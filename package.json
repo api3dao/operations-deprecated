@@ -1,9 +1,29 @@
 {
   "name": "operations",
+  "license": "MIT",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "lint": "yarn run prettier:check && yarn run lint:eslint",
+    "lint:eslint": "eslint . --ext .js,.ts",
+    "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\" --loglevel silent",
+    "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
+    "start": "ts-node src/index.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/api3dao/operations.git"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-functional": "^4.0.2",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "husky": "^7.0.0",
+    "jest": "^27.4.5",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   }
 }
