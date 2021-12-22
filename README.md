@@ -1,1 +1,77 @@
-# operations
+# @api3/operations
+
+> A package that houses data and utilities required for API3 operations
+
+**Although this repo is private, do not push sensitive data to it.**
+
+## `/data`
+
+Static data that other applications (e.g., monitoring and visualization services) may need to know about, including:
+
+- Chain integrations
+- API integrations
+  - OIS
+  - Deployment files
+- Templates
+- Beacons
+
+## `/data/chains.json`
+
+A JSON file that contains data related to the chains. These chains will not necessarily have official support. Each
+chain has the following specified:
+
+- `AirnodeRrp`: AirnodeRrp contract address
+- `RrpBeaconServer`: RrpBeaconServer contract address
+
+## `/data/apis`
+
+Hosts one directory per API, where the directory name is the OIS title.
+
+**The OIS title of an API is immutable.**
+
+### `/data/apis/{oisTitle}`
+
+Hosts integration and deployment data about a specific API. The contents of this directory should refer to the
+first-party deployment, i.e., do not push your third-party deployment data here. If you really have to, you can create a
+separate directory (`/data/apis/test-{oisTitle}`).
+
+**All files merged to `main` must have been reviewed and tested.**
+
+#### `/data/apis/{oisTitle}/ois`
+
+Hosts JSON files that contain OIS iterations. Each OIS must be versioned according to [semver](https://semver.org/) and
+the version will be used in the file name.
+
+#### `/data/apis/{oisTitle}/deployments`
+
+Hosts directories that contain the files used for individual deployments. Each of these directories are named with the
+deployment date as `YYYY-MM-DD`. If more than one deployment was done in a day, only push the latest one.
+
+Each of the directories only include the contents of the zip file that is sent to the API provider for deployment. Make
+sure to sanitize `aws.env` and `secrets.env` files of all sensitive data, and update their extension to be
+`.env.example`.
+
+### `/data/apis/{oisTitle}/templates`
+
+Hosts files containing template data and metadata. The files are named to describe what the template is for so that they
+are human-browseable. The files contents are:
+
+- `airnode`: Airnode address (must match the one in `apiMetadata.json`)
+- `endpointId`: Endpoint ID (must match the one from `config.json`)
+- `parameters`: Airnode ABI-encoded parameters
+- `decodedParameters`: `parameters` decoded to be human-readable
+- `chains`: Chains that the template is currently deployed on (must match the ones in `chains.json`)
+- `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
+
+### `/data/apis/{oisTitle}/beacons`
+
+Hosts files containing beacon data and metadata. The files are named to describe what the beacon is for so that they are
+human-browseable.
+
+- `templateId`: Template ID (must match one of the ones in `/data/apis/{oisTitle}/templates`)
+- `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
+- `decodedParameters`: `parameters` decoded to be human-readable
+- `chains`: Chains that the beacon is currently operational on (must match the ones in `chains.json`)
+- `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
+
+TODO: Add Airkeeper threshold parameters
