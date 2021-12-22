@@ -37,6 +37,15 @@ separate directory (`/data/apis/test-{oisTitle}`).
 
 **All files merged to `main` must have been reviewed and tested.**
 
+#### `/data/apis/{oisTitle}/apiMetadata.json`
+
+A JSON file that contains metadata related to the API provider:
+
+- `active`: If the latest deployment under `/data/apis/{oisTitle}/deployments` is active
+- `airnode`: Airnode address
+- `xpub`: Extended public key of the Airnode wallet
+- `contact`: Contact information of the API provider, specifically related to Airnode operation
+
 #### `/data/apis/{oisTitle}/ois`
 
 Hosts JSON files that contain OIS iterations. Each OIS must be versioned according to [semver](https://semver.org/) and
