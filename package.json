@@ -1,6 +1,7 @@
 {
-  "name": "operations",
+  "name": "@api3/operations",
   "license": "MIT",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "lint": "yarn run prettier:check && yarn run lint:eslint",
