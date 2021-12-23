@@ -33,7 +33,7 @@ Hosts one directory per API, where the directory name is the OIS title.
 
 Hosts integration and deployment data about a specific API. The contents of this directory should refer to the
 first-party deployment, i.e., do not push your third-party deployment data here. If you really have to, you can create a
-separate directory (`/data/apis/test-{oisTitle}`).
+separate directory (e.g., `/data/apis/test-{oisTitle}`).
 
 **All files merged to `main` must have been reviewed and tested.**
 
@@ -66,10 +66,10 @@ Hosts files containing template data and metadata. The files are named to descri
 are human-browseable. The files contents are:
 
 - `airnode`: Airnode address (must match the one in `apiMetadata.json`)
-- `endpointId`: Endpoint ID (must match the one from `config.json`)
+- `endpointId`: Endpoint ID (must match one from `config.json`)
 - `parameters`: Airnode ABI-encoded parameters
 - `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the template is currently deployed on (must match the ones in `chains.json`)
+- `chains`: Chains that the template is currently deployed on (must match one in `chains.json`)
 - `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
 
 ### `/data/apis/{oisTitle}/beacons`
@@ -77,10 +77,10 @@ are human-browseable. The files contents are:
 Hosts files containing beacon data and metadata. The files are named to describe what the beacon is for so that they are
 human-browseable.
 
-- `templateId`: Template ID (must match one of the ones in `/data/apis/{oisTitle}/templates`)
+- `templateId`: Template ID (must match one from `/data/apis/{oisTitle}/templates`)
 - `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
 - `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the beacon is currently operational on (must match the ones in `chains.json`)
+- `chains`: Chains that the beacon is currently operational on (must match one in `chains.json`)
 - `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
 
 TODO: Add Airkeeper threshold parameters
