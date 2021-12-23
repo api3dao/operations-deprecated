@@ -82,5 +82,5 @@ human-browseable.
 - `decodedParameters`: `parameters` decoded to be human-readable
 - `chains`: Chains that the beacon is currently operational on (must match one in `chains.json`)
 - `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
-
-TODO: Add Airkeeper threshold parameters
+- `firstPartyAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
+- `thirdPartyAirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
