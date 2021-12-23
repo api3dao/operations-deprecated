@@ -20,6 +20,7 @@ Static data that other applications (e.g., monitoring and visualization services
 A JSON file that contains data related to the chains. These chains will not necessarily have official support. Each
 chain has the following specified:
 
+- `AccessControlRegistry`: AccessControlRegistry contract address
 - `AirnodeRrp`: AirnodeRrp contract address
 - `RrpBeaconServer`: RrpBeaconServer contract address
 
@@ -31,9 +32,9 @@ Hosts one directory per API, where the directory name is the OIS title.
 
 ### `/data/apis/{oisTitle}`
 
-Hosts integration and deployment data about a specific API. The contents of this directory should refer to the
-first-party deployment, i.e., do not push your third-party deployment data here. If you really have to, you can create a
-separate directory (e.g., `/data/apis/test-{oisTitle}`).
+Hosts API integration, deployment and service-related data about a specific API. The contents of this directory should
+refer to the first-party deployment, i.e., do not push your third-party deployment data here. If you really have to, you
+can create a separate directory (e.g., `/data/apis/test-{oisTitle}`).
 
 **All files merged to `main` must have been reviewed and tested.**
 
@@ -68,9 +69,9 @@ are human-browseable. The files contents are:
 - `airnode`: Airnode address (must match the one in `apiMetadata.json`)
 - `endpointId`: Endpoint ID (must match one from `config.json`)
 - `parameters`: Airnode ABI-encoded parameters
-- `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the template is currently deployed on (must match one in `chains.json`)
 - `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
+- `decodedParameters`: `parameters` decoded to be human-readable
+- `chains`: Chains that the template is currently deployed on (must match ones from `chains.json`)
 
 ### `/data/apis/{oisTitle}/beacons`
 
@@ -79,8 +80,14 @@ human-browseable.
 
 - `templateId`: Template ID (must match one from `/data/apis/{oisTitle}/templates`)
 - `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
-- `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the beacon is currently operational on (must match one in `chains.json`)
 - `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
-- `firstPartyAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
-- `thirdPartyAirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
+- `decodedParameters`: `parameters` decoded to be human-readable
+- `chains`: Chains that the beacon is currently operational on (must match ones from `chains.json`)
+- `apiProviderAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
+- `api3AirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
+- `sponsor`: Sponsor address that will be used while requesting an update (sponsor wallet to be derived from the API
+  provider `xpub`). Both the API provider-operated and the API3-operated Airkeepers use the same `sponsor`.
+- `apiProviderAirkeeperSponsor`: Airkeeper sponsor address that will be used by the API provider-operated Airkeeper to
+  keep the beacon (sponsor wallet to be derived from `xpub` in `apiMetadata.json`)
+- `api3AirkeeperSponsor`: Airkeeper sponsor address that will be used by the API3-operated Airkeeper to keep the beacon
+  (sponsor wallet to be derived from `xpub` in `api3Metadata.json`)

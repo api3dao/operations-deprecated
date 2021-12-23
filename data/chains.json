@@ -1,5 +1,6 @@
 {
   "mainnet": {
+    "AccessControlRegistry": "",
     "AirnodeRrp": "",
     "RrpBeaconServer": ""
   }
