@@ -11,6 +11,7 @@
       "sponsor": "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8",
       "apiProviderAirkeeperSponsor": "0x240eCa26087C77112a6e7D14d0144b0315FD307E",
       "api3AirkeeperSponsor": "0x3EcEf08D0e2DaD803847E052249bb4F8bFf2D5bB",
+      "sponsorWalletBalanceAlertThreshold": { "amount": 2, "units": "ether" },
       "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": { "amount": 2, "units": "ether" },
       "api3AirkeeperSponsorWalletBalanceAlertThreshold": { "amount": 1, "units": "ether" }
     }
