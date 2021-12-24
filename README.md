@@ -82,12 +82,21 @@ human-browseable.
 - `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
 - `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
 - `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the beacon is currently operational on (must match ones from `chains.json`)
-- `apiProviderAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
-- `api3AirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
-- `sponsor`: Sponsor address that will be used while requesting an update (sponsor wallet to be derived from the API
-  provider `xpub`). Both the API provider-operated and the API3-operated Airkeepers use the same `sponsor`.
-- `apiProviderAirkeeperSponsor`: Airkeeper sponsor address that will be used by the API provider-operated Airkeeper to
-  keep the beacon (sponsor wallet to be derived from `xpub` in `apiMetadata.json`)
-- `api3AirkeeperSponsor`: Airkeeper sponsor address that will be used by the API3-operated Airkeeper to keep the beacon
-  (sponsor wallet to be derived from `xpub` in `api3Metadata.json`)
+- `chains`: Chains that the beacon is currently operational on
+  - `name`: Name of the chain (must match one from `chains.json`)
+  - `apiProviderAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
+  - `api3AirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
+  - `sponsor`: Sponsor address that will be used while requesting an update (sponsor wallet to be derived from the API
+    provider `xpub`). Both the API provider-operated and the API3-operated Airkeepers use the same `sponsor`.
+  - `apiProviderAirkeeperSponsor`: Airkeeper sponsor address that will be used by the API provider-operated Airkeeper to
+    keep the beacon (sponsor wallet to be derived from `xpub` in `apiMetadata.json`)
+  - `api3AirkeeperSponsor`: Airkeeper sponsor address that will be used by the API3-operated Airkeeper to keep the
+    beacon (sponsor wallet to be derived from `xpub` in `api3Metadata.json`)
+  - `apiProviderAirkeeperSponsorWalletBalanceAlertThreshold`: If the sponsor wallet used by the API provider-operated
+    Airkeeper falls below this amount, an alert should be raised
+    - `amount`: Balance amount in numbers
+    - `units`: One of the [ETH units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--named-units)
+  - `api3AirkeeperSponsorWalletBalanceAlertThreshold`: If the sponsor wallet used by the API3-operated Airkeeper falls
+    below this amount, an alert should be raised
+    - `amount`: Balance amount in numbers
+    - `units`: One of the [ETH units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--named-units)

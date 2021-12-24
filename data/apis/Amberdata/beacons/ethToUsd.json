@@ -3,10 +3,16 @@
   "parameters": "0x3162000000000000000000000000000000000000000000000000000000000000746f0000000000000000000000000000000000000000000000000000000000004554480000000000000000000000000000000000000000000000000000000000",
   "beaconId": "0xe4a91c759242694932a9d17bed88b7d12a8f3b20c624168ce632f48e6381471b",
   "decodedParameters": [{ "type": "bytes32", "name": "from", "value": "ETH" }],
-  "chains": ["mainnet"],
-  "apiProviderAirkeeperDeviationPercentage": 2.5,
-  "api3AirkeeperDeviationPercentage": 5,
-  "sponsor": "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8",
-  "apiProviderAirkeeperSponsor": "0x240eCa26087C77112a6e7D14d0144b0315FD307E",
-  "api3AirkeeperSponsor": "0x3EcEf08D0e2DaD803847E052249bb4F8bFf2D5bB"
+  "chains": [
+    {
+      "name": "mainnet",
+      "apiProviderAirkeeperDeviationPercentage": 2.5,
+      "api3AirkeeperDeviationPercentage": 5,
+      "sponsor": "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8",
+      "apiProviderAirkeeperSponsor": "0x240eCa26087C77112a6e7D14d0144b0315FD307E",
+      "api3AirkeeperSponsor": "0x3EcEf08D0e2DaD803847E052249bb4F8bFf2D5bB",
+      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": { "amount": 2, "units": "ether" },
+      "api3AirkeeperSponsorWalletBalanceAlertThreshold": { "amount": 1, "units": "ether" }
+    }
+  ]
 }
