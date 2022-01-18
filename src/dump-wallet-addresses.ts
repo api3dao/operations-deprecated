@@ -34,8 +34,7 @@ function main() {
               const sponsorWallet = {
                 beaconName,
                 walletType: 'Sponsor wallet',
-                // The `protocolId` below will be 1 and not 0 in v0.4
-                address: deriveSponsorWalletAddress(apiMetadata.xpub, 0, beaconChain.sponsor),
+                address: deriveSponsorWalletAddress(apiMetadata.xpub, 1, beaconChain.sponsor),
                 thresholdInWei: ethers.utils
                   .parseUnits(
                     beaconChain.sponsorWalletBalanceAlertThreshold.amount.toString(),
