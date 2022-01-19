@@ -1,0 +1,109 @@
+{
+  "templateId": "0xae29d1671cc0df2ccd14cfd4ad094857ad06e6881132fedc195b56ceef9b396a",
+  "parameters": "0x316262626200000000000000000000000000000000000000000000000000000070616972000000000000000000000000000000000000000000000000000000006461695f657468000000000000000000000000000000000000000000000000005f706174680000000000000000000000000000000000000000000000000000007061796c6f61642e767761702c000000000000000000000000000000000000005f74797065000000000000000000000000000000000000000000000000000000696e743235362c74696d657374616d70000000000000000000000000000000005f74696d65730000000000000000000000000000000000000000000000000000313030303030302c000000000000000000000000000000000000000000000000",
+  "decodedParameters": [
+    {
+      "name": "pair",
+      "type": "bytes32",
+      "value": "dai_eth"
+    },
+    {
+      "name": "_path",
+      "type": "bytes32",
+      "value": "payload.vwap,"
+    },
+    {
+      "name": "_type",
+      "type": "bytes32",
+      "value": "int256,timestamp"
+    },
+    {
+      "name": "_times",
+      "type": "bytes32",
+      "value": "1000000,"
+    }
+  ],
+  "beaconId": "0x51e69816ce48ce503eb8a0b9b2f87e3cce93765483f3cef71380436e7821c628",
+  "chains": [
+    {
+      "name": "ropsten",
+      "apiProviderAirkeeperDeviationPercentage": 1,
+      "api3AirkeeperDeviationPercentage": 2,
+      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
+      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
+      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
+      "sponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 1,
+        "units": "ether"
+      }
+    },
+    {
+      "name": "rinkeby",
+      "apiProviderAirkeeperDeviationPercentage": 1,
+      "api3AirkeeperDeviationPercentage": 2,
+      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
+      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
+      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
+      "sponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 1,
+        "units": "ether"
+      }
+    },
+    {
+      "name": "goerli",
+      "apiProviderAirkeeperDeviationPercentage": 1,
+      "api3AirkeeperDeviationPercentage": 2,
+      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
+      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
+      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
+      "sponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 1,
+        "units": "ether"
+      }
+    },
+    {
+      "name": "polygon-mumbai",
+      "apiProviderAirkeeperDeviationPercentage": 1,
+      "api3AirkeeperDeviationPercentage": 2,
+      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
+      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
+      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
+      "sponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 2,
+        "units": "ether"
+      },
+      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
+        "amount": 1,
+        "units": "ether"
+      }
+    }
+  ]
+}
