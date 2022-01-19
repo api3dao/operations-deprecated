@@ -23,7 +23,7 @@
       "value": "1000000,"
     }
   ],
-  "beaconId": "0x0ea5232857bb57ade2581004c15c46990b795f0be68476b4622a5787513a1c9e",
+  "beaconId": "0x9ff48eeb5e408f691ce8752a6ef73a3f2a7a6d7739fa4788ad1587c6336c6499",
   "chains": [
     {
       "name": "ropsten",

@@ -13,7 +13,7 @@
       "value": "int256,timestamp"
     }
   ],
-  "beaconId": "0x7de3d098ea0e4b375268085f338ef6811f2868b4924b7e927039257ad6df1213",
+  "beaconId": "0xdcf801ee9030dd1679bdde8dc9db6063a1fe82e6ade0963600029ccec8b6eaec",
   "chains": [
     {
       "name": "ropsten",
