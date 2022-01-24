@@ -1,9 +1,7 @@
 {
   "chains": [
     {
-      "authorizers": [
-        "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"
-      ],
+      "authorizers": ["0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"],
       "contracts": {
         "AirnodeRrp": "0x3B35250Ca54C1Fb8c83D48F21231ef6e4fb9f79D"
       },
@@ -24,9 +22,7 @@
       }
     },
     {
-      "authorizers": [
-        "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"
-      ],
+      "authorizers": ["0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"],
       "contracts": {
         "AirnodeRrp": "0xC11593B87f258672b8eB02d9A723a429b15E9E03"
       },
@@ -47,9 +43,7 @@
       }
     },
     {
-      "authorizers": [
-        "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"
-      ],
+      "authorizers": ["0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593"],
       "contracts": {
         "AirnodeRrp": "0xF6d2675468989387e96127546e0CBC9A384fa418"
       },
@@ -70,9 +64,7 @@
       }
     },
     {
-      "authorizers": [
-        "0x4C132E092bacdF38bDf4b76700Af3C019352fEdE"
-      ],
+      "authorizers": ["0x4C132E092bacdF38bDf4b76700Af3C019352fEdE"],
       "contracts": {
         "AirnodeRrp": "0x68E36bEeDA1644258973E532029fc3a2806bBA8b"
       },

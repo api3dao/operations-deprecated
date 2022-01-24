@@ -19,80 +19,56 @@
       "name": "ropsten",
       "apiProviderAirkeeperDeviationPercentage": 1,
       "api3AirkeeperDeviationPercentage": 2,
-      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
-      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
-      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
-      "sponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderUpdateRequesterMetadata": {
+        "address": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90"
       },
-      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderAirnodeFulfillerMetadata": {
+        "address": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5"
       },
-      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 1,
-        "units": "ether"
+      "api3ProviderUpdateRequesterMetadata": {
+        "address": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168"
       }
     },
     {
       "name": "rinkeby",
       "apiProviderAirkeeperDeviationPercentage": 1,
       "api3AirkeeperDeviationPercentage": 2,
-      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
-      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
-      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
-      "sponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderUpdateRequesterMetadata": {
+        "address": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90"
       },
-      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderAirnodeFulfillerMetadata": {
+        "address": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5"
       },
-      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 1,
-        "units": "ether"
+      "api3ProviderUpdateRequesterMetadata": {
+        "address": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168"
       }
     },
     {
       "name": "goerli",
       "apiProviderAirkeeperDeviationPercentage": 1,
       "api3AirkeeperDeviationPercentage": 2,
-      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
-      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
-      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
-      "sponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderUpdateRequesterMetadata": {
+        "address": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90"
       },
-      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderAirnodeFulfillerMetadata": {
+        "address": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5"
       },
-      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 1,
-        "units": "ether"
+      "api3ProviderUpdateRequesterMetadata": {
+        "address": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168"
       }
     },
     {
       "name": "polygon-mumbai",
       "apiProviderAirkeeperDeviationPercentage": 1,
       "api3AirkeeperDeviationPercentage": 2,
-      "apiProviderUpdateRequester": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90",
-      "apiProviderAirnodeFulfiller": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5",
-      "api3Unknown": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168",
-      "sponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderUpdateRequesterMetadata": {
+        "address": "0x9f58989539B8c90cdDE06Cb568e41e3DeB73df90"
       },
-      "apiProviderAirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 2,
-        "units": "ether"
+      "apiProviderAirnodeFulfillerMetadata": {
+        "address": "0x1A40773c2cFb7CCa34Cbd2287097A80Cba28b9E5"
       },
-      "api3AirkeeperSponsorWalletBalanceAlertThreshold": {
-        "amount": 1,
-        "units": "ether"
+      "api3ProviderUpdateRequesterMetadata": {
+        "address": "0xf08DA3Cb3eaeD0a22814f1A34cA82C686ba13168"
       }
     }
   ]
