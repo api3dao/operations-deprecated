@@ -366,6 +366,36 @@
             }
           ]
         }
+      },
+      "/market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest": {
+        "get": {
+          "parameters": [
+            {
+              "name": "base",
+              "in": "path"
+            },
+            {
+              "name": "fields",
+              "in": "query"
+            },
+            {
+              "name": "format",
+              "in": "query"
+            },
+            {
+              "name": "lookbackPeriod",
+              "in": "query"
+            },
+            {
+              "name": "quote",
+              "in": "path"
+            },
+            {
+              "name": "timeFormat",
+              "in": "query"
+            }
+          ]
+        }
       }
     }
   },
@@ -1120,6 +1150,70 @@
           "operationParameter": {
             "name": "x-amberdata-blockchain-id",
             "in": "header"
+          }
+        }
+      ],
+      "testable": true
+    },
+    {
+      "name": "GET /market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest",
+      "operation": {
+        "method": "get",
+        "path": "/market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest"
+      },
+      "reservedParameters": [
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_path"
+        },
+        {
+          "name": "_times"
+        }
+      ],
+      "fixedOperationParameters": [],
+      "parameters": [
+        {
+          "name": "base",
+          "operationParameter": {
+            "name": "base",
+            "in": "path"
+          }
+        },
+        {
+          "name": "fields",
+          "operationParameter": {
+            "name": "fields",
+            "in": "query"
+          }
+        },
+        {
+          "name": "format",
+          "operationParameter": {
+            "name": "format",
+            "in": "query"
+          }
+        },
+        {
+          "name": "lookbackPeriod",
+          "operationParameter": {
+            "name": "lookbackPeriod",
+            "in": "query"
+          }
+        },
+        {
+          "name": "quote",
+          "operationParameter": {
+            "name": "quote",
+            "in": "path"
+          }
+        },
+        {
+          "name": "timeFormat",
+          "operationParameter": {
+            "name": "timeFormat",
+            "in": "query"
           }
         }
       ],
