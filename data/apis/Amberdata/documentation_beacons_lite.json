@@ -137,27 +137,6 @@
   {
     "templateParameters": [
       {
-        "name": "pair",
-        "value": "tusd_usd"
-      },
-      {
-        "name": "_path",
-        "value": "payload.vwap,"
-      },
-      {
-        "name": "lookbackPeriod",
-        "value": "5"
-      }
-    ],
-    "templateId": "0x40b01f910cb9fb33af6850df0df783be55d0e8c57ac82624f5d3dad4181d39c0",
-    "oisTitle": "Amberdata-Lite",
-    "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-    "beaconId": "0x5d8b12381d15045a4044b0cbee0952cf030bd5e50e659b2041747af6e404bba5",
-    "templateName": "global vwap for tusd_usd"
-  },
-  {
-    "templateParameters": [
-      {
         "name": "base",
         "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
       },

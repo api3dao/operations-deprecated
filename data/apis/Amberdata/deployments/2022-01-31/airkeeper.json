@@ -251,42 +251,6 @@
         "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
       },
       {
-        "templateId": "0x40b01f910cb9fb33af6850df0df783be55d0e8c57ac82624f5d3dad4181d39c0",
-        "templateParameters": [
-          {
-            "name": "pair",
-            "type": "bytes32",
-            "value": "tusd_usd"
-          },
-          {
-            "name": "_path",
-            "type": "bytes32",
-            "value": "payload.vwap,"
-          },
-          {
-            "name": "_type",
-            "type": "bytes32",
-            "value": "int256,timestamp"
-          },
-          {
-            "name": "_times",
-            "type": "bytes32",
-            "value": "1000000,"
-          },
-          {
-            "name": "lookbackPeriod",
-            "type": "bytes32",
-            "value": "5"
-          }
-        ],
-        "overrideParameters": [],
-        "oisTitle": "Amberdata-Lite",
-        "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-        "deviationPercentage": "0.1",
-        "keeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f",
-        "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
-      },
-      {
         "templateId": "0x47b7bee116be7e8d220a7598ddb2fab0caaf783e3e4c01b804395a266a0df013",
         "templateParameters": [
           {

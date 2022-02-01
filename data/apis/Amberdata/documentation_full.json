@@ -89,7 +89,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for avax_usd.json",
       "name": "global vwap for avax_usd"
     },
@@ -189,7 +194,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for snx_usd.json",
       "name": "global vwap for snx_usd"
     },
@@ -259,7 +269,12 @@
           "value": "int256,timestamp"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "gas prediction for fast gas price.json",
       "name": "gas prediction for fast gas price"
     },
@@ -329,7 +344,12 @@
           "value": "int256,timestamp"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "goerli", "polygon-mumbai"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "goerli",
+        "polygon-mumbai"
+      ],
       "sourceFile": "gas prediction for average gas price.json",
       "name": "gas prediction for average gas price"
     },
@@ -429,7 +449,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for usdc_usd.json",
       "name": "global vwap for usdc_usd"
     },
@@ -539,7 +564,12 @@
           "value": "5"
         }
       ],
-      "chains": ["goerli", "polygon-mumbai", "ropsten", "rinkeby"],
+      "chains": [
+        "goerli",
+        "polygon-mumbai",
+        "ropsten",
+        "rinkeby"
+      ],
       "sourceFile": "global dex vwap for usdt_weth.json",
       "name": "global dex vwap for usdt_weth"
     },
@@ -639,109 +669,14 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for bat_usd.json",
       "name": "global vwap for bat_usd"
-    },
-    "extraTemplateData": {
-      "endpointId": "0x592da7070110dc650c34b31f2b0ec1d45456ed8bca4ccdc28ef879f41655f006",
-      "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-      "oisTitle": "Amberdata-Lite"
-    }
-  },
-  {
-    "templateId": "0x40b01f910cb9fb33af6850df0df783be55d0e8c57ac82624f5d3dad4181d39c0",
-    "templateName": "global vwap for tusd_usd",
-    "parameters": "0x31626262626200000000000000000000000000000000000000000000000000007061697200000000000000000000000000000000000000000000000000000000747573645f7573640000000000000000000000000000000000000000000000005f706174680000000000000000000000000000000000000000000000000000007061796c6f61642e767761702c000000000000000000000000000000000000005f74797065000000000000000000000000000000000000000000000000000000696e743235362c74696d657374616d70000000000000000000000000000000005f74696d65730000000000000000000000000000000000000000000000000000313030303030302c0000000000000000000000000000000000000000000000006c6f6f6b6261636b506572696f640000000000000000000000000000000000003500000000000000000000000000000000000000000000000000000000000000",
-    "decodedParameters": [
-      {
-        "name": "pair",
-        "type": "bytes32",
-        "value": "tusd_usd"
-      },
-      {
-        "name": "_path",
-        "type": "bytes32",
-        "value": "payload.vwap,"
-      },
-      {
-        "name": "_type",
-        "type": "bytes32",
-        "value": "int256,timestamp"
-      },
-      {
-        "name": "_times",
-        "type": "bytes32",
-        "value": "1000000,"
-      },
-      {
-        "name": "lookbackPeriod",
-        "type": "bytes32",
-        "value": "5"
-      }
-    ],
-    "beaconId": "0x5d8b12381d15045a4044b0cbee0952cf030bd5e50e659b2041747af6e404bba5",
-    "chains": [
-      {
-        "name": "ropsten",
-        "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-        "apiProviderAirkeeperDeviationPercentage": 0.1,
-        "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
-      },
-      {
-        "name": "rinkeby",
-        "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-        "apiProviderAirkeeperDeviationPercentage": 0.1,
-        "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
-      },
-      {
-        "name": "polygon-mumbai",
-        "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-        "apiProviderAirkeeperDeviationPercentage": 0.1,
-        "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
-      },
-      {
-        "name": "goerli",
-        "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-        "apiProviderAirkeeperDeviationPercentage": 0.1,
-        "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
-      }
-    ],
-    "template": {
-      "airnode": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-      "endpointId": "0x592da7070110dc650c34b31f2b0ec1d45456ed8bca4ccdc28ef879f41655f006",
-      "parameters": "0x31626262626200000000000000000000000000000000000000000000000000007061697200000000000000000000000000000000000000000000000000000000747573645f7573640000000000000000000000000000000000000000000000005f706174680000000000000000000000000000000000000000000000000000007061796c6f61642e767761702c000000000000000000000000000000000000005f74797065000000000000000000000000000000000000000000000000000000696e743235362c74696d657374616d70000000000000000000000000000000005f74696d65730000000000000000000000000000000000000000000000000000313030303030302c0000000000000000000000000000000000000000000000006c6f6f6b6261636b506572696f640000000000000000000000000000000000003500000000000000000000000000000000000000000000000000000000000000",
-      "templateId": "0x40b01f910cb9fb33af6850df0df783be55d0e8c57ac82624f5d3dad4181d39c0",
-      "decodedParameters": [
-        {
-          "name": "pair",
-          "type": "bytes32",
-          "value": "tusd_usd"
-        },
-        {
-          "name": "_path",
-          "type": "bytes32",
-          "value": "payload.vwap,"
-        },
-        {
-          "name": "_type",
-          "type": "bytes32",
-          "value": "int256,timestamp"
-        },
-        {
-          "name": "_times",
-          "type": "bytes32",
-          "value": "1000000,"
-        },
-        {
-          "name": "lookbackPeriod",
-          "type": "bytes32",
-          "value": "5"
-        }
-      ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-      "sourceFile": "global vwap for tusd_usd.json",
-      "name": "global vwap for tusd_usd"
     },
     "extraTemplateData": {
       "endpointId": "0x592da7070110dc650c34b31f2b0ec1d45456ed8bca4ccdc28ef879f41655f006",
@@ -849,7 +784,12 @@
           "value": "5"
         }
       ],
-      "chains": ["goerli", "polygon-mumbai", "ropsten", "rinkeby"],
+      "chains": [
+        "goerli",
+        "polygon-mumbai",
+        "ropsten",
+        "rinkeby"
+      ],
       "sourceFile": "global dex vwap for usdc_weth.json",
       "name": "global dex vwap for usdc_weth"
     },
@@ -949,7 +889,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for btc_usd.json",
       "name": "global vwap for btc_usd"
     },
@@ -1049,7 +994,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for mana_usd.json",
       "name": "global vwap for mana_usd"
     },
@@ -1149,7 +1099,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for lrc_usd.json",
       "name": "global vwap for lrc_usd"
     },
@@ -1249,7 +1204,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for dai_eth.json",
       "name": "global vwap for dai_eth"
     },
@@ -1349,7 +1309,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for dai_usd.json",
       "name": "global vwap for dai_usd"
     },
@@ -1449,7 +1414,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for near_usd.json",
       "name": "global vwap for near_usd"
     },
@@ -1549,7 +1519,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for knc_usd.json",
       "name": "global vwap for knc_usd"
     },
@@ -1649,7 +1624,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for pax_usd.json",
       "name": "global vwap for pax_usd"
     },
@@ -1749,7 +1729,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for aave_usd.json",
       "name": "global vwap for aave_usd"
     },
@@ -1849,7 +1834,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for atom_usd.json",
       "name": "global vwap for atom_usd"
     },
@@ -1949,7 +1939,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for matic_usd.json",
       "name": "global vwap for matic_usd"
     },
@@ -2049,7 +2044,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for usdt_usd.json",
       "name": "global vwap for usdt_usd"
     },
@@ -2149,7 +2149,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for eth_btc.json",
       "name": "global vwap for eth_btc"
     },
@@ -2249,7 +2254,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for yfi_usd.json",
       "name": "global vwap for yfi_usd"
     },
@@ -2349,7 +2359,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for eth_usd.json",
       "name": "global vwap for eth_usd"
     },
@@ -2449,7 +2464,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for sol_usd.json",
       "name": "global vwap for sol_usd"
     },
@@ -2549,7 +2569,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for comp_usd.json",
       "name": "global vwap for comp_usd"
     },
@@ -2649,7 +2674,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for wbtc_usd.json",
       "name": "global vwap for wbtc_usd"
     },
@@ -2749,7 +2779,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for uni_usd.json",
       "name": "global vwap for uni_usd"
     },
@@ -2849,7 +2884,12 @@
           "value": "5"
         }
       ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
+      "chains": [
+        "ropsten",
+        "rinkeby",
+        "polygon-mumbai",
+        "goerli"
+      ],
       "sourceFile": "global vwap for bal_usd.json",
       "name": "global vwap for bal_usd"
     },
