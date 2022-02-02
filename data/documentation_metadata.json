@@ -14,13 +14,6 @@
     "apiName": "Amberdata"
   },
   {
-    "templateId": "0x47b7bee116be7e8d220a7598ddb2fab0caaf783e3e4c01b804395a266a0df013",
-    "templateName": "Global Dex Vwap For Usdc_weth",
-    "beaconId": "0x184fadfbf9d4ec8270a1e2ceb4b629091834e830442dea51ad3f996ad70360de",
-    "chains": ["goerli", "polygon-mumbai", "ropsten", "rinkeby"],
-    "apiName": "Amberdata"
-  },
-  {
     "templateId": "0x3ae8c3944b8522cbc865a8eea1392333d7471aed88bcfe06789a062473072118",
     "templateName": "Global Dex Vwap For Usdt_weth",
     "beaconId": "0x4dfdac845a3316b528a3ea88ae82abf48a7dfff45d0922e04e90c52576d60426",
@@ -77,13 +70,6 @@
     "apiName": "Amberdata"
   },
   {
-    "templateId": "0x84e82a04095f91c60c7496274ecef2ed6845baff2376b7d6715b4d76c4d15451",
-    "templateName": "Global Vwap For Dai_eth",
-    "beaconId": "0xbc6d8f653e247cddb24473e78c8d25fb3f622dc6cbe3b71ec157bae9b86247d8",
-    "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-    "apiName": "Amberdata"
-  },
-  {
     "templateId": "0x86012c43d9aceabd9a010ab3eb9b80e6ac371e4056b3f6500b35ef68b3da1dc2",
     "templateName": "Global Vwap For Dai_usd",
     "beaconId": "0x72c512f825577f581e7100dba06031dc34c748e948bb060af51ba76112a9abc0",
@@ -136,13 +122,6 @@
     "templateId": "0x885b41879a473a215b74246c17c50aa99fe99b1ef9a91fc93e8e615621a2832a",
     "templateName": "Global Vwap For Near_usd",
     "beaconId": "0xe0d9e7a3b702e130e17f90c765eaacd197755de0ca6b9140c359ea342b7d40cb",
-    "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-    "apiName": "Amberdata"
-  },
-  {
-    "templateId": "0x94a2cbf0dc86a506979ad504771b1e7f6efe3538965d5f189aca453072e2a584",
-    "templateName": "Global Vwap For Pax_usd",
-    "beaconId": "0x917c437bffba1ed477cefb38eff6e017ada8c33e80d56345370e72518e28b130",
     "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
     "apiName": "Amberdata"
   },
