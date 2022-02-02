@@ -1,2 +1,4 @@
+yarn run export-documentation
+yarn run data-validation
 yarn run prettier:write
 yarn run lint
