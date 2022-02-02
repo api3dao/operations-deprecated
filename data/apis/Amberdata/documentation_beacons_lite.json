@@ -137,31 +137,6 @@
   {
     "templateParameters": [
       {
-        "name": "base",
-        "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-      },
-      {
-        "name": "quote",
-        "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-      },
-      {
-        "name": "_path",
-        "value": "payload.vwap,"
-      },
-      {
-        "name": "lookbackPeriod",
-        "value": "5"
-      }
-    ],
-    "templateId": "0x47b7bee116be7e8d220a7598ddb2fab0caaf783e3e4c01b804395a266a0df013",
-    "oisTitle": "Amberdata-Lite",
-    "endpointName": "GET /market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest",
-    "beaconId": "0x184fadfbf9d4ec8270a1e2ceb4b629091834e830442dea51ad3f996ad70360de",
-    "templateName": "global dex vwap for usdc_weth"
-  },
-  {
-    "templateParameters": [
-      {
         "name": "pair",
         "value": "btc_usd"
       },
@@ -305,27 +280,6 @@
     "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
     "beaconId": "0x57d81bfd734c7a2b2376f65694760f160baac40a9a50a5fa2b93076b5e59a1eb",
     "templateName": "global vwap for knc_usd"
-  },
-  {
-    "templateParameters": [
-      {
-        "name": "pair",
-        "value": "pax_usd"
-      },
-      {
-        "name": "_path",
-        "value": "payload.vwap,"
-      },
-      {
-        "name": "lookbackPeriod",
-        "value": "5"
-      }
-    ],
-    "templateId": "0x94a2cbf0dc86a506979ad504771b1e7f6efe3538965d5f189aca453072e2a584",
-    "oisTitle": "Amberdata-Lite",
-    "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-    "beaconId": "0x917c437bffba1ed477cefb38eff6e017ada8c33e80d56345370e72518e28b130",
-    "templateName": "global vwap for pax_usd"
   },
   {
     "templateParameters": [
