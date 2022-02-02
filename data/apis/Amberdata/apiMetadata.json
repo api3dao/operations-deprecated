@@ -1,6 +1,6 @@
 {
-  "active": false,
-  "airnode": "0x5fe3b544030ee8Ff8c61Ef55d427075cd7f0767C",
-  "xpub": "xpub6D1iGXrgPrJgY22N6bGFBC5TBpGedTNgWv6YH9vi1R76vS8F4SJLvwRipJDVHwssNjVYwJQCSkkQu4re3eUKV7NGYL4xW1zxXqTC5JEm9Rd",
-  "contact": ""
+  "xpub": "xpub6C4Rxe6YMdxDtoDvi5RVuMBBWMhAJPsQDPiTqCbvShS9xDSJRh51utmaHskjBo9u4xHXP7ie1djR2SQVVPD9U7HUn4k4xBCPQX4DeQ1ovpF",
+  "active": true,
+  "airnode": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "contact": "john@data-provider.com"
 }

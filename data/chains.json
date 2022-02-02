@@ -1,7 +1,37 @@
 {
-  "mainnet": {
-    "AccessControlRegistry": "",
-    "AirnodeRrp": "",
-    "RrpBeaconServer": ""
+  "goerli": {
+    "AirnodeRrp": "0xF6d2675468989387e96127546e0CBC9A384fa418",
+    "AccessControlRegistry": "0x6825D6461b20a273959b0cB64a3188375b815CB4",
+    "OwnableCallForwarder": "0x3dF933f75bc9de7d72189Ef10eebEAf7F4d498a0",
+    "RequesterAuthorizerWithManager": "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593",
+    "RrpBeaconServer": "0x2cFda716b751eb406C5124C6E4428F2AEA453D96"
+  },
+  "mumbai": {
+    "AirnodeRrp": "0xA4899D35897033b927acFCf422bc745916139776",
+    "AccessControlRegistry": "0xf953b3A269d80e3eB0F2947630Da976B896A8C5b",
+    "OwnableCallForwarder": "0xAA292E8611aDF267e563f334Ee42320aC96D0463",
+    "RequesterAuthorizerWithManager": "0x5c74c94173F05dA1720953407cbb920F3DF9f887",
+    "RrpBeaconServer": "0x720472c8ce72c2A2D711333e064ABD3E6BbEAdd3"
+  },
+  "polygon-mumbai": {
+    "AirnodeRrp": "0x68E36bEeDA1644258973E532029fc3a2806bBA8b",
+    "AccessControlRegistry": "0xa59A67b7b50943B559ed79dF7a36a7Be5C67F5F3",
+    "OwnableCallForwarder": "0x046c5E556d584bc4718B432aE148de73Fa9Cf083",
+    "RequesterAuthorizerWithManager": "0x4C132E092bacdF38bDf4b76700Af3C019352fEdE",
+    "RrpBeaconServer": "0xFF298a3169117606BDA78eD6C04917224968f9b5"
+  },
+  "rinkeby": {
+    "AirnodeRrp": "0xC11593B87f258672b8eB02d9A723a429b15E9E03",
+    "AccessControlRegistry": "0x6825D6461b20a273959b0cB64a3188375b815CB4",
+    "OwnableCallForwarder": "0x3dF933f75bc9de7d72189Ef10eebEAf7F4d498a0",
+    "RequesterAuthorizerWithManager": "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593",
+    "RrpBeaconServer": "0x2cFda716b751eb406C5124C6E4428F2AEA453D96"
+  },
+  "ropsten": {
+    "AirnodeRrp": "0x3B35250Ca54C1Fb8c83D48F21231ef6e4fb9f79D",
+    "AccessControlRegistry": "0x6825D6461b20a273959b0cB64a3188375b815CB4",
+    "OwnableCallForwarder": "0x3dF933f75bc9de7d72189Ef10eebEAf7F4d498a0",
+    "RequesterAuthorizerWithManager": "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593",
+    "RrpBeaconServer": "0x2cFda716b751eb406C5124C6E4428F2AEA453D96"
   }
 }
