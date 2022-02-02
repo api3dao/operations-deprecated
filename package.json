@@ -5,6 +5,8 @@
   "version": "1.0.0",
   "scripts": {
     "dump-wallet-addresses": "ts-node src/dump-wallet-addresses.ts",
+    "export-documentation": "ts-node src/export-documentation.ts",
+    "data-validation": "ts-node src/data-validation.ts",
     "lint": "yarn run prettier:check && yarn run lint:eslint",
     "lint:eslint": "eslint . --ext .js,.ts",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\" --loglevel silent",
