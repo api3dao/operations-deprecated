@@ -251,47 +251,6 @@
         "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
       },
       {
-        "templateId": "0x47b7bee116be7e8d220a7598ddb2fab0caaf783e3e4c01b804395a266a0df013",
-        "templateParameters": [
-          {
-            "name": "base",
-            "type": "string",
-            "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-          },
-          {
-            "name": "quote",
-            "type": "string",
-            "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-          },
-          {
-            "name": "_path",
-            "type": "bytes32",
-            "value": "payload.vwap,"
-          },
-          {
-            "name": "_type",
-            "type": "bytes32",
-            "value": "int256,timestamp"
-          },
-          {
-            "name": "_times",
-            "type": "bytes32",
-            "value": "1000000,"
-          },
-          {
-            "name": "lookbackPeriod",
-            "type": "bytes32",
-            "value": "5"
-          }
-        ],
-        "overrideParameters": [],
-        "oisTitle": "Amberdata-Lite",
-        "endpointName": "GET /market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest",
-        "deviationPercentage": "0.5",
-        "keeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f",
-        "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
-      },
-      {
         "templateId": "0x5159c2c6e3b9584eb673fa9054bdbf8e74d0b6a9abe3c237556b631203c72be6",
         "templateParameters": [
           {
@@ -370,42 +329,6 @@
             "name": "pair",
             "type": "bytes32",
             "value": "lrc_usd"
-          },
-          {
-            "name": "_path",
-            "type": "bytes32",
-            "value": "payload.vwap,"
-          },
-          {
-            "name": "_type",
-            "type": "bytes32",
-            "value": "int256,timestamp"
-          },
-          {
-            "name": "_times",
-            "type": "bytes32",
-            "value": "1000000,"
-          },
-          {
-            "name": "lookbackPeriod",
-            "type": "bytes32",
-            "value": "5"
-          }
-        ],
-        "overrideParameters": [],
-        "oisTitle": "Amberdata-Lite",
-        "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-        "deviationPercentage": "0.5",
-        "keeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f",
-        "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
-      },
-      {
-        "templateId": "0x84e82a04095f91c60c7496274ecef2ed6845baff2376b7d6715b4d76c4d15451",
-        "templateParameters": [
-          {
-            "name": "pair",
-            "type": "bytes32",
-            "value": "dai_eth"
           },
           {
             "name": "_path",
@@ -540,42 +463,6 @@
         "oisTitle": "Amberdata-Lite",
         "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
         "deviationPercentage": "0.5",
-        "keeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f",
-        "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
-      },
-      {
-        "templateId": "0x94a2cbf0dc86a506979ad504771b1e7f6efe3538965d5f189aca453072e2a584",
-        "templateParameters": [
-          {
-            "name": "pair",
-            "type": "bytes32",
-            "value": "pax_usd"
-          },
-          {
-            "name": "_path",
-            "type": "bytes32",
-            "value": "payload.vwap,"
-          },
-          {
-            "name": "_type",
-            "type": "bytes32",
-            "value": "int256,timestamp"
-          },
-          {
-            "name": "_times",
-            "type": "bytes32",
-            "value": "1000000,"
-          },
-          {
-            "name": "lookbackPeriod",
-            "type": "bytes32",
-            "value": "5"
-          }
-        ],
-        "overrideParameters": [],
-        "oisTitle": "Amberdata-Lite",
-        "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-        "deviationPercentage": "0.1",
         "keeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f",
         "requestSponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b"
       },
