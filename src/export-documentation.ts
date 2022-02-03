@@ -48,16 +48,27 @@ const exportDocumentation = () => {
         apiName,
         chains: beacon.chains.map((chain) => chain.name),
         templateName: toTitleCase(beacon.templateName),
-        decodedParameters: undefined,
         filename: undefined,
         parameters: undefined,
       };
     });
   });
 
-  const docuemntationPath = join(dataBasePath, 'documentation_metadata.json');
-  rmSync(docuemntationPath, { force: true });
-  writeFileSync(docuemntationPath, JSON.stringify(beacons, null, 2));
+  const chains = readJsonFile(join(dataBasePath, 'chains.json'));
+
+  const documentationOutput = {
+    beacons,
+    chains,
+  };
+
+  const documentationPath = join(dataBasePath, 'documentation_metadata.json');
+  rmSync(documentationPath, { force: true });
+  writeFileSync(documentationPath, JSON.stringify(documentationOutput, null, 2));
 };
 
-exportDocumentation();
+try {
+  exportDocumentation();
+} catch (e) {
+  console.error(`An error occurred, please investigate and fix before committing:`);
+  console.trace(e);
+}
