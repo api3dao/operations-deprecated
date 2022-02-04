@@ -2,7 +2,7 @@
   "beacons": [
     {
       "templateId": "0x9c24111e2c324627cb837b5ec68e17e457596c9398683b280da533e27ab50894",
-      "templateName": "Aave/usd",
+      "templateName": "aave_usd",
       "decodedParameters": [
         {
           "name": "pair",
@@ -37,7 +37,7 @@
     },
     {
       "templateId": "0xb05f57b84056d8bb075b5f1012a3e50a1039175bcfceaaddd6ee7fc774fca35e",
-      "templateName": "Atom/usd",
+      "templateName": "atom_usd",
       "decodedParameters": [
         {
           "name": "pair",
@@ -72,7 +72,7 @@
     },
     {
       "templateId": "0x2a0219013e042c3d68afa6501e9798c84863e7e466f64f4a7d45cb00bf70732e",
-      "templateName": "Avax/usd",
+      "templateName": "avax_usd",
       "decodedParameters": [
         {
           "name": "pair",
@@ -107,7 +107,7 @@
     },
     {
       "templateId": "0x2c552c0210bea2ab148355aaa285bddfe3c1b11f8eeb17c9e6bccc6ec56f9954",
-      "templateName": "Average Gas On Ethereum Mainnet",
+      "templateName": "Average Gas on Ethereum Mainnet",
       "decodedParameters": [
         {
           "name": "_path",
@@ -127,7 +127,7 @@
     },
     {
       "templateId": "0xf60503627e5c2cf3e44c4a39d574a472992823f160d629a6635807de1ec4dce2",
-      "templateName": "Bal/usd",
+      "templateName": "BAL/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -162,7 +162,7 @@
     },
     {
       "templateId": "0x3f9aa8fb88335e7deb5ac57de6158e89b96fed949fca56f9fcfb1f6b65bfa08c",
-      "templateName": "Bat/usd",
+      "templateName": "BAT/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -197,7 +197,7 @@
     },
     {
       "templateId": "0x5159c2c6e3b9584eb673fa9054bdbf8e74d0b6a9abe3c237556b631203c72be6",
-      "templateName": "Btc/usd",
+      "templateName": "BTC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -232,7 +232,7 @@
     },
     {
       "templateId": "0xda1146bcb4ac9a3f7451f5f52d29a2a1f607004b5214e9b859427b4cddd81689",
-      "templateName": "Comp/usd",
+      "templateName": "COMP/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -267,7 +267,7 @@
     },
     {
       "templateId": "0x86012c43d9aceabd9a010ab3eb9b80e6ac371e4056b3f6500b35ef68b3da1dc2",
-      "templateName": "Dai/usd",
+      "templateName": "DAI/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -302,7 +302,7 @@
     },
     {
       "templateId": "0xc047a4eba9bcc27a196b987c43ba91853bf7e24b073a071138f423c8fe72d619",
-      "templateName": "Eth/btc",
+      "templateName": "ETH/BTC",
       "decodedParameters": [
         {
           "name": "pair",
@@ -337,7 +337,7 @@
     },
     {
       "templateId": "0xd218d6d5f630faa290676bebe58c88f68a9dccbfece4a3028cf4a5539f397459",
-      "templateName": "Eth/usd",
+      "templateName": "ETH/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -372,7 +372,7 @@
     },
     {
       "templateId": "0x2ec4a6323e521ec60284b211c2a1348eedb0f2bfbd59c562f0e585226bd0aaf9",
-      "templateName": "Fast Gas On Ethereum Mainnet",
+      "templateName": "Fast Gas on Ethereum Mainnet",
       "decodedParameters": [
         {
           "name": "_path",
@@ -392,7 +392,7 @@
     },
     {
       "templateId": "0x930141b7fe75bba0c3fbfa5e0b1b006391cad76bea10562e434ca81b70876ba3",
-      "templateName": "Knc/usd",
+      "templateName": "KNC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -427,7 +427,7 @@
     },
     {
       "templateId": "0x8473a4c5a894bf4724c4d7f7d06ed30019db0058941e5e87b9177514d2fa7308",
-      "templateName": "Lrc/usd",
+      "templateName": "LRC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -462,7 +462,7 @@
     },
     {
       "templateId": "0x5e5fb4b0b75160f1fe08b46e9703fb5cdac50498755cd89b23a4944c18448db0",
-      "templateName": "Mana/usd",
+      "templateName": "MANA/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -497,7 +497,7 @@
     },
     {
       "templateId": "0xb43779b94ff444678da1f32a9076f1dc0d655b6a05377cdf9617a767b41a273a",
-      "templateName": "Matic/usd",
+      "templateName": "MATIC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -532,7 +532,7 @@
     },
     {
       "templateId": "0x885b41879a473a215b74246c17c50aa99fe99b1ef9a91fc93e8e615621a2832a",
-      "templateName": "Near/usd",
+      "templateName": "NEAR/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -566,8 +566,28 @@
       "apiName": "Amberdata"
     },
     {
+      "templateId": "0x2c552c0210bea2ab148355aaa285bddfe3c1b11f8eeb17c9e6bccc6ec56f9954",
+      "templateName": "prediction test",
+      "decodedParameters": [
+        {
+          "name": "_path",
+          "type": "bytes32",
+          "value": "payload.average.gasPrice,"
+        },
+        {
+          "name": "_type",
+          "type": "bytes32",
+          "value": "int256,timestamp"
+        }
+      ],
+      "beaconId": "0x44407753c8ffd478e377af11067a1619dfe5bb810fd4d0265e601574f4fc0a06",
+      "chains": ["ropsten", "rinkeby", "goerli", "polygon-mumbai"],
+      "description": "predicition test description\\",
+      "apiName": "Amberdata"
+    },
+    {
       "templateId": "0x2b599b828260838fe64c7e5b8a8f96253d24c32e17e9198cc34588c8e3971c2f",
-      "templateName": "Snx/usd",
+      "templateName": "SNX/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -602,7 +622,7 @@
     },
     {
       "templateId": "0xd5654f3c9e35c123fa13a6d324d7344840ef1cd7be06202e13645036cc7e94ae",
-      "templateName": "Sol/usd",
+      "templateName": "SOL/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -637,7 +657,7 @@
     },
     {
       "templateId": "0xe2926977ca4e0621485c3510f03425b2015412fb08a70b32f8f559b737641ecc",
-      "templateName": "Uni/usd",
+      "templateName": "UNI/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -672,7 +692,7 @@
     },
     {
       "templateId": "0x396ee546168feb66804f32d30aa230447e09dfbf7c8f4182f0ebad17acff7615",
-      "templateName": "Usdc/usd",
+      "templateName": "USDC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -707,7 +727,7 @@
     },
     {
       "templateId": "0xb91c1c228b42faa43721a4dcd7eafa6432ad8c31e2e067708fc519967f54a2f8",
-      "templateName": "Usdt/usd",
+      "templateName": "USDT/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -742,7 +762,7 @@
     },
     {
       "templateId": "0x3ae8c3944b8522cbc865a8eea1392333d7471aed88bcfe06789a062473072118",
-      "templateName": "Usdt/weth",
+      "templateName": "USDT/WETH",
       "decodedParameters": [
         {
           "name": "base",
@@ -782,7 +802,7 @@
     },
     {
       "templateId": "0xdaf2dad42a8da921733d2f83acf1cc8c9aee77c6bc499fbb8b881e39d618a7bd",
-      "templateName": "Wbtc/usd",
+      "templateName": "WBTC/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -817,7 +837,7 @@
     },
     {
       "templateId": "0xc979c3c90aee8d4c67d6319cf7fe062463003c4a41ec2dc84206486bf6155e0d",
-      "templateName": "Yfi/usd",
+      "templateName": "YFI/USD",
       "decodedParameters": [
         {
           "name": "pair",

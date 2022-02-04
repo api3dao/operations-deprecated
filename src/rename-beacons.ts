@@ -1,78 +1,8 @@
-/*
-Targets:
-documentation_metadata.json -> beacons -> templateName
-apis -> (apiName) -> beacons -> (beacons).json
-                              -> templateName too
-                  -> templates -> (templates.json)
-                  ->
-
- */
-
-import { readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'fs';
+import { readdirSync, renameSync, rmSync, writeFileSync } from 'fs';
 import path, { join } from 'path';
-import prompts, { PromptObject } from 'prompts';
-
-export const promptQuestions = (questions: PromptObject[]) =>
-  prompts(questions, {
-    // https://github.com/terkelg/prompts/issues/27#issuecomment-527693302
-    onCancel: () => {
-      throw new Error('Aborted by the user');
-    },
-  });
-
-interface FilePayload {
-  readonly filename: string;
-}
-
-export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
-
-export const sanitiseFilename = (filename: string) => {
-  const illegalRe = /[\/?<>\\:*|"]/g;
-  // eslint-disable-next-line no-control-regex
-  const controlRe = /[\x00-\x1f\x80-\x9f]/g;
-  const reservedRe = /^\.+$/;
-  const windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
-
-  return filename
-    .replace(illegalRe, '_')
-    .replace(controlRe, '_')
-    .replace(reservedRe, '_')
-    .replace(windowsReservedRe, '_')
-    .toLocaleLowerCase();
-};
-
-export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload>[] =>
-  readdirSync(directoryPath).map((filename) => ({
-    ...readJsonFile(join(directoryPath, filename)),
-    filename,
-  }));
-
-interface EthValue {
-  amount: number;
-  units: 'wei' | 'kwei' | 'mwei' | 'gwei' | 'szabo' | 'finney' | 'ether';
-}
-
-export interface ChainDescriptor {
-  readonly name: string;
-  readonly api3AirkeeperSponsor?: string;
-  readonly apiProviderAirkeeperSponsor?: string;
-  readonly sponsor: string; // aka address used to derive Airnode controlled wallet
-  readonly apiProviderAirkeeperDeviationPercentage: number;
-  readonly api3AirkeeperDeviationPercentage?: number;
-  readonly apiProviderAirkeeperSponsorWalletBalanceAlertThreshold?: EthValue;
-  readonly api3AirkeeperSponsorWalletBalanceAlertThreshold?: EthValue;
-}
-
-interface BeaconDescriptor {
-  readonly templateId: string;
-  readonly templateName: string;
-  readonly description?: string;
-  readonly parameters: string;
-  readonly beaconId: string;
-  readonly decodedParameters: { type: string; name: string; value: string }[];
-  readonly chains: ChainDescriptor[];
-  readonly filename?: string;
-}
+import { PromptObject } from 'prompts';
+import { promptQuestions, readJsonDirectoryAsArray, readJsonFile, sanitiseFilename } from './utils';
+import { BeaconDescriptor } from './types';
 
 const renameBeacons = async () => {
   const apisBasePath = join(__dirname, '..', 'data', 'apis');
@@ -188,4 +118,8 @@ const renameBeacons = async () => {
   }
 };
 
-renameBeacons();
+try {
+  renameBeacons();
+} catch (e) {
+  console.trace(e);
+}

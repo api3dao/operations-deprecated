@@ -7,11 +7,13 @@
     "dump-wallet-addresses": "ts-node src/dump-wallet-addresses.ts",
     "export-documentation": "ts-node src/export-documentation.ts",
     "data-validation": "ts-node src/data-validation.ts",
+    "rename-beacons": "ts-node src/rename-beacons.ts",
     "lint": "yarn run prettier:check && yarn run lint:eslint",
     "lint:eslint": "eslint . --ext .js,.ts",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\" --loglevel silent",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,7 @@
     "eslint-plugin-functional": "^4.0.2",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
-    "husky": "^7.0.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
