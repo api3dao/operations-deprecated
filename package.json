@@ -32,6 +32,8 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "ethers": "^5.5.2"
+    "@types/prompts": "^2.0.14",
+    "ethers": "^5.5.2",
+    "prompts": "^2.4.2"
   }
 }
