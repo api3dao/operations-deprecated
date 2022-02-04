@@ -2,7 +2,6 @@
 
 > A package that houses data and utilities required for API3 operations
 
-**Although this repo is private, do not push sensitive data to it.**
 
 ## `/data`
 
