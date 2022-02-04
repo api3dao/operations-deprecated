@@ -58,7 +58,7 @@ const renameBeacons = async () => {
           type: 'text',
           name: 'name',
           message: 'Please enter a name for the above template (press enter to accept displayed name):',
-          initial: file.name,
+          initial: template.templateName,
         },
       ])
     ).name;

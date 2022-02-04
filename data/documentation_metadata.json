@@ -2,7 +2,7 @@
   "beacons": [
     {
       "templateId": "0x9c24111e2c324627cb837b5ec68e17e457596c9398683b280da533e27ab50894",
-      "templateName": "aave_usd",
+      "templateName": "AAVE/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -37,7 +37,7 @@
     },
     {
       "templateId": "0xb05f57b84056d8bb075b5f1012a3e50a1039175bcfceaaddd6ee7fc774fca35e",
-      "templateName": "atom_usd",
+      "templateName": "ATOM/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -72,7 +72,7 @@
     },
     {
       "templateId": "0x2a0219013e042c3d68afa6501e9798c84863e7e466f64f4a7d45cb00bf70732e",
-      "templateName": "avax_usd",
+      "templateName": "AVAX/USD",
       "decodedParameters": [
         {
           "name": "pair",
@@ -563,26 +563,6 @@
       "beaconId": "0xe0d9e7a3b702e130e17f90c765eaacd197755de0ca6b9140c359ea342b7d40cb",
       "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
       "description": "Price of NEAR in USD",
-      "apiName": "Amberdata"
-    },
-    {
-      "templateId": "0x2c552c0210bea2ab148355aaa285bddfe3c1b11f8eeb17c9e6bccc6ec56f9954",
-      "templateName": "prediction test",
-      "decodedParameters": [
-        {
-          "name": "_path",
-          "type": "bytes32",
-          "value": "payload.average.gasPrice,"
-        },
-        {
-          "name": "_type",
-          "type": "bytes32",
-          "value": "int256,timestamp"
-        }
-      ],
-      "beaconId": "0x44407753c8ffd478e377af11067a1619dfe5bb810fd4d0265e601574f4fc0a06",
-      "chains": ["ropsten", "rinkeby", "goerli", "polygon-mumbai"],
-      "description": "predicition test description\\",
       "apiName": "Amberdata"
     },
     {
