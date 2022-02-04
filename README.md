@@ -2,7 +2,6 @@
 
 > A package that houses data and utilities required for API3 operations
 
-
 ## `/data`
 
 Static data that other applications (e.g., monitoring and visualization services) may need to know about, including:
@@ -17,7 +16,7 @@ Static data that other applications (e.g., monitoring and visualization services
 ## `/data/chains.json`
 
 A JSON file that contains data related to the chains. These chains will not necessarily have official support. Each
-chain has the following specified:
+chain has the following specified at minimum:
 
 - `AccessControlRegistry`: AccessControlRegistry contract address
 - `AirnodeRrp`: AirnodeRrp contract address
@@ -71,13 +70,17 @@ are human-browseable. The files contents are:
 - `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
 - `decodedParameters`: `parameters` decoded to be human-readable
 - `chains`: Chains that the template is currently deployed on (must match ones from `chains.json`)
+- `templateName`: A human-readable name for the template, suitable for documentation use.
+- `description`: A human-readable description for the template, suitable for documentation use (optional).
 
 ### `/data/apis/{oisTitle}/beacons`
 
 Hosts files containing beacon data and metadata. The files are named to describe what the beacon is for so that they are
-human-browseable.
+human-browsable.
 
 - `templateId`: Template ID (must match one from `/data/apis/{oisTitle}/templates`)
+- `templateName`: A human-readable name for the template, suitable for documentation use.
+- `description`: A human-readable description for the template, suitable for documentation use (optional).
 - `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
 - `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
 - `decodedParameters`: `parameters` decoded to be human-readable

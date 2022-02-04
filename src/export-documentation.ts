@@ -1,39 +1,7 @@
 import { join } from 'path';
-import { readdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
-
-// TODO from the telemetry apps
-interface BeaconDescriptor {
-  readonly templateId: string;
-  readonly parameters: string;
-  readonly beaconId: string;
-  readonly decodedParameters: { type: string; name: string; value: string }[];
-  readonly templateName: string;
-  readonly description: string;
-  readonly chains: ChainDescriptor[];
-}
-
-export interface ChainDescriptor {
-  readonly name: string;
-}
-
-export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
-
-export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload[]> =>
-  readdirSync(directoryPath).map((filename) => ({
-    ...readJsonFile(join(directoryPath, filename)),
-    filename,
-  }));
-
-interface FilePayload {
-  readonly filename: string;
-}
-
-const toTitleCase = (phrase: string) =>
-  phrase
-    .toLowerCase()
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+import { readdirSync, rmSync, writeFileSync } from 'fs';
+import { readJsonDirectoryAsArray, readJsonFile } from './utils';
+import { BeaconDescriptor } from './types';
 
 const exportDocumentation = () => {
   const dataBasePath = join(__dirname, '..', 'data');
@@ -47,7 +15,7 @@ const exportDocumentation = () => {
         ...beacon,
         apiName,
         chains: beacon.chains.map((chain) => chain.name),
-        templateName: toTitleCase(beacon.templateName),
+        templateName: beacon.templateName,
         filename: undefined,
         parameters: undefined,
       };
