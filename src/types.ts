@@ -13,3 +13,11 @@ export interface BeaconDescriptor {
   readonly chains: ChainDescriptor[];
   readonly filename?: string;
 }
+
+export interface TemplateDescriptor {
+  readonly templateId: string;
+  readonly endpointId: string;
+  readonly airnode: string;
+  readonly parameters: { name: string; type: string; value; string }[];
+  readonly chains: string[];
+}
