@@ -70,8 +70,6 @@ are human-browseable. The files contents are:
 - `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
 - `decodedParameters`: `parameters` decoded to be human-readable
 - `chains`: Chains that the template is currently deployed on (must match ones from `chains.json`)
-- `templateName`: A human-readable name for the template, suitable for documentation use.
-- `description`: A human-readable description for the template, suitable for documentation use (optional).
 
 ### `/data/apis/{oisTitle}/beacons`
 
