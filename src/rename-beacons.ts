@@ -52,16 +52,18 @@ const renameBeacons = async () => {
     );
 
     const file = path.parse(template.filename);
-    const newName = (
-      await promptQuestions([
-        {
-          type: 'text',
-          name: 'name',
-          message: 'Please enter a name for the above template (press enter to accept displayed name):',
-          initial: template.templateName,
-        },
-      ])
-    ).name;
+    const newName = template.templateName;
+
+    // (
+    //   await promptQuestions([
+    //     {
+    //       type: 'text',
+    //       name: 'name',
+    //       message: 'Please enter a name for the above template (press enter to accept displayed name):',
+    //       initial: template.templateName,
+    //     },
+    //   ])
+    // ).name;
 
     const description = askForDescriptions
       ? (
@@ -90,6 +92,8 @@ const renameBeacons = async () => {
         {
           ...newTemplate,
           filename: undefined,
+          parameters: '0x',
+          decodedParameters: [],
         },
         null,
         2
@@ -107,7 +111,7 @@ const renameBeacons = async () => {
         {
           ...oldTemplateData,
           filename: undefined,
-          templateName: newName,
+          templateName: undefined,
         },
         null,
         2
