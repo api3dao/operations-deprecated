@@ -15,6 +15,5 @@
       "value": "int256,timestamp"
     }
   ],
-  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-  "templateName": "Fast Gas on Ethereum Mainnet"
+  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"]
 }

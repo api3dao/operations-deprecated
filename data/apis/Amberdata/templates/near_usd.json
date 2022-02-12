@@ -30,6 +30,5 @@
       "value": "5"
     }
   ],
-  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-  "templateName": "NEAR/USD"
+  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"]
 }

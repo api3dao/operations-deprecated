@@ -859,13 +859,6 @@
       "RequesterAuthorizerWithManager": "0x0d288Ba0B890c9D3DF6F1e4AE3c286F335eBd593",
       "RrpBeaconServer": "0x2cFda716b751eb406C5124C6E4428F2AEA453D96"
     },
-    "mumbai": {
-      "AirnodeRrp": "0xA4899D35897033b927acFCf422bc745916139776",
-      "AccessControlRegistry": "0xf953b3A269d80e3eB0F2947630Da976B896A8C5b",
-      "OwnableCallForwarder": "0xAA292E8611aDF267e563f334Ee42320aC96D0463",
-      "RequesterAuthorizerWithManager": "0x5c74c94173F05dA1720953407cbb920F3DF9f887",
-      "RrpBeaconServer": "0x720472c8ce72c2A2D711333e064ABD3E6BbEAdd3"
-    },
     "polygon-mumbai": {
       "AirnodeRrp": "0x68E36bEeDA1644258973E532029fc3a2806bBA8b",
       "AccessControlRegistry": "0xa59A67b7b50943B559ed79dF7a36a7Be5C67F5F3",
