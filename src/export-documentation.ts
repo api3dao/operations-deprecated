@@ -21,7 +21,7 @@ const exportDocumentation = () => {
         templateName: beacon.templateName,
         filename: undefined,
         parameters: undefined,
-        decodedParameters: templates.find((template) => template.templateId === beacon.templateId).parameters,
+        decodedParameters: templates.find((template) => template.templateId === beacon.templateId).decodedParameters,
       };
     });
   });
