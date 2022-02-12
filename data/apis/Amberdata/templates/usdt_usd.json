@@ -30,6 +30,5 @@
       "value": "5"
     }
   ],
-  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"],
-  "templateName": "USDT/USD"
+  "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"]
 }

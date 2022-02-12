@@ -15,6 +15,5 @@
       "value": "int256,timestamp"
     }
   ],
-  "chains": ["ropsten", "rinkeby", "goerli", "polygon-mumbai"],
-  "templateName": "Average Gas on Ethereum Mainnet"
+  "chains": ["ropsten", "rinkeby", "goerli", "polygon-mumbai"]
 }

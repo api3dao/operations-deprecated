@@ -1,19 +1,8 @@
 {
   "templateId": "0x2c552c0210bea2ab148355aaa285bddfe3c1b11f8eeb17c9e6bccc6ec56f9954",
   "templateName": "Average Gas on Ethereum Mainnet",
-  "parameters": "0x31626200000000000000000000000000000000000000000000000000000000005f706174680000000000000000000000000000000000000000000000000000007061796c6f61642e617665726167652e67617350726963652c000000000000005f74797065000000000000000000000000000000000000000000000000000000696e743235362c74696d657374616d7000000000000000000000000000000000",
-  "decodedParameters": [
-    {
-      "name": "_path",
-      "type": "bytes32",
-      "value": "payload.average.gasPrice,"
-    },
-    {
-      "name": "_type",
-      "type": "bytes32",
-      "value": "int256,timestamp"
-    }
-  ],
+  "parameters": "0x",
+  "decodedParameters": [],
   "beaconId": "0x44407753c8ffd478e377af11067a1619dfe5bb810fd4d0265e601574f4fc0a06",
   "chains": [
     {

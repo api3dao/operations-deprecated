@@ -35,6 +35,5 @@
       "value": "5"
     }
   ],
-  "chains": ["goerli", "polygon-mumbai", "ropsten", "rinkeby"],
-  "templateName": "USDT/WETH"
+  "chains": ["goerli", "polygon-mumbai", "ropsten", "rinkeby"]
 }
