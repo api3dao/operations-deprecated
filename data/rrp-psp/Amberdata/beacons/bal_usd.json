@@ -1,34 +1,34 @@
 {
-  "templateId": "0x885b41879a473a215b74246c17c50aa99fe99b1ef9a91fc93e8e615621a2832a",
-  "templateName": "NEAR/USD",
+  "templateId": "0xf60503627e5c2cf3e44c4a39d574a472992823f160d629a6635807de1ec4dce2",
+  "templateName": "BAL/USD",
   "parameters": "0x",
   "decodedParameters": [],
-  "beaconId": "0xe0d9e7a3b702e130e17f90c765eaacd197755de0ca6b9140c359ea342b7d40cb",
+  "beaconId": "0xfec7084cc5e427c0832f15010a9af9e459fff9db5da0a359eed657cd14266893",
   "chains": [
     {
-      "name": "ropsten",
+      "namedVersion": ["ropsten", "v1"],
       "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
       "apiProviderAirkeeperDeviationPercentage": 0.5,
       "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
     },
     {
-      "name": "rinkeby",
+      "namedVersion": ["rinkeby", "v1"],
       "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
       "apiProviderAirkeeperDeviationPercentage": 0.5,
       "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
     },
     {
-      "name": "polygon-mumbai",
+      "namedVersion": ["polygon-mumbai", "v1"],
       "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
       "apiProviderAirkeeperDeviationPercentage": 0.5,
       "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
     },
     {
-      "name": "goerli",
+      "namedVersion": ["goerli", "v1"],
       "sponsor": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
       "apiProviderAirkeeperDeviationPercentage": 0.5,
       "apiProviderAirkeeperSponsor": "0x58c210AC77bf7075598D497b18778b7c6687C59f"
     }
   ],
-  "description": "Price of NEAR in USD"
+  "description": "Price of BAL in USD"
 }
