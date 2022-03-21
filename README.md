@@ -38,17 +38,14 @@ including:
 
 `/data/apis` hosts one directory per API, where the directory name is the sanitized API Name.
 
-#### API Metadata
+#### API Metadata — `/data/apis/{sanitizedApiName}/apiMetadata.json`
 
-`/data/apis/{apiName}/apiMetadata.json`
+A JSON file that contains metadata related to the API:
 
-A JSON file that contains metadata related to the API provider:
-
-- `active`: If the latest deployment under `/data/apis/{oisTitle}/deployments` is active
-- `contact`: Contact information of the API provider, specifically related to Airnode operation
+- `name`: API name (which the sanitized name will be derived from)
+- `active`: If the latest deployment under `/data/apis/{sanitizedApiName}/deployments` is active
 - `airnode`: Airnode address
 - `xpub`: Extended public key of the Airnode wallet
-- `httpEndpoint`: The URL of the HTTP gateway associated with this deployment
 
 #### OIS
 
