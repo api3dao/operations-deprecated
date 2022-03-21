@@ -34,14 +34,9 @@ including:
 - Managed feeds
 - Pricing parameters
 
-### APIs
+### APIs — `/data/apis`
 
-`/data/apis/{apiName}`
-
-Hosts one directory per API, where the directory name is the API Name.
-
-Hosts API integration, deployment and service-related data about a specific API. The contents of this directory should
-refer to the first-party deployment, i.e., do not push your third-party deployment data here.
+`/data/apis` hosts one directory per API, where the directory name is the sanitized API Name.
 
 #### API Metadata
 
