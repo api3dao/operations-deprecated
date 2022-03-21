@@ -20,14 +20,10 @@ versions that are still supported are:
 If an update has moved on to step 4, block all other updates from doing so until the PR is merged. This is to prevent
 parallel updates from overwriting each other's changes.
 
----
-
 ## Utilities
 
 This repository contains utilities for generating and integrating new APIs in the form of interactive CLI applications.
 You can see the instructions for these [here](./utilities).
-
----
 
 ## Directory and file structure
 
