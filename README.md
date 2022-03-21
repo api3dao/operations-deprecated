@@ -100,6 +100,14 @@ be human-browsable.
   - `ttlMinutes`: The number of minutes that need to have elapsed since the on-chain value exceeded API3's
     updateCondition
 
+### Managed feeds — `/data/feeds`
+
+_TODO_
+
+### Pricing parameters
+
+_TODO, possibly as additional fields under Beacon.chains and Feed.chains_
+
 ## Utilities
 
 This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
