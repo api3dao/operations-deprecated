@@ -11,7 +11,14 @@ versions that are still supported are:
 
 ## Updates
 
-New deployments must follow the `new branch->PR (including CI status checks)->merge to main` process.
+1. Create new branch with the updates
+2. Open PR to `main` (or to a deprecated version branch)
+3. Have changes approved by reviewers
+4. Apply changes if needed, e.g., have an API provider redeploy
+5. Merge PR immediately after step 4
+
+If an update has moved on to step 4, block all other updates from doing so until the PR is merged. This is to prevent
+parallel updates from overwriting each other's changes.
 
 ## Chain and contract deployment references
 
