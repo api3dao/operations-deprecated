@@ -72,34 +72,25 @@ to be human-browsable.
 - `parameters`: Airnode ABI-encoded parameters
 - `decodedParameters`: `parameters` decoded to be human-readable for convenience, not to be used in production.
 
-#### Beacons
+#### Beacons — `/data/apis/{sanitizedApiName}/beacons`
 
-`/data/apis/{apiName}/beacons`
+Files containing Beacon data. The files are named as `/data/apis/{sanitizedApiName}/templates/{sanitiziedBeaconName}` to
+be human-browsable.
 
-- Initialised during creation of the boilerplate and is manually populated.
-- Files can be named arbitrarily as they are renamed according to the `beaconName` on `validate`.
-
-Files containing subscription data and metadata:
-
-- `beaconId`: A Beacon ID, programmatically generated on validation, eg.
-  "0x168194af62ab1b621eff3be1df9646f198dcef36f9eace0474fd19d47b2e0039"
-  - To auto-generate beaconIds and set them in the these files, run `yarn derive-beacon-ids`
-- `beaconName`: A descriptive name, eg. "CoinGecko USD/BTC"
-  - This defaults to the source template's name.
-- `beaconDescription`: An extended description of the beacon, eg. "Price of BTC in USD"
-  - This defaults to the source template's description.
+- `name`: Beacon name that will be seen by the end-user (which the sanitized name will be derived from). Defaults to
+  `"{API name} {Template name}"`
+- `description`: An extended description of the beacon, eg. "Price of BTC in USD"
+- `beaconId`: Beacon ID
 - `airnodeAddress`: The source Airnode's address, eg. "0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace"
-- `templateId`: An associated template ID, eg. "0xea30f92923ece1a97af69d450a8418db31be5a26a886540a13c09c739ba8eaaa"
+- `templateId`: The associated template ID, eg. "0xea30f92923ece1a97af69d450a8418db31be5a26a886540a13c09c739ba8eaaa"
 - `updateConditionPercentage`: A number representing the deviation threshold percentage above which an update should
   occur, eg. 0.75 for 0.75%
   - This value will be used to generate a conditions object for services.
-- `relayer`: The relayer address, eg. "0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace"
-- `sponsor`: The sponsor address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
-- `requester`: The requester address, eg. "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
-- `fulfillFunctionId`: The bytes4 fulfilment function ID, eg. "0x206b48f4"
-- `chains`: [...] Chains that the beacon is currently operational on
+- `chains`: Chains on which the beacon is operated in any point in time
+  - `active`: If the beacon is being actively operated
   - `name`: Name of the chain (must match a chain with deployed contracts from the repository noted above), eg.
     "ropsten"
+  - `sponsor`: The sponsor address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
   - `topUpWallets`: [...] An array of addresses to monitor and keep topped-up
     - `walletType`: The wallet type, either 'API3' or 'Provider'
     - `address`: The target address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
