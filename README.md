@@ -20,13 +20,6 @@ versions that are still supported are:
 If an update has moved on to step 4, block all other updates from doing so until the PR is merged. This is to prevent
 parallel updates from overwriting each other's changes.
 
-## Chain and contract deployment references
-
-API3 operational services rely on various on-chain contracts. Deployments of these contracts are referenced by their
-chain name in the
-[API3 utility-contracts repository](https://github.com/api3dao/utility-contracts/tree/main/SelfServeRrpBeaconServerWhitelister/deployments).
-Deployed contracts are versioned through their import in `package.json`, which can be any supported git reference.
-
 ---
 
 ## Integrating a new API
