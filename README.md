@@ -22,7 +22,8 @@ parallel updates from overwriting each other's changes.
 
 ## Directory and file structure
 
-`/data` houses static data that other applications (e.g., monitoring and visualization services) may need to know about, including:
+`/data` houses static data that other applications (e.g., monitoring and visualization services) may need to know about,
+including:
 
 - Chain integrations
 - API integrations

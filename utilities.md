@@ -5,7 +5,7 @@ with the command `yarn install`.
 
 ## API integration
 
-*TODO: `generate-deployment-payload`*
+_TODO: `generate-deployment-payload`_
 
 The following utilities, in deployment order, are available:
 
