@@ -42,7 +42,7 @@ including:
 
 A JSON file that contains metadata related to the API:
 
-- `name`: API name (which the sanitized name will be derived from)
+- `name`: API name that will be seen by the end-user (which the sanitized name will be derived from)
 - `active`: If the latest deployment under `/data/apis/{sanitizedApiName}/deployments` is active
 - `airnode`: Airnode address
 - `xpub`: Extended public key of the Airnode wallet
