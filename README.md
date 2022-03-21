@@ -61,28 +61,16 @@ Example `secrets.env.example` and `aws.env.example` files are generated for conv
 files will be required for deployment. The populated files (which will contain secrets) should not be included in this
 repository.
 
-#### Templates
+#### Templates — `/data/apis/{sanitizedApiName}/templates`
 
-`/data/apis/{apiName}/templates`
+Files containing template data. The files are named as `/data/apis/{sanitizedApiName}/templates/{sanitizedTemplateName}`
+to be human-browsable.
 
-- Initialised during creation of the boilerplate and is manually populated.
-- Files can be named arbitrarily as they are renamed according to the `templateName` on `validate`.
-
-Files containing template data and metadata. The files are named to describe what the template is for so that they are
-human-browsable. The files contents are:
-
+- `name`: Template name that will be seen by the end-user (which the sanitized name will be derived from)
 - `templateId`: Template ID
-  - To auto-generate templateIds and set them in the template files, run `yarn derive-template-ids`
-- `templateName`: A human-readable name for the template.
-  - In most cases this will inform the default name of the beacon that uses this template.
-  - This name will be publicly displayed and should be both appropriate and honour branding capitalisation.
-- `templateDescription`: As above, but a description
-  - In most cases this will inform the default description of the beacon that uses this template.
-  - This text will be publicly displayed; please take care.
-- `endpointId`: Endpoint ID (must match one from the target Airnode's `config.json`).
-- `templateParameters`: The Airnode ABI-encoded parameters.
-- `decodedTemplateParameters`: `templateParameters` decoded to be human-readable for convenience, not to be used in
-  production.
+- `endpointId`: Endpoint ID
+- `parameters`: Airnode ABI-encoded parameters
+- `decodedParameters`: `parameters` decoded to be human-readable for convenience, not to be used in production.
 
 #### Beacons
 
