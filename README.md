@@ -52,14 +52,10 @@ A JSON file that contains metadata related to the API:
 Hosts JSON files that contain OIS iterations. Each OIS must be versioned according to [semver](https://semver.org/) and
 the file name will be `<oisTitle>_<version>.json`.
 
-#### Deployments
-
-`/data/apis/{apiName}/deployments`
-
+#### Deployments — `/data/apis/{sanitizedApiName}/deployments`
 
 Directories that contain the files used for individual deployments. Each of these directories are named with the
-deployment date as `YYYY-MM-DD`, based on when `generate-deployment-payload` was run. If more than one deployment was
-done in a day, only include the latest one.
+deployment date as `YYYY-MM-DD`. If more than one deployment was done in a day, only include the latest one.
 
 Example `secrets.env.example` and `aws.env.example` files are generated for convenience. Populated versions of these
 files will be required for deployment. The populated files (which will contain secrets) should not be included in this
