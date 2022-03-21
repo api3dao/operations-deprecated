@@ -5,6 +5,8 @@ with the command `yarn install`.
 
 ## API integration
 
+*TODO: `generate-deployment-payload`*
+
 The following utilities, in deployment order, are available:
 
 - `create-boilerplate`: Prompts for various API metadata and creates a set of folders with examples. These folders must
