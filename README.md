@@ -20,11 +20,6 @@ versions that are still supported are:
 If an update has moved on to step 4, block all other updates from doing so until the PR is merged. This is to prevent
 parallel updates from overwriting each other's changes.
 
-## Utilities
-
-This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
-for these [here](./utilities).
-
 ## Directory and file structure
 
 ### `/data`
@@ -142,3 +137,8 @@ Files containing subscription data and metadata:
     `_conditionParameters`
   - `ttlMinutes`: The number of minutes that need to have elapsed since the on-chain value exceeded API3's
     updateCondition
+
+## Utilities
+
+This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
+for these [here](./utilities).
