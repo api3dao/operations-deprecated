@@ -47,15 +47,10 @@ A JSON file that contains metadata related to the API:
 - `airnode`: Airnode address
 - `xpub`: Extended public key of the Airnode wallet
 
-#### OIS
-
-`/data/apis/{apiName}/ois`
+#### OIS — `/data/apis/{sanitizedApiName}/ois`
 
 Hosts JSON files that contain OIS iterations. Each OIS must be versioned according to [semver](https://semver.org/) and
-both the oisTitle and version will be used in the file name. The file will be renamed programmatically on validation of
-this repository.
-
-**The OIS title of an API is immutable.**
+the file name will be `<oisTitle>_<version>.json`.
 
 #### Deployments
 
