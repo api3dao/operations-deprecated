@@ -4,13 +4,12 @@
 
 ## Branches and versioning
 
-The main branch of this repository will always represent our current working system reference. The main branch will be
-used by all operational concerns except concerns that specifically reference a deprecated version of the repository.
-Deprecated versions will be tagged as a specific version, eg. `v0.1` and may be supported indefinitely.
+`main` represents the current state of the system. Deprecated versions are housed in individual branches. Deprecated
+versions that are still supported are:
 
-Deprecated versions as of this commit:
+- `v0.1`: RrpBeaconServer-based Beacons
 
-- `v0.1`: RRP-based Beacons
+## Updates
 
 New deployments must follow the `new branch->PR (including CI status checks)->merge to main` process.
 
