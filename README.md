@@ -111,4 +111,4 @@ _TODO, possibly as additional fields under Beacon.chains and Feed.chains_
 ## Utilities
 
 This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
-for these [here](./utilities).
+for these [here](./UTILITIES.MD).

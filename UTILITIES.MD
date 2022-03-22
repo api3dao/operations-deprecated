@@ -1,7 +1,8 @@
 # Utilities
 
-Utilities rely on `yarn` and various dependencies and therefore these should be installed before utilising any utilities
-with the command `yarn install`.
+> Utilities for integrating and deploying Beacon systems
+
+Before you begin, run `yarn install`.
 
 ## API integration
 
@@ -18,11 +19,7 @@ The following utilities, in deployment order, are available:
       - Note that the above files can have any name initially as the validator will name them according to their
         `templateName`, `beaconName` and `oisTitle-oisVersion`.
     - `deployments/secrets.env`:
-      - This is a boilerplate file, but it contains a programmatically generated HTTP gateway endpoint secret. Please
-        retain this secret and post it to our `#operations-keys` Slack channel on successful deployment, along with
-        `receipt.json`.
-      - This secret should not be committed and will be expunged pre-commit.
-    - Please reference the "Directory and file structure" section below for more information on these resources.
+      - This is a boilerplate file which contains a programmatically generated HTTP gateway endpoint secret.
 - `validate`: Validates and conforms the entire repository - any errors must be fixed prior to continuing.
 - `create-config`: Creates a set of config files:
   - `config.json`: The Airnode config file, should not require editing.
@@ -30,9 +27,8 @@ The following utilities, in deployment order, are available:
   - `secrets.env`: This file will need to be populated prior to executing the next step and ultimately deployment.
     - The file will require an HTTP gateway secret, this secret will be generated and populated in the next deployment
       step on the API provider's machine.
-    - Important: Once the deployment is complete, the HTTP Gateway key, along with the `receipt.json` file must be
-      posted to the `#operations-keys` channel on our Slack workspace.
-  - The above files will be validated by their respective validators. Be sure to fix any errors output.
+    - Important: Once the deployment is complete, copy and submit the `operations-export.secret` to the API3 secrets
+      service.
 
 Once you have populated the config files, avoiding populating them with any secrets:
 
@@ -88,6 +84,3 @@ The file has the following structure:
   - `templateId`: The ID of the template used to execute API calls that power this data feed
   - `chains`: An array of strings representing the names of chains on which this service runs. Chain names should
     reference the utility-contracts package, eg. "ropsten"
-  - Optionally:
-    - "templateName": If the template name and beacon name differ, this field will be populated.
-    - "templateDescription": If the template description and beacon description differ, this field will be populated.
