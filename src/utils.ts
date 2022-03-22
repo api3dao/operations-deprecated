@@ -1,6 +1,20 @@
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { readdirSync, readFileSync, statSync } from 'fs';
+import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
+
+export const readFileOrDirectoryRecursively = (target: string) => {
+  const stats = statSync(target);
+  if (stats.isFile()) {
+    return readJsonFile(target);
+  }
+
+  return Object.fromEntries(
+    readdirSync(target).map((file) => [
+      path.basename(file, path.extname(file)),
+      readFileOrDirectoryRecursively(join(target, file)),
+    ])
+  );
+};
 
 export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
 
