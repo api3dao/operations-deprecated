@@ -1,61 +1,90 @@
-// Trimmed from Telemetry Apps
-export interface ChainDescriptor {
+import { Config, ApiCallParameters } from '@api3/airnode-node';
+import { OIS } from '@api3/airnode-ois';
+import { AirkeeperConfig } from '@api3/airkeeper/src/validator';
+
+export interface TopUpWallet {
+  walletType: 'Provider' | 'API3';
+  address: string;
+}
+
+export interface ExtendedChainDescription {
+  active: boolean; // TODO don't include in docs export if false
   name: ChainName;
-  version: ContractDeploymentVersion;
+  sponsor: string;
+  topUpWallets: TopUpWallet[];
 }
 
-export interface ChainMetadata {
-  namedVersion: ChainDescriptor;
-  sponsor?: string;
-  apiProviderAirkeeperDeviationPercentage?: number;
-  apiProviderAirkeeperSponsor?: number;
-}
-
-export interface RrpPspBeaconDescriptor {
-  templateId: string;
+export interface Beacon {
   name: string;
-  description?: string;
-  parameters: string;
-  beaconId: string;
-  decodedParameters: { type: string; name: string; value: string }[];
-  chains: ChainDescriptor[];
-  filename?: string;
+  description: string;
+  beaconId: string; // TODO derive this
+  airnodeAddress: string; // TODO verify in apiMetadata
+  templateId: string; // TODO verify exists in templates
+  updateConditionPercentage: number;
+  chains: ExtendedChainDescription[];
+  signedKeeperConditions: {
+    deviationFactorThreshold: number;
+    ttlMinutes: number;
+  };
 }
 
-export interface TemplateDescriptor {
+export type Beacons = Record<string, Beacon>;
+
+export interface DeploymentSet {
+  config: Config;
+  airkeeper: AirkeeperConfig;
+}
+
+export type Deployments = Record<string, DeploymentSet>;
+
+export interface Template {
+  name: string;
   templateId: string;
   endpointId: string;
-  airnode: string;
   parameters: string;
-  decodedParameters: { name: string; type: string; value; string }[];
-  chains: ChainMetadata[];
+  decodedParameters: ApiCallParameters[]; // TODO derive this
 }
 
-export interface ProtoPspBeaconDescriptor {
+export type Templates = Record<string, Template>; // TODO key to be derived via sanitise from templateName
+
+export type Oises = Record<string, OIS>; // TODO derive OIS key
+
+export interface ApiMetadata {
+  name: string; // Pretty name
+  active: boolean; // Do not include in docs if not active
+  airnode: string; // TODO these are related, so check
+  xpub: string;
+}
+
+export interface Api {
+  apiMetadata: ApiMetadata;
+  beacons: Beacons;
+  templates: Templates;
+  deployments: Deployments;
+  ois: Oises;
+}
+
+export interface OperationsRepository {
+  apis: Record<string, Api>; // TODO derive key from Api name in metadata
+  documentation: Documentation;
+}
+
+export interface BeaconDocumentation {
   beaconId: string;
   name: string;
   description: string;
-  apiName: string;
-  templateId: string;
-
-  conditions: {
-    description: string; // 'A deviation of 5%'
-    _conditionFunctionId: string; // ideally the documentation should link to the contract via Etherscan so
-    _conditionParameters: string; // users can read the condition fn code
-  };
-  chains: ChainMetadata[];
+  oisTitle: string;
+  decodedParameters: ApiCallParameters[];
+  chains: string[];
 }
 
 export type ChainName = string;
 export type ContractName = string;
-export type ContractDeploymentVersion = string;
 export type ContractAddress = string;
+export type ApiName = string;
 
-export type ContractInstanceSet = Record<ContractName, ContractAddress>;
-export type VersionedContractDeployment = Record<ContractDeploymentVersion, ContractInstanceSet>;
-
+// Only active beacons
 export interface Documentation {
-  protoPsp: ProtoPspBeaconDescriptor[];
-  rrpPsp: RrpPspBeaconDescriptor[];
-  contracts: Record<ChainName, VersionedContractDeployment>;
+  beacons: Record<ApiName, BeaconDocumentation>;
+  chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement
 }

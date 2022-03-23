@@ -5,6 +5,10 @@ import prompts, { PromptObject } from 'prompts';
 export const readFileOrDirectoryRecursively = (target: string) => {
   const stats = statSync(target);
   if (stats.isFile()) {
+    if (target.indexOf('.json') === -1) {
+      return {};
+    }
+
     return readJsonFile(target);
   }
 
