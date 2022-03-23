@@ -1,6 +1,66 @@
-import { readdirSync, readFileSync, statSync } from 'fs';
+import { mkdirSync, readdirSync, readFileSync, renameSync, rmdirSync, statSync, writeFileSync } from 'fs';
 import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
+import { OperationsRepository } from './types';
+
+// TODO handle secrets.env
+export const writeOperationsRepository = (payload: OperationsRepository) => {
+  const tmpBasePath = join(__dirname, '..', 'tmpData');
+  const targetBasePath = join(__dirname, '..', 'data');
+
+  try {
+    rmdirSync(tmpBasePath, { recursive: true });
+    mkdirSync(join(tmpBasePath, 'apis'), { recursive: true });
+    writeJsonFile(join(tmpBasePath, 'documentation.json'), payload.documentation);
+
+    Object.entries(payload.apis).forEach(([filename, api]) => {
+      const apiBasePath = join(tmpBasePath, 'apis', filename);
+      const deploymentsBasePath = join(apiBasePath, 'deployments');
+
+      mkdirSync(apiBasePath);
+      mkdirSync(join(apiBasePath, 'beacons'));
+      mkdirSync(deploymentsBasePath);
+      mkdirSync(join(apiBasePath, 'templates'));
+      mkdirSync(join(apiBasePath, 'ois'));
+
+      writeJsonFile(join(apiBasePath, 'apiMetadata.json'), api.apiMetadata);
+
+      // TODO abstract this
+      Object.entries(api.beacons).forEach(([filename, beacon]) => {
+        writeJsonFile(join(apiBasePath, 'beacons', `${filename}.json`), beacon);
+      });
+      Object.entries(api.templates).forEach(([filename, template]) => {
+        writeJsonFile(join(apiBasePath, 'templates', `${filename}.json`), template);
+      });
+      Object.entries(api.ois).forEach(([filename, ois]) => {
+        writeJsonFile(join(apiBasePath, 'ois', `${filename}.json`), ois);
+      });
+
+      Object.entries(api.deployments).forEach(([directoryName, deployment]) => {
+        const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
+        mkdirSync(subDeploymentBasePath);
+        Object.entries(deployment).forEach(([filename, configContent]) => {
+          writeJsonFile(join(subDeploymentBasePath, `${filename}.json`), configContent);
+        });
+      });
+    });
+
+    rmdirSync(targetBasePath, { recursive: true });
+    renameSync(tmpBasePath, targetBasePath);
+  } catch (e) {
+    console.error('An error occurred while writing the operations repository data structure: ', e);
+    console.trace(e);
+
+    rmdirSync(tmpBasePath, { recursive: true });
+  }
+};
+
+export const writeJsonFile = (path: string, payload: {}) => {
+  writeFileSync(path, JSON.stringify(payload, null, 2));
+};
+
+export const readOperationsRepository = () =>
+  readFileOrDirectoryRecursively(join(__dirname, '..', 'data')) as OperationsRepository;
 
 export const readFileOrDirectoryRecursively = (target: string) => {
   const stats = statSync(target);

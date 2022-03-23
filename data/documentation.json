@@ -1,39 +1,18 @@
 {
-  "beacons": [
-    {
-      "beaconId": "0x7c3e9a38a16439e9b3e77bfe742f6c10004c26beabfab70fd78e3cf062ed6256",
-      "beaconName": "CoinGecko USD/BTC",
-      "beaconDescription": "A ticker feed for the global volume-weighted average price of the USD/BTC pair",
-      "oisTitle": "API3",
-      "templateId": "0x9c24111e2c324627cb837b5ec68e17e457596c9398683b280da533e27ab50894",
-      "decodedTemplateParameters": [
-        {
-          "name": "pair",
-          "type": "bytes32",
-          "value": "usd_btc"
-        },
-        {
-          "name": "_path",
-          "type": "bytes32",
-          "value": "payload.vwap,"
-        },
-        {
-          "name": "_type",
-          "type": "bytes32",
-          "value": "int256,timestamp"
-        },
-        {
-          "name": "_times",
-          "type": "bytes32",
-          "value": "1000000,"
-        },
-        {
-          "name": "lookbackPeriod",
-          "type": "bytes32",
-          "value": "5"
-        }
-      ],
-      "chains": ["ropsten", "rinkeby", "polygon-mumbai", "goerli"]
-    }
-  ]
+  "beacons": {
+    "api3": [
+      {
+        "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
+        "name": "CoinGecko BTC/USD 0.1 percent deviation",
+        "description": "The public CoinGecko BTC/USD price ticker",
+        "chains": ["ropsten-2"]
+      },
+      {
+        "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
+        "name": "CoinGecko BTC/USD 1 percent deviation",
+        "description": "The public CoinGecko BTC/USD price ticker",
+        "chains": ["ropsten"]
+      }
+    ]
+  }
 }

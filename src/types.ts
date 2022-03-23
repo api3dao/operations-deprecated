@@ -17,7 +17,7 @@ export interface ExtendedChainDescription {
 export interface Beacon {
   name: string;
   description: string;
-  beaconId: string; // TODO derive this
+  beaconId: string;
   airnodeAddress: string; // TODO verify in apiMetadata
   templateId: string; // TODO verify exists in templates
   updateConditionPercentage: number;
@@ -42,18 +42,18 @@ export interface Template {
   templateId: string;
   endpointId: string;
   parameters: string;
-  decodedParameters: ApiCallParameters[]; // TODO derive this
+  decodedParameters: Record<string, string>;
 }
 
-export type Templates = Record<string, Template>; // TODO key to be derived via sanitise from templateName
+export type Templates = Record<string, Template>;
 
-export type Oises = Record<string, OIS>; // TODO derive OIS key
+export type Oises = Record<string, OIS>;
 
 export interface ApiMetadata {
-  name: string; // Pretty name
-  active: boolean; // Do not include in docs if not active
+  name: string;
+  active: boolean;
   airnode: string; // TODO these are related, so check
-  xpub: string;
+  xpub: string; // TODO these are related, so check
 }
 
 export interface Api {
@@ -65,7 +65,7 @@ export interface Api {
 }
 
 export interface OperationsRepository {
-  apis: Record<string, Api>; // TODO derive key from Api name in metadata
+  apis: Record<string, Api>;
   documentation: Documentation;
 }
 
