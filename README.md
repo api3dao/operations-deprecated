@@ -2,101 +2,113 @@
 
 > A package that houses data and utilities required for API3 operations
 
-## `/data`
+## Branches and versioning
 
-Static data that other applications (e.g., monitoring and visualization services) may need to know about, including:
+`main` represents the current state of the system. Deprecated versions are housed in individual branches. Deprecated
+versions that are still supported are:
+
+- `v0.1`: RrpBeaconServer-based Beacons
+
+## Updates
+
+1. Create new branch with the updates
+2. Open PR to `main` (or to a deprecated version branch)
+3. Have changes approved by reviewers
+4. Apply changes if needed, e.g., have an API provider redeploy
+5. Merge PR immediately after step 4
+
+If an update has moved on to step 4, block all other updates from doing so until the PR is merged. This is to prevent
+parallel updates from overwriting each other's changes.
+
+## Directory and file structure
+
+`/data` houses static data that other applications (e.g., monitoring and visualization services) may need to know about,
+including:
 
 - Chain integrations
 - API integrations
   - OIS
   - Deployment files
-- Templates
-- Beacons
+  - Templates
+  - Beacons
+- Managed feeds
+- Pricing parameters
 
-## `/data/chains.json`
+### APIs — `/data/apis`
 
-A JSON file that contains data related to the chains. These chains will not necessarily have official support. Each
-chain has the following specified at minimum:
+`/data/apis` hosts one directory per API, where the directory name is the sanitized API Name.
 
-- `AccessControlRegistry`: AccessControlRegistry contract address
-- `AirnodeRrp`: AirnodeRrp contract address
-- `RrpBeaconServer`: RrpBeaconServer contract address
+#### API Metadata — `/data/apis/{sanitizedApiName}/apiMetadata.json`
 
-## `/data/apis`
+A JSON file that contains metadata related to the API:
 
-Hosts one directory per API, where the directory name is the OIS title.
-
-**The OIS title of an API is immutable.**
-
-### `/data/apis/{oisTitle}`
-
-Hosts API integration, deployment and service-related data about a specific API. The contents of this directory should
-refer to the first-party deployment, i.e., do not push your third-party deployment data here. If you really have to, you
-can create a separate directory (e.g., `/data/apis/test-{oisTitle}`).
-
-**All files merged to `main` must have been reviewed and tested.**
-
-#### `/data/apis/{oisTitle}/apiMetadata.json`
-
-A JSON file that contains metadata related to the API provider:
-
-- `active`: If the latest deployment under `/data/apis/{oisTitle}/deployments` is active
+- `name`: API name that will be seen by the end-user (which the sanitized name will be derived from)
+- `active`: If the latest deployment under `/data/apis/{sanitizedApiName}/deployments` is active
 - `airnode`: Airnode address
 - `xpub`: Extended public key of the Airnode wallet
-- `contact`: Contact information of the API provider, specifically related to Airnode operation
 
-#### `/data/apis/{oisTitle}/ois`
+#### OIS — `/data/apis/{sanitizedApiName}/ois`
 
 Hosts JSON files that contain OIS iterations. Each OIS must be versioned according to [semver](https://semver.org/) and
-the version will be used in the file name.
+the file name will be `<oisTitle>_<version>.json`.
 
-#### `/data/apis/{oisTitle}/deployments`
+#### Deployments — `/data/apis/{sanitizedApiName}/deployments`
 
-Hosts directories that contain the files used for individual deployments. Each of these directories are named with the
-deployment date as `YYYY-MM-DD`. If more than one deployment was done in a day, only push the latest one.
+Directories that contain the files used for individual deployments. Each of these directories are named with the
+deployment date as `YYYY-MM-DD`. If more than one deployment was done in a day, only include the latest one.
 
-Each of the directories only include the contents of the zip file that is sent to the API provider for deployment. Make
-sure to sanitize `aws.env` and `secrets.env` files of all sensitive data, and update their extension to be
-`.env.example`.
+Example `secrets.env.example` and `aws.env.example` files are generated for convenience. Populated versions of these
+files will be required for deployment. The populated files (which will contain secrets) should not be included in this
+repository.
 
-### `/data/apis/{oisTitle}/templates`
+#### Templates — `/data/apis/{sanitizedApiName}/templates`
 
-Hosts files containing template data and metadata. The files are named to describe what the template is for so that they
-are human-browseable. The files contents are:
+Files containing template data. The files are named as `/data/apis/{sanitizedApiName}/templates/{sanitizedTemplateName}`
+to be human-browsable.
 
-- `airnode`: Airnode address (must match the one in `apiMetadata.json`)
-- `endpointId`: Endpoint ID (must match one from `config.json`)
+- `name`: Template name that will be seen by the end-user (which the sanitized name will be derived from)
+- `templateId`: Template ID
+- `endpointId`: Endpoint ID
 - `parameters`: Airnode ABI-encoded parameters
-- `templateId`: Template ID (must match `airnode`, `endpointId`, `parameters` encoded and hashed)
-- `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the template is currently deployed on (must match ones from `chains.json`)
+- `decodedParameters`: `parameters` decoded to be human-readable for convenience, not to be used in production.
 
-### `/data/apis/{oisTitle}/beacons`
+#### Beacons — `/data/apis/{sanitizedApiName}/beacons`
 
-Hosts files containing beacon data and metadata. The files are named to describe what the beacon is for so that they are
-human-browsable.
+Files containing Beacon data. The files are named as `/data/apis/{sanitizedApiName}/templates/{sanitiziedBeaconName}` to
+be human-browsable.
 
-- `templateId`: Template ID (must match one from `/data/apis/{oisTitle}/templates`)
-- `templateName`: A human-readable name for the template, suitable for documentation use.
-- `description`: A human-readable description for the template, suitable for documentation use (optional).
-- `parameters`: Airnode ABI-encoded parameters to extend the ones defined by the template
-- `beaconId`: Beacon ID (must match `templateId`, `parameters` encoded and hashed)
-- `decodedParameters`: `parameters` decoded to be human-readable
-- `chains`: Chains that the beacon is currently operational on
-  - `name`: Name of the chain (must match one from `chains.json`)
-  - `apiProviderAirkeeperDeviationPercentage`: Deviation percentage to be used by the API provider-operated Airkeeper
-  - `api3AirkeeperDeviationPercentage`: Deviation percentage to be used by the API3-operated Airkeeper
-  - `sponsor`: Sponsor address that will be used while requesting an update (sponsor wallet to be derived from the API
-    provider `xpub`). Both the API provider-operated and the API3-operated Airkeepers use the same `sponsor`.
-  - `apiProviderAirkeeperSponsor`: Airkeeper sponsor address that will be used by the API provider-operated Airkeeper to
-    keep the beacon (sponsor wallet to be derived from `xpub` in `apiMetadata.json`)
-  - `api3AirkeeperSponsor`: Airkeeper sponsor address that will be used by the API3-operated Airkeeper to keep the
-    beacon (sponsor wallet to be derived from `xpub` in `api3Metadata.json`)
-  - `apiProviderAirkeeperSponsorWalletBalanceAlertThreshold`: If the sponsor wallet used by the API provider-operated
-    Airkeeper falls below this amount, an alert should be raised
-    - `amount`: Balance amount in numbers
-    - `units`: One of the [ETH units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--named-units)
-  - `api3AirkeeperSponsorWalletBalanceAlertThreshold`: If the sponsor wallet used by the API3-operated Airkeeper falls
-    below this amount, an alert should be raised
-    - `amount`: Balance amount in numbers
-    - `units`: One of the [ETH units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--named-units)
+- `name`: Beacon name that will be seen by the end-user (which the sanitized name will be derived from). Defaults to
+  `"{API name} {Template name}"`
+- `description`: An extended description of the beacon, eg. "Price of BTC in USD"
+- `beaconId`: Beacon ID
+- `airnodeAddress`: The source Airnode's address, eg. "0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace"
+- `templateId`: The associated template ID, eg. "0xea30f92923ece1a97af69d450a8418db31be5a26a886540a13c09c739ba8eaaa"
+- `updateConditionPercentage`: A number representing the deviation threshold percentage above which an update should
+  occur, eg. 0.75 for 0.75%
+  - This value will be used to generate a conditions object for services.
+- `chains`: Chains on which the beacon is operated in any point in time
+  - `active`: If the beacon is being actively operated
+  - `name`: Name of the chain (must match a chain with deployed contracts from the repository noted above), eg.
+    "ropsten"
+  - `sponsor`: The sponsor address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+  - `topUpWallets`: [...] An array of addresses to monitor and keep topped-up
+    - `walletType`: The wallet type, either 'API3' or 'Provider'
+    - `address`: The target address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+- `signedKeeperConditions`:
+  - `deviationFactorThreshold`: The factor by which to multiply the provider's deviation threshold to calculate API3's
+    `_conditionParameters`
+  - `ttlMinutes`: The number of minutes that need to have elapsed since the on-chain value exceeded API3's
+    updateCondition
+
+### Managed feeds — `/data/feeds`
+
+_TODO_
+
+### Pricing parameters
+
+_TODO, possibly as additional fields under Beacon.chains and Feed.chains_
+
+## Utilities
+
+This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
+for these [here](./UTILITIES.MD).

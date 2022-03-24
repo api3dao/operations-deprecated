@@ -1,5 +1,4 @@
-yarn run export-documentation
-yarn run data-validation
+yarn run normalize-and-validate
 yarn run prettier:write
 yarn run lint
-git add data/documentation_metadata.json
+git add data/documentation.json
