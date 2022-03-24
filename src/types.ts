@@ -8,7 +8,7 @@ export interface TopUpWallet {
 }
 
 export interface ExtendedChainDescription {
-  active: boolean; // TODO don't include in docs export if false
+  active: boolean;
   name: ChainName;
   sponsor: string;
   topUpWallets: TopUpWallet[];
@@ -33,6 +33,7 @@ export type Beacons = Record<string, Beacon>;
 export interface DeploymentSet {
   config: Config;
   airkeeper: AirkeeperConfig;
+  secrets: { extension: string; content: string };
 }
 
 export type Deployments = Record<string, DeploymentSet>;
@@ -83,7 +84,6 @@ export type ContractName = string;
 export type ContractAddress = string;
 export type ApiName = string;
 
-// Only active beacons
 export interface Documentation {
   beacons: Record<ApiName, BeaconDocumentation>;
   chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement

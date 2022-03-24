@@ -1,12 +1,14 @@
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmdirSync, statSync, writeFileSync } from 'fs';
 import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
-import { OperationsRepository } from './types';
+import { OperationsRepository } from '../types';
 
 // TODO handle secrets.env
-export const writeOperationsRepository = (payload: OperationsRepository) => {
-  const tmpBasePath = join(__dirname, '..', 'tmpData');
-  const targetBasePath = join(__dirname, '..', 'data');
+export const writeOperationsRepository = (
+  payload: OperationsRepository,
+  targetBasePath = join(__dirname, '..', '..', 'data')
+) => {
+  const tmpBasePath = join(__dirname, '..', '..', 'tmpData');
 
   try {
     rmdirSync(tmpBasePath, { recursive: true });
@@ -27,20 +29,20 @@ export const writeOperationsRepository = (payload: OperationsRepository) => {
 
       // TODO abstract this
       Object.entries(api.beacons).forEach(([filename, beacon]) => {
-        writeJsonFile(join(apiBasePath, 'beacons', `${filename}.json`), beacon);
+        writeJsonFile(join(apiBasePath, 'beacons', filename), beacon);
       });
       Object.entries(api.templates).forEach(([filename, template]) => {
-        writeJsonFile(join(apiBasePath, 'templates', `${filename}.json`), template);
+        writeJsonFile(join(apiBasePath, 'templates', filename), template);
       });
       Object.entries(api.ois).forEach(([filename, ois]) => {
-        writeJsonFile(join(apiBasePath, 'ois', `${filename}.json`), ois);
+        writeJsonFile(join(apiBasePath, 'ois', filename), ois);
       });
 
       Object.entries(api.deployments).forEach(([directoryName, deployment]) => {
         const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
         mkdirSync(subDeploymentBasePath);
         Object.entries(deployment).forEach(([filename, configContent]) => {
-          writeJsonFile(join(subDeploymentBasePath, `${filename}.json`), configContent);
+          writeJsonFile(join(subDeploymentBasePath, filename), configContent);
         });
       });
     });
@@ -55,18 +57,26 @@ export const writeOperationsRepository = (payload: OperationsRepository) => {
   }
 };
 
-export const writeJsonFile = (path: string, payload: {}) => {
-  writeFileSync(path, JSON.stringify(payload, null, 2));
+export const writeJsonFile = (path: string, payload: any) => {
+  if (payload.filename && payload.content) {
+    const extension = payload.filename.split('.').pop();
+    writeFileSync(`${path}.${extension}`, payload.content);
+    return;
+  }
+
+  const extension = path.indexOf('.json') === -1 ? '.json' : '';
+
+  writeFileSync(`${path}${extension}`, JSON.stringify(payload, null, 2));
 };
 
-export const readOperationsRepository = () =>
-  readFileOrDirectoryRecursively(join(__dirname, '..', 'data')) as OperationsRepository;
+export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
+  readFileOrDirectoryRecursively(target) as OperationsRepository;
 
 export const readFileOrDirectoryRecursively = (target: string) => {
   const stats = statSync(target);
   if (stats.isFile()) {
     if (target.indexOf('.json') === -1) {
-      return {};
+      return { filename: path.basename(target), content: readFileSync(target).toString('binary') };
     }
 
     return readJsonFile(target);

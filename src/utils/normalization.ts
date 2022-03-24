@@ -1,10 +1,12 @@
+import { Buffer } from 'buffer';
 import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
 import { ethers } from 'ethers';
 import { decode } from '@api3/airnode-abi';
-import { OperationsRepository } from './types';
-import { sanitiseFilename } from './utils';
+import { parse } from 'dotenv';
+import { sanitiseFilename } from './filesystem';
+import { OperationsRepository } from '../types';
 
-export const conformOperationsRepository = (payload: OperationsRepository) => {
+export const normalize = (payload: OperationsRepository) => {
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
@@ -46,13 +48,37 @@ export const conformOperationsRepository = (payload: OperationsRepository) => {
         Object.entries(api.ois).map(([_key, value]) => [sanitiseFilename(`${value.title}-${value.version}`), value])
       );
 
+      const deployments = Object.fromEntries(
+        Object.entries(api.deployments).map(([key, value]) => {
+          return [
+            key,
+            Object.fromEntries(
+              Object.entries(value).map(([key, value]) => {
+                console.log(key);
+                if (key.toLowerCase() === 'secrets') {
+                  const envBuffer = Buffer.from(value.content);
+                  const content = Object.entries(parse(envBuffer))
+                    .map(([key, _value]) => key)
+                    .concat([''])
+                    .join('=""\n');
+
+                  return [key, { ...value, content }];
+                }
+
+                return [key, value];
+              })
+            ),
+          ];
+        })
+      );
+
       return [
         apiKey,
         {
           beacons,
           templates,
           ois,
-          deployments: api.deployments,
+          deployments,
           apiMetadata: api.apiMetadata,
         },
       ];

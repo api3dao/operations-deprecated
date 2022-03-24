@@ -1,20 +1,18 @@
-import { readOperationsRepository, writeOperationsRepository } from './utils';
-import { runAndHandleErrors } from './cli';
-import { OperationsRepository } from './types';
-import { conformOperationsRepository } from './conform-operations-repository';
-
-export const validateOperationsRepository = (payload: OperationsRepository) => {};
+import { readOperationsRepository } from './utils/filesystem';
+import { runAndHandleErrors } from './utils/cli';
+import { validate } from './utils/validation';
 
 const main = async () => {
   const rawOpsData = readOperationsRepository();
-  const conformedOpsData = conformOperationsRepository(rawOpsData);
 
-  validateOperationsRepository(conformedOpsData);
-
-  if (JSON.stringify(rawOpsData) !== JSON.stringify(conformedOpsData)) {
-    console.log('Repository data changed - writing to disk...');
-    writeOperationsRepository(conformedOpsData);
+  const [success, logs] = validate(rawOpsData);
+  if (!success) {
+    console.log('Validation failed:');
+    console.log(JSON.stringify(logs, null, 2));
+    return;
   }
+
+  console.log('Validation was successful.');
 };
 
 runAndHandleErrors(main);

@@ -1,11 +1,9 @@
 # package directories
 /node_modules
 
-# ENV variables and secrets
-*.env
-
 # IDE specific files
 .vscode
+.idea
 
 # Log files
 *.log
