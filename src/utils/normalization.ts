@@ -113,7 +113,7 @@ export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNest
     if (typeof object[key] === 'object' && !ignoreNestedKeys.includes(key)) {
       emptyObject(object[key], preserveValueKeys, ignoreNestedKeys);
     } else {
-       /* eslint-disable no-eval */
+      // eslint-disable-next-line functional/immutable-data
       object[key] = preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key]);
     }
   }
