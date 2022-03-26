@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "export-documentation": "ts-node src/export-documentation.ts",
+    "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "normalize-and-validate": "ts-node src/normalize-and-validate.ts",
     "validate": "ts-node src/normalize-and-validate.ts",
     "normalize": "ts-node src/normalize.ts",

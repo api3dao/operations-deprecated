@@ -107,3 +107,29 @@ export const normalize = (payload: OperationsRepository) => {
 
   return { apis, documentation } as OperationsRepository;
 };
+
+export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
+  for (let key in object) {
+    if (typeof object[key] === 'object' && !ignoreNestedKeys.includes(key)) {
+      emptyObject(object[key], preserveValueKeys, ignoreNestedKeys);
+    } else {
+      object[key] = preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key]);
+    }
+  }
+  return object;
+};
+
+const emptyReturn = (value: any) => {
+  switch(typeof value) {
+    case 'boolean':
+      return false;
+    case 'number':
+      return 0;
+    case 'string':
+      return '';
+    case 'object':
+      return {};
+    default:
+      return null;
+  }
+}

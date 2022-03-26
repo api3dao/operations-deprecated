@@ -52,6 +52,8 @@ export type Oises = Record<string, OIS>;
 
 export interface ApiMetadata {
   name: string;
+  contact?: string;
+  description?: string;
   active: boolean;
   airnode: string; // TODO these are related, so check
   xpub: string; // TODO these are related, so check
