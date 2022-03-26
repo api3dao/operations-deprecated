@@ -129,6 +129,7 @@ const emptyReturn = (value: any) => {
     case 'string':
       return '';
     case 'object':
+      if (Array.isArray(value)) return [];
       return {};
     default:
       return null;
