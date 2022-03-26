@@ -1,6 +1,6 @@
+import { PromptObject } from 'prompts';
 import { readApiData, writeApiData, promptQuestions } from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
-import { PromptObject } from 'prompts';
 import { emptyObject } from './utils/normalization';
 import { Api, ApiMetadata, Beacons, Oises, Templates } from './types';
 
@@ -28,9 +28,12 @@ const main = async () => {
 
   // Create the boilderplate apiMetadata
   const apiMetadata = emptyObject(apiDataTemplate.apiMetadata, ['active'], []) as ApiMetadata;
-  apiMetadata.name = response.apiName;
-  apiMetadata.contact = response.apiContact;
-  apiMetadata.description = response.apiDescription;
+  const apiMetadataBoilerplate = {
+    ...apiMetadata,
+    name: response.apiName,
+    contact: response.apiContact,
+    description: response.apiDescription,
+  } as ApiMetadata;
 
   // Create the boilderplate ois
   const oises = emptyObject(
@@ -55,7 +58,7 @@ const main = async () => {
   const beaconBoilerPlate = { [response.apiName + '-' + 'beacon01.json']: beacons[Object.keys(beacons)[0]] } as Beacons;
 
   const ApiDataBoilerplate = {
-    apiMetadata: apiMetadata,
+    apiMetadata: apiMetadataBoilerplate,
     beacons: beaconBoilerPlate,
     templates: templateBoilerPlate,
     deployments: {},

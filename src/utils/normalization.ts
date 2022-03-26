@@ -109,10 +109,11 @@ export const normalize = (payload: OperationsRepository) => {
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
-  for (let key in object) {
+  for (const key in object) {
     if (typeof object[key] === 'object' && !ignoreNestedKeys.includes(key)) {
       emptyObject(object[key], preserveValueKeys, ignoreNestedKeys);
     } else {
+       /* eslint-disable no-eval */
       object[key] = preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key]);
     }
   }
