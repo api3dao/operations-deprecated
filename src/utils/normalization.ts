@@ -120,7 +120,7 @@ export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNest
 };
 
 const emptyReturn = (value: any) => {
-  switch(typeof value) {
+  switch (typeof value) {
     case 'boolean':
       return false;
     case 'number':
@@ -132,4 +132,4 @@ const emptyReturn = (value: any) => {
     default:
       return null;
   }
-}
+};

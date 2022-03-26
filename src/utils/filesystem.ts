@@ -64,7 +64,7 @@ export const writeApiData = (payload: Api, target: string) => {
     rmdirSync(tmpBasePath, { recursive: true });
     mkdirSync(tmpBasePath, { recursive: true });
 
-    const apiBasePath = tmpBasePath
+    const apiBasePath = tmpBasePath;
     const deploymentsBasePath = join(apiBasePath, 'deployments');
 
     mkdirSync(join(apiBasePath, 'beacons'));
@@ -74,26 +74,26 @@ export const writeApiData = (payload: Api, target: string) => {
 
     writeJsonFile(join(apiBasePath, 'apiMetadata.json'), payload.apiMetadata);
 
-      // TODO abstract this
-      Object.entries(payload.beacons).forEach(([filename, beacon]) => {
-        writeJsonFile(join(apiBasePath, 'beacons', filename), beacon);
-      });
-      Object.entries(payload.templates).forEach(([filename, template]) => {
-        writeJsonFile(join(apiBasePath, 'templates', filename), template);
-      });
-      Object.entries(payload.ois).forEach(([filename, ois]) => {
-        writeJsonFile(join(apiBasePath, 'ois', filename), ois);
-      });
+    // TODO abstract this
+    Object.entries(payload.beacons).forEach(([filename, beacon]) => {
+      writeJsonFile(join(apiBasePath, 'beacons', filename), beacon);
+    });
+    Object.entries(payload.templates).forEach(([filename, template]) => {
+      writeJsonFile(join(apiBasePath, 'templates', filename), template);
+    });
+    Object.entries(payload.ois).forEach(([filename, ois]) => {
+      writeJsonFile(join(apiBasePath, 'ois', filename), ois);
+    });
 
-      Object.entries(payload.deployments).forEach(([directoryName, deployment]) => {
-        const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
-        mkdirSync(subDeploymentBasePath);
-        Object.entries(deployment).forEach(([filename, configContent]) => {
-          writeJsonFile(join(subDeploymentBasePath, filename), configContent);
-        });
+    Object.entries(payload.deployments).forEach(([directoryName, deployment]) => {
+      const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
+      mkdirSync(subDeploymentBasePath);
+      Object.entries(deployment).forEach(([filename, configContent]) => {
+        writeJsonFile(join(subDeploymentBasePath, filename), configContent);
       });
+    });
 
-    const targetBasePath = join(__dirname, '..', '..', 'data','apis', target);
+    const targetBasePath = join(__dirname, '..', '..', 'data', 'apis', target);
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
   } catch (e) {
@@ -121,7 +121,6 @@ export const readOperationsRepository = (target = join(__dirname, '..', '..', 'd
 
 export const readApiData = (target = join(__dirname, '..', '..', 'data', 'apis', 'api3')) =>
   readFileOrDirectoryRecursively(target) as Api;
-
 
 export const readFileOrDirectoryRecursively = (target: string) => {
   const stats = statSync(target);
