@@ -75,6 +75,7 @@ export interface BeaconDocumentation {
   description: string;
   oisTitle: string;
   decodedParameters: ApiCallParameters[];
+  templateUrl: string;
   chains: string[];
 }
 
