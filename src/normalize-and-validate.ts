@@ -2,6 +2,8 @@ import { readOperationsRepository, writeOperationsRepository } from './utils/fil
 import { runAndHandleErrors } from './utils/cli';
 import { normalize } from './utils/normalization';
 import { validate } from './utils/validation';
+import { deepEquals } from './utils/general';
+import { replacer } from './utils/marshaling';
 
 const main = async () => {
   const rawOpsData = readOperationsRepository();
@@ -10,14 +12,13 @@ const main = async () => {
   const [success, logs] = validate(conformedOpsData);
   if (!success) {
     console.log('Validation failed:');
-    console.log(JSON.stringify(logs, null, 2));
+    console.log(JSON.stringify(logs, replacer, 2));
     return;
   }
 
   console.log('Validation was successful.');
 
-  // TODO determine if rewrite required
-  if (JSON.stringify(rawOpsData) !== JSON.stringify(conformedOpsData)) {
+  if (!deepEquals(rawOpsData, conformedOpsData)) {
     console.log('Repository data changed - writing to disk...');
     writeOperationsRepository(conformedOpsData);
   }

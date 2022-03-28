@@ -9,7 +9,7 @@
       "id": "3",
       "providers": {
         "exampleProvider": {
-          "url": "${PROVIDER_URL}"
+          "url": "https://${PROVIDER_URL}"
         }
       },
       "type": "evm",
@@ -17,7 +17,7 @@
         "txType": "eip1559",
         "baseFeeMultiplier": 2,
         "priorityFee": {
-          "value": "3.12",
+          "value": 3.12,
           "unit": "gwei"
         }
       }
@@ -26,7 +26,8 @@
   "nodeSettings": {
     "cloudProvider": {
       "type": "aws",
-      "region": "us-east-1"
+      "region": "us-east-1",
+      "disableConcurrencyReservations": false
     },
     "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
     "heartbeat": {

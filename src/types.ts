@@ -1,6 +1,6 @@
 import { Config, ApiCallParameters } from '@api3/airnode-node';
 import { OIS } from '@api3/airnode-ois';
-import { AirkeeperConfig } from '@api3/airkeeper/src/validator';
+import { Config as AirkeeperConfig } from '@api3/airkeeper/dist/src/types';
 
 export interface TopUpWallet {
   walletType: 'Provider' | 'API3';
@@ -33,9 +33,8 @@ export type Beacons = Record<string, Beacon>;
 export interface DeploymentSet {
   config: Config;
   airkeeper: AirkeeperConfig;
-  secrets: { extension: string; content: string };
+  secrets: { content: string };
 }
-
 export type Deployments = Record<string, DeploymentSet>;
 
 export interface Template {
@@ -65,10 +64,10 @@ export interface Api {
   ois: Oises;
 }
 
-export interface OperationsRepository {
-  apis: Record<string, Api>;
-  documentation: Documentation;
-}
+export type ChainName = string;
+export type ContractName = string;
+export type ContractAddress = string;
+export type ApiName = string;
 
 export interface BeaconDocumentation {
   beaconId: string;
@@ -79,12 +78,12 @@ export interface BeaconDocumentation {
   chains: string[];
 }
 
-export type ChainName = string;
-export type ContractName = string;
-export type ContractAddress = string;
-export type ApiName = string;
-
 export interface Documentation {
-  beacons: Record<ApiName, BeaconDocumentation>;
-  chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement
+  beacons: Record<ApiName, BeaconDocumentation[]>;
+  //chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement
+}
+
+export interface OperationsRepository {
+  apis: Record<string, Api>;
+  documentation: Documentation;
 }
