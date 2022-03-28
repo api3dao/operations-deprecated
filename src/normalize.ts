@@ -7,7 +7,6 @@ const main = async () => {
   const rawOpsData = readOperationsRepository();
   const conformedOpsData = normalize(rawOpsData);
 
-  // TODO determine if rewrite required
   if (!deepEquals(rawOpsData, conformedOpsData)) {
     console.log('Repository data changed - writing to disk...');
     writeOperationsRepository(conformedOpsData);

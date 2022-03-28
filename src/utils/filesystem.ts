@@ -3,7 +3,6 @@ import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
 import { OperationsRepository } from '../types';
 
-// TODO handle secrets.env
 export const writeOperationsRepository = (
   payload: OperationsRepository,
   targetBasePath = join(__dirname, '..', '..', 'data')
