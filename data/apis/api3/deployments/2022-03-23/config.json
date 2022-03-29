@@ -5,7 +5,7 @@
       "authorizers": [],
       "contracts": { "AirnodeRrp": "0x478BbFDb16eD14822893461595997420b854BEA0" },
       "id": "3",
-      "providers": { "exampleProvider": { "url": "https://${PROVIDER_URL}" } },
+      "providers": { "exampleProvider": { "url": "${PROVIDER_URL}" } },
       "type": "evm",
       "options": { "txType": "eip1559", "baseFeeMultiplier": 2, "priorityFee": { "value": 3.12, "unit": "gwei" } }
     }

@@ -40,7 +40,7 @@ export const beaconsSchema = z.record(beaconSchema);
 export const deploymentSetSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
-  secrets: z.object({ content: z.string() }),
+  secrets: z.object({ filename: z.string(), content: z.string() }),
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
@@ -90,8 +90,25 @@ export const operationsRepositorySchema = z.object({
   documentation: documentationSchema,
 });
 
+export const replaceInterpolatedVariables = (object: any) => {
+  if (object instanceof Array) {
+    return object.map(replaceInterpolatedVariables);
+  }
+
+  if (object instanceof Object) {
+    return Object.fromEntries(Object.entries(object).map(([key, value]) => [key, replaceInterpolatedVariables(value)]));
+  }
+
+  const stringObject = object.toString().toLowerCase();
+  if (stringObject.includes('${') && stringObject.includes('url')) {
+    return 'https://blank.url';
+  }
+
+  return object;
+};
+
 export const validate = (payload: OperationsRepository) => {
-  const result = operationsRepositorySchema.safeParse(payload);
+  const result = operationsRepositorySchema.safeParse(replaceInterpolatedVariables(payload));
   if (!result.success) {
     return [false, result];
   }
