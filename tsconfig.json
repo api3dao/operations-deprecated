@@ -1,6 +1,5 @@
 {
   "declaration": true,
-  "downlevelIteration": true,
   "lib": ["es2015"],
   "module": "commonjs",
   "moduleResolution": "node",
@@ -10,6 +9,7 @@
   "skipLibCheck": true,
   "compilerOptions": {
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
     "outDir": "dist"

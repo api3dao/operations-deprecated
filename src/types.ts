@@ -33,7 +33,7 @@ export type Beacons = Record<string, Beacon>;
 export interface DeploymentSet {
   config: Config;
   airkeeper: AirkeeperConfig;
-  secrets: { extension: string; content: string };
+  secrets: { filename: string; content: string };
 }
 
 export type Deployments = Record<string, DeploymentSet>;
