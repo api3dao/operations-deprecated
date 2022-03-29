@@ -1,12 +1,9 @@
-import { Choice, PromptObject } from 'prompts';
-import {
-  promptQuestions,
-  readOperationsRepository,
-} from './utils/filesystem';
-import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId } from './utils/evm';
 import { ChainConfig, NodeSettings, Triggers, Trigger, ApiCredentials, Config, Provider } from '@api3/airnode-node';
 import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
+import { Choice, PromptObject } from 'prompts';
+import { promptQuestions, readOperationsRepository } from './utils/filesystem';
+import { runAndHandleErrors } from './utils/cli';
+import { chainNameToChainId } from './utils/evm';
 import { deriveEndpointId } from '@api3/airnode-admin';
 
 const questions = (choices: Choice[]): PromptObject[] => {
@@ -184,6 +181,8 @@ const main = async () => {
     ois: Object.values(apiData.ois),
     apiCredentials,
   };
+
+  console.log(JSON.stringify(Config, null, 2));
 
   // apiData.deployments[new Date().toISOString().split('T')[0]] = {
   //   config: Config,
