@@ -1,6 +1,7 @@
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmdirSync, statSync, writeFileSync } from 'fs';
 import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
+import { format } from 'prettier';
 import { OperationsRepository } from '../types';
 
 export const writeOperationsRepository = (
@@ -56,6 +57,20 @@ export const writeOperationsRepository = (
   }
 };
 
+export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
+
+export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload[]> =>
+  readdirSync(directoryPath).map((filename) => ({
+    ...readJsonFile(join(directoryPath, filename)),
+    filename,
+  }));
+
+interface FilePayload {
+  readonly filename: string;
+}
+
+const prettierConfig = readJsonFile(join(__dirname, '..', '..', '.prettierrc'));
+
 export const writeJsonFile = (path: string, payload: any) => {
   if (payload.filename && payload.content) {
     const extension = payload.filename.split('.').pop();
@@ -65,7 +80,8 @@ export const writeJsonFile = (path: string, payload: any) => {
 
   const extension = path.indexOf('.json') === -1 ? '.json' : '';
 
-  writeFileSync(`${path}${extension}`, JSON.stringify(payload, null, 2));
+  const prettierJson = format(JSON.stringify(payload), { semi: false, parser: 'json', ...prettierConfig });
+  writeFileSync(`${path}${extension}`, prettierJson);
 };
 
 export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
@@ -88,18 +104,6 @@ export const readFileOrDirectoryRecursively = (target: string) => {
     ])
   );
 };
-
-export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
-
-export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload[]> =>
-  readdirSync(directoryPath).map((filename) => ({
-    ...readJsonFile(join(directoryPath, filename)),
-    filename,
-  }));
-
-interface FilePayload {
-  readonly filename: string;
-}
 
 export const promptQuestions = (questions: PromptObject[]) =>
   prompts(questions, {

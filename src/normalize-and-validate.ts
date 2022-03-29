@@ -2,7 +2,6 @@ import { readOperationsRepository, writeOperationsRepository } from './utils/fil
 import { runAndHandleErrors } from './utils/cli';
 import { normalize } from './utils/normalization';
 import { validate } from './utils/validation';
-import { deepEquals } from './utils/general';
 import { replacer } from './utils/marshaling';
 
 const main = async () => {
@@ -16,12 +15,11 @@ const main = async () => {
     return;
   }
 
-  console.log('Validation was successful.');
-
-  if (!deepEquals(rawOpsData, conformedOpsData)) {
-    console.log('Repository data changed - writing to disk...');
-    writeOperationsRepository(conformedOpsData);
-  }
+  console.log('Validation was successful, writing changes...');
+  writeOperationsRepository(conformedOpsData);
+  console.log('Operations data successfully written.');
 };
 
 runAndHandleErrors(main);
+
+// thursday
