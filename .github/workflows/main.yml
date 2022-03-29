@@ -7,9 +7,6 @@ on:
       - main
     types: [opened, synchronize, reopened]
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
   documentation:
     name: Check documentation
