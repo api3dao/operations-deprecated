@@ -1,9 +1,10 @@
 import { Choice, PromptObject } from 'prompts';
-import { readApiData, writeApiData, promptQuestions, readOperationsRepository, sanitiseFilename } from './utils/filesystem';
+import {
+  promptQuestions,
+  readOperationsRepository,
+} from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
 import { chainNameToChainId } from './utils/evm';
-import { emptyObject } from './utils/normalization';
-import { Api, ApiMetadata, Beacon, Beacons, Oises, Templates } from './types';
 import { ChainConfig, NodeSettings, Triggers, Trigger, ApiCredentials, Config, Provider } from '@api3/airnode-node';
 import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
@@ -104,7 +105,7 @@ const main = async () => {
   });
 
   //// Build Config.json NodeSettings ////
-  
+
   const nodeSettings: NodeSettings = {
     nodeVersion: '0.5.0',
     cloudProvider: {
@@ -118,21 +119,21 @@ const main = async () => {
         apiKey: '${HEARTBEAT_API_KEY}',
         id: '${HEARTBEAT_ID}',
         url: '${HEARTBEAT_URL}',
-      })
+      }),
     },
     httpGateway: {
       enabled: response.airnodeHttpGateway,
       ...(response.airnodeHttpGateway && {
         apiKey: '${HTTP_GATEWAY_API_KEY}',
-        maxConcurrency: 20
-      })
+        maxConcurrency: 20,
+      }),
     },
     httpSignedDataGateway: {
       enabled: response.airnodeHttpSignedDataGateway,
       ...(response.airnodeHttpSignedDataGateway && {
         apiKey: '${HTTP_SIGNED_DATA_GATEWAY_API_KEY}',
-        maxConcurrency: 20
-      })
+        maxConcurrency: 20,
+      }),
     },
     logFormat: 'plain',
     logLevel: 'INFO',
@@ -166,12 +167,15 @@ const main = async () => {
   //// Build Config.json ApiCredentials ////
   const apiCredentials: ApiCredentials[] = Object.keys(apiData.ois).flatMap((oisFilename) => {
     const ois = apiData.ois[oisFilename];
-    return Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => ({
-      oisTitle: ois.title,
-      securitySchemeName: security,
-      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
-    } as ApiCredentials));
-  })
+    return Object.keys(ois.apiSpecifications.components.securitySchemes).map(
+      (security) =>
+        ({
+          oisTitle: ois.title,
+          securitySchemeName: security,
+          securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
+        } as ApiCredentials)
+    );
+  });
 
   const Config: Config = {
     chains,
@@ -179,7 +183,7 @@ const main = async () => {
     triggers,
     ois: Object.values(apiData.ois),
     apiCredentials,
-  }
+  };
 
   // apiData.deployments[new Date().toISOString().split('T')[0]] = {
   //   config: Config,
@@ -188,7 +192,6 @@ const main = async () => {
   //     content: ""
   //   }
   // }
-
 };
 
 runAndHandleErrors(main);
