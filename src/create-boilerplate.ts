@@ -8,7 +8,6 @@ import {
 } from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
 import { emptyObject } from './utils/normalization';
-import { ApiMetadata } from './types';
 
 const questions: PromptObject[] = [
   {
@@ -38,13 +37,13 @@ const main = async () => {
   const apiDataTemplate = readApiData();
 
   // Create the boilerplate apiMetadata
-  const apiMetadata = emptyObject(apiDataTemplate.apiMetadata, ['active'], []) as ApiMetadata;
+  const apiMetadata = emptyObject(apiDataTemplate.apiMetadata, ['active'], []);
   const apiMetadataBoilerplate = {
     ...apiMetadata,
     name,
     contact,
     description,
-  } as ApiMetadata;
+  };
 
   // Create the boilerplate ois
   const oises = emptyObject(
