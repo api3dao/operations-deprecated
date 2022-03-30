@@ -109,15 +109,15 @@ export const normalize = (payload: OperationsRepository) => {
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
-  for (const key in object) {
-    if (typeof object[key] === 'object' && !ignoreNestedKeys.includes(key)) {
-      emptyObject(object[key], preserveValueKeys, ignoreNestedKeys);
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      object[key] = preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key]);
+  const processedTuples = Object.entries(object).map(([key, value]) => {
+    if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
+      return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];
     }
-  }
-  return object;
+
+    return [key, preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key])];
+  });
+
+  return Object.fromEntries(processedTuples);
 };
 
 const emptyReturn = (value: any) => {

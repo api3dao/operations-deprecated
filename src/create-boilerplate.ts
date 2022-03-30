@@ -1,77 +1,88 @@
 import { PromptObject } from 'prompts';
-import { readApiData, writeApiData, promptQuestions, sanitiseFilename } from './utils/filesystem';
+import {
+  readApiData,
+  promptQuestions,
+  sanitiseFilename,
+  readOperationsRepository,
+  writeOperationsRepository,
+} from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
 import { emptyObject } from './utils/normalization';
-import { Api, ApiMetadata, Beacons, Oises, Templates } from './types';
+import { ApiMetadata } from './types';
 
 const questions: PromptObject[] = [
   {
     type: 'text',
-    name: 'apiName',
-    message: 'What is the name of the API Integration?',
-    initial: 'coingecko',
+    name: 'name',
+    message: [
+      "What is the API Provider's name?",
+      'Note that the name should include stylistic capitalisation, eg. CoinGecko or CoinMarkCap',
+    ].join('\n'),
+    initial: 'CoinGecko',
   },
   {
     type: 'text',
-    name: 'apiDescription',
-    message: 'Description of the API Integration',
-    initial: 'CoinGecko is a cryptocurrency ranking web site.',
+    name: 'description',
+    message: 'Please enter a description of the API integration',
+    initial: 'CoinGecko is a cryptocurrency ranking web site',
   },
   {
     type: 'text',
-    name: 'apiContact',
-    message: 'Contact email for the API Integration',
+    name: 'contact',
+    message: 'Please enter a contact email for the API integration',
   },
 ];
 
 const main = async () => {
-  const response = await promptQuestions(questions);
+  const { name, contact, description } = await promptQuestions(questions);
   const apiDataTemplate = readApiData();
 
-  // Create the boilderplate apiMetadata
+  // Create the boilerplate apiMetadata
   const apiMetadata = emptyObject(apiDataTemplate.apiMetadata, ['active'], []) as ApiMetadata;
   const apiMetadataBoilerplate = {
     ...apiMetadata,
-    name: response.apiName,
-    contact: response.apiContact,
-    description: response.apiDescription,
+    name,
+    contact,
+    description,
   } as ApiMetadata;
 
-  // Create the boilderplate ois
+  // Create the boilerplate ois
   const oises = emptyObject(
     apiDataTemplate.ois,
     ['oisFormat', 'version'],
     ['paths', 'fixedOperationParameters', 'reservedParameters', 'parameters']
-  ) as Oises;
-  const oisBoilerPlate = { [response.apiName + '-' + '1.0.0.json']: oises[Object.keys(oises)[0]] } as Oises;
+  );
+  const oisBoilerPlate = { [sanitiseFilename(`${name}-1.0.0.json`)]: oises[Object.keys(oises)[0]] };
 
   // Create the boilerplate template
   const templates = emptyObject(
     apiDataTemplate.templates,
     ['name', 'templateId', 'endpointId', 'parameters', 'decodedParameters'],
     ['decodedParameters']
-  ) as Templates;
+  );
   const templateBoilerPlate = {
-    [sanitiseFilename(response.apiName + '-' + 'template01.json')]: templates[Object.keys(templates)[0]],
-  } as Templates;
+    [sanitiseFilename(`${name}-template01.json`)]: templates[Object.keys(templates)[0]],
+  };
 
   // Create the boilerplate beacon
   const beacons = emptyObject(
     apiDataTemplate.beacons,
     ['updateConditionPercentage', 'active', 'walletType', 'deviationFactorThreshold', 'ttlMinutes'],
     ['decodedParameters']
-  ) as Beacons;
-  const beaconBoilerPlate = { [response.apiName + '-' + 'beacon01.json']: beacons[Object.keys(beacons)[0]] } as Beacons;
+  );
+  const beaconBoilerPlate = { [sanitiseFilename(`${name}-beacon01.json`)]: beacons[Object.keys(beacons)[0]] };
 
-  const ApiDataBoilerplate = {
+  const apiDataBoilerplate = {
     apiMetadata: apiMetadataBoilerplate,
     beacons: beaconBoilerPlate,
     templates: templateBoilerPlate,
     deployments: {},
     ois: oisBoilerPlate,
-  } as Api;
+  };
 
-  writeApiData(ApiDataBoilerplate, response.apiName);
+  const opsData = readOperationsRepository();
+  const updatedOpsData = { ...opsData, apis: { ...opsData.apis, [sanitiseFilename(name)]: apiDataBoilerplate } };
+  writeOperationsRepository(updatedOpsData);
 };
 
 runAndHandleErrors(main);
