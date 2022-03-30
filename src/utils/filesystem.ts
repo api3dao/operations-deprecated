@@ -93,6 +93,9 @@ export const writeJsonFile = (path: string, payload: any) => {
 export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
   readFileOrDirectoryRecursively(target) as OperationsRepository;
 
+export const readApiData = (target = join(__dirname, '..', '..', 'data', 'apis', 'api3')) =>
+  readFileOrDirectoryRecursively(target);
+
 export const readFileOrDirectoryRecursively = (target: string): any => {
   const stats = statSync(target);
   if (stats.isFile()) {
