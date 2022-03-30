@@ -85,6 +85,8 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
+  const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+
   // TODO break this up
   const documentation = {
     beacons: Object.fromEntries(
@@ -98,6 +100,9 @@ export const normalize = (payload: OperationsRepository) => {
               beaconId: beacon.beaconId,
               name: beacon.name,
               description: beacon.description,
+              templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
+                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)[0]
+              }.json`,
               chains: beacon.chains.map((chain) => chain.name),
             })),
         ])

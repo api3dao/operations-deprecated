@@ -1,4 +1,3 @@
 yarn run normalize-and-validate
-yarn run prettier:write
 yarn run lint
 git add data/documentation.json
