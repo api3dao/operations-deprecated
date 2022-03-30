@@ -1,5 +1,5 @@
 import { PromptObject } from 'prompts';
-import { readApiData, writeApiData, promptQuestions } from './utils/filesystem';
+import { readApiData, writeApiData, promptQuestions, sanitiseFilename } from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
 import { emptyObject } from './utils/normalization';
 import { Api, ApiMetadata, Beacons, Oises, Templates } from './types';
@@ -9,11 +9,13 @@ const questions: PromptObject[] = [
     type: 'text',
     name: 'apiName',
     message: 'What is the name of the API Integration?',
+    initial: 'coingecko',
   },
   {
     type: 'text',
     name: 'apiDescription',
     message: 'Description of the API Integration',
+    initial: 'CoinGecko is a cryptocurrency ranking web site.',
   },
   {
     type: 'text',
@@ -44,9 +46,9 @@ const main = async () => {
   const oisBoilerPlate = { [response.apiName + '-' + '1.0.0.json']: oises[Object.keys(oises)[0]] } as Oises;
 
   // Create the boilerplate template
-  const templates = emptyObject(apiDataTemplate.templates, [], ['decodedParameters']) as Templates;
+  const templates = emptyObject(apiDataTemplate.templates, ['name','templateId','endpointId','parameters','decodedParameters'], ['decodedParameters']) as Templates;
   const templateBoilerPlate = {
-    [response.apiName + '-' + 'tempate01.json']: templates[Object.keys(templates)[0]],
+    [sanitiseFilename(response.apiName + '-' + 'template01.json')]: templates[Object.keys(templates)[0]],
   } as Templates;
 
   // Create the boilerplate beacon
