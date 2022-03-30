@@ -2,7 +2,6 @@ import { readOperationsRepository, writeOperationsRepository } from './utils/fil
 import { runAndHandleErrors } from './utils/cli';
 import { normalize } from './utils/normalization';
 import { validate } from './utils/validation';
-import { replacer } from './utils/marshaling';
 
 const main = async () => {
   const rawOpsData = readOperationsRepository();
@@ -11,7 +10,7 @@ const main = async () => {
   const [success, logs] = validate(conformedOpsData);
   if (!success) {
     console.log('Validation failed:');
-    console.log(JSON.stringify(logs, replacer, 2));
+    console.log(JSON.stringify(logs, null, 2));
     return;
   }
 
