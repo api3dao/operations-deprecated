@@ -11,7 +11,7 @@ export interface TopUpWallet {
 
 export interface ExtendedChainDescription {
   active: boolean;
-  name: ChainName;
+  name: ChainName; // TODO check that the chain is available in the top level chains object
   sponsor: string;
   topUpWallets: TopUpWallet[];
 }
@@ -25,8 +25,7 @@ export interface Beacon {
   updateConditionPercentage: number;
   chains: ExtendedChainDescription[];
   signedKeeperConditions: {
-    deviationFactorThreshold: number;
-    ttlMinutes: number;
+    updateConditionPercentage: number;
   };
 }
 
@@ -56,6 +55,7 @@ export interface ApiMetadata {
   active: boolean;
   airnode: string; // TODO these are related, so check
   xpub: string; // TODO these are related, so check
+  logoPath: string;
 }
 
 export interface Api {
@@ -80,12 +80,22 @@ export interface BeaconDocumentation {
   chains: string[];
 }
 
+export interface ChainMetadata {
+  name: string;
+  id: string;
+  contracts: Record<ContractName, ContractAddress>;
+  nativeToken: string;
+  blockTime: number;
+  logoPath?: string;
+}
+
 export interface Documentation {
   beacons: Record<ApiName, BeaconDocumentation[]>;
-  //chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement
+  chains: Record<ChainName, ChainMetadata>;
 }
 
 export interface OperationsRepository {
   apis: Record<string, Api>;
   documentation: Documentation;
+  chains: Record<ChainName, ChainMetadata>;
 }

@@ -47,6 +47,12 @@ export const writeOperationsRepository = (
       });
     });
 
+    const chainsBasePath = join(tmpBasePath, 'chains');
+    mkdirSync(join(tmpBasePath, 'chains'), { recursive: true });
+    Object.entries(payload.chains).forEach(([_, chain]) => {
+      writeJsonFile(join(chainsBasePath, sanitiseFilename(chain.name)), chain);
+    });
+
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
   } catch (e) {
@@ -87,7 +93,7 @@ export const writeJsonFile = (path: string, payload: any) => {
 export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
   readFileOrDirectoryRecursively(target) as OperationsRepository;
 
-export const readFileOrDirectoryRecursively = (target: string) => {
+export const readFileOrDirectoryRecursively = (target: string): any => {
   const stats = statSync(target);
   if (stats.isFile()) {
     if (target.indexOf('.json') === -1) {

@@ -7,6 +7,8 @@ import { sanitiseFilename } from './filesystem';
 import { OperationsRepository } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
+  const { chains } = payload;
+
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
@@ -103,7 +105,8 @@ export const normalize = (payload: OperationsRepository) => {
         ])
         .filter(([_key, value]) => value.length > 0)
     ),
+    chains,
   };
 
-  return { apis, documentation } as OperationsRepository;
+  return { apis, documentation, chains } as OperationsRepository;
 };

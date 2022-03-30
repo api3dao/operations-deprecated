@@ -34,6 +34,18 @@ including:
 - Managed feeds
 - Pricing parameters
 
+### Chains — `/data/chains`
+
+`/data/chains` contains JSON files storing per-chain metadata in the following format:
+
+- `name`: The name of the chain
+- `id`: The id of the chain, eg. "3" for Ropsten
+- `contracts`: An object containing active protocol contracts on this chain, eg.
+  - `DapiServer`: "0x000..."
+- `nativeToken`: The native token symbol of the chain, eg. "ETH"
+- `blockTime`: The average number of seconds between blocks
+- `logoPath`: A URL or relative path to a logo for this chain
+
 ### APIs — `/data/apis`
 
 `/data/apis` hosts one directory per API, where the directory name is the sanitized API Name.
@@ -46,6 +58,7 @@ A JSON file that contains metadata related to the API:
 - `active`: If the latest deployment under `/data/apis/{sanitizedApiName}/deployments` is active
 - `airnode`: Airnode address
 - `xpub`: Extended public key of the Airnode wallet
+- `logoPath`: a URL or relative path to a logo for this data provider
 
 #### OIS — `/data/apis/{sanitizedApiName}/ois`
 
@@ -95,10 +108,7 @@ be human-browsable.
     - `walletType`: The wallet type, either 'API3' or 'Provider'
     - `address`: The target address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
 - `signedKeeperConditions`:
-  - `deviationFactorThreshold`: The factor by which to multiply the provider's deviation threshold to calculate API3's
-    `_conditionParameters`
-  - `ttlMinutes`: The number of minutes that need to have elapsed since the on-chain value exceeded API3's
-    updateCondition
+  - `updateConditionPercentage`: API3's update condition percentage, eg: 0.1 for 0.1%
 
 ### Managed feeds — `/data/feeds`
 

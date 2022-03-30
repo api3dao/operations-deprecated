@@ -21,5 +21,3 @@ const main = async () => {
 };
 
 runAndHandleErrors(main);
-
-// thursday
