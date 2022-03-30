@@ -46,7 +46,11 @@ const main = async () => {
   const oisBoilerPlate = { [response.apiName + '-' + '1.0.0.json']: oises[Object.keys(oises)[0]] } as Oises;
 
   // Create the boilerplate template
-  const templates = emptyObject(apiDataTemplate.templates, ['name','templateId','endpointId','parameters','decodedParameters'], ['decodedParameters']) as Templates;
+  const templates = emptyObject(
+    apiDataTemplate.templates,
+    ['name', 'templateId', 'endpointId', 'parameters', 'decodedParameters'],
+    ['decodedParameters']
+  ) as Templates;
   const templateBoilerPlate = {
     [sanitiseFilename(response.apiName + '-' + 'template01.json')]: templates[Object.keys(templates)[0]],
   } as Templates;
