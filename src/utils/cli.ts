@@ -16,7 +16,7 @@ export const runAndHandleErrors = (fn: () => Promise<unknown>) => {
       });
   } catch (error) {
     cliPrint.error('' + error);
-    console.log(error.stack);
+    console.log((error as Error).stack);
     process.exit(1);
   }
 };

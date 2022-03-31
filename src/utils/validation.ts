@@ -99,7 +99,7 @@ export const operationsRepositorySchema = z.object({
   chains: z.record(chainsMetadata),
 });
 
-export const replaceInterpolatedVariables = (object: any) => {
+export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {
     return object.map(replaceInterpolatedVariables);
   }

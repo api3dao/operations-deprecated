@@ -5,7 +5,7 @@
         "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
         "name": "CoinGecko BTC/USD 0.1 percent deviation",
         "description": "The public CoinGecko BTC/USD price ticker",
-        "templateUrl": "https://github.com/api3dao/operations/blob/d03fdcb6cb01c954252de63fb986b7d3e6d1dc1e/data/apis/api3/templates/coingecko btc_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/183767a5e6ab97af7581469a9a6791bc47d45f97/data/apis/api3/templates/coingecko btc_usd.json",
         "chains": ["ropsten"]
       }
     ]
@@ -17,7 +17,7 @@
       "contracts": { "DapiServer": "0xa70443CBE84C4e7BBcfD9DC097342932ab783e7f" },
       "nativeToken": "ropEth",
       "blockTime": 10,
-      "logoPath": "https://assets.coingecko.com/coins/images/13256/large/api3.jpg?1606751424"
+      "logoPath": "https://api.anyblock.tools/ethereum/ewf/ewc/icon/"
     }
   }
 }

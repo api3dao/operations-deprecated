@@ -103,7 +103,7 @@ export const normalize = (payload: OperationsRepository) => {
               name: beacon.name,
               description: beacon.description,
               templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
-                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)[0]
+                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
               }.json`,
               chains: beacon.chains.map((chain) => chain.name),
             })),
@@ -116,7 +116,7 @@ export const normalize = (payload: OperationsRepository) => {
   return { apis, documentation, chains } as OperationsRepository;
 };
 
-export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
+export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
   const processedTuples = Object.entries(object).map(([key, value]) => {
     if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
       return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];
