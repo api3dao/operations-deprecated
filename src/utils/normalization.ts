@@ -14,15 +14,15 @@ export const normalize = (payload: OperationsRepository) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
 
       const beacons = Object.fromEntries(
-        Object.entries(api.beacons).map(([_key, value]) => {
+        Object.entries(api.beacons).map(([_key, beacon]) => {
           const beaconId = keccak256(
-            defaultAbiCoder.encode(['address', 'bytes32'], [value.airnodeAddress, value.templateId])
+            defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
           );
 
           return [
-            sanitiseFilename(value.name),
+            sanitiseFilename(beacon.name),
             {
-              ...value,
+              ...beacon,
               beaconId,
             },
           ];
