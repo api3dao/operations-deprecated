@@ -1,6 +1,6 @@
 import { Config, ApiCallParameters } from '@api3/airnode-node';
 import { OIS } from '@api3/airnode-ois';
-import { Config as AirkeeperConfig } from '@api3/airkeeper/dist/src/types';
+import { Config as AirkeeperConfig } from './airkeeper-types';
 
 export type WalletType = 'Provider' | 'API3';
 
@@ -26,6 +26,7 @@ export interface Beacon {
   chains: ExtendedChainDescription[];
   signedKeeperConditions: {
     updateConditionPercentage: number;
+    ttlSeconds: number;
   };
 }
 

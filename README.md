@@ -109,6 +109,7 @@ be human-browsable.
     - `address`: The target address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
 - `signedKeeperConditions`:
   - `updateConditionPercentage`: API3's update condition percentage, eg: 0.1 for 0.1%
+  - `ttlSeconds`: Time in seconds since the last update, past which an update will be forced
 
 ### Managed feeds — `/data/feeds`
 

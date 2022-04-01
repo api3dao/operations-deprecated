@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { oisSchema, configSchema as airnodeConfigSchema } from '@api3/airnode-validator';
-import { configSchema as airkeeperConfigSchema } from '@api3/airkeeper/dist/src';
+import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 import { OperationsRepository } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
@@ -31,6 +31,7 @@ export const beaconSchema = z.object({
   chains: z.array(extendedChainDescriptionSchema),
   signedKeeperConditions: z.object({
     updateConditionPercentage: z.number(),
+    ttlSeconds: z.number(),
   }),
 });
 
