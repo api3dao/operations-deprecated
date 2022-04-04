@@ -294,6 +294,7 @@ const main = async () => {
   // Get the current date
   const date = new Date().toISOString().split('T')[0];
 
+  //// Create the deployment directory ////
   const updatedOpsData: OperationsRepository = {
     ...operationsRepository,
     apis: {
