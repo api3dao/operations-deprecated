@@ -229,7 +229,7 @@ const main = async () => {
               encodedBeaconUpdateSubscriptionConditions,
               airnodeAddress,
               sponsor,
-              DapiServerAddress, // Should this be the sponsorWallet.address instead?
+              DapiServerAddress,
               DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
             ]
           )
