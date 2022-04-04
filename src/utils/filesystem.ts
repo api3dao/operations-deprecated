@@ -1,9 +1,9 @@
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmdirSync, statSync, writeFileSync } from 'fs';
 import path, { join } from 'path';
 import prompts, { PromptObject } from 'prompts';
-import { Api, OperationsRepository } from '../types';
+import { format } from 'prettier';
+import { OperationsRepository } from '../types';
 
-// TODO handle secrets.env
 export const writeOperationsRepository = (
   payload: OperationsRepository,
   targetBasePath = join(__dirname, '..', '..', 'data')
@@ -57,52 +57,19 @@ export const writeOperationsRepository = (
   }
 };
 
-export const writeApiData = (payload: Api, target: string) => {
-  const tmpBasePath = join(__dirname, '..', '..', 'tmpData');
+export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
 
-  try {
-    rmdirSync(tmpBasePath, { recursive: true });
-    mkdirSync(tmpBasePath, { recursive: true });
+export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload[]> =>
+  readdirSync(directoryPath).map((filename) => ({
+    ...readJsonFile(join(directoryPath, filename)),
+    filename,
+  }));
 
-    const apiBasePath = tmpBasePath;
-    const deploymentsBasePath = join(apiBasePath, 'deployments');
+interface FilePayload {
+  readonly filename: string;
+}
 
-    mkdirSync(join(apiBasePath, 'beacons'));
-    mkdirSync(deploymentsBasePath);
-    mkdirSync(join(apiBasePath, 'templates'));
-    mkdirSync(join(apiBasePath, 'ois'));
-
-    writeJsonFile(join(apiBasePath, 'apiMetadata.json'), payload.apiMetadata);
-
-    // TODO abstract this
-    Object.entries(payload.beacons).forEach(([filename, beacon]) => {
-      writeJsonFile(join(apiBasePath, 'beacons', filename), beacon);
-    });
-    Object.entries(payload.templates).forEach(([filename, template]) => {
-      writeJsonFile(join(apiBasePath, 'templates', filename), template);
-    });
-    Object.entries(payload.ois).forEach(([filename, ois]) => {
-      writeJsonFile(join(apiBasePath, 'ois', filename), ois);
-    });
-
-    Object.entries(payload.deployments).forEach(([directoryName, deployment]) => {
-      const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
-      mkdirSync(subDeploymentBasePath);
-      Object.entries(deployment).forEach(([filename, configContent]) => {
-        writeJsonFile(join(subDeploymentBasePath, filename), configContent);
-      });
-    });
-
-    const targetBasePath = join(__dirname, '..', '..', 'data', 'apis', target);
-    rmdirSync(targetBasePath, { recursive: true });
-    renameSync(tmpBasePath, targetBasePath);
-  } catch (e) {
-    console.error('An error occurred while writing the api data structure: ', e);
-    console.trace(e);
-
-    rmdirSync(tmpBasePath, { recursive: true });
-  }
-};
+const prettierConfig = readJsonFile(join(__dirname, '..', '..', '.prettierrc'));
 
 export const writeJsonFile = (path: string, payload: any) => {
   if (payload.filename && payload.content) {
@@ -113,14 +80,15 @@ export const writeJsonFile = (path: string, payload: any) => {
 
   const extension = path.indexOf('.json') === -1 ? '.json' : '';
 
-  writeFileSync(`${path}${extension}`, JSON.stringify(payload, null, 2));
+  const prettierJson = format(JSON.stringify(payload), { semi: false, parser: 'json', ...prettierConfig });
+  writeFileSync(`${path}${extension}`, prettierJson);
 };
 
 export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
   readFileOrDirectoryRecursively(target) as OperationsRepository;
 
 export const readApiData = (target = join(__dirname, '..', '..', 'data', 'apis', 'api3')) =>
-  readFileOrDirectoryRecursively(target) as Api;
+  readFileOrDirectoryRecursively(target);
 
 export const readFileOrDirectoryRecursively = (target: string) => {
   const stats = statSync(target);
@@ -139,18 +107,6 @@ export const readFileOrDirectoryRecursively = (target: string) => {
     ])
   );
 };
-
-export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
-
-export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePayload[]> =>
-  readdirSync(directoryPath).map((filename) => ({
-    ...readJsonFile(join(directoryPath, filename)),
-    filename,
-  }));
-
-interface FilePayload {
-  readonly filename: string;
-}
 
 export const promptQuestions = (questions: PromptObject[]) =>
   prompts(questions, {

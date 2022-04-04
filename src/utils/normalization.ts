@@ -85,6 +85,8 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
+  const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+
   // TODO break this up
   const documentation = {
     beacons: Object.fromEntries(
@@ -98,6 +100,9 @@ export const normalize = (payload: OperationsRepository) => {
               beaconId: beacon.beaconId,
               name: beacon.name,
               description: beacon.description,
+              templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
+                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)[0]
+              }.json`,
               chains: beacon.chains.map((chain) => chain.name),
             })),
         ])
@@ -109,15 +114,15 @@ export const normalize = (payload: OperationsRepository) => {
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
-  for (const key in object) {
-    if (typeof object[key] === 'object' && !ignoreNestedKeys.includes(key)) {
-      emptyObject(object[key], preserveValueKeys, ignoreNestedKeys);
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      object[key] = preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key]);
+  const processedTuples = Object.entries(object).map(([key, value]) => {
+    if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
+      return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];
     }
-  }
-  return object;
+
+    return [key, preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key])];
+  });
+
+  return Object.fromEntries(processedTuples);
 };
 
 const emptyReturn = (value: any) => {

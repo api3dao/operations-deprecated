@@ -1,11 +1,12 @@
 {
   "declaration": true,
-  "lib": ["es2015"],
+  "downlevelIteration": true,
+  "lib": ["es2020"],
   "module": "commonjs",
   "moduleResolution": "node",
   "sourceMap": true,
   "strict": true,
-  "target": "es5",
+  "target": "es2020",
   "skipLibCheck": true,
   "compilerOptions": {
     "esModuleInterop": true,

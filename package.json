@@ -3,31 +3,34 @@
   "license": "MIT",
   "private": true,
   "version": "1.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/types.ts",
   "scripts": {
-    "export-documentation": "ts-node src/export-documentation.ts",
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
+    "build": "tsc -p tsconfig.json",
     "normalize-and-validate": "ts-node src/normalize-and-validate.ts",
-    "validate": "ts-node src/normalize-and-validate.ts",
+    "validate": "ts-node src/validate.ts",
     "normalize": "ts-node src/normalize.ts",
     "lint": "yarn run prettier:check && yarn run lint:eslint",
     "lint:eslint": "eslint . --ext .js,.ts",
-    "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\" --loglevel silent",
+    "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "start": "ts-node src/index.ts",
-    "prepare": "husky install"
+    "get-airkeeper": "rm -rf airkeeper; rm -rf node_modules/@api3/airkeeper; git clone http://github.com/api3dao/airkeeper; cd airkeeper; yarn install; yarn build; yarn pack; mkdir -p ../node_modules/@api3/airkeeper; cp -fv airkeeper*.tgz ../node_modules/@api3/airkeeper; cd ../node_modules/@api3/airkeeper; tar xvf *.tgz; mv package/* .; rm -rf package; rm -rf *.tgz; cd ../../../; rm -rf airkeeper;",
+    "prepare": "husky install; yarn get-airkeeper"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/api3dao/operations.git"
   },
   "devDependencies": {
-    "@api3/airkeeper": "api3dao/airkeeper",
+    "@api3/airnode-abi": "^0.5.0",
     "@api3/airnode-node": "^0.5.0",
     "@api3/airnode-ois": "^0.5.0",
-    "@api3/airnode-abi": "^0.5.0",
     "@api3/airnode-protocol": "^0.5.0",
     "@api3/airnode-admin": "^0.5.0",
     "@types/node": "^17.0.2",
+    "@types/prompts": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
@@ -39,12 +42,10 @@
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
-    "zod": "^3.14.2"
-  },
-  "dependencies": {
-    "@types/prompts": "^2.0.14",
+    "zod": "^3.14.2",
     "dotenv": "^16.0.0",
     "ethers": "^5.5.2",
     "prompts": "^2.4.2"
-  }
+  },
+  "dependencies": {}
 }

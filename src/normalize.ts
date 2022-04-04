@@ -6,11 +6,9 @@ const main = async () => {
   const rawOpsData = readOperationsRepository();
   const conformedOpsData = normalize(rawOpsData);
 
-  // TODO determine if rewrite required
-  if (JSON.stringify(rawOpsData) !== JSON.stringify(conformedOpsData)) {
-    console.log('Repository data changed - writing to disk...');
-    writeOperationsRepository(conformedOpsData);
-  }
+  console.log('Validation was successful, writing changes...');
+  writeOperationsRepository(conformedOpsData);
+  console.log('Operations data successfully written.');
 };
 
 runAndHandleErrors(main);

@@ -14,13 +14,11 @@ const main = async () => {
     return;
   }
 
-  console.log('Validation was successful.');
-
-  // TODO determine if rewrite required
-  if (JSON.stringify(rawOpsData) !== JSON.stringify(conformedOpsData)) {
-    console.log('Repository data changed - writing to disk...');
-    writeOperationsRepository(conformedOpsData);
-  }
+  console.log('Validation was successful, writing changes...');
+  writeOperationsRepository(conformedOpsData);
+  console.log('Operations data successfully written.');
 };
 
 runAndHandleErrors(main);
+
+// thursday
