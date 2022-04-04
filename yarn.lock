@@ -40,25 +40,6 @@
     lodash "^4.17.21"
     yargs "^17.0.1"
 
-"@api3/airnode-node@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@api3/airnode-node/-/airnode-node-0.4.1.tgz#82590c69b141a8b0c4cfb3cfc033239c75725478"
-  integrity sha512-Ke0zT2DvecTejFWfGjtw15HCJj1ZFQDXo+84T/PW/EHgWStGbm+2LbWmXmFuy3whcZghdN22qhRJ7av7dt9qBQ==
-  dependencies:
-    "@api3/airnode-abi" "^0.4.1"
-    "@api3/airnode-adapter" "^0.4.1"
-    "@api3/airnode-ois" "^0.4.1"
-    "@api3/airnode-protocol" "^0.4.1"
-    "@api3/airnode-validator" "^0.4.1"
-    "@lifeomic/attempt" "^3.0.0"
-    aws-sdk "^2.814.0"
-    date-fns "^2.16.1"
-    dotenv "^10.0.0"
-    ethers "^5.4.5"
-    google-auth-library "^7.10.2"
-    lodash "^4.17.21"
-    yargs "^17.0.1"
-
 "@api3/airnode-node@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@api3/airnode-node/-/airnode-node-0.5.0.tgz#ef89f74901e19b2d8c3cd2d80c86860816e093bb"

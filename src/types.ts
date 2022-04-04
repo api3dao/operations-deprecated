@@ -1,6 +1,6 @@
 import { Config, ApiCallParameters } from '@api3/airnode-node';
 import { OIS } from '@api3/airnode-ois';
-import { Config as AirkeeperConfig } from '@api3/airkeeper/dist/src/types';
+import { AirkeeperConfig } from '@api3/airkeeper/dist/src/validator';
 
 export type WalletType = 'Provider' | 'API3';
 
@@ -35,7 +35,7 @@ export type Beacons = Record<string, Beacon>;
 export interface DeploymentSet {
   config: Config;
   airkeeper: AirkeeperConfig;
-  secrets: { content: string };
+  secrets: { filename: string; content: string };
 }
 export type Deployments = Record<string, DeploymentSet>;
 
