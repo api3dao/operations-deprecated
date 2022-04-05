@@ -3,8 +3,6 @@ import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
-import { Config } from '@api3/airnode-node';
-import { AirkeeperConfig } from '@api3/airkeeper/dist/src/validator';
 import { OperationsRepository } from './types';
 import { promptQuestions, readOperationsRepository, writeOperationsRepository } from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
@@ -87,7 +85,7 @@ const main = async () => {
     nodeVersion: require('@api3/airnode-node/package.json').version,
     cloudProvider: {
       type: 'aws' as const,
-      region: 'us-east-1' as const,
+      region: 'us-east-1',
       disableConcurrencyReservations: true,
     },
     airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
@@ -111,19 +109,19 @@ const main = async () => {
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: 'dev' as const,
+    stage: 'dev',
     skipValidation: true,
   };
 
   //generate the triggers from the OISes
   const oisTriggers = await Promise.all(
-    Object.values(apiData.ois).flatMap((ois) => {
-      return ois.endpoints.map(async (endpoint) => ({
+    Object.values(apiData.ois).flatMap((ois) =>
+      ois.endpoints.map(async (endpoint) => ({
         endpointId: await deriveEndpointId(ois.title, endpoint.name),
         endpointName: endpoint.name,
         oisTitle: ois.title,
-      }));
-    })
+      }))
+    )
   );
 
   const triggers = {
@@ -132,17 +130,15 @@ const main = async () => {
     httpSignedData: oisTriggers,
   };
 
-  const apiCredentials = Object.values(apiData.ois).flatMap((ois) => {
-    return Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => {
-      return {
-        oisTitle: ois.title,
-        securitySchemeName: security,
-        securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
-      };
-    });
-  });
+  const apiCredentials = Object.values(apiData.ois).flatMap((ois) =>
+    Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => ({
+      oisTitle: ois.title,
+      securitySchemeName: security,
+      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
+    }))
+  );
 
-  const Config: Config = {
+  const config = {
     chains,
     nodeSettings,
     triggers,
@@ -167,7 +163,7 @@ const main = async () => {
     ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
   ];
 
-  const Secrets = {
+  const secrets = {
     filename: '.env',
     content: secretsArray.join('\n'),
   };
@@ -279,7 +275,7 @@ const main = async () => {
     {}
   );
 
-  const AirkeeperConfig: AirkeeperConfig = {
+  const airkeeper = {
     airnodeAddress: apiData.apiMetadata.airnode,
     airnodeXpub: apiData.apiMetadata.xpub,
     chains: airkeeperChains,
@@ -302,9 +298,9 @@ const main = async () => {
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
           [date]: {
-            config: Config,
-            airkeeper: AirkeeperConfig,
-            secrets: Secrets,
+            config,
+            airkeeper,
+            secrets,
           },
         },
       },
