@@ -114,6 +114,15 @@ export const normalize = (payload: OperationsRepository) => {
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
+  if (Array.isArray(object)) {
+    return object.map((value) => {
+      if (typeof value === 'object' && !ignoreNestedKeys.includes(value)) {
+        return emptyObject(value, preserveValueKeys, ignoreNestedKeys);
+      }
+
+      return preserveValueKeys.includes(value) ? object[value] : emptyReturn(object[value]);
+    });
+  }
   const processedTuples = Object.entries(object).map(([key, value]) => {
     if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
       return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];
@@ -121,7 +130,6 @@ export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNest
 
     return [key, preserveValueKeys.includes(key) ? object[key] : emptyReturn(object[key])];
   });
-
   return Object.fromEntries(processedTuples);
 };
 

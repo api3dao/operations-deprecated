@@ -3,15 +3,8 @@ import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
-import { ChainConfig, NodeSettings, Triggers, Trigger, ApiCredentials, Config } from '@api3/airnode-node';
-import {
-  AirkeeperConfig,
-  AirkeeperChainConfig,
-  Triggers as AirkeeperTriggers,
-  Subscriptions,
-  Templates as AirkeeperTemplates,
-  Endpoints as AirkeeperEndpoints,
-} from '@api3/airkeeper/dist/src/validator';
+import { Config } from '@api3/airnode-node';
+import { AirkeeperConfig } from '@api3/airkeeper/dist/src/validator';
 import { OperationsRepository } from './types';
 import { promptQuestions, readOperationsRepository, writeOperationsRepository } from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
@@ -28,13 +21,13 @@ const questions = (choices: Choice[]): PromptObject[] => {
     {
       type: 'confirm',
       name: 'airnodeAuthorizer',
-      message: 'Do you want to include the airnode authorizer?',
+      message: 'Do you want to include the Airnode Authorizer?',
       initial: false,
     },
     {
       type: 'confirm',
       name: 'airnodeHeartbeat',
-      message: 'Do you want to enable the airnode heartbeat?',
+      message: 'Do you want to enable the Airnode Heartbeat?',
       initial: false,
     },
   ];
@@ -45,7 +38,6 @@ const main = async () => {
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })) as Choice[];
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
-  const secrets = [];
 
   //// Build Config.json  ////
 
@@ -56,7 +48,7 @@ const main = async () => {
     ),
   ];
 
-  const chains: ChainConfig[] = apiChains.map((chainName) => {
+  const chains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
     //TODO: Add RequesterAuthorizerWithManager
     const authorizers =
@@ -78,15 +70,12 @@ const main = async () => {
       },
     };
 
-    // push the provider url to the secrets
-    secrets.push(`${chainName}_PROVIDER_URL=`.toUpperCase());
-
     return {
       authorizers,
       contracts,
       id: `${chainId}`,
       providers,
-      type: 'evm',
+      type: 'evm' as const,
       options,
       maxConcurrency: 100,
       blockHistoryLimit: 300,
@@ -94,11 +83,11 @@ const main = async () => {
     };
   });
 
-  const nodeSettings: NodeSettings = {
-    nodeVersion: '0.5.0',
+  const nodeSettings = {
+    nodeVersion: require('@api3/airnode-node/package.json').version,
     cloudProvider: {
-      type: 'aws',
-      region: 'us-east-1',
+      type: 'aws' as const,
+      region: 'us-east-1' as const,
       disableConcurrencyReservations: true,
     },
     airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
@@ -120,24 +109,15 @@ const main = async () => {
       apiKey: '${HTTP_SIGNED_DATA_GATEWAY_API_KEY}',
       maxConcurrency: 20,
     },
-    logFormat: 'plain',
-    logLevel: 'INFO',
-    stage: 'dev',
+    logFormat: 'plain' as const,
+    logLevel: 'INFO' as const,
+    stage: 'dev' as const,
     skipValidation: true,
   };
 
-  // Push the NodeSetting secrets to the secrets array
-  secrets.push(`AIRNODE_WALLET_MNEMONIC=`);
-  response.airnodeHeartbeat && secrets.push(`HEARTBEAT_API_KEY=`);
-  response.airnodeHeartbeat && secrets.push(`HEARTBEAT_ID=`);
-  response.airnodeHeartbeat && secrets.push(`HEARTBEAT_URL=`);
-  secrets.push(`HTTP_GATEWAY_API_KEY=`);
-  secrets.push(`HTTP_SIGNED_DATA_GATEWAY_API_KEY=`);
-
   //generate the triggers from the OISes
-  const oisTriggers: Trigger[] = await Promise.all(
-    Object.keys(apiData.ois).flatMap((oisFilename) => {
-      const ois = apiData.ois[oisFilename];
+  const oisTriggers = await Promise.all(
+    Object.values(apiData.ois).flatMap((ois) => {
       return ois.endpoints.map(async (endpoint) => ({
         endpointId: await deriveEndpointId(ois.title, endpoint.name),
         endpointName: endpoint.name,
@@ -146,17 +126,14 @@ const main = async () => {
     })
   );
 
-  const triggers: Triggers = {
+  const triggers = {
     rrp: oisTriggers,
     http: oisTriggers,
     httpSignedData: oisTriggers,
   };
 
-  const apiCredentials: ApiCredentials[] = Object.keys(apiData.ois).flatMap((oisFilename) => {
-    const ois = apiData.ois[oisFilename];
+  const apiCredentials = Object.values(apiData.ois).flatMap((ois) => {
     return Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => {
-      // push the security scheme to the secrets
-      secrets.push(`SS_${security.toUpperCase()}=`.replace(/ /g, '_'));
       return {
         oisTitle: ois.title,
         securitySchemeName: security,
@@ -173,9 +150,31 @@ const main = async () => {
     apiCredentials,
   };
 
+    //// Build Secrets.env ////
+
+    const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
+    Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
+      `SS_${security.toUpperCase()}=`.replace(/ /g, '_')
+    )
+   );
+  
+   const secretsArray = [
+    `AIRNODE_WALLET_MNEMONIC=`,
+    `HTTP_GATEWAY_API_KEY=`,
+    `HTTP_SIGNED_DATA_GATEWAY_API_KEY=`,
+    ...(response.airnodeHeartbeat ? [`HEARTBEAT_API_KEY=`, `HEARTBEAT_ID=`, `HEARTBEAT_URL=`] : []),
+    ...oisSecrets,
+    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+  ]
+
+  const Secrets = {
+    filename: '.env',
+    content: secretsArray.join('\n'),
+  }
+
   //// Build Airkeeper.json ////
 
-  const airkeeperChains: AirkeeperChainConfig[] = apiChains.map((chainName) => {
+  const airkeeperChains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
     //TODO: Add RrpBeaconServer and DapiServer contracts based on chain
     const RrpBeaconServer = '';
@@ -190,15 +189,15 @@ const main = async () => {
     };
   });
 
-  const airkeeperSubscriptions: Subscriptions = Object.keys(apiData.beacons)
+  const airkeeperSubscriptions = Object.values(apiData.beacons)
     .flatMap((beacon) => {
       const DapiServerInteface = DapiServerInterface();
       const parameters = '0x';
-      const airnodeAddress = apiData.beacons[beacon].airnodeAddress;
-      const templateId = apiData.beacons[beacon].templateId;
+      const airnodeAddress = beacon.airnodeAddress;
+      const templateId = beacon.templateId;
 
       const threshold = ethers.BigNumber.from(100000000)
-        .mul(apiData.beacons[beacon].updateConditionPercentage * 100)
+        .mul(beacon.updateConditionPercentage * 100)
         .div(10000);
       const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(['uint256'], [threshold]);
       const encodedBeaconUpdateSubscriptionConditions = encode([
@@ -213,7 +212,7 @@ const main = async () => {
         { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
       ]);
 
-      return apiData.beacons[beacon].chains.map((chain) => {
+      return beacon.chains.map((chain) => {
         const chainId = chainNameToChainId[chain.name] || 1;
         //TODO: Add DapiServer contracts based on chain
         const DapiServerAddress = ethers.constants.AddressZero;
@@ -251,32 +250,31 @@ const main = async () => {
     })
     .reduce((subscriptionsObject, subscription) => ({ ...subscriptionsObject, ...subscription }), {});
 
-  const airkeeperTriggers: AirkeeperTriggers = {
+  const airkeeperTriggers = {
     rrpBeaconServerKeeperJobs: [],
     protoPsp: Object.keys(airkeeperSubscriptions),
   };
 
-  const airkeeperTemplates: AirkeeperTemplates = Object.keys(apiData.templates).reduce(
+  const airkeeperTemplates = Object.values(apiData.templates).reduce(
     (templateObj, template) => ({
       ...templateObj,
-      [apiData.templates[template].templateId]: {
-        endpointId: apiData.templates[template].endpointId,
-        templateParameters: apiData.templates[template].parameters,
+      [template.templateId]: {
+        endpointId: template.endpointId,
+        templateParameters: template.parameters,
       },
     }),
     {}
   );
 
   const airkeeperEndpointArray = await Promise.all(
-    Object.keys(apiData.ois).flatMap((oisFilename) => {
-      const ois = apiData.ois[oisFilename];
+    Object.values(apiData.ois).flatMap((ois) => {
       return ois.endpoints.map(async (endpoint) => ({
         [await deriveEndpointId(ois.title, endpoint.name)]: { endpointName: endpoint.name, oisTitle: ois.title },
       }));
     })
   );
 
-  const AirkeeperEndpoints: AirkeeperEndpoints = airkeeperEndpointArray.reduce(
+  const AirkeeperEndpoints = airkeeperEndpointArray.reduce(
     (endpointsObject, endpoint) => ({ ...endpointsObject, ...endpoint }),
     {}
   );
@@ -306,10 +304,7 @@ const main = async () => {
           [date]: {
             config: Config,
             airkeeper: AirkeeperConfig,
-            secrets: {
-              filename: '.env',
-              content: secrets.join('\n'),
-            },
+            secrets: Secrets,
           },
         },
       },
