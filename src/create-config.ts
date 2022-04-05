@@ -150,27 +150,27 @@ const main = async () => {
     apiCredentials,
   };
 
-    //// Build Secrets.env ////
+  //// Build Secrets.env ////
 
-    const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
+  const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
       `SS_${security.toUpperCase()}=`.replace(/ /g, '_')
     )
-   );
-  
-   const secretsArray = [
+  );
+
+  const secretsArray = [
     `AIRNODE_WALLET_MNEMONIC=`,
     `HTTP_GATEWAY_API_KEY=`,
     `HTTP_SIGNED_DATA_GATEWAY_API_KEY=`,
     ...(response.airnodeHeartbeat ? [`HEARTBEAT_API_KEY=`, `HEARTBEAT_ID=`, `HEARTBEAT_URL=`] : []),
     ...oisSecrets,
     ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
-  ]
+  ];
 
   const Secrets = {
     filename: '.env',
     content: secretsArray.join('\n'),
-  }
+  };
 
   //// Build Airkeeper.json ////
 
