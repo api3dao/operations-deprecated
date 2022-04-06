@@ -4,23 +4,25 @@ import { ethers } from 'ethers';
 import { decode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
-import { OperationsRepository } from '../types';
+import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
+  const { chains } = payload;
+
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
 
       const beacons = Object.fromEntries(
-        Object.entries(api.beacons).map(([_key, value]) => {
+        Object.entries(api.beacons).map(([_key, beacon]) => {
           const beaconId = keccak256(
-            defaultAbiCoder.encode(['address', 'bytes32'], [value.airnodeAddress, value.templateId])
+            defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
           );
 
           return [
-            sanitiseFilename(value.name),
+            sanitiseFilename(beacon.name),
             {
-              ...value,
+              ...beacon,
               beaconId,
             },
           ];
@@ -54,9 +56,8 @@ export const normalize = (payload: OperationsRepository) => {
             key,
             Object.fromEntries(
               Object.entries(value).map(([key, value]) => {
-                console.log(key);
-                if (key.toLowerCase() === 'secrets') {
-                  const envBuffer = Buffer.from(value.content);
+                if (key === 'secrets') {
+                  const envBuffer = Buffer.from((value as Secrets).content);
                   const content = Object.entries(parse(envBuffer))
                     .map(([key, _value]) => key)
                     .concat([''])
@@ -101,19 +102,20 @@ export const normalize = (payload: OperationsRepository) => {
               name: beacon.name,
               description: beacon.description,
               templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
-                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)[0]
+                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
               }.json`,
               chains: beacon.chains.map((chain) => chain.name),
             })),
         ])
         .filter(([_key, value]) => value.length > 0)
     ),
+    chains,
   };
 
-  return { apis, documentation } as OperationsRepository;
+  return { apis, documentation, chains } as OperationsRepository;
 };
 
-export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]) => {
+export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
   const processedTuples = Object.entries(object).map(([key, value]) => {
     if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
       return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];

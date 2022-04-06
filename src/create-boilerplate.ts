@@ -1,13 +1,10 @@
 import { PromptObject } from 'prompts';
-import {
-  readApiData,
-  promptQuestions,
-  sanitiseFilename,
-  readOperationsRepository,
-  writeOperationsRepository,
-} from './utils/filesystem';
 import { runAndHandleErrors } from './utils/cli';
+import { sanitiseFilename } from './utils/filesystem';
 import { emptyObject } from './utils/normalization';
+import { promptQuestions } from './utils/prompts';
+import { readApiData, readOperationsRepository } from './utils/read-operations';
+import { writeOperationsRepository } from './utils/write-operations';
 
 const questions: PromptObject[] = [
   {

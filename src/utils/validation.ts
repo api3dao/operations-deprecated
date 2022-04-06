@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { oisSchema, configSchema as airnodeConfigSchema } from '@api3/airnode-validator';
-import { configSchema as airkeeperConfigSchema } from '@api3/airkeeper/dist/src';
+import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 import { OperationsRepository } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
@@ -9,8 +9,10 @@ export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z0-9]{107}$/);
 
+export const walletTypeSchema = z.enum(['Provider', 'API3']);
+
 export const topUpWalletSchema = z.object({
-  walletType: z.enum(['Provider', 'API3']),
+  walletType: walletTypeSchema,
   address: evmAddressSchema,
 });
 
@@ -29,18 +31,21 @@ export const beaconSchema = z.object({
   templateId: evmTemplateIdSchema,
   updateConditionPercentage: z.number(),
   chains: z.array(extendedChainDescriptionSchema),
-  signedKeeperConditions: z.object({
-    deviationFactorThreshold: z.number(),
-    ttlMinutes: z.number(),
+  airseekerConfig: z.object({
+    deviationThreshold: z.number(),
+    heartbeatInterval: z.number(),
+    updateInterval: z.number(),
   }),
 });
 
 export const beaconsSchema = z.record(beaconSchema);
 
+export const secretsSchema = z.object({ filename: z.string(), content: z.string() });
+
 export const deploymentSetSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
-  secrets: z.object({ filename: z.string(), content: z.string() }),
+  secrets: secretsSchema,
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
@@ -62,6 +67,7 @@ export const apiMetadataSchema = z.object({
   active: z.boolean(),
   airnode: evmAddressSchema,
   xpub: evmXpubSchema,
+  logoPath: z.string(),
 });
 
 export const apiSchema = z.object({
@@ -79,18 +85,27 @@ export const beaconDocumentationSchema = z.object({
   chains: z.array(z.string()),
 });
 
+export const chainsMetadataSchema = z.object({
+  name: z.string(),
+  id: z.string(),
+  contracts: z.record(z.string()),
+  nativeToken: z.string(),
+  blockTime: z.number(),
+  logoPath: z.string(),
+});
+
 export const documentationSchema = z.object({
   beacons: z.record(z.array(beaconDocumentationSchema)),
-  // TODO Implement chains
-  // chains: z.record(z.record(evmAddressSchema)),
+  chains: z.record(chainsMetadataSchema),
 });
 
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
+  chains: z.record(chainsMetadataSchema),
 });
 
-export const replaceInterpolatedVariables = (object: any) => {
+export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {
     return object.map(replaceInterpolatedVariables);
   }

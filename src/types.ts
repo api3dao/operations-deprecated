@@ -1,94 +1,39 @@
-import { Config, ApiCallParameters } from '@api3/airnode-node';
-import { OIS } from '@api3/airnode-ois';
-import { Config as AirkeeperConfig } from '@api3/airkeeper/dist/src/types';
+import { z } from 'zod';
+import {
+  apiMetadataSchema,
+  apiSchema,
+  beaconDocumentationSchema,
+  beaconSchema,
+  beaconsSchema,
+  chainsMetadataSchema,
+  deploymentSetSchema,
+  deploymentsSchema,
+  documentationSchema,
+  extendedChainDescriptionSchema,
+  oisesSchema,
+  operationsRepositorySchema,
+  secretsSchema,
+  templateSchema,
+  topUpWalletSchema,
+  templatesSchema,
+  walletTypeSchema,
+} from './utils/validation';
 
-export type WalletType = 'Provider' | 'API3';
+export type Beacon = z.infer<typeof beaconSchema>;
+export type Beacons = z.infer<typeof beaconsSchema>;
+export type DeploymentSet = z.infer<typeof deploymentSetSchema>;
+export type Deployments = z.infer<typeof deploymentsSchema>;
+export type Template = z.infer<typeof templateSchema>;
+export type Templates = z.infer<typeof templatesSchema>;
+export type Oises = z.infer<typeof oisesSchema>;
+export type ApiMetadata = z.infer<typeof apiMetadataSchema>;
+export type Api = z.infer<typeof apiSchema>;
+export type BeaconDocumentation = z.infer<typeof beaconDocumentationSchema>;
+export type ChainsMetadata = z.infer<typeof chainsMetadataSchema>;
+export type Documentation = z.infer<typeof documentationSchema>;
+export type Secrets = z.infer<typeof secretsSchema>;
+export type TopUpWalletSchema = z.infer<typeof topUpWalletSchema>;
+export type WalletType = z.infer<typeof walletTypeSchema>;
+export type ExtendedChainDescription = z.infer<typeof extendedChainDescriptionSchema>;
 
-export interface TopUpWallet {
-  walletType: WalletType;
-  address: string;
-}
-
-export interface ExtendedChainDescription {
-  active: boolean;
-  name: ChainName;
-  sponsor: string;
-  topUpWallets: TopUpWallet[];
-}
-
-export interface Beacon {
-  name: string;
-  description: string;
-  beaconId: string;
-  airnodeAddress: string; // TODO verify in apiMetadata
-  templateId: string; // TODO verify exists in templates
-  updateConditionPercentage: number;
-  chains: ExtendedChainDescription[];
-  signedKeeperConditions: {
-    deviationFactorThreshold: number;
-    ttlMinutes: number;
-  };
-}
-
-export type Beacons = Record<string, Beacon>;
-
-export interface DeploymentSet {
-  config: Config;
-  airkeeper: AirkeeperConfig;
-  secrets: { content: string };
-}
-export type Deployments = Record<string, DeploymentSet>;
-
-export interface Template {
-  name: string;
-  templateId: string;
-  endpointId: string;
-  parameters: string;
-  decodedParameters: Record<string, string>;
-}
-
-export type Templates = Record<string, Template>;
-
-export type Oises = Record<string, OIS>;
-
-export interface ApiMetadata {
-  name: string;
-  contact?: string;
-  description?: string;
-  active: boolean;
-  airnode: string; // TODO these are related, so check
-  xpub: string; // TODO these are related, so check
-}
-
-export interface Api {
-  apiMetadata: ApiMetadata;
-  beacons: Beacons;
-  templates: Templates;
-  deployments: Deployments;
-  ois: Oises;
-}
-
-export type ChainName = string;
-export type ContractName = string;
-export type ContractAddress = string;
-export type ApiName = string;
-
-export interface BeaconDocumentation {
-  beaconId: string;
-  name: string;
-  description: string;
-  oisTitle: string;
-  decodedParameters: ApiCallParameters[];
-  templateUrl: string;
-  chains: string[];
-}
-
-export interface Documentation {
-  beacons: Record<ApiName, BeaconDocumentation[]>;
-  //chains: Record<ChainName, Record<ContractName, ContractAddress>>; // TODO implement
-}
-
-export interface OperationsRepository {
-  apis: Record<string, Api>;
-  documentation: Documentation;
-}
+export type OperationsRepository = z.infer<typeof operationsRepositorySchema>;
