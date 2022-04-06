@@ -2,7 +2,9 @@ import { randomBytes } from 'crypto';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { runAndHandleErrors } from './utils/cli';
-import { promptQuestions, readOperationsRepository, writeOperationsRepository } from './utils/filesystem';
+import { promptQuestions } from './utils/prompts';
+import { readOperationsRepository } from './utils/read-operations'
+import { writeOperationsRepository } from './utils/write-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
