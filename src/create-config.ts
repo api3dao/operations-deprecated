@@ -4,7 +4,9 @@ import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { OperationsRepository } from './types';
-import { promptQuestions, readOperationsRepository, writeOperationsRepository } from './utils/filesystem';
+import { promptQuestions } from './utils/prompts';
+import { readOperationsRepository } from './utils/read-operations';
+import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { chainNameToChainId, DapiServerInterface } from './utils/evm';
 

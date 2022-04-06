@@ -1,19 +1,19 @@
 {
-  "declaration": true,
-  "downlevelIteration": true,
-  "lib": ["es2020"],
-  "module": "commonjs",
-  "moduleResolution": "node",
-  "sourceMap": true,
-  "strict": true,
-  "target": "es2020",
-  "skipLibCheck": true,
   "compilerOptions": {
+    "declaration": true,
+    "downlevelIteration": true,
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5",
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "outDir": "dist"
+    "outDir": "./dist"
   },
   "include": ["./src/**/*", "./test/**/*", "./scripts/**/*"],
   "exclude": ["dist/**/*", "node_modules/**/*"]

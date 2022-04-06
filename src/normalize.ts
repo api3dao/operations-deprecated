@@ -1,4 +1,5 @@
-import { readOperationsRepository, writeOperationsRepository } from './utils/filesystem';
+import { readOperationsRepository } from './utils/read-operations';
+import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { normalize } from './utils/normalization';
 

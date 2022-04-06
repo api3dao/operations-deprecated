@@ -3,12 +3,17 @@
   "license": "MIT",
   "private": true,
   "version": "1.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/types.ts",
+  "main": "./dist/index",
+  "types": "./dist/types",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf -rf ./dist *.tgz",
+    "compile": "tsc -p tsconfig.json",
     "normalize-and-validate": "ts-node src/normalize-and-validate.ts",
     "validate": "ts-node src/validate.ts",
     "normalize": "ts-node src/normalize.ts",
@@ -16,9 +21,10 @@
     "lint:eslint": "eslint . --ext .js,.ts",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
+    "pack": "yarn pack",
     "start": "ts-node src/index.ts",
-    "get-airkeeper": "rm -rf airkeeper; rm -rf node_modules/@api3/airkeeper; git clone http://github.com/api3dao/airkeeper; cd airkeeper; yarn install; yarn build; yarn pack; mkdir -p ../node_modules/@api3/airkeeper; cp -fv airkeeper*.tgz ../node_modules/@api3/airkeeper; cd ../node_modules/@api3/airkeeper; tar xvf *.tgz; mv package/* .; rm -rf package; rm -rf *.tgz; cd ../../../; rm -rf airkeeper;",
-    "prepare": "husky install; yarn get-airkeeper"
+    "prepare": "husky install",
+    "postinstall": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -34,19 +40,20 @@
     "@types/prompts": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "dotenv": "^16.0.0",
     "eslint": "^8.5.0",
     "eslint-plugin-functional": "^4.0.2",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
+    "ethers": "^5.5.2",
     "husky": "^7.0.4",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
+    "prompts": "^2.4.2",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
-    "zod": "^3.14.2",
-    "dotenv": "^16.0.0",
-    "ethers": "^5.5.2",
-    "prompts": "^2.4.2"
+    "zod": "^3.14.2"
   },
   "dependencies": {}
 }
