@@ -39,7 +39,7 @@ const main = async () => {
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
 
-  //// Build Config.json  ////
+  //// Build config.json  ////
 
   // Get all the chains the API will be deployed on
   const apiChains = [
@@ -148,7 +148,7 @@ const main = async () => {
     apiCredentials,
   };
 
-  //// Build Secrets.env ////
+  //// Build secrets.env ////
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
@@ -170,7 +170,16 @@ const main = async () => {
     content: secretsArray.join('\n'),
   };
 
-  //// Build Airkeeper.json ////
+  //// Build aws.env ////
+
+  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`, `# Optional`, `AWS_SESSION_TOKEN=`];
+
+  const aws = {
+    filename: '.env',
+    content: awsSecretsArray.join('\n'),
+  };
+
+  //// Build airkeeper.json ////
 
   const airkeeperChains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
@@ -303,6 +312,7 @@ const main = async () => {
             config,
             airkeeper,
             secrets,
+            aws,
           },
         },
       },
