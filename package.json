@@ -11,6 +11,7 @@
   "scripts": {
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
+    "import-receipt": "ts-node src/import-receipt.ts",
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",
