@@ -28,8 +28,8 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 };
 
 const main = async () => {
-  const httpGateWayKey = randomBytes(48).toString('hex');
-  const signedHttpGateWayKey = randomBytes(48).toString('hex');
+  const httpGatewayKey = randomBytes(48).toString('hex');
+  const signedHttpGatewayKey = randomBytes(48).toString('hex');
 
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
@@ -43,8 +43,8 @@ const main = async () => {
     filename: '.env',
     content: [
       ...oldSecrets,
-      `HTTP_GATEWAY_API_KEY=${httpGateWayKey}`,
-      `HTTP_SIGNED_DATA_GATEWAY_API_KEY=${signedHttpGateWayKey}`,
+      `HTTP_GATEWAY_API_KEY=${httpGatewayKey}`,
+      `HTTP_SIGNED_DATA_GATEWAY_API_KEY=${signedHttpGatewayKey}`,
     ].join('\n'),
   };
 
@@ -65,8 +65,8 @@ const main = async () => {
     },
   };
 
-  console.log(`🔑 Generated HTTP Gateway API Key: ${httpGateWayKey}`);
-  console.log(`🔑 Generated HTTP Signed Data Gateway API Key: ${signedHttpGateWayKey}`);
+  console.log(`🔑 Generated HTTP Gateway API Key: ${httpGatewayKey}`);
+  console.log(`🔑 Generated HTTP Signed Data Gateway API Key: ${signedHttpGatewayKey}`);
 
   writeOperationsRepository(updatedOpsData);
 };
