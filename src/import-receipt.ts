@@ -1,8 +1,8 @@
-import { existsSync, mkdirSync, renameSync, rmdirSync, rmSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, rmSync } from 'fs';
 import { join } from 'path';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
-import { runAndHandleErrors, runShellCommand } from './utils/cli';
+import { runAndHandleErrors } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
 import { readJsonFile, readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
