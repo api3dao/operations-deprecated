@@ -1,4 +1,4 @@
-import { readOperationsRepository } from './utils/filesystem';
+import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { validate } from './utils/validation';
 
