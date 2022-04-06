@@ -3,7 +3,8 @@ import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { runAndHandleErrors, runShellCommand } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
+import { readJsonFile, readOperationsRepository } from './utils/read-operations';
+import { writeJsonFile } from './utils/write-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
@@ -28,7 +29,6 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 
 const main = async () => {
   const nodeVersion = require('@api3/airnode-node/package.json').version;
-  const airkeeperVersion = require('@api3/airkeeper/package.json').version;
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
@@ -46,25 +46,36 @@ const main = async () => {
     .filter(Boolean)
     .join(' ');
 
-  console.log(`☁ - Airnode has been deployed, you can find the "receipt.json" within the deployments folder.`);
+  console.log(`⏳ - Deploying Airnode...`);
 
   runShellCommand(airnodeDeployCommand);
 
-  console.log(`⏳ - Now deploying Airkeeper`);
+  const gateway: any = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
+    .trim()
+    .split('\n')
+    .map((secret) => ({ title: secret.split('=')[0], value: secret.split('=')[1] }))
+    .filter((secret) => secret.title === 'HTTP_GATEWAY_API_KEY' || secret.title === 'HTTP_SIGNED_DATA_GATEWAY_API_KEY')
+    .reduce((acc, secret) => ({ ...acc, [secret.title]: secret.value }), {});
 
-  const airkeeperDeployCommand = [
-    `docker run -it --rm`,
-    `--env-file ${awsSecretsFilePath}`,
-    `-v ${deploymentDirectory}:/app/config`,
-    `api3/airkeeper:${airkeeperVersion} deploy --stage dev --region us-east-1`,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const receipt = readJsonFile(join(deploymentDirectory, 'receipt.json'));
+  const updatedReceipt = {
+    ...receipt,
+    api: {
+      ...receipt.api,
+      httpGatewayApiKey: gateway.HTTP_GATEWAY_API_KEY,
+      httpSignedDataGatewayApiKey: gateway.HTTP_SIGNED_DATA_GATEWAY_API_KEY,
+    },
+  };
+  writeJsonFile(join(deploymentDirectory, 'receipt.json'), updatedReceipt);
 
-  runShellCommand(airkeeperDeployCommand);
-
+  console.log(`☁ - Airnode has been deployed, you can find the "receipt.json" within the deployments folder.`);
   console.log(
-    `🗽 - Airkeeper has been deployed, you can find the "receipt.json" within the deployments folder.\n⏩ - Please forward the "receipt.json" to the API3 team.`
+    [
+      `☁ - Airnode has been deployed`,
+      `⏩ - Please forward the "receipt.json" to the API3 team.`,
+      `The "receipt.json" contains sensitive information and should not be shared or made public.`,
+    ],
+    join('\n')
   );
 };
 
