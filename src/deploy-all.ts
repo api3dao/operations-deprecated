@@ -46,7 +46,7 @@ const main = async () => {
     .filter(Boolean)
     .join(' ');
 
-  console.log(`☁ - Airnode has been deployed, you can find the "recipt.json" within the deployments folder.`);
+  console.log(`☁ - Airnode has been deployed, you can find the "receipt.json" within the deployments folder.`);
 
   runShellCommand(airnodeDeployCommand);
 
@@ -63,7 +63,9 @@ const main = async () => {
 
   runShellCommand(airkeeperDeployCommand);
 
-  console.log(`🗽 - Airkeeper has been deployed, you can find the "recipt.json" within the deployments folder.`);
+  console.log(
+    `🗽 - Airkeeper has been deployed, you can find the "receipt.json" within the deployments folder.\n⏩ - Please forward the "receipt.json" to the API3 team.`
+  );
 };
 
 runAndHandleErrors(main);
