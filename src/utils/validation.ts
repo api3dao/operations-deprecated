@@ -29,18 +29,21 @@ export const beaconSchema = z.object({
   templateId: evmTemplateIdSchema,
   updateConditionPercentage: z.number(),
   chains: z.array(extendedChainDescriptionSchema),
-  signedKeeperConditions: z.object({
-    updateConditionPercentage: z.number(),
-    ttlSeconds: z.number(),
+  airseekerConfig: z.object({
+    deviationThreshold: z.number(),
+    heartbeatInterval: z.number(),
+    updateInterval: z.number(),
   }),
 });
 
 export const beaconsSchema = z.record(beaconSchema);
 
+export const secretsSchema = z.object({ filename: z.string(), content: z.string() });
+
 export const deploymentSetSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
-  secrets: z.object({ filename: z.string(), content: z.string() }),
+  secrets: secretsSchema,
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
@@ -80,7 +83,7 @@ export const beaconDocumentationSchema = z.object({
   chains: z.array(z.string()),
 });
 
-export const chainsMetadata = z.object({
+export const chainsMetadataSchema = z.object({
   name: z.string(),
   id: z.string(),
   contracts: z.record(z.string()),
@@ -91,13 +94,13 @@ export const chainsMetadata = z.object({
 
 export const documentationSchema = z.object({
   beacons: z.record(z.array(beaconDocumentationSchema)),
-  chains: z.record(chainsMetadata),
+  chains: z.record(chainsMetadataSchema),
 });
 
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
-  chains: z.record(chainsMetadata),
+  chains: z.record(chainsMetadataSchema),
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {

@@ -107,7 +107,7 @@ be human-browsable.
   - `topUpWallets`: [...] An array of addresses to monitor and keep topped-up
     - `walletType`: The wallet type, either 'API3' or 'Provider'
     - `address`: The target address, eg. "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
-- `signedKeeperConfig`:
+- `airseekerConfig`:
   - `deviationThreshold`: API3's update condition threshold percentage, eg: 0.1 for 0.1%
   - `heartbeatInterval`: Time in seconds since the last update, past which an update will be forced
   - `updateInterval`: The interval in seconds between update condition evaluation

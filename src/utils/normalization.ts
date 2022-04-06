@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { decode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
-import { OperationsRepository } from '../types';
+import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
   const { chains } = payload;
@@ -56,9 +56,8 @@ export const normalize = (payload: OperationsRepository) => {
             key,
             Object.fromEntries(
               Object.entries(value).map(([key, value]) => {
-                console.log(key);
-                if (key.toLowerCase() === 'secrets') {
-                  const envBuffer = Buffer.from(value.content);
+                if (key === 'secrets') {
+                  const envBuffer = Buffer.from((value as Secrets).content);
                   const content = Object.entries(parse(envBuffer))
                     .map(([key, _value]) => key)
                     .concat([''])

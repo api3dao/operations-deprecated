@@ -13,5 +13,5 @@
       "topUpWallets": [{ "walletType": "Provider", "address": "0x94260A9f059E94e312611dE7A44b121853297dF5" }]
     }
   ],
-  "signedKeeperConditions": { "updateConditionPercentage": 2, "ttlSeconds": 3000 }
+  "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
 }
