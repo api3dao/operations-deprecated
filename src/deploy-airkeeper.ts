@@ -34,11 +34,16 @@ const main = async () => {
   const deploymentDirectory = join(__dirname, '..', 'data', 'apis', response.name, 'deployments', response.deployment);
   const awsSecretsFilePath = join(deploymentDirectory, 'aws.env');
 
+  const config = operationsRepository.apis[response.name].deployments[response.deployment].config;
+  const stage = config.nodeSettings.stage;
+  const region =
+    config.nodeSettings.cloudProvider.type === 'aws' ? config.nodeSettings.cloudProvider.region : 'us-east-1';
+
   const airkeeperDeployCommand = [
     `docker run -it --rm`,
     `--env-file ${awsSecretsFilePath}`,
     `-v ${deploymentDirectory}:/app/config`,
-    `api3/airkeeper:${airkeeperVersion} deploy --stage dev --region us-east-1`,
+    `api3/airkeeper:${airkeeperVersion} deploy --stage ${stage} --region ${region}}`,
   ]
     .filter(Boolean)
     .join(' ');

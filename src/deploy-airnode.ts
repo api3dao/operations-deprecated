@@ -68,11 +68,10 @@ const main = async () => {
   };
   writeJsonFile(join(deploymentDirectory, 'receipt.json'), updatedReceipt);
 
-  console.log(`☁ - Airnode has been deployed, you can find the "receipt.json" within the deployments folder.`);
   console.log(
     [
       `☁ - Airnode has been deployed`,
-      `⏩ - Please forward the "receipt.json" to the API3 team.`,
+      `⏩ - Please forward the "receipt.json" in the deployments folder to the API3 team.`,
       `The "receipt.json" contains sensitive information and should not be shared or made public.`,
     ],
     join('\n')
