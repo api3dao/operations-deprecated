@@ -4,8 +4,7 @@ import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { cliPrint, runAndHandleErrors, runShellCommand } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
-import { readJsonFile, readOperationsRepository } from './utils/read-operations';
-import { writeJsonFile } from './utils/write-operations';
+import { readOperationsRepository } from './utils/read-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
