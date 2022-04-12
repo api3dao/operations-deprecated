@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
-import { runAndHandleErrors, runShellCommand } from './utils/cli';
+import { cliPrint, runAndHandleErrors, runShellCommand } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 
@@ -36,21 +36,24 @@ const main = async () => {
 
   const config = operationsRepository.apis[response.name].deployments[response.deployment].config;
   const stage = config.nodeSettings.stage;
-  const region =
-    config.nodeSettings.cloudProvider.type === 'aws' ? config.nodeSettings.cloudProvider.region : 'us-east-1';
+  const cloudProvider = config.nodeSettings.cloudProvider.type;
+  if (cloudProvider === 'local') return cliPrint.error('🛑 Cloud provider is local. Please deploy to AWS/GCP.');
+
+  const region = config.nodeSettings.cloudProvider.region;
+  if (!region) return cliPrint.error('🛑 Cloud provider region is not set.');
 
   const airkeeperDeployCommand = [
     `docker run -it --rm`,
     `--env-file ${awsSecretsFilePath}`,
     `-v ${deploymentDirectory}:/app/config`,
     `api3/airkeeper:${airkeeperVersion} deploy --stage ${stage} --region ${region}}`,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  ].join(' ');
 
   console.log(`⏳ - Deploying Airkeeper`);
 
-  runShellCommand(airkeeperDeployCommand);
+  const deployment = runShellCommand(airkeeperDeployCommand);
+
+  if (deployment.status !== 0) return cliPrint.error('🛑 Airkeeper deployment failed.');
 
   console.log(
     [

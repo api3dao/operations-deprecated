@@ -1,7 +1,8 @@
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
-import { runAndHandleErrors, runShellCommand } from './utils/cli';
+import { cliPrint, runAndHandleErrors, runShellCommand } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
 import { readJsonFile, readOperationsRepository } from './utils/read-operations';
 import { writeJsonFile } from './utils/write-operations';
@@ -34,6 +35,7 @@ const main = async () => {
 
   const deploymentDirectory = join(__dirname, '..', 'data', 'apis', response.name, 'deployments', response.deployment);
   const awsSecretsFilePath = join(deploymentDirectory, 'aws.env');
+  const receiptPath = join(deploymentDirectory, 'receipt.json');
 
   const airnodeDeployCommand = [
     `docker run -it --rm`,
@@ -42,22 +44,25 @@ const main = async () => {
     `-v ${deploymentDirectory}:/app/config`,
     `-v ${deploymentDirectory}:/app/output`,
     `api3/airnode-deployer:${nodeVersion} deploy`,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  ].join(' ');
 
   console.log(`⏳ - Deploying Airnode...`);
 
-  runShellCommand(airnodeDeployCommand);
+  const deployment = runShellCommand(airnodeDeployCommand);
 
-  const gateway: any = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
+  if (deployment.status !== 0 || !existsSync(receiptPath)) return cliPrint.error('🛑 Airnode deployment failed.');
+
+  const gateway = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
     .trim()
     .split('\n')
     .map((secret) => ({ title: secret.split('=')[0], value: secret.split('=')[1] }))
     .filter((secret) => secret.title === 'HTTP_GATEWAY_API_KEY' || secret.title === 'HTTP_SIGNED_DATA_GATEWAY_API_KEY')
-    .reduce((acc, secret) => ({ ...acc, [secret.title]: secret.value }), {});
+    .reduce((acc, secret) => ({ ...acc, [secret.title]: secret.value }), {
+      HTTP_GATEWAY_API_KEY: '',
+      HTTP_SIGNED_DATA_GATEWAY_API_KEY: '',
+    });
 
-  const receipt = readJsonFile(join(deploymentDirectory, 'receipt.json'));
+  const receipt = readJsonFile(receiptPath);
   const updatedReceipt = {
     ...receipt,
     api: {
@@ -66,7 +71,7 @@ const main = async () => {
       httpSignedDataGatewayApiKey: gateway.HTTP_SIGNED_DATA_GATEWAY_API_KEY,
     },
   };
-  writeJsonFile(join(deploymentDirectory, 'receipt.json'), updatedReceipt);
+  writeJsonFile(receiptPath, updatedReceipt);
 
   console.log(
     [
