@@ -52,27 +52,6 @@ const main = async () => {
 
   if (deployment.status !== 0 || !existsSync(receiptPath)) return cliPrint.error('🛑 Airnode deployment failed.');
 
-  const gateway = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
-    .trim()
-    .split('\n')
-    .map((secret) => ({ title: secret.split('=')[0], value: secret.split('=')[1] }))
-    .filter((secret) => secret.title === 'HTTP_GATEWAY_API_KEY' || secret.title === 'HTTP_SIGNED_DATA_GATEWAY_API_KEY')
-    .reduce((acc, secret) => ({ ...acc, [secret.title]: secret.value }), {
-      HTTP_GATEWAY_API_KEY: '',
-      HTTP_SIGNED_DATA_GATEWAY_API_KEY: '',
-    });
-
-  const receipt = readJsonFile(receiptPath);
-  const updatedReceipt = {
-    ...receipt,
-    api: {
-      ...receipt.api,
-      httpGatewayApiKey: gateway.HTTP_GATEWAY_API_KEY,
-      httpSignedDataGatewayApiKey: gateway.HTTP_SIGNED_DATA_GATEWAY_API_KEY,
-    },
-  };
-  writeJsonFile(receiptPath, updatedReceipt);
-
   console.log(
     [
       `☁ - Airnode has been deployed`,
