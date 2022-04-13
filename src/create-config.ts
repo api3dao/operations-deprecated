@@ -9,6 +9,7 @@ import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { chainNameToChainId, DapiServerInterface } from './utils/evm';
+import { sanitiseFilename } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -39,7 +40,7 @@ const main = async () => {
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
 
-  //// Build Config.json  ////
+  //// Build config.json  ////
 
   // Get all the chains the API will be deployed on
   const apiChains = [
@@ -148,7 +149,7 @@ const main = async () => {
     apiCredentials,
   };
 
-  //// Build Secrets.env ////
+  //// Build secrets.env ////
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
@@ -158,9 +159,15 @@ const main = async () => {
 
   const secretsArray = [
     `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_GATEWAY_API_KEY=`,
-    `HTTP_SIGNED_DATA_GATEWAY_API_KEY=`,
-    ...(response.airnodeHeartbeat ? [`HEARTBEAT_API_KEY=`, `HEARTBEAT_ID=`, `HEARTBEAT_URL=`] : []),
+    `HTTP_GATEWAY_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+    ...(response.airnodeHeartbeat
+      ? [
+          `HEARTBEAT_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+          `HEARTBEAT_ID_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+          `HEARTBEAT_URL_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+        ]
+      : []),
     ...oisSecrets,
     ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
   ];
@@ -170,7 +177,16 @@ const main = async () => {
     content: secretsArray.join('\n'),
   };
 
-  //// Build Airkeeper.json ////
+  //// Build aws.env ////
+
+  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`, `# Optional`, `AWS_SESSION_TOKEN=`];
+
+  const aws = {
+    filename: '.env',
+    content: awsSecretsArray.join('\n'),
+  };
+
+  //// Build airkeeper.json ////
 
   const airkeeperChains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
@@ -303,6 +319,7 @@ const main = async () => {
             config,
             airkeeper,
             secrets,
+            aws,
           },
         },
       },
