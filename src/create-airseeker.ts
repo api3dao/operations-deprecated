@@ -63,7 +63,7 @@ const main = async () => {
 
   const airseekerChains = apiChains
     .map((chainName) => ({
-      [chainNameToChainId[chainName]]: {
+      [`${chainNameToChainId[chainName]}`]: {
         contracts: {
           AirnodeRrp: AirnodeRrpAddresses[chainNameToChainId[chainName]] || '',
           DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
