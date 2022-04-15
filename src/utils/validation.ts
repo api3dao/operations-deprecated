@@ -46,6 +46,7 @@ export const deploymentSetSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
   secrets: secretsSchema,
+  aws: secretsSchema,
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
