@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { oisSchema, configSchema as airnodeConfigSchema } from '@api3/airnode-validator';
 import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
+import { configSchema as airseekerConfigSchema } from './airseeker-validation';
 import { OperationsRepository } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
@@ -100,10 +101,23 @@ export const documentationSchema = z.object({
   chains: z.record(chainsMetadataSchema),
 });
 
+const airseekerDeploymentSetSchema = z.object({
+  config: airseekerConfigSchema,
+  secrets: secretsSchema,
+});
+
+const airseekerDeploymentsSchema = z.record(airseekerDeploymentSetSchema);
+
+//TODO: Flesh out the airseeker schema
+export const api3Schema = z.object({
+  airseeker: airseekerDeploymentsSchema,
+});
+
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
+  api3: api3Schema,
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {

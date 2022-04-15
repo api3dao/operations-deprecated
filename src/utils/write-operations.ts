@@ -54,6 +54,19 @@ export const writeOperationsRepository = (
       writeJsonFile(join(chainsBasePath, sanitiseFilename(chain.name)), chain);
     });
 
+    const api3BasePath = join(tmpBasePath, 'api3');
+    mkdirSync(api3BasePath, { recursive: true });
+    const airseekerBasePath = join(api3BasePath, 'airseeker');
+    mkdirSync(airseekerBasePath, { recursive: true });
+
+    Object.entries(payload.api3.airseeker).forEach(([filename, airseekerConfigs]) => {
+      const airseekerConfigBasePath = join(airseekerBasePath, filename);
+      mkdirSync(airseekerConfigBasePath);
+      Object.entries(airseekerConfigs).forEach(([filename, airseekerConfig]) => {
+        writeJsonFile(join(airseekerConfigBasePath, filename), airseekerConfig);
+      });
+    });
+
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
   } catch (e) {
