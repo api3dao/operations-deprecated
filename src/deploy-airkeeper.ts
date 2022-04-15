@@ -46,7 +46,7 @@ const main = async () => {
     `docker run -it --rm`,
     `--env-file ${awsSecretsFilePath}`,
     `-v ${deploymentDirectory}:/app/config`,
-    `api3/airkeeper:${airkeeperVersion} deploy --stage ${stage} --region ${region}}`,
+    `api3/airkeeper:${airkeeperVersion} deploy --stage ${stage} --region ${region}`,
   ].join(' ');
 
   console.log(`⏳ - Deploying Airkeeper`);
