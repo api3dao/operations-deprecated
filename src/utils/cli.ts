@@ -26,7 +26,7 @@ export const runAndHandleErrors = (fn: () => Promise<unknown>) => {
  */
 export const runShellCommand = (command: string) => {
   cliPrint.info(command);
-  spawnSync(command, {
+  return spawnSync(command, {
     shell: true,
     stdio: 'inherit',
   });
