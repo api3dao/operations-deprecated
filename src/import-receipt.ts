@@ -17,7 +17,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
     },
     {
       type: 'confirm',
-      name: 'reciept',
+      name: 'receipt',
       message: 'Have you placed the "receipt.json" in the "/import" folder?',
       initial: true,
     },
@@ -30,8 +30,8 @@ const main = async () => {
 
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
-  if (!response.reciept)
-    return console.log('Please place the "receipt.json" in the "/import" folder and rerun the command.');
+  if (!response.receipt)
+    return console.log('Please place the "receipt.json" in the "/import" folder and re-run the command.');
 
   const receipt = readJsonFile(join(importPath, 'receipt.json'));
 
