@@ -3,7 +3,7 @@
     {
       "maxConcurrency": 100,
       "authorizers": [],
-      "contracts": { "AirnodeRrp": "0x478BbFDb16eD14822893461595997420b854BEA0" },
+      "contracts": { "AirnodeRrp": "0xca581Ee19F8Ef54e908783f5021A5508B0D89330" },
       "id": "3",
       "providers": { "exampleProvider": { "url": "${PROVIDER_URL}" } },
       "type": "evm",
