@@ -42,6 +42,9 @@ const main = async () => {
 
   //// Build config.json  ////
 
+  const cloudProviderType = 'aws' as const;
+  const cloudProviderRegion = 'us-east-1';
+
   // Get all the chains the API will be deployed on
   const apiChains = [
     ...new Set(
@@ -84,30 +87,32 @@ const main = async () => {
     };
   });
 
+  const secretAppend = sanitiseFilename(apiData.apiMetadata.name).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
+
   const nodeSettings = {
     nodeVersion: require('@api3/airnode-node/package.json').version,
     cloudProvider: {
-      type: 'aws' as const,
-      region: 'us-east-1',
+      type: cloudProviderType,
+      region: cloudProviderRegion,
       disableConcurrencyReservations: true,
     },
     airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
     heartbeat: {
       enabled: response.airnodeHeartbeat,
       ...(response.airnodeHeartbeat && {
-        apiKey: '${HEARTBEAT_API_KEY}',
-        id: '${HEARTBEAT_ID}',
-        url: '${HEARTBEAT_URL}',
+        apiKey: `\${HEARTBEAT_KEY_${secretAppend}}`,
+        id: `\${HEARTBEAT_ID_${secretAppend}}`,
+        url: `\${HEARTBEAT_URL_${secretAppend}}`,
       }),
     },
     httpGateway: {
       enabled: true,
-      apiKey: '${HTTP_GATEWAY_API_KEY}',
+      apiKey: `\${HTTP_GATEWAY_KEY_${secretAppend}}`,
       maxConcurrency: 20,
     },
     httpSignedDataGateway: {
       enabled: true,
-      apiKey: '${HTTP_SIGNED_DATA_GATEWAY_API_KEY}',
+      apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}}`,
       maxConcurrency: 20,
     },
     logFormat: 'plain' as const,
@@ -159,14 +164,10 @@ const main = async () => {
 
   const secretsArray = [
     `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_GATEWAY_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
+    `HTTP_GATEWAY_KEY_${secretAppend}=`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
     ...(response.airnodeHeartbeat
-      ? [
-          `HEARTBEAT_KEY_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
-          `HEARTBEAT_ID_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
-          `HEARTBEAT_URL_${sanitiseFilename(apiData.apiMetadata.name).toUpperCase()}_AWS=`,
-        ]
+      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
     ...oisSecrets,
     ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),

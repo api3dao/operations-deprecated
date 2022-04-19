@@ -2,6 +2,7 @@ import { randomBytes } from 'crypto';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { runAndHandleErrors } from './utils/cli';
+import { sanitiseFilename } from './utils/filesystem';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
@@ -34,17 +35,20 @@ const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
+  const api = operationsRepository.apis[response.name];
+  const secretAppend = sanitiseFilename(api.apiMetadata.name).toUpperCase() + `_AWS`;
+
   const oldSecrets = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
     .trim()
     .split('\n')
-    .filter((secret) => secret !== 'HTTP_GATEWAY_API_KEY=' && secret !== 'HTTP_SIGNED_DATA_GATEWAY_API_KEY=');
+    .filter((secret) => !secret.includes('HTTP_GATEWAY_KEY') && !secret.includes('HTTP_SIGNED_DATA_GATEWAY_KEY'));
 
   const newSecrets = {
     filename: '.env',
     content: [
       ...oldSecrets,
-      `HTTP_GATEWAY_API_KEY=${httpGatewayKey}`,
-      `HTTP_SIGNED_DATA_GATEWAY_API_KEY=${signedHttpGatewayKey}`,
+      `HTTP_GATEWAY_KEY_${secretAppend}=${httpGatewayKey}`,
+      `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=${signedHttpGatewayKey}`,
     ].join('\n'),
   };
 
