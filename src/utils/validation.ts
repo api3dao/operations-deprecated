@@ -47,7 +47,7 @@ export const deploymentSetSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
   secrets: secretsSchema,
-  aws: secretsSchema,
+  aws: secretsSchema.optional(),
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
@@ -117,7 +117,7 @@ export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
-  api3: api3Schema,
+  api3: api3Schema.optional(),
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {
