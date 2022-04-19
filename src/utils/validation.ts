@@ -117,7 +117,7 @@ export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
-  api3: api3Schema.optional(),
+  api3: api3Schema,
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {
