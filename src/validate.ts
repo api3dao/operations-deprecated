@@ -9,7 +9,7 @@ const main = async () => {
   if (!success) {
     console.log('Validation failed:');
     console.log(JSON.stringify(logs, null, 2));
-    return;
+    process.exit(1);
   }
 
   console.log('Validation was successful.');
