@@ -59,13 +59,14 @@ export const writeOperationsRepository = (
     const airseekerBasePath = join(api3BasePath, 'airseeker');
     mkdirSync(airseekerBasePath, { recursive: true });
 
-    Object.entries(payload.api3.airseeker).forEach(([filename, airseekerConfigs]) => {
-      const airseekerConfigBasePath = join(airseekerBasePath, filename);
-      mkdirSync(airseekerConfigBasePath);
-      Object.entries(airseekerConfigs).forEach(([filename, airseekerConfig]) => {
-        writeJsonFile(join(airseekerConfigBasePath, filename), airseekerConfig);
-      });
-    });
+    // TODO enable once airseeker is deployed
+    // Object.entries(payload.api3.airseeker).forEach(([filename, airseekerConfigs]) => {
+    //   const airseekerConfigBasePath = join(airseekerBasePath, filename);
+    //   mkdirSync(airseekerConfigBasePath);
+    //   Object.entries(airseekerConfigs).forEach(([filename, airseekerConfig]) => {
+    //     writeJsonFile(join(airseekerConfigBasePath, filename), airseekerConfig);
+    //   });
+    // });
 
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
