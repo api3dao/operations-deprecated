@@ -1,16 +1,11 @@
 import { ethers } from 'ethers';
+import { NonceManager } from '@ethersproject/experimental';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
-import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
-import { deriveEndpointId } from '@api3/airnode-admin';
-import { OperationsRepository } from './types';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { chainNameToChainId, chainNameToPublicRPCUrl, DapiServerContract, DapiServerInterface } from './utils/evm';
-import { NonceManager } from '@ethersproject/experimental';
-import { sanitiseFilename } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -103,6 +98,7 @@ const main = async () => {
         )
       );
 
+      // eslint-disable-next-line no-async-promise-executor
       return new Promise(async (resolve, reject) => {
         try {
           console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chain.name}`);
