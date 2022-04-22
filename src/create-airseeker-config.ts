@@ -49,6 +49,9 @@ const main = async () => {
   const apiChains = [...new Set(beacons.flatMap((beacon) => beacon.chains.map((chain) => chain.name)))];
 
   //// Build airseeker.json ////
+
+  const cloudProviderType = 'aws';
+
   const airseekerBeacons = beacons.reduce(
     (beaconObj, beacon) => ({
       ...beaconObj,
@@ -91,8 +94,12 @@ const main = async () => {
       [api.apiMetadata.airnode]: [
         ...(gatewaysObject?.[api.apiMetadata.airnode] || []),
         {
-          apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(api.apiMetadata.name).toUpperCase()}_AWS}`,
-          url: `\${HTTP_SIGNED_DATA_GATEWAY_URL_${sanitiseFilename(api.apiMetadata.name).toUpperCase()}_AWS}`,
+          apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(
+            api.apiMetadata.name
+          ).toUpperCase()}_${cloudProviderType.toUpperCase()}}`,
+          url: `\${HTTP_SIGNED_DATA_GATEWAY_URL_${sanitiseFilename(
+            api.apiMetadata.name
+          ).toUpperCase()}_${cloudProviderType.toUpperCase()}}`,
         },
       ],
     }),
@@ -155,8 +162,12 @@ const main = async () => {
   //// Build secrets.env ////
 
   const gatewaySecrets = apis.flatMap((api) => [
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(api.apiMetadata.name).toUpperCase()}_AWS=`,
-    `HTTP_SIGNED_DATA_GATEWAY_URL_${sanitiseFilename(api.apiMetadata.name).toUpperCase()}_AWS=`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${sanitiseFilename(
+      api.apiMetadata.name
+    ).toUpperCase()}_${cloudProviderType.toUpperCase()}=`,
+    `HTTP_SIGNED_DATA_GATEWAY_URL_${sanitiseFilename(
+      api.apiMetadata.name
+    ).toUpperCase()}_${cloudProviderType.toUpperCase()}=`,
   ]);
 
   const secretsArray = [...gatewaySecrets, ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase())];
