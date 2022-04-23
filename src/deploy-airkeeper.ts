@@ -43,7 +43,7 @@ const main = async () => {
   );
   const awsSecretsFilePath = join(deploymentDirectory, 'aws.env');
 
-  const config = operationsRepository.apis[response.name].deployments[response.deployment].airnode.config;
+  const config = operationsRepository.apis[response.name].deployments[response.deployment].airkeeper.config;
   const stage = config.nodeSettings.stage;
   const cloudProvider = config.nodeSettings.cloudProvider.type;
   if (cloudProvider === 'local') return cliPrint.error('🛑 Cloud provider is local. Please deploy to AWS/GCP.');
