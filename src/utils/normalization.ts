@@ -105,6 +105,8 @@ export const normalize = (payload: OperationsRepository) => {
                 Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
               }.json`,
               chains: beacon.chains.map((chain) => chain.name),
+              airkeeperThreshold: beacon.updateConditionPercentage,
+              airseekerThreshold: beacon.airseekerConfig.deviationThreshold,
             })),
         ])
         .filter(([_key, value]) => value.length > 0)

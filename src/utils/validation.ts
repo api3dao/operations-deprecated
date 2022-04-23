@@ -85,6 +85,8 @@ export const beaconDocumentationSchema = z.object({
   name: z.string(),
   description: z.string(),
   chains: z.array(z.string()),
+  airkeeperThreshold: z.number(),
+  airseekerThreshold: z.number(),
 });
 
 export const chainsMetadataSchema = z.object({
