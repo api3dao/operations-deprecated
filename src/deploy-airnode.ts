@@ -32,7 +32,16 @@ const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
-  const deploymentDirectory = join(__dirname, '..', 'data', 'apis', response.name, 'deployments', response.deployment);
+  const deploymentDirectory = join(
+    __dirname,
+    '..',
+    'data',
+    'apis',
+    response.name,
+    'deployments',
+    response.deployment,
+    'airnode'
+  );
   const awsSecretsFilePath = join(deploymentDirectory, 'aws.env');
   const receiptPath = join(deploymentDirectory, 'receipt.json');
 
