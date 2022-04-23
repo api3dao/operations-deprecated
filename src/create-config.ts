@@ -317,10 +317,21 @@ const main = async () => {
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
           [date]: {
-            config,
-            airkeeper,
-            secrets,
-            aws,
+            ...operationsRepository.apis[response.apiName].deployments[date],
+            airnode: {
+              config: {
+                ...config,
+                chains: [],
+              },
+              secrets,
+              aws,
+            },
+            airkeeper: {
+              airkeeper,
+              config,
+              secrets,
+              aws,
+            },
           },
         },
       },
