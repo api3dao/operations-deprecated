@@ -17,6 +17,7 @@
     "deploy-airkeeper": "yarn ts-node src/deploy-airkeeper",
     "deploy-airnode": "yarn ts-node src/deploy-airnode",
     "generate-gateway-key": "ts-node src/generate-gateway-key.ts",
+    "register-subscriptions": "ts-node src/register-subscriptions.ts",
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",

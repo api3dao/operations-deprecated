@@ -5,16 +5,11 @@ import { encode } from '@api3/airnode-abi';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId, chainNameToPublicRPCUrl, DapiServerContract, DapiServerInterface } from './utils/evm';
+import { chainNameToChainId, DapiServerContract, DapiServerInterface } from './utils/evm';
+import { loadCredentials } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
-    {
-      type: 'text',
-      name: 'mnemonic',
-      message: 'Enter the mnemonic that will be used to make the transaction for registering the subscription Ids',
-      initial: '',
-    },
     {
       type: 'autocomplete',
       name: 'apiName',
@@ -25,13 +20,11 @@ const questions = (choices: Choice[]): PromptObject[] => {
 };
 
 const main = async () => {
+  const credentials = loadCredentials();
   const operationsRepository = readOperationsRepository();
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api }));
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
-
-  if (!response.mnemonic) throw new Error('🛑 No mnemonic provided');
-  const registrar = ethers.Wallet.fromMnemonic(response.mnemonic);
 
   // Get all the chains the API will be deployed on
   const apiChains = [
@@ -43,7 +36,9 @@ const main = async () => {
     (acc, chainName) => ({
       ...acc,
       [chainName]: new NonceManager(
-        registrar.connect(new ethers.providers.JsonRpcProvider(chainNameToPublicRPCUrl[chainName]))
+        ethers.Wallet.fromMnemonic(credentials.networks[chainName].accounts.mnemonic).connect(
+          new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url)
+        )
       ),
     }),
     {} as { [chainName: string]: NonceManager }
@@ -73,8 +68,8 @@ const main = async () => {
       const chainId = chainNameToChainId[chain.name];
       if (!chainId) throw new Error(`🛑 Unknown chain name: ${chain.name}`);
 
-      if (!chainNameToPublicRPCUrl[chain.name]) throw new Error(`🛑 No public RPC URL for chain ${chain.name}`);
-      const provider = new ethers.providers.JsonRpcProvider(chainNameToPublicRPCUrl[chain.name]);
+      if (!credentials.networks[chain.name].url) throw new Error(`🛑 No public RPC URL for chain ${chain.name}`);
+      const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chain.name].url);
       const DapiServerAddress = operationsRepository.documentation.chains[chain.name].contracts['DapiServer'];
       if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chain.name}`);
       const DapiServer = DapiServerContract(DapiServerAddress, provider);
@@ -97,52 +92,47 @@ const main = async () => {
           ]
         )
       );
+      try {
+        console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chain.name}`);
 
-      // eslint-disable-next-line no-async-promise-executor
-      return new Promise(async (resolve, reject) => {
-        try {
-          console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chain.name}`);
+        const registerBeaconUpdateSubscription = await DapiServer.connect(
+          nonceManagers[chain.name]
+        ).registerBeaconUpdateSubscription(
+          airnodeAddress,
+          templateId,
+          encodedBeaconUpdateSubscriptionConditions,
+          airnodeAddress,
+          sponsor
+        );
 
-          const registerBeaconUpdateSubscription = await DapiServer.connect(
-            nonceManagers[chain.name]
-          ).registerBeaconUpdateSubscription(
-            airnodeAddress,
-            templateId,
-            encodedBeaconUpdateSubscriptionConditions,
-            airnodeAddress,
-            sponsor
+        // Check that the transaction is complete
+        const tx = await registerBeaconUpdateSubscription.wait();
+
+        const subscriptionId = tx.events.find(
+          (event: { event: string }) => event.event === 'RegisteredBeaconUpdateSubscription'
+        ).args.subscriptionId;
+
+        if (subscriptionId !== expectedSubscriptionId) {
+          throw new Error(
+            `🛑 The subscription ID ${subscriptionId} does not match the expected ID ${expectedSubscriptionId}`
           );
-
-          // Check that the transaction is complete
-          const tx = await registerBeaconUpdateSubscription.wait();
-
-          const subscriptionId = tx.events.find(
-            (event: { event: string }) => event.event === 'RegisteredBeaconUpdateSubscription'
-          ).args.subscriptionId;
-
-          if (subscriptionId !== expectedSubscriptionId) {
-            reject(`🛑 The subscription ID ${subscriptionId} does not match the expected ID ${expectedSubscriptionId}`);
-          }
-
-          resolve(
-            `✅ Subscription registered with ID ${subscriptionId} for beacon ${beaconName} on chain ${chain.name}`
-          );
-        } catch (error) {
-          console.error(`🛑 Error registering subscription for beacon ${beaconName} on chain ${chain.name}`);
-          reject(error);
         }
-      });
+
+        return `✅ Subscription registered with ID ${subscriptionId} for beacon ${beaconName} on chain ${chain.name}`;
+      } catch (error) {
+        console.error(error);
+        throw new Error(`🛑 Error registering subscription for beacon ${beaconName} on chain ${chain.name}`);
+      }
     });
   });
 
-  await Promise.allSettled(subscriptionPromises).then((results) => {
-    results.forEach((result) => {
-      if (result.status === 'fulfilled') {
-        console.log(result.value);
-      } else {
-        console.log(result.reason);
-      }
-    });
+  const results = await Promise.allSettled(subscriptionPromises);
+  results.forEach((result) => {
+    if (result.status === 'fulfilled') {
+      console.log(result.value);
+    } else {
+      console.log(result.reason);
+    }
   });
 };
 
