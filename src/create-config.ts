@@ -46,11 +46,7 @@ const main = async () => {
   const cloudProviderRegion = 'us-east-1';
 
   // Get all the chains the API will be deployed on
-  const apiChains = [
-    ...new Set(
-      Object.keys(apiData.beacons).flatMap((beacon) => apiData.beacons[beacon].chains.map((chain) => chain.name))
-    ),
-  ];
+  const apiChains = [...new Set(Object.values(apiData.beacons).flatMap((beacon) => Object.keys(beacon.chains)))];
 
   const chains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
@@ -193,7 +189,7 @@ const main = async () => {
     const chainId = chainNameToChainId[chainName];
     //TODO: Add RrpBeaconServer and DapiServer contracts based on chain
     const RrpBeaconServer = '';
-    const DapiServer = '';
+    const DapiServer = operationsRepository.documentation.chains[chainName].contracts.DapiServer;
 
     return {
       id: `${chainId}`,
@@ -205,32 +201,33 @@ const main = async () => {
   });
 
   const airkeeperSubscriptions = Object.values(apiData.beacons)
-    .flatMap((beacon) => {
-      const DapiServerInteface = DapiServerInterface();
-      const parameters = '0x';
-      const airnodeAddress = beacon.airnodeAddress;
-      const templateId = beacon.templateId;
+    .flatMap((beacon) =>
+      Object.entries(beacon.chains).map(([chainName, chain]) => {
+        const chainId = chainNameToChainId[chainName] || 1;
+        const DapiServerInteface = DapiServerInterface();
+        const parameters = '0x';
+        const airnodeAddress = beacon.airnodeAddress;
+        const templateId = beacon.templateId;
 
-      const threshold = ethers.BigNumber.from(100000000)
-        .mul(beacon.updateConditionPercentage * 100)
-        .div(10000);
-      const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(['uint256'], [threshold]);
-      const encodedBeaconUpdateSubscriptionConditions = encode([
-        {
-          type: 'bytes32',
-          name: '_conditionFunctionId',
-          value: ethers.utils.defaultAbiCoder.encode(
-            ['bytes4'],
-            [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
-          ),
-        },
-        { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
-      ]);
-
-      return beacon.chains.map((chain) => {
-        const chainId = chainNameToChainId[chain.name] || 1;
-        //TODO: Add DapiServer contracts based on chain
-        const DapiServerAddress = ethers.constants.AddressZero;
+        const threshold = ethers.BigNumber.from(100000000)
+          .mul(chain.updateConditionPercentage * 100)
+          .div(10000);
+        const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(
+          ['uint256'],
+          [threshold]
+        );
+        const encodedBeaconUpdateSubscriptionConditions = encode([
+          {
+            type: 'bytes32',
+            name: '_conditionFunctionId',
+            value: ethers.utils.defaultAbiCoder.encode(
+              ['bytes4'],
+              [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
+            ),
+          },
+          { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
+        ]);
+        const DapiServerAddress = operationsRepository.documentation.chains[chainName].contracts.DapiServer;
         const sponsor = chain.sponsor;
         const beaconUpdateSubscriptionId = ethers.utils.keccak256(
           ethers.utils.defaultAbiCoder.encode(
@@ -261,8 +258,8 @@ const main = async () => {
             fulfillFunctionId: DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
           },
         };
-      });
-    })
+      })
+    )
     .reduce((subscriptionsObject, subscription) => ({ ...subscriptionsObject, ...subscription }), {});
 
   const airkeeperTriggers = {
