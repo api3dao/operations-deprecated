@@ -79,11 +79,16 @@ export const apiSchema = z.object({
   ois: oisesSchema,
 });
 
+export const beaconChainDocumentationSchema = z.object({
+  airkeeperDeviationThreshold: z.number(),
+  airseekerDeviationThreshold: z.number(),
+});
+
 export const beaconDocumentationSchema = z.object({
   beaconId: evmBeaconIdSchema,
   name: z.string(),
   description: z.string(),
-  chains: z.array(z.string()),
+  chains: z.record(beaconChainDocumentationSchema),
 });
 
 export const chainsMetadataSchema = z.object({
