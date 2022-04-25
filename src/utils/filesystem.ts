@@ -1,3 +1,5 @@
+import { existsSync } from 'fs';
+
 export const sanitiseFilename = (filename: string) => {
   const illegalRe = /[\/?<>\\:*|"]/g;
   // eslint-disable-next-line no-control-regex
@@ -11,4 +13,11 @@ export const sanitiseFilename = (filename: string) => {
     .replace(reservedRe, '_')
     .replace(windowsReservedRe, '_')
     .toLocaleLowerCase();
+};
+
+export const loadCredentials = () => {
+  if (existsSync('../../credentials.json')) {
+    return require('../../credentials.json');
+  }
+  return require('../../credentials.example.json');
 };

@@ -17,3 +17,8 @@ export const DapiServerInterface = () => {
   const dapiServerAbi = JSON.parse(fs.readFileSync(path.resolve('./src/utils/artifacts/DapiServer.json')).toString());
   return new ethers.utils.Interface(dapiServerAbi.abi);
 };
+
+export const DapiServerContract = (dapiServerAddress: string, provider: ethers.providers.JsonRpcProvider) => {
+  const dapiServerAbi = JSON.parse(fs.readFileSync(path.resolve('./src/utils/artifacts/DapiServer.json')).toString());
+  return new ethers.Contract(dapiServerAddress, dapiServerAbi.abi, provider);
+};
