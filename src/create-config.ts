@@ -94,7 +94,7 @@ const main = async () => {
     cloudProvider: {
       type: cloudProviderType,
       region: cloudProviderRegion,
-      disableConcurrencyReservations: true,
+      disableConcurrencyReservations: false,
     },
     airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
     heartbeat: {
@@ -108,12 +108,12 @@ const main = async () => {
     httpGateway: {
       enabled: true,
       apiKey: `\${HTTP_GATEWAY_KEY_${secretAppend}}`,
-      maxConcurrency: 20,
+      maxConcurrency: 200,
     },
     httpSignedDataGateway: {
       enabled: true,
       apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}}`,
-      maxConcurrency: 20,
+      maxConcurrency: 200,
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
