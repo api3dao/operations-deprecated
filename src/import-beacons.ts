@@ -23,48 +23,66 @@ export const deriveWalletPathFromSponsorAddress = (sponsorAddress: string, proto
 export const deriveSponsorWalletFromMnemonic = (airnodeMnemonic: string, sponsorAddress: string, protocolId: string) =>
   ethers.Wallet.fromMnemonic(
     airnodeMnemonic,
-    `m/44'/60'/0'/${deriveWalletPathFromSponsorAddress(sponsorAddress, protocolId)}`,
+    `m/44'/60'/0'/${deriveWalletPathFromSponsorAddress(sponsorAddress, protocolId)}`
   );
 
 const main = () => {
-  const airkeeper = JSON.parse(fs.readFileSync('/home/aquarat/Projects/operations/data/apis/api3/deployments/2022-04-26/airkeeper.json').toString()) as z.infer<typeof airkeeperConfigSchema>;
+  const airkeeper = JSON.parse(
+    fs.readFileSync('/home/aquarat/Projects/operations/data/apis/api3/deployments/2022-04-26/airkeeper.json').toString()
+  ) as z.infer<typeof airkeeperConfigSchema>;
   const opsData = readOperationsRepository();
 
-  opsData.apis['api3'].beacons = Object.fromEntries(Object.values(airkeeper.subscriptions).map((sub) => {
-    const coinId = decode(airkeeper.templates[sub.templateId].templateParameters)['coinId'];
+  opsData.apis['api3'].beacons = Object.fromEntries(
+    Object.values(airkeeper.subscriptions).map((sub) => {
+      const coinId = decode(airkeeper.templates[sub.templateId].templateParameters)['coinId'];
 
-    return [crypto.randomBytes(6).toString(), {
-      name: `CoinGecko coinId ${coinId}`,
-      airnodeAddress: sub.airnodeAddress,
-      description: `CoinGecko coinId ${coinId}`,
-      beaconId: 'calculate me', // todo
-      templateId: sub.templateId,
-      updateConditionPercentage: 0.1,
-      chains: [
+      return [
+        crypto.randomBytes(6).toString(),
         {
-          'active': true,
-          'name': 'ropsten',
-          'sponsor': sub.sponsor,
-          'topUpWallets': [{
-            'walletType': 'Provider' as const,
-            'address': deriveSponsorWalletFromMnemonic('tube spin artefact salad slab lumber foot bitter wash reward vote cook', sub.sponsor, PROTOCOL_ID_PSP).address,
-          }],
+          name: `CoinGecko coinId ${coinId}`,
+          airnodeAddress: sub.airnodeAddress,
+          description: `CoinGecko coinId ${coinId}`,
+          beaconId: 'calculate me', // todo
+          templateId: sub.templateId,
+          updateConditionPercentage: 0.1,
+          chains: [
+            {
+              active: true,
+              name: 'ropsten',
+              sponsor: sub.sponsor,
+              topUpWallets: [
+                {
+                  walletType: 'Provider' as const,
+                  address: deriveSponsorWalletFromMnemonic(
+                    'tube spin artefact salad slab lumber foot bitter wash reward vote cook',
+                    sub.sponsor,
+                    PROTOCOL_ID_PSP
+                  ).address,
+                },
+              ],
+            },
+          ],
+          airseekerConfig: { deviationThreshold: 0.2, heartbeatInterval: 86400, updateInterval: 30 },
         },
-      ],
-      airseekerConfig: { deviationThreshold: 0.2, heartbeatInterval: 86400, updateInterval: 30 },
-    }];
-  }));
+      ];
+    })
+  );
 
-  opsData.apis['api3'].templates = Object.fromEntries(Object.entries(airkeeper.templates).map(([templateId, template]) => {
-    const decodedParameters = decode(template.templateParameters);
-    return [crypto.randomBytes(6).toString(), {
-      name: `CoinGecko ${decodedParameters['coinId']}`,
-      templateId,
-      endpointId: template.endpointId,
-      parameters: template.templateParameters,
-      decodedParameters: decodedParameters as Record<string, string>
-    }];
-  }));
+  opsData.apis['api3'].templates = Object.fromEntries(
+    Object.entries(airkeeper.templates).map(([templateId, template]) => {
+      const decodedParameters = decode(template.templateParameters);
+      return [
+        crypto.randomBytes(6).toString(),
+        {
+          name: `CoinGecko ${decodedParameters['coinId']}`,
+          templateId,
+          endpointId: template.endpointId,
+          parameters: template.templateParameters,
+          decodedParameters: decodedParameters as Record<string, string>,
+        },
+      ];
+    })
+  );
 
   const normOps = normalize(opsData);
   writeOperationsRepository(normOps);

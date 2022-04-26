@@ -70,7 +70,7 @@ export const apiMetadataSchema = z.object({
   airnode: evmAddressSchema,
   xpub: evmXpubSchema,
   logoPath: z.string(),
-  maxSubscriptionPeriod: z.number()
+  maxSubscriptionPeriod: z.number(),
 });
 
 export const apiSchema = z.object({
@@ -114,34 +114,43 @@ export const api3Schema = z.object({
   airseeker: airseekerDeploymentsSchema,
 });
 
-export const dapisSchema = z.record(z.record(z.object({
-  name: z.string(),
-  dataFeedId: z.string(), // can be a beacon or beacon set id
-})));
-
-export const explorerSchema = z.object({
-  beaconMetadata: z.record(z.object({
-    category: z.string(),
-    coveragePricing: z.string() // must be present in pricingCoverage
-  })),
-  pricingCoverage: z.record(z.array(z.object({
-    subscriptionFee: z.number(),
-    coverageFee: z.number(),
-    coverage: z.number()
-  })))
-});
+export const dapisSchema = z.record(
+  z.record(
+    z.object({
+      name: z.string(),
+      dataFeedId: z.string(), // can be a beacon or beacon set id
+    })
+  )
+);
 
 export const beaconSetSchema = z.record(z.array(z.string()));
+
+export const explorerSchema = z.object({
+  beaconMetadata: z.record(
+    z.object({
+      category: z.string(),
+      coveragePricing: z.string(), // must be present in pricingCoverage
+    })
+  ),
+  pricingCoverage: z.record(
+    z.array(
+      z.object({
+        subscriptionFee: z.number(),
+        coverageFee: z.number(),
+        coverage: z.number(),
+      })
+    )
+  ),
+  beaconSets: beaconSetSchema,
+});
 
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
-  api3: api3Schema.optional(),
-  dapis: dapisSchema.optional(),
-  explorer: explorerSchema.optional(),
-  beaconSets: beaconSetSchema.optional()
-
+  api3: api3Schema,
+  dapis: dapisSchema,
+  explorer: explorerSchema,
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {

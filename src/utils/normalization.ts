@@ -6,7 +6,7 @@ import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
 
-export const normalize = (payload: OperationsRepository) => {
+export const normalize = (payload: OperationsRepository): OperationsRepository => {
   const { chains } = payload;
 
   const apis = Object.fromEntries(
@@ -112,7 +112,20 @@ export const normalize = (payload: OperationsRepository) => {
     chains,
   };
 
-  return { apis, documentation, chains } as OperationsRepository;
+  const dapis = payload.dapis;
+  const explorer = {
+    beaconSets: Object.fromEntries(
+      Object.values(payload.explorer.beaconSets).map((value) => {
+        const cleanKey = ethers.utils.solidityKeccak256(['bytes32', 'bytes32', 'bytes32'], value);
+
+        return [cleanKey, value];
+      })
+    ),
+    beaconMetadata: payload.explorer.beaconMetadata,
+    pricingCoverage: payload.explorer.pricingCoverage,
+  };
+
+  return { apis, documentation, chains, dapis, explorer } as OperationsRepository; // TODO why is apis incompatible
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
