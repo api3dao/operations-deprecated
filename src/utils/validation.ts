@@ -114,22 +114,13 @@ export const api3Schema = z.object({
   airseeker: airseekerDeploymentsSchema,
 });
 
-export const dapisSchema = z.record(
-  z.record(
-    z.object({
-      name: z.string(),
-      dataFeedId: z.string(), // can be a beacon or beacon set id
-    })
-  )
-);
-
 export const beaconSetSchema = z.record(z.array(z.string()));
 
 export const explorerSchema = z.object({
   beaconMetadata: z.record(
     z.object({
       category: z.string(),
-      coveragePricing: z.string(), // must be present in pricingCoverage
+      pricingCoverage: z.string(), // must be present in pricingCoverage
     })
   ),
   pricingCoverage: z.record(
@@ -148,8 +139,8 @@ export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
-  api3: api3Schema,
-  dapis: dapisSchema,
+  api3: api3Schema.optional(),
+  dapis: z.record(z.record(z.string())),
   explorer: explorerSchema,
 });
 

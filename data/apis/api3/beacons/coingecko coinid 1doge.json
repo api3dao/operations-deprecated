@@ -10,7 +10,7 @@
       "active": true,
       "name": "ropsten",
       "sponsor": "0x4E627547052A9D443759B31BED099c1AAB9D7b01",
-      "topUpWallets": [{ "walletType": "Provider", "address": "0x7ca383C51C67b346CAC166dA0d7743e395050a91" }]
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x195D99333A39B63CF3eCf19C2a4206D313A573A7" }]
     }
   ],
   "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
