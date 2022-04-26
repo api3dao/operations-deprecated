@@ -1,10 +1,10 @@
-const hre = require('hardhat');
 const fs = require('fs');
 const path = require('path');
+const hre = require('hardhat');
 const airnodeProtocol = require('@api3/airnode-protocol');
 const airnodeProtocolV1References = require('@api3/airnode-protocol-v1/deployments/references.json');
 
-module.exports = async ({ deployments, getUnnamedAccounts }) => {
+export default async ({ deployments, getUnnamedAccounts }: any) => {
   const { deploy, log } = deployments;
   const accounts = await getUnnamedAccounts();
 
@@ -23,4 +23,3 @@ module.exports = async ({ deployments, getUnnamedAccounts }) => {
   });
   log(`Deployed DapiServer at ${dapiServer.address}.`);
 };
-module.exports.tags = ['deploy'];

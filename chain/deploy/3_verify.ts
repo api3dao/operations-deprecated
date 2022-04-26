@@ -1,10 +1,10 @@
-const hre = require('hardhat');
 const fs = require('fs');
 const path = require('path');
+const hre = require('hardhat');
 const airnodeProtocol = require('@api3/airnode-protocol');
 const airnodeProtocolV1References = require('@api3/airnode-protocol-v1/deployments/references.json');
 
-module.exports = async ({ deployments }) => {
+export default async ({ deployments }: any) => {
   const DapiServer = await deployments.get('DapiServer');
 
   const accessControlRegistryAddress =
@@ -20,4 +20,3 @@ module.exports = async ({ deployments }) => {
     constructorArguments: [accessControlRegistryAddress, adminRoleDescription, managerAddress, airnodeProtocolAddress],
   });
 };
-module.exports.tags = ['verify'];
