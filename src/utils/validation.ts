@@ -19,9 +19,14 @@ export const topUpWalletSchema = z.object({
 
 export const extendedChainDescriptionSchema = z.object({
   active: z.boolean(),
-  name: z.string(),
   sponsor: z.string(),
   topUpWallets: z.array(topUpWalletSchema),
+  updateConditionPercentage: z.number(),
+  airseekerConfig: z.object({
+    deviationThreshold: z.number(),
+    heartbeatInterval: z.number(),
+    updateInterval: z.number(),
+  }),
 });
 
 export const beaconSchema = z.object({
@@ -30,24 +35,29 @@ export const beaconSchema = z.object({
   beaconId: evmBeaconIdSchema,
   airnodeAddress: evmAddressSchema,
   templateId: evmTemplateIdSchema,
-  updateConditionPercentage: z.number(),
-  chains: z.array(extendedChainDescriptionSchema),
-  airseekerConfig: z.object({
-    deviationThreshold: z.number(),
-    heartbeatInterval: z.number(),
-    updateInterval: z.number(),
-  }),
+  chains: z.record(extendedChainDescriptionSchema),
 });
 
 export const beaconsSchema = z.record(beaconSchema);
 
 export const secretsSchema = z.object({ filename: z.string(), content: z.string() });
 
-export const deploymentSetSchema = z.object({
+export const airnodeDeploymentSchema = z.object({
+  config: airnodeConfigSchema,
+  secrets: secretsSchema,
+  aws: secretsSchema.optional(),
+});
+
+export const airkeeperDeploymentSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
   secrets: secretsSchema,
   aws: secretsSchema.optional(),
+});
+
+export const deploymentSetSchema = z.object({
+  airnode: airnodeDeploymentSchema,
+  airkeeper: airkeeperDeploymentSchema,
 });
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
@@ -80,11 +90,16 @@ export const apiSchema = z.object({
   ois: oisesSchema,
 });
 
+export const beaconChainDocumentationSchema = z.object({
+  airkeeperDeviationThreshold: z.number(),
+  airseekerDeviationThreshold: z.number(),
+});
+
 export const beaconDocumentationSchema = z.object({
   beaconId: evmBeaconIdSchema,
   name: z.string(),
   description: z.string(),
-  chains: z.array(z.string()),
+  chains: z.record(beaconChainDocumentationSchema),
 });
 
 export const chainsMetadataSchema = z.object({

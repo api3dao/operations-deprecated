@@ -52,24 +52,38 @@ export const normalize = (payload: OperationsRepository) => {
 
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
-          return [
-            key,
-            Object.fromEntries(
-              Object.entries(value).map(([key, value]) => {
-                if (key === 'secrets') {
-                  const envBuffer = Buffer.from((value as Secrets).content);
-                  const content = Object.entries(parse(envBuffer))
-                    .map(([key, _value]) => key)
-                    .concat([''])
-                    .join('=""\n');
+          const airnode = Object.fromEntries(
+            Object.entries(value.airnode).map(([key, value]) => {
+              if (key === 'secrets') {
+                const envBuffer = Buffer.from((value as Secrets).content);
+                const content = Object.entries(parse(envBuffer))
+                  .map(([key, _value]) => key)
+                  .concat([''])
+                  .join('=""\n');
 
-                  return [key, { ...value, content }];
-                }
+                return [key, { ...value, content }];
+              }
 
-                return [key, value];
-              })
-            ),
-          ];
+              return [key, value];
+            })
+          );
+
+          const airkeeper = Object.fromEntries(
+            Object.entries(value.airkeeper).map(([key, value]) => {
+              if (key === 'secrets') {
+                const envBuffer = Buffer.from((value as Secrets).content);
+                const content = Object.entries(parse(envBuffer))
+                  .map(([key, _value]) => key)
+                  .concat([''])
+                  .join('=""\n');
+
+                return [key, { ...value, content }];
+              }
+
+              return [key, value];
+            })
+          );
+          return [key, { airnode, airkeeper }];
         })
       );
 
@@ -96,7 +110,7 @@ export const normalize = (payload: OperationsRepository) => {
         .map(([apiKey, api]) => [
           apiKey,
           Object.entries(api.beacons)
-            .filter(([_key, value]) => value.chains.filter((chain) => chain.active).length > 0)
+            .filter(([_key, value]) => Object.values(value.chains).filter((chain) => chain.active).length > 0)
             .map(([_, beacon]) => ({
               beaconId: beacon.beaconId,
               name: beacon.name,
@@ -104,7 +118,16 @@ export const normalize = (payload: OperationsRepository) => {
               templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
                 Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
               }.json`,
-              chains: beacon.chains.map((chain) => chain.name),
+              chains: Object.entries(beacon.chains).reduce(
+                (acc, [chainName, chain]) => ({
+                  ...acc,
+                  [chainName]: {
+                    airkeeperDeviationThreshold: chain.updateConditionPercentage,
+                    airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
+                  },
+                }),
+                {}
+              ),
             })),
         ])
         .filter(([_key, value]) => value.length > 0)
