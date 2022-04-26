@@ -5,245 +5,245 @@
         "beaconId": "0x819c2f1b7eb162084f9a1e0e6834a821c6ac1ebf63f59e463171d1e5b63107d3",
         "name": "CoinGecko coinId 0-mee",
         "description": "CoinGecko coinId 0-mee",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0-mee.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0-mee.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x0edfa0fa34dbd9aeedc860a9311456b2ed903408ba68cbab459f42f98d6ded41",
         "name": "CoinGecko coinId 01coin",
         "description": "CoinGecko coinId 01coin",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 01coin.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 01coin.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x87c62e4f0970139b09f97d9e0fea4fd92911088717ec9d3565d087d8ace09bc3",
         "name": "CoinGecko coinId 0chain",
         "description": "CoinGecko coinId 0chain",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0chain.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0chain.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x31bea1ed93e42fd05f71a99ce87624cb20e60ad17101896ab44297d53867734c",
         "name": "CoinGecko coinId 0x",
         "description": "CoinGecko coinId 0x",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0x.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0x.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xb54313b8defc13e4e86eb33e3ed8e7c01ae23fe30688ce5c83e2a6b1b9b06a0d",
         "name": "CoinGecko coinId 0xcert",
         "description": "CoinGecko coinId 0xcert",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0xcert.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0xcert.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xe125076ae266b6d50b4d7c710d24ab1b28f5315594ab61c2f9baf288117a027f",
         "name": "CoinGecko coinId 0xdao",
         "description": "CoinGecko coinId 0xdao",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0xdao.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0xdao.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x9241eb73737dc496013846409f578ca20650a35fd50b98461ffef2af5b7fc355",
         "name": "CoinGecko coinId 0xpad",
         "description": "CoinGecko coinId 0xpad",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 0xpad.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 0xpad.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x0f65bcf09c3f01b55cbf8d9a485b48b71b17034d910219d2da4653b963a81bf7",
         "name": "CoinGecko coinId 1-up",
         "description": "CoinGecko coinId 1-up",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1-up.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1-up.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xcb568fa9d5c9348539475fb063adc66638b945f3cb526194df5fb6dc259cfe2c",
         "name": "CoinGecko coinId 12ships",
         "description": "CoinGecko coinId 12ships",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 12ships.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 12ships.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x26abd157200d351e604e445043d9bedf0b45a02775d0109fc38c761e44a15df8",
         "name": "CoinGecko coinId 1337",
         "description": "CoinGecko coinId 1337",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1337.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1337.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x2c07ccb5f3c25a98f957f68ef4ac36e101737e5b35b215cbd6e0c307361bf5ee",
         "name": "CoinGecko coinId 1art",
         "description": "CoinGecko coinId 1art",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1art.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1art.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x997f6c6b050986caf0bcf1ce9248b242111cd491f9f32686aeea41fe05659eac",
         "name": "CoinGecko coinId 1bch",
         "description": "CoinGecko coinId 1bch",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1bch.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1bch.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xbd3b869ad3827b205bb02e4932c7c1f0fc1633ed5decca30429e4abd148d2ef7",
         "name": "CoinGecko coinId 1beam",
         "description": "CoinGecko coinId 1beam",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1beam.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1beam.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x37324cb2160219997a7b7b456035db9191deb1236c115aff60e227a54e60bd40",
         "name": "CoinGecko coinId 1doge",
         "description": "CoinGecko coinId 1doge",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1doge.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1doge.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x73f24aee721408d2c3b2918d4a62bc5fd369e2ecc82fd7f42aac8cd096824281",
         "name": "CoinGecko coinId 1eco",
         "description": "CoinGecko coinId 1eco",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1eco.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1eco.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xb47c4b3182fc279767a971457dbed816e41468a4d0716e255569d3d1d1a0bc42",
         "name": "CoinGecko coinId 1inch",
         "description": "CoinGecko coinId 1inch",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1inch.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1inch.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xef436be2796baef1827afba7698825d1c3b609785b85a2e464096f89cef36946",
         "name": "CoinGecko coinId 1peco",
         "description": "CoinGecko coinId 1peco",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1peco.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1peco.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x9d694d0ce8e8bffd141af23770afaf1e62fea7e98fdf4bd53d62750f29c7fa6f",
         "name": "CoinGecko coinId 1safu",
         "description": "CoinGecko coinId 1safu",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1safu.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1safu.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x5dbdb1df243c0bb9c6f29ec256f16384ba14a9de685c486d086eb5dae6f912fe",
         "name": "CoinGecko coinId 1sol",
         "description": "CoinGecko coinId 1sol",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 1sol.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 1sol.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xd09a3bd411f5f830b5d9b067f05c4f0bf4813acb0ad29235fc8612a32206d1c4",
         "name": "CoinGecko coinId 28vck",
         "description": "CoinGecko coinId 28vck",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 28vck.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 28vck.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x2b3746ff89f45a37a8cd613007f143aaedd326b698fd4ddade7b24ff30a39400",
         "name": "CoinGecko coinId 2goshi",
         "description": "CoinGecko coinId 2goshi",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 2goshi.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 2goshi.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xd9583811f0a528c174842b91dd8bc98e55c44b188f025e36f2a90910fd972258",
         "name": "CoinGecko coinId 2key",
         "description": "CoinGecko coinId 2key",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 2key.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 2key.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x67a8ae134711da392c5a59e8ed637892f2c550bc85f5a4f4cfd905b0b8216f20",
         "name": "CoinGecko coinId 300fit",
         "description": "CoinGecko coinId 300fit",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 300fit.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 300fit.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xaf1b767f98adbd4a7dc9e243db446fb4dc1c3a4d8020d4c8bc438d6e8d5df825",
         "name": "CoinGecko coinId 4-stock",
         "description": "CoinGecko coinId 4-stock",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4-stock.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4-stock.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x375a3963859dc5f6471b3ce6d121fa4ae41d881e1358a8a084fef327cd013c93",
         "name": "CoinGecko coinId 4bulls",
         "description": "CoinGecko coinId 4bulls",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4bulls.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4bulls.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x873dd32b082e0bb6603bb6318b3c8b352741b1e088f4b89553563bdc279d5cfd",
         "name": "CoinGecko coinId 4int",
         "description": "CoinGecko coinId 4int",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4int.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4int.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x38234c3b6fd77992667aee1d0c40fbcadca94caedc134b969a792c41919735c5",
         "name": "CoinGecko coinId 4jnet",
         "description": "CoinGecko coinId 4jnet",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4jnet.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4jnet.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x84691e2363fcc35dc5c8b4195f00fc0df17a94ffae41ae0ff99a0224866fbcb0",
         "name": "CoinGecko coinId 4mw",
         "description": "CoinGecko coinId 4mw",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4mw.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4mw.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xb69f630f1f7a0d581e8acc60aca1aed9eaf5d71583ad4869d41c4099091ab3a8",
         "name": "CoinGecko coinId 4new",
         "description": "CoinGecko coinId 4new",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 4new.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 4new.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xfc2c9fce8e014e522eef1e33eb6bb84aedb5c9927a9c840ab07cb02e2f216967",
         "name": "CoinGecko coinId 520",
         "description": "CoinGecko coinId 520",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 520.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 520.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x49c6a83920da03d65b5e9bfd3d72219e7bcde8eea24287b59c5b24221ff388fb",
         "name": "CoinGecko coinId 5g-cash",
         "description": "CoinGecko coinId 5g-cash",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 5g-cash.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 5g-cash.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xa6794661824c4132fc163cd958565b5c37d12e8b7013995567e09e392f3d1905",
         "name": "CoinGecko coinId 7eleven",
         "description": "CoinGecko coinId 7eleven",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 7eleven.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 7eleven.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0xb8933cb989d144a5bc7e62188e6ed7e39639f080b52859c1947adb05571d0f38",
         "name": "CoinGecko coinId 7share",
         "description": "CoinGecko coinId 7share",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 7share.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 7share.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x00860cb185e4c5c0fb2e03442b79392b37853c7332bfaedd480279ba84235560",
         "name": "CoinGecko coinId 7up",
         "description": "CoinGecko coinId 7up",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 7up.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 7up.json",
         "chains": ["ropsten"]
       },
       {
         "beaconId": "0x146055f68b25535691dcd62dcd46f770b37ac75b24eb6856b9c185a6ff954c86",
         "name": "CoinGecko coinId 867",
         "description": "CoinGecko coinId 867",
-        "templateUrl": "https://github.com/api3dao/operations/blob/96a43d16ade81b4fc36dd27089f0a872f16f074a/data/apis/api3/templates/coingecko 867.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8ad2800e8cd02c8bdddb4225fb49fd30ec85b20a/data/apis/api3/templates/coingecko 867.json",
         "chains": ["ropsten"]
       }
     ]

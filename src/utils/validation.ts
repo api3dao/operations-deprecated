@@ -127,7 +127,6 @@ export const explorerSchema = z.object({
     z.array(
       z.object({
         subscriptionFee: z.number(),
-        coverageFee: z.number(),
         coverage: z.number(),
       })
     )
