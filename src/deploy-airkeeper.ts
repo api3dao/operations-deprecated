@@ -31,10 +31,19 @@ const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
-  const deploymentDirectory = join(__dirname, '..', 'data', 'apis', response.name, 'deployments', response.deployment);
+  const deploymentDirectory = join(
+    __dirname,
+    '..',
+    'data',
+    'apis',
+    response.name,
+    'deployments',
+    response.deployment,
+    'airkeeper'
+  );
   const awsSecretsFilePath = join(deploymentDirectory, 'aws.env');
 
-  const config = operationsRepository.apis[response.name].deployments[response.deployment].config;
+  const config = operationsRepository.apis[response.name].deployments[response.deployment].airkeeper.config;
   const stage = config.nodeSettings.stage;
   const cloudProvider = config.nodeSettings.cloudProvider.type;
   if (cloudProvider === 'local') return cliPrint.error('🛑 Cloud provider is local. Please deploy to AWS/GCP.');

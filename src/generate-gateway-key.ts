@@ -38,7 +38,7 @@ const main = async () => {
   const api = operationsRepository.apis[response.name];
   const secretAppend = sanitiseFilename(api.apiMetadata.name).toUpperCase() + `_AWS`;
 
-  const oldSecrets = operationsRepository.apis[response.name].deployments[response.deployment].secrets.content
+  const oldSecrets = operationsRepository.apis[response.name].deployments[response.deployment].airnode.secrets.content
     .trim()
     .split('\n')
     .filter((secret) => !secret.includes('HTTP_GATEWAY_KEY') && !secret.includes('HTTP_SIGNED_DATA_GATEWAY_KEY'));
@@ -62,7 +62,14 @@ const main = async () => {
           ...operationsRepository.apis[response.name].deployments,
           [response.deployment]: {
             ...operationsRepository.apis[response.name].deployments[response.deployment],
-            secrets: newSecrets,
+            airnode: {
+              ...operationsRepository.apis[response.name].deployments[response.deployment].airnode,
+              secrets: newSecrets,
+            },
+            airkeeper: {
+              ...operationsRepository.apis[response.name].deployments[response.deployment].airkeeper,
+              secrets: newSecrets,
+            },
           },
         },
       },

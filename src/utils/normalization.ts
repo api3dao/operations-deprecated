@@ -52,24 +52,38 @@ export const normalize = (payload: OperationsRepository) => {
 
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
-          return [
-            key,
-            Object.fromEntries(
-              Object.entries(value).map(([key, value]) => {
-                if (key === 'secrets') {
-                  const envBuffer = Buffer.from((value as Secrets).content);
-                  const content = Object.entries(parse(envBuffer))
-                    .map(([key, _value]) => key)
-                    .concat([''])
-                    .join('=""\n');
+          const airnode = Object.fromEntries(
+            Object.entries(value.airnode).map(([key, value]) => {
+              if (key === 'secrets') {
+                const envBuffer = Buffer.from((value as Secrets).content);
+                const content = Object.entries(parse(envBuffer))
+                  .map(([key, _value]) => key)
+                  .concat([''])
+                  .join('=""\n');
 
-                  return [key, { ...value, content }];
-                }
+                return [key, { ...value, content }];
+              }
 
-                return [key, value];
-              })
-            ),
-          ];
+              return [key, value];
+            })
+          );
+
+          const airkeeper = Object.fromEntries(
+            Object.entries(value.airkeeper).map(([key, value]) => {
+              if (key === 'secrets') {
+                const envBuffer = Buffer.from((value as Secrets).content);
+                const content = Object.entries(parse(envBuffer))
+                  .map(([key, _value]) => key)
+                  .concat([''])
+                  .join('=""\n');
+
+                return [key, { ...value, content }];
+              }
+
+              return [key, value];
+            })
+          );
+          return [key, { airnode, airkeeper }];
         })
       );
 
