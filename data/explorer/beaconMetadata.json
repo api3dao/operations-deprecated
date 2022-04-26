@@ -4,7 +4,7 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x0edfa0fa34dbd9aeedc860a9311456b2ed903408ba68cbab459f42f98d6ded41": {
-    "category": "Cryptocurrency",
+    "category": "Category Six",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x87c62e4f0970139b09f97d9e0fea4fd92911088717ec9d3565d087d8ace09bc3": {
@@ -20,7 +20,7 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0xe125076ae266b6d50b4d7c710d24ab1b28f5315594ab61c2f9baf288117a027f": {
-    "category": "Cryptocurrency",
+    "category": "Category Five",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x9241eb73737dc496013846409f578ca20650a35fd50b98461ffef2af5b7fc355": {
@@ -48,7 +48,7 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0xbd3b869ad3827b205bb02e4932c7c1f0fc1633ed5decca30429e4abd148d2ef7": {
-    "category": "Cryptocurrency",
+    "category": "Category Three",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x37324cb2160219997a7b7b456035db9191deb1236c115aff60e227a54e60bd40": {
@@ -76,7 +76,7 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0xd09a3bd411f5f830b5d9b067f05c4f0bf4813acb0ad29235fc8612a32206d1c4": {
-    "category": "Cryptocurrency",
+    "category": "Category Three",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x2b3746ff89f45a37a8cd613007f143aaedd326b698fd4ddade7b24ff30a39400": {
@@ -96,7 +96,7 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x375a3963859dc5f6471b3ce6d121fa4ae41d881e1358a8a084fef327cd013c93": {
-    "category": "Cryptocurrency",
+    "category": "Category Three",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x873dd32b082e0bb6603bb6318b3c8b352741b1e088f4b89553563bdc279d5cfd": {
@@ -132,11 +132,11 @@
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x00860cb185e4c5c0fb2e03442b79392b37853c7332bfaedd480279ba84235560": {
-    "category": "Cryptocurrency",
+    "category": "Category Three",
     "pricingCoverage": "test-pricing-set-one"
   },
   "0x146055f68b25535691dcd62dcd46f770b37ac75b24eb6856b9c185a6ff954c86": {
-    "category": "Cryptocurrency",
+    "category": "Commodities",
     "pricingCoverage": "test-pricing-set-one"
   }
 }
