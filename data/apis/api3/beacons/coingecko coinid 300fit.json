@@ -1,0 +1,17 @@
+{
+  "name": "CoinGecko coinId 300fit",
+  "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
+  "description": "CoinGecko coinId 300fit",
+  "beaconId": "0x67a8ae134711da392c5a59e8ed637892f2c550bc85f5a4f4cfd905b0b8216f20",
+  "templateId": "0xa7cf49386d46d29393281f08732b69885195068e908b83297909aacb97fcbe32",
+  "updateConditionPercentage": 0.1,
+  "chains": [
+    {
+      "active": true,
+      "name": "ropsten",
+      "sponsor": "0xa9593A66C7F8831dF77eC90cD591192efbc7C27e",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x70Ee3a2A09dA06a1067E5026083d87ef82D15676" }]
+    }
+  ],
+  "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+}

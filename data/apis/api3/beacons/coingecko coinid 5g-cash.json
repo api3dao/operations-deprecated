@@ -1,0 +1,17 @@
+{
+  "name": "CoinGecko coinId 5g-cash",
+  "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
+  "description": "CoinGecko coinId 5g-cash",
+  "beaconId": "0x49c6a83920da03d65b5e9bfd3d72219e7bcde8eea24287b59c5b24221ff388fb",
+  "templateId": "0xc84a7ee8580a8bae975b813c456cd220571e3035925e2e3d9467b9d240546496",
+  "updateConditionPercentage": 0.1,
+  "chains": [
+    {
+      "active": true,
+      "name": "ropsten",
+      "sponsor": "0xFFF20e3e599334F663A03371D1c463878A246AB8",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xfAD788Ee9E2fFD3Eb10db37D5656F5A1e54eeeAE" }]
+    }
+  ],
+  "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+}

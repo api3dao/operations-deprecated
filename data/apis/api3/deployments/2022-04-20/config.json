@@ -1,0 +1,107 @@
+{
+  "chains": [
+    {
+      "authorizers": [],
+      "contracts": { "AirnodeRrp": "0x3B35250Ca54C1Fb8c83D48F21231ef6e4fb9f79D" },
+      "id": "3",
+      "providers": { "provider1": { "url": "${ROPSTEN_PROVIDER_URL}" } },
+      "type": "evm",
+      "options": { "txType": "eip1559", "priorityFee": { "value": 3.12, "unit": "gwei" }, "baseFeeMultiplier": 2 },
+      "maxConcurrency": 100,
+      "blockHistoryLimit": 300,
+      "minConfirmations": 0
+    }
+  ],
+  "nodeSettings": {
+    "nodeVersion": "0.5.0",
+    "cloudProvider": { "type": "aws", "region": "us-east-1", "disableConcurrencyReservations": true },
+    "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
+    "heartbeat": {
+      "enabled": true,
+      "apiKey": "${HEARTBEAT_KEY_API3_AWS}",
+      "id": "${HEARTBEAT_ID_API3_AWS}",
+      "url": "${HEARTBEAT_URL_API3_AWS}"
+    },
+    "httpGateway": { "enabled": true, "apiKey": "${HTTP_GATEWAY_KEY_API3_AWS}", "maxConcurrency": 20 },
+    "httpSignedDataGateway": {
+      "enabled": true,
+      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_API3_AWS}",
+      "maxConcurrency": 20
+    },
+    "logFormat": "plain",
+    "logLevel": "INFO",
+    "stage": "dev",
+    "skipValidation": true
+  },
+  "triggers": {
+    "rrp": [
+      {
+        "endpointId": "0xfb87102cdabadf905321521ba0b3cbf74ad09c5d400ac2eccdbef8d6143e78c4",
+        "endpointName": "coinMarketData",
+        "oisTitle": "CoinGecko basic request"
+      }
+    ],
+    "http": [
+      {
+        "endpointId": "0xfb87102cdabadf905321521ba0b3cbf74ad09c5d400ac2eccdbef8d6143e78c4",
+        "endpointName": "coinMarketData",
+        "oisTitle": "CoinGecko basic request"
+      }
+    ],
+    "httpSignedData": [
+      {
+        "endpointId": "0xfb87102cdabadf905321521ba0b3cbf74ad09c5d400ac2eccdbef8d6143e78c4",
+        "endpointName": "coinMarketData",
+        "oisTitle": "CoinGecko basic request"
+      }
+    ]
+  },
+  "ois": [
+    {
+      "oisFormat": "1.0.0",
+      "title": "CoinGecko basic request",
+      "version": "1.0.0",
+      "apiSpecifications": {
+        "servers": [{ "url": "https://api.coingecko.com/api/v3" }],
+        "paths": {
+          "/coins/{id}": {
+            "get": {
+              "parameters": [
+                { "in": "path", "name": "id" },
+                { "in": "query", "name": "localization" },
+                { "in": "query", "name": "tickers" },
+                { "in": "query", "name": "market_data" },
+                { "in": "query", "name": "community_data" },
+                { "in": "query", "name": "developer_data" },
+                { "in": "query", "name": "sparkline" }
+              ]
+            }
+          }
+        },
+        "components": { "securitySchemes": {} },
+        "security": {}
+      },
+      "endpoints": [
+        {
+          "name": "coinMarketData",
+          "operation": { "method": "get", "path": "/coins/{id}" },
+          "fixedOperationParameters": [
+            { "operationParameter": { "in": "query", "name": "localization" }, "value": "false" },
+            { "operationParameter": { "in": "query", "name": "tickers" }, "value": "false" },
+            { "operationParameter": { "in": "query", "name": "market_data" }, "value": "true" },
+            { "operationParameter": { "in": "query", "name": "community_data" }, "value": "false" },
+            { "operationParameter": { "in": "query", "name": "developer_data" }, "value": "false" },
+            { "operationParameter": { "in": "query", "name": "sparkline" }, "value": "false" }
+          ],
+          "reservedParameters": [
+            { "name": "_type", "fixed": "int256" },
+            { "name": "_path", "fixed": "market_data.current_price.usd" },
+            { "name": "_times", "fixed": "1000000" }
+          ],
+          "parameters": [{ "name": "coinId", "operationParameter": { "in": "path", "name": "id" } }]
+        }
+      ]
+    }
+  ],
+  "apiCredentials": []
+}

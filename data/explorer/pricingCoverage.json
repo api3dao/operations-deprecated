@@ -1,0 +1,56 @@
+{
+  "test-pricing-set-one": [
+    {
+      "subscriptionFee": 50,
+      "coverageFee": 100,
+      "coverage": 5000
+    },
+    {
+      "subscriptionFee": 100,
+      "coverageFee": 100,
+      "coverage": 50000
+    },
+    {
+      "subscriptionFee": 200,
+      "coverageFee": 100,
+      "coverage": 60000
+    },
+    {
+      "subscriptionFee": 300,
+      "coverageFee": 100,
+      "coverage": 70000
+    },
+    {
+      "subscriptionFee": 300,
+      "coverageFee": 100,
+      "coverage": 70000
+    }
+  ],
+  "test-pricing-set-two": [
+    {
+      "subscriptionFee": 500,
+      "coverageFee": 1000,
+      "coverage": 50000
+    },
+    {
+      "subscriptionFee": 1000,
+      "coverageFee": 1000,
+      "coverage": 500000
+    },
+    {
+      "subscriptionFee": 2000,
+      "coverageFee": 1000,
+      "coverage": 600000
+    },
+    {
+      "subscriptionFee": 3000,
+      "coverageFee": 1000,
+      "coverage": 700000
+    },
+    {
+      "subscriptionFee": 3000,
+      "coverageFee": 1000,
+      "coverage": 700000
+    }
+  ]
+}

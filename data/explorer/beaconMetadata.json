@@ -1,0 +1,10 @@
+{
+  "0x000000": {
+    "category": "Cryptocurrency",
+    "coveragePricing": "test-pricing-set-one"
+  },
+  "0x000001": {
+    "category": "Commodities",
+    "coveragePricing": "test-pricing-set-two"
+  }
+}

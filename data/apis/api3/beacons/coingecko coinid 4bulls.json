@@ -1,0 +1,17 @@
+{
+  "name": "CoinGecko coinId 4bulls",
+  "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
+  "description": "CoinGecko coinId 4bulls",
+  "beaconId": "0x375a3963859dc5f6471b3ce6d121fa4ae41d881e1358a8a084fef327cd013c93",
+  "templateId": "0x99349c5bde8488cb840f47fbcf975a5b698783e852f41b060e35c04d23ee3c3c",
+  "updateConditionPercentage": 0.1,
+  "chains": [
+    {
+      "active": true,
+      "name": "ropsten",
+      "sponsor": "0x96887cCE6fcB48aA3a6cb37cFE9e0F6f903c1a25",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xC5B01f7d741125A6De6bbD42f45B1249c0c6e4d5" }]
+    }
+  ],
+  "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+}
