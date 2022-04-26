@@ -189,7 +189,7 @@ const main = async () => {
     const chainId = chainNameToChainId[chainName];
     //TODO: Add RrpBeaconServer and DapiServer contracts based on chain
     const RrpBeaconServer = '';
-    const DapiServer = operationsRepository.documentation.chains[chainName].contracts.DapiServer;
+    const DapiServer = operationsRepository.chains[chainName].contracts.DapiServer;
 
     return {
       id: `${chainId}`,
@@ -227,7 +227,7 @@ const main = async () => {
           },
           { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
         ]);
-        const DapiServerAddress = operationsRepository.documentation.chains[chainName].contracts.DapiServer;
+        const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
         const sponsor = chain.sponsor;
         const beaconUpdateSubscriptionId = ethers.utils.keccak256(
           ethers.utils.defaultAbiCoder.encode(
