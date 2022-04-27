@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
-import { deriveWalletPathFromSponsorAddress } from '@api3/airnode-node/dist/src/evm';
+import { encode } from '@api3/airnode-abi';
 import { Choice, PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { generateChainSponsorAddress, PROTOCOL_ID_PSP } from './utils/evm';
+import { sanitiseFilename } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -25,37 +25,17 @@ const main = async () => {
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
 
-  const beacons = Object.fromEntries(
-    Object.entries(apiData.beacons).map(([_key, beacon]) => {
-      const chains = Object.fromEntries(
-        Object.entries(beacon.chains).map(([chainName, chain]) => {
-          const airnodeHdNode = ethers.utils.HDNode.fromExtendedKey(apiData.apiMetadata.xpub);
-          const sponsor = generateChainSponsorAddress(chainName, apiData.apiMetadata.xpub);
-          const providerTopUpWallet = airnodeHdNode.derivePath(
-            deriveWalletPathFromSponsorAddress(sponsor, PROTOCOL_ID_PSP)
-          ).address;
-          return [
-            chainName,
-            {
-              ...chain,
-              sponsor,
-              topUpWallets: [
-                ...chain.topUpWallets,
-                {
-                  walletType: 'Provider',
-                  address: providerTopUpWallet,
-                },
-              ],
-            },
-          ];
-        })
-      );
+  const templates = Object.fromEntries(
+    Object.entries(apiData.templates).map(([_key, value]) => {
+      const parameters = encode(value.decodedParameters);
+      const templateId = ethers.utils.solidityKeccak256(['bytes32', 'bytes'], [value.endpointId, parameters]);
 
       return [
-        _key,
+        sanitiseFilename(value.name),
         {
-          ...beacon,
-          chains,
+          ...value,
+          templateId,
+          parameters,
         },
       ];
     })
@@ -68,7 +48,7 @@ const main = async () => {
       ...operationsRepository.apis,
       [response.apiName]: {
         ...operationsRepository.apis[response.apiName],
-        beacons,
+        templates,
       },
     },
   };

@@ -5,7 +5,7 @@
         "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
         "name": "CoinGecko BTC/USD 0.1 percent deviation",
         "description": "The public CoinGecko BTC/USD price ticker",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8253a5d9c1bd6950e41b11605172c154176838e3/data/apis/api3/templates/coingecko btc_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/5d5478b44966679cc4b5f051f48d927322fca914/data/apis/api3/templates/coingecko btc_usd.json",
         "chains": { "ropsten": { "airkeeperDeviationThreshold": 0.1, "airseekerDeviationThreshold": 0.2 } }
       }
     ]
