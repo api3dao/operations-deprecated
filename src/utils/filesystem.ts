@@ -16,8 +16,8 @@ export const sanitiseFilename = (filename: string) => {
 };
 
 export const loadCredentials = () => {
-  if (existsSync('../../credentials.json')) {
-    return require('../../credentials.json');
+  if (existsSync('../../chain/credentials.json')) {
+    return require('../../chain/credentials.json');
   }
-  return require('../../credentials.example.json');
+  return require('../../chain/credentials.example.json');
 };
