@@ -7,8 +7,8 @@
   "chains": {
     "avalanche": {
       "active": true,
-      "sponsor": "0x099778e361ED3CBD76eA2aA4621f4442d0D4C817",
-      "topUpWallets": [{ "walletType": "Provider", "address": "0x9B6bA1F7a45950bdd386Bf7EFd240beCDd6D8CFe" }],
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
     }
