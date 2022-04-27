@@ -1,0 +1,23 @@
+{
+  "name": "AmberData USDC/USD",
+  "description": "",
+  "beaconId": "0x47cf500b18a3ba8ed515162b0579afbba7afd3093fe9701332c291824708aa6a",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x11de92fd4ae53d197283e99fa61a7fa32d775e0807788690968ad62c261eedd9",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0x9A3BeAc2f7C007Ee9F60F55F6515d0A1bD1CC3E6",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x5fC01529D84d2796D5F7547b110E864748B7717c" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "rsk": {
+      "active": true,
+      "sponsor": "0xDbc8B5633ff56CF1b5140345D171499fA4436433",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x56d07ecC4e08C55656791c21D27cf9b693b3E20E" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

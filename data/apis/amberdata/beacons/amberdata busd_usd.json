@@ -1,0 +1,16 @@
+{
+  "name": "AmberData BUSD/USD",
+  "description": "",
+  "beaconId": "0xba5b03b6806bb43f8d89c156095d9ae1d8fd9beaf78a9cddc4b99b2721a81857",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xcf8486170ffe597a1069553cb37310038d69220b8e6cf841c4fc5bfdbcf9de57",
+  "chains": {
+    "bsc": {
+      "active": true,
+      "sponsor": "0x312d5d17d4E71D0b13F3bC02eB01DC32D1A29cb2",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xa002951fdC244bd904e9fDfb1DE18A5a0F6ED269" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

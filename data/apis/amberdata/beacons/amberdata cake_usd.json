@@ -1,0 +1,16 @@
+{
+  "name": "AmberData CAKE/USD",
+  "description": "",
+  "beaconId": "0x496ad342b6c60a40c5fa1731f7751fcb105c81a63ec42dcf8f9c9d106ad80d13",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xf1650db7ba2be90ba085937b743973e9f4ba52a2a0352fbaee2248727972cf04",
+  "chains": {
+    "bsc": {
+      "active": true,
+      "sponsor": "0x312d5d17d4E71D0b13F3bC02eB01DC32D1A29cb2",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xa002951fdC244bd904e9fDfb1DE18A5a0F6ED269" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

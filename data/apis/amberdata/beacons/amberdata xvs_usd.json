@@ -1,0 +1,16 @@
+{
+  "name": "AmberData XVS/USD",
+  "description": "",
+  "beaconId": "0xda910511db6db6cab2d535eea5805fe06ad9558ad9df165b47244b259a5ccb3f",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x8adfe82afd90beb524778f7fa25d13b19f15ca16118e4ddc4f6f87c886d2d422",
+  "chains": {
+    "bsc": {
+      "active": true,
+      "sponsor": "0x312d5d17d4E71D0b13F3bC02eB01DC32D1A29cb2",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xa002951fdC244bd904e9fDfb1DE18A5a0F6ED269" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

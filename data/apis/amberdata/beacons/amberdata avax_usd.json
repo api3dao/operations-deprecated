@@ -1,0 +1,16 @@
+{
+  "name": "AmberData AVAX/USD",
+  "description": "",
+  "beaconId": "0xa85042185001391b446f5819776f04e5efdd2cfb5dcf1b4c2c032faa51c747d4",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x4dd3bc12e20cb0c288c8c3746aa3e8363574f42c941277d59f017b277912ecc8",
+  "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0x099778e361ED3CBD76eA2aA4621f4442d0D4C817",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x9B6bA1F7a45950bdd386Bf7EFd240beCDd6D8CFe" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

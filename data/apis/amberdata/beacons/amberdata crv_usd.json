@@ -1,0 +1,16 @@
+{
+  "name": "AmberData CRV/USD",
+  "description": "",
+  "beaconId": "0x62848b1159261c29be2df9dc47539862287c3c212a65846de4ea465b577f39fc",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xd134648fca35f44b88f020dbc0d9274511d5c85732a1e7259fa09a9360af371c",
+  "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0x099778e361ED3CBD76eA2aA4621f4442d0D4C817",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x9B6bA1F7a45950bdd386Bf7EFd240beCDd6D8CFe" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

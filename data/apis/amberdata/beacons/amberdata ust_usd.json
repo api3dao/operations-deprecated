@@ -1,0 +1,16 @@
+{
+  "name": "AmberData UST/USD",
+  "description": "",
+  "beaconId": "0x8c7e06eb555b03ec9fd991f9d7a92573a4402a327209e1be4fdbeef1e8014f2a",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x0b4feb388e78945de14c25a5968bae2f401ca2cfa47d0ef765773449f08716c9",
+  "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0x099778e361ED3CBD76eA2aA4621f4442d0D4C817",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0x9B6bA1F7a45950bdd386Bf7EFd240beCDd6D8CFe" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

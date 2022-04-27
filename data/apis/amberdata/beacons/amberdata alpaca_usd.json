@@ -1,0 +1,16 @@
+{
+  "name": "AmberData ALPACA/USD",
+  "description": "",
+  "beaconId": "0xee28630b05f38d43172d711e790e95e5d3be18de3426eb3667e8cb70f4beece0",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x1f8dbeba2817648f5ed20375c3632f4405e78130d85039093d1887a5d18cd1ad",
+  "chains": {
+    "bsc": {
+      "active": true,
+      "sponsor": "0x312d5d17d4E71D0b13F3bC02eB01DC32D1A29cb2",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xa002951fdC244bd904e9fDfb1DE18A5a0F6ED269" }],
+      "updateConditionPercentage": 1,
+      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
