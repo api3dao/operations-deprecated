@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { ethers } from 'ethers';
 
+export declare const PROTOCOL_ID_PSP = '2';
+
 export const chainNameToChainId: { [chainName: string]: number } = {
   mainnet: 1,
   ropsten: 3,

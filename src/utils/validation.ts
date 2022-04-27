@@ -62,12 +62,18 @@ export const deploymentSetSchema = z.object({
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
 
+export const templateDecodedParametersSchema = z.object({
+  name: z.string(),
+  type: z.string(),
+  value: z.string(),
+});
+
 export const templateSchema = z.object({
   name: z.string(),
   templateId: evmTemplateIdSchema,
   endpointId: evmEndpointIdSchema,
   parameters: z.string(),
-  decodedParameters: z.record(z.string()),
+  decodedParameters: z.array(templateDecodedParametersSchema),
 });
 
 export const templatesSchema = z.record(templateSchema);
