@@ -1,0 +1,8 @@
+{
+  "name": "rsk",
+  "id": "30",
+  "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
+  "nativeToken": "RBTC",
+  "blockTime": 1,
+  "logoPath": ""
+}

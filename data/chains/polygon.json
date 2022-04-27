@@ -1,0 +1,8 @@
+{
+  "name": "polygon",
+  "id": "137",
+  "contracts": { "DapiServer": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5" },
+  "nativeToken": "MATIC",
+  "blockTime": 1,
+  "logoPath": ""
+}

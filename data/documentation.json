@@ -5,12 +5,36 @@
         "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
         "name": "CoinGecko BTC/USD 0.1 percent deviation",
         "description": "The public CoinGecko BTC/USD price ticker",
-        "templateUrl": "https://github.com/api3dao/operations/blob/80db72035954845beb7d84988dc815ce109df49a/data/apis/api3/templates/coingecko btc_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/8253a5d9c1bd6950e41b11605172c154176838e3/data/apis/api3/templates/coingecko btc_usd.json",
         "chains": { "ropsten": { "airkeeperDeviationThreshold": 0.1, "airseekerDeviationThreshold": 0.2 } }
       }
     ]
   },
   "chains": {
+    "avalanche": {
+      "name": "avalanche",
+      "id": "43114",
+      "contracts": { "DapiServer": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4" },
+      "nativeToken": "AVAX",
+      "blockTime": 1,
+      "logoPath": ""
+    },
+    "bsc": {
+      "name": "bsc",
+      "id": "56",
+      "contracts": { "DapiServer": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c" },
+      "nativeToken": "BNB",
+      "blockTime": 1,
+      "logoPath": ""
+    },
+    "polygon": {
+      "name": "polygon",
+      "id": "137",
+      "contracts": { "DapiServer": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5" },
+      "nativeToken": "MATIC",
+      "blockTime": 1,
+      "logoPath": ""
+    },
     "ropsten": {
       "name": "ropsten",
       "id": "3",
@@ -18,6 +42,14 @@
       "nativeToken": "ropEth",
       "blockTime": 10,
       "logoPath": "https://api.anyblock.tools/ethereum/ewf/ewc/icon/"
+    },
+    "rsk": {
+      "name": "rsk",
+      "id": "30",
+      "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
+      "nativeToken": "RBTC",
+      "blockTime": 1,
+      "logoPath": ""
     }
   }
 }

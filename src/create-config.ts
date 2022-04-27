@@ -154,19 +154,19 @@ const main = async () => {
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
-      `SS_${security.toUpperCase()}=`.replace(/ /g, '_')
+      `SS_${security.toUpperCase()}=""`.replace(/ /g, '_')
     )
   );
 
   const secretsArray = [
-    `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_GATEWAY_KEY_${secretAppend}=`,
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
+    `AIRNODE_WALLET_MNEMONIC=""`,
+    `HTTP_GATEWAY_KEY_${secretAppend}=""`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=""`,
     ...(response.airnodeHeartbeat
-      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
+      ? [`HEARTBEAT_KEY_${secretAppend}=""`, `HEARTBEAT_ID_${secretAppend}=""`, `HEARTBEAT_URL_${secretAppend}=""`]
       : []),
     ...oisSecrets,
-    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=""`.toUpperCase()),
   ];
 
   const secrets = {
@@ -176,7 +176,7 @@ const main = async () => {
 
   //// Build aws.env ////
 
-  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`, `# Optional`, `AWS_SESSION_TOKEN=`];
+  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=""`, `AWS_SECRET_ACCESS_KEY=""`, `AWS_SESSION_TOKEN=""`];
 
   const aws = {
     filename: '.env',

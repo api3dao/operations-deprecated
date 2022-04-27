@@ -39,6 +39,7 @@
     "url": "git+https://github.com/api3dao/operations.git"
   },
   "devDependencies": {
+    "@api3/airkeeper": "0.0.6",
     "@api3/airnode-protocol-v1": "0.3.0",
     "@ethersproject/experimental": "5.6.0",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
