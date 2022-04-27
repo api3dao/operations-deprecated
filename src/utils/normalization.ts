@@ -1,7 +1,7 @@
 import { Buffer } from 'buffer';
-import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
 import { ethers } from 'ethers';
-import { decode } from '@api3/airnode-abi';
+import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
+import { encode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
@@ -31,16 +31,15 @@ export const normalize = (payload: OperationsRepository) => {
 
       const templates = Object.fromEntries(
         Object.entries(api.templates).map(([_key, value]) => {
-          const templateId = ethers.utils.solidityKeccak256(['bytes32', 'bytes'], [value.endpointId, value.parameters]);
-
-          const decodedParameters = decode(value.parameters);
+          const parameters = encode(value.decodedParameters);
+          const templateId = ethers.utils.solidityKeccak256(['bytes32', 'bytes'], [value.endpointId, parameters]);
 
           return [
             sanitiseFilename(value.name),
             {
               ...value,
               templateId,
-              decodedParameters,
+              parameters,
             },
           ];
         })
@@ -139,6 +138,15 @@ export const normalize = (payload: OperationsRepository) => {
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
+  if (Array.isArray(object)) {
+    return object.map((value) => {
+      if (typeof value === 'object' && !ignoreNestedKeys.includes(value)) {
+        return emptyObject(value, preserveValueKeys, ignoreNestedKeys);
+      }
+
+      return preserveValueKeys.includes(value) ? object[value] : emptyReturn(object[value]);
+    });
+  }
   const processedTuples = Object.entries(object).map(([key, value]) => {
     if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
       return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];
