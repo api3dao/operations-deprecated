@@ -14,3 +14,8 @@
 
 # Log files
 *.log
+
+# Hardhat files
+cache
+artifacts
+credentials.json
