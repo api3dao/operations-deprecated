@@ -18,13 +18,6 @@ export const chainNameToChainId: { [chainName: string]: number } = {
   polygonMumbai: 80001,
 };
 
-export const generateChainSponsorAddress = (chainName: string, xpub: string) => {
-  const chainId = chainNameToChainId[chainName];
-  const airnodeHdNode = ethers.utils.HDNode.fromExtendedKey(xpub);
-  const chainSponsor = airnodeHdNode.derivePath(`${PROTOCOL_ID_PSP}/${chainId}`).address;
-  return chainSponsor;
-};
-
 export const DapiServerInterface = () => {
   const dapiServerAbi = JSON.parse(fs.readFileSync(path.resolve('./src/utils/artifacts/DapiServer.json')).toString());
   return new ethers.utils.Interface(dapiServerAbi.abi);

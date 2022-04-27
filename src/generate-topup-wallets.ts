@@ -6,7 +6,7 @@ import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { generateChainSponsorAddress, PROTOCOL_ID_PSP } from './utils/evm';
+import { PROTOCOL_ID_PSP } from './utils/evm';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -30,15 +30,13 @@ const main = async () => {
       const chains = Object.fromEntries(
         Object.entries(beacon.chains).map(([chainName, chain]) => {
           const airnodeHdNode = ethers.utils.HDNode.fromExtendedKey(apiData.apiMetadata.xpub);
-          const sponsor = generateChainSponsorAddress(chainName, apiData.apiMetadata.xpub);
           const providerTopUpWallet = airnodeHdNode.derivePath(
-            deriveWalletPathFromSponsorAddress(sponsor, PROTOCOL_ID_PSP)
+            deriveWalletPathFromSponsorAddress(chain.sponsor, PROTOCOL_ID_PSP)
           ).address;
           return [
             chainName,
             {
               ...chain,
-              sponsor,
               topUpWallets: [
                 ...chain.topUpWallets,
                 {
