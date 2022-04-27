@@ -65,7 +65,7 @@ const main = async () => {
       baseFeeMultiplier: 2,
     };
     const providers = {
-      provider1: {
+      [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
         url: `\${${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL}`.toUpperCase(),
       },
     };
@@ -138,7 +138,7 @@ const main = async () => {
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => ({
       oisTitle: ois.title,
       securitySchemeName: security,
-      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_').replace(/\-/g, '_'),
+      securitySchemeValue: `\${SS_${sanitiseFilename(security).toUpperCase()}}`.replace(/ /g, '_').replace(/\-/g, '_'),
     }))
   );
 
@@ -154,7 +154,7 @@ const main = async () => {
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
-      `SS_${security.toUpperCase()}=""`.replace(/ /g, '_').replace(/\-/g, '_')
+      `SS_${sanitiseFilename(security).toUpperCase()}=""`.replace(/ /g, '_').replace(/\-/g, '_')
     )
   );
 
