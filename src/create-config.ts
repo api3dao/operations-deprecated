@@ -66,7 +66,7 @@ const main = async () => {
     };
     const providers = {
       provider1: {
-        url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
+        url: `\${${sanitiseFilename(chainName).replace(/-/g, '_')}_PROVIDER_URL}`.toUpperCase(),
       },
     };
 
@@ -138,7 +138,7 @@ const main = async () => {
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => ({
       oisTitle: ois.title,
       securitySchemeName: security,
-      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
+      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_').replace(/-/g, '_'),
     }))
   );
 
