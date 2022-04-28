@@ -1,5 +1,4 @@
 import { Buffer } from 'buffer';
-import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
 import { ethers } from 'ethers';
 import { decode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
