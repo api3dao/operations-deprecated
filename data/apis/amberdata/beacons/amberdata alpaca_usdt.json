@@ -1,9 +1,9 @@
 {
-  "name": "AmberData CAKE/USD",
+  "name": "AmberData ALPACA/USDT",
   "description": "",
-  "beaconId": "0x496ad342b6c60a40c5fa1731f7751fcb105c81a63ec42dcf8f9c9d106ad80d13",
+  "beaconId": "0xb68d2ca6a86e7b9a7df35201bb2665c8fdb3af2732544ca2bc21a0c8a1c40360",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0xf1650db7ba2be90ba085937b743973e9f4ba52a2a0352fbaee2248727972cf04",
+  "templateId": "0xeb34b56c56faefea6daff8635746b126bf0d81dfb607b038878ff0dadce4d319",
   "chains": {
     "bsc": {
       "active": true,
