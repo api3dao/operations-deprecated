@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 0-mee",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 0-mee",
-  "beaconId": "0x819c2f1b7eb162084f9a1e0e6834a821c6ac1ebf63f59e463171d1e5b63107d3",
+  "beaconId": "0x76703df0823e137317cc09df36de147ac229528686729d77c939575cd611770d",
   "templateId": "0xc34bf7074e11f304e5e176c0a567910a42a812fbf98aaf1117c49c9940ef2642",
   "updateConditionPercentage": 0.1,
   "chains": [

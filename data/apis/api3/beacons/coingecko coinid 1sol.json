@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 1sol",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 1sol",
-  "beaconId": "0x5dbdb1df243c0bb9c6f29ec256f16384ba14a9de685c486d086eb5dae6f912fe",
+  "beaconId": "0xac49475e4d5d3c4bdfe103086c69d6e7d8117eb493bc4a7c5060c84a699db4fa",
   "templateId": "0xb5dd4fc074ea42471205ae78c225082f2e17f7f93791b41dbcd570c08b9313d4",
   "updateConditionPercentage": 0.1,
   "chains": [

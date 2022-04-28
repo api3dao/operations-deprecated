@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 4-stock",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 4-stock",
-  "beaconId": "0xaf1b767f98adbd4a7dc9e243db446fb4dc1c3a4d8020d4c8bc438d6e8d5df825",
+  "beaconId": "0x9eff874a6bf2e19357d67576ff07cb66736c129174d039137965efc8c0aa1b8b",
   "templateId": "0xd3d19f00f8516ab8d72c45b6bdbef6dc664d5b8324724ac3099bc270e9698b6a",
   "updateConditionPercentage": 0.1,
   "chains": [

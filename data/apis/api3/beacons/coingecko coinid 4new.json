@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 4new",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 4new",
-  "beaconId": "0xb69f630f1f7a0d581e8acc60aca1aed9eaf5d71583ad4869d41c4099091ab3a8",
+  "beaconId": "0x6d29f9302913bb7c3e80b979e023a9da2e5037485256c52c9ab9e35aeb1aa4eb",
   "templateId": "0xddf2f042db61a2b493143533bdb86e3071b058d5c2e7655ea91932528835daa3",
   "updateConditionPercentage": 0.1,
   "chains": [

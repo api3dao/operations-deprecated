@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 7eleven",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 7eleven",
-  "beaconId": "0xa6794661824c4132fc163cd958565b5c37d12e8b7013995567e09e392f3d1905",
+  "beaconId": "0x8bf6a61252d1fe88a63d6c9618ad332ef1cce00d03faa5a38998db8124f16541",
   "templateId": "0xaa9bdf8266a670ac865cecd08223df8404816664d9475f8d1b4317f65919b96b",
   "updateConditionPercentage": 0.1,
   "chains": [

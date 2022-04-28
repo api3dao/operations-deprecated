@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 0xcert",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 0xcert",
-  "beaconId": "0xb54313b8defc13e4e86eb33e3ed8e7c01ae23fe30688ce5c83e2a6b1b9b06a0d",
+  "beaconId": "0xa5ac52d42e0c8a0879a100efc79736f0b7a91dbb24587be564d11713188bac8e",
   "templateId": "0xb33af0f6e407e666f88835be2de72e26426ba3ee824f7c1abaa61306cd485ad2",
   "updateConditionPercentage": 0.1,
   "chains": [

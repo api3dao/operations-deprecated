@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 2goshi",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 2goshi",
-  "beaconId": "0x2b3746ff89f45a37a8cd613007f143aaedd326b698fd4ddade7b24ff30a39400",
+  "beaconId": "0x05ad8351c1f321757a3ab92fbb5f26eabdbc9f916a9ed96ef3099529c27c6437",
   "templateId": "0xab2f39fa2ea445461a87d1c4548d4ac598a9e3bca83bb55f7e8b836c87f44e89",
   "updateConditionPercentage": 0.1,
   "chains": [

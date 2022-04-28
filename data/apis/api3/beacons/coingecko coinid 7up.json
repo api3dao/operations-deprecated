@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 7up",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 7up",
-  "beaconId": "0x00860cb185e4c5c0fb2e03442b79392b37853c7332bfaedd480279ba84235560",
+  "beaconId": "0xa703469017b1456a38beceae8f2d22b5d0257db5e59617ddc51f80e48cb165db",
   "templateId": "0xacb6092d8bb7a247b4b2380096663b6a1cb00255ab2ca4f96da2523faac43421",
   "updateConditionPercentage": 0.1,
   "chains": [

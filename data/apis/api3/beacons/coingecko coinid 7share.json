@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 7share",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 7share",
-  "beaconId": "0xb8933cb989d144a5bc7e62188e6ed7e39639f080b52859c1947adb05571d0f38",
+  "beaconId": "0x917b237ba21c3da5efa42c13f948acfd541951cf960e918541c52832198c8e9e",
   "templateId": "0x173ac7a1a03ab64d760fc535593d0600daedea592bcd45e3ffcf259651c75028",
   "updateConditionPercentage": 0.1,
   "chains": [

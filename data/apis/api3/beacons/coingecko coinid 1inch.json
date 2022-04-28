@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 1inch",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 1inch",
-  "beaconId": "0xb47c4b3182fc279767a971457dbed816e41468a4d0716e255569d3d1d1a0bc42",
+  "beaconId": "0x08f15ad29af793ddf5d589f5612a84ee5adcf742daf6150ff8faa0cb3f2d8663",
   "templateId": "0x594c6f77bf26147aa9586d45114d1884fcce81a47dc1dfc1844cb6f0222e47ea",
   "updateConditionPercentage": 0.1,
   "chains": [

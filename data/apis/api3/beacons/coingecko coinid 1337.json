@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 1337",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 1337",
-  "beaconId": "0x26abd157200d351e604e445043d9bedf0b45a02775d0109fc38c761e44a15df8",
+  "beaconId": "0x969a153a0ebfd7b295dd0533ba823d4b765e120c32647bfff127f8f4dc430d50",
   "templateId": "0xd58a6688e643412ddafcf36f601d4f036dba36d12579598dd18e7f001a8d6837",
   "updateConditionPercentage": 0.1,
   "chains": [

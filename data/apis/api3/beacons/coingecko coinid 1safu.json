@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 1safu",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 1safu",
-  "beaconId": "0x9d694d0ce8e8bffd141af23770afaf1e62fea7e98fdf4bd53d62750f29c7fa6f",
+  "beaconId": "0xfd4ef724635569dce70c4fd71e2767ae11cb9c6fa8b6d3382c5f2d3e46caa8c4",
   "templateId": "0xd3b822317e3d1db9cbb094498dbe6507993d35394caeb3b6c91832c66e320f45",
   "updateConditionPercentage": 0.1,
   "chains": [

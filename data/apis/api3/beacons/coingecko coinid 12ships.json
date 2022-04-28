@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 12ships",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 12ships",
-  "beaconId": "0xcb568fa9d5c9348539475fb063adc66638b945f3cb526194df5fb6dc259cfe2c",
+  "beaconId": "0xf456bb2985b0891005b1ccc3f3264b1220a06a23d871861d20d5e3175330f26f",
   "templateId": "0xc2ae1c63429585fcd9ba615749c091d31aa68c0ad8e32a86ac0e6a39b95bfdd3",
   "updateConditionPercentage": 0.1,
   "chains": [

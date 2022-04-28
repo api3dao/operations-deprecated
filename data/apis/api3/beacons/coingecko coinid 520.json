@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 520",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 520",
-  "beaconId": "0xfc2c9fce8e014e522eef1e33eb6bb84aedb5c9927a9c840ab07cb02e2f216967",
+  "beaconId": "0x9c7f95f7720636e2272fec140141372f8bf3035bc4c4ec2d13ebcc51ac3d909e",
   "templateId": "0xc2973711d1c2bd039abbeb28f180b6dcdb5208bd9f7cf1006a615943b6d5162d",
   "updateConditionPercentage": 0.1,
   "chains": [

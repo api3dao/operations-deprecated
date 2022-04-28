@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 4jnet",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 4jnet",
-  "beaconId": "0x38234c3b6fd77992667aee1d0c40fbcadca94caedc134b969a792c41919735c5",
+  "beaconId": "0xff2fc9a91acbab4832711f91435882bc425e0b87edac6fa7c9267d830bc63a24",
   "templateId": "0x1b81ca3c7d6045597568ab450600fae8427b17fec763ed274b83175a84e5f1be",
   "updateConditionPercentage": 0.1,
   "chains": [

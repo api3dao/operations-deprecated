@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 28vck",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 28vck",
-  "beaconId": "0xd09a3bd411f5f830b5d9b067f05c4f0bf4813acb0ad29235fc8612a32206d1c4",
+  "beaconId": "0x16aa30f431feae52fce9a588fa1cae6c6ecf5fb5d3f514f443023267ac7c86bb",
   "templateId": "0xe6875eb881c436fbb11a7680496337ff5d4f29f88699c4bb0870349e70d86478",
   "updateConditionPercentage": 0.1,
   "chains": [

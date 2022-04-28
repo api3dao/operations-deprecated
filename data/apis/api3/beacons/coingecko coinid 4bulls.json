@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 4bulls",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 4bulls",
-  "beaconId": "0x375a3963859dc5f6471b3ce6d121fa4ae41d881e1358a8a084fef327cd013c93",
+  "beaconId": "0xfaac33edb1ba4647024b409358e10d22bf7767333327ec4665f072d663864408",
   "templateId": "0x99349c5bde8488cb840f47fbcf975a5b698783e852f41b060e35c04d23ee3c3c",
   "updateConditionPercentage": 0.1,
   "chains": [

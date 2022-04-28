@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 5g-cash",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 5g-cash",
-  "beaconId": "0x49c6a83920da03d65b5e9bfd3d72219e7bcde8eea24287b59c5b24221ff388fb",
+  "beaconId": "0x9867d244fdfdc16a75578ec45608291745d5c26703b148cd861a19f97a36a8cd",
   "templateId": "0xc84a7ee8580a8bae975b813c456cd220571e3035925e2e3d9467b9d240546496",
   "updateConditionPercentage": 0.1,
   "chains": [

@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 4mw",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 4mw",
-  "beaconId": "0x84691e2363fcc35dc5c8b4195f00fc0df17a94ffae41ae0ff99a0224866fbcb0",
+  "beaconId": "0x9e78bf345528197ff186c6e78f6c3b3d3628d17be306a5ea19cac15e2c243b7d",
   "templateId": "0x7c6d8305e3512e48aee62ff22d9ecd08a47df3898cc4860727a42f7c7abbbd83",
   "updateConditionPercentage": 0.1,
   "chains": [

@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 1peco",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 1peco",
-  "beaconId": "0xef436be2796baef1827afba7698825d1c3b609785b85a2e464096f89cef36946",
+  "beaconId": "0x8bb53259d71dabfbeab20e2953075e7cf7d5a1bbf7c955249ecd870160a6cbe9",
   "templateId": "0x934df82d677d8470f7d5ddf27b59f2762e3d58810580825d954de56ec415a12b",
   "updateConditionPercentage": 0.1,
   "chains": [

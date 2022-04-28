@@ -2,7 +2,7 @@
   "name": "CoinGecko coinId 300fit",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "description": "CoinGecko coinId 300fit",
-  "beaconId": "0x67a8ae134711da392c5a59e8ed637892f2c550bc85f5a4f4cfd905b0b8216f20",
+  "beaconId": "0x4f157a9388a11acd50dcee78b252e6cb2b3f204583e38e024fca20161d6e262a",
   "templateId": "0xa7cf49386d46d29393281f08732b69885195068e908b83297909aacb97fcbe32",
   "updateConditionPercentage": 0.1,
   "chains": [
