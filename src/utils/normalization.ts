@@ -1,5 +1,4 @@
 import { Buffer } from 'buffer';
-import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
 import { ethers } from 'ethers';
 import { decode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
@@ -15,8 +14,8 @@ export const normalize = (payload: OperationsRepository) => {
 
       const beacons = Object.fromEntries(
         Object.entries(api.beacons).map(([_key, beacon]) => {
-          const beaconId = keccak256(
-            defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
+          const beaconId = ethers.utils.keccak256(
+            ethers.utils.defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
           );
 
           return [
