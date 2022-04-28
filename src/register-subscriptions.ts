@@ -69,6 +69,7 @@ const main = async () => {
 
       if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
       const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
+      const gasPrice = await provider.getGasPrice();
       const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
       if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
       const DapiServer = DapiServerContract(DapiServerAddress, provider);
@@ -101,7 +102,8 @@ const main = async () => {
           templateId,
           encodedBeaconUpdateSubscriptionConditions,
           airnodeAddress,
-          sponsor
+          sponsor,
+          { gasPrice }
         );
 
         // Check that the transaction is complete
