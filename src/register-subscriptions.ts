@@ -99,7 +99,7 @@ const main = async () => {
           expectedSubscriptionId
         );
 
-        if (beaconId != ethers.constants.HashZero)
+        if (beaconId !== ethers.constants.HashZero)
           return `✅ subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`;
 
         console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chainName}`);
