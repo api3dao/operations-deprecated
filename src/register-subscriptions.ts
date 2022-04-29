@@ -27,7 +27,9 @@ const main = async () => {
   const apiData = operationsRepository.apis[response.apiName];
 
   // Get all the chains the API will be deployed on
-  const apiChains = [...new Set(Object.values(apiData.beacons).flatMap((beacon) => Object.keys(beacon.chains)))];
+  const apiChains = [
+    ...new Set(Object.values(apiData.beacons).flatMap((beacon) => beacon.chains.map((chain) => chain.name))),
+  ];
 
   // Build NounceManagers for each chain
   const nonceManagers = apiChains.reduce(
@@ -43,7 +45,8 @@ const main = async () => {
   );
 
   const subscriptionPromises = Object.entries(apiData.beacons).flatMap(([beaconName, beacon]) =>
-    Object.entries(beacon.chains).map(async ([chainName, chain]) => {
+    beacon.chains.map(async (chain) => {
+      const chainName = chain.name;
       const DapiServerInteface = DapiServerInterface();
       const parameters = '0x';
       const airnodeAddress = beacon.airnodeAddress;
@@ -52,6 +55,8 @@ const main = async () => {
         .mul(beacon.chains.find((chain) => chain.name === chainName)!.updateConditionPercentage * 100)
         .div(10000);
       const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(['uint256'], [threshold]);
+      const { sponsor } = beacon;
+
       const encodedBeaconUpdateSubscriptionConditions = encode([
         {
           type: 'bytes32',
@@ -73,8 +78,6 @@ const main = async () => {
       const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
       if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
       const DapiServer = DapiServerContract(DapiServerAddress, provider);
-
-      const sponsor = chain.sponsor;
 
       const expectedSubscriptionId = ethers.utils.keccak256(
         ethers.utils.defaultAbiCoder.encode(

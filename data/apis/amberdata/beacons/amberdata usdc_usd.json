@@ -4,11 +4,11 @@
   "beaconId": "0x47cf500b18a3ba8ed515162b0579afbba7afd3093fe9701332c291824708aa6a",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x11de92fd4ae53d197283e99fa61a7fa32d775e0807788690968ad62c261eedd9",
+  "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
   "chains": [
     {
       "active": true,
       "name": "polygon",
-      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 0.2,
       "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
@@ -16,7 +16,6 @@
     {
       "active": true,
       "name": "rsk",
-      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 0.2,
       "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }

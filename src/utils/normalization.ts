@@ -117,10 +117,10 @@ export const normalize = (payload: OperationsRepository) => {
               templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
                 Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
               }.json`,
-              chains: Object.entries(beacon.chains).reduce(
-                (acc, [chainName, chain]) => ({
+              chains: beacon.chains.reduce(
+                (acc, chain) => ({
                   ...acc,
-                  [chainName]: {
+                  [chain.name]: {
                     airkeeperDeviationThreshold: chain.updateConditionPercentage,
                     airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
                   },
