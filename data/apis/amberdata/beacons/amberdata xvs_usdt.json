@@ -4,13 +4,14 @@
   "beaconId": "0xfb1ab4653f5211bbe8050f97e1c6f269229b88783f840e4b353168dcc19d958b",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x760992290ec8d314f215fd26b054c37c12a2750bffdac9aaf901b87ad242f208",
-  "chains": {
-    "bsc": {
+  "chains": [
+    {
       "active": true,
+      "name": "bsc",
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
     }
-  }
+  ]
 }
