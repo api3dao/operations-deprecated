@@ -4,11 +4,11 @@
   "beaconId": "0x8c7e06eb555b03ec9fd991f9d7a92573a4402a327209e1be4fdbeef1e8014f2a",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x0b4feb388e78945de14c25a5968bae2f401ca2cfa47d0ef765773449f08716c9",
-  "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
   "chains": [
     {
       "active": true,
       "name": "avalanche",
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 0.2,
       "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }

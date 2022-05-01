@@ -4,11 +4,11 @@
   "beaconId": "0xc91d0526470a4dad652d0d929fb7dc0ca2268b8dedb0a70e7e7c698e766ef13b",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x909997db72c783b98bad7b2059aed4ec6c45103941d6a8bcb926bdcc42183d4a",
-  "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
   "chains": [
     {
       "active": true,
       "name": "polygon",
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }

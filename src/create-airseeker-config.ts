@@ -46,7 +46,7 @@ const main = async () => {
     .filter((api, index, apis) => apis.findIndex((find) => find.apiMetadata.name === api.apiMetadata.name) === index);
 
   // Get all the chains the API will be deployed on
-  const apiChains = [...new Set(Object.values(beacons).flatMap((beacon) => beacon.chains.map((chain) => chain.name)))];
+  const apiChains = [...new Set(Object.values(beacons).flatMap((beacon) => Object.keys(beacon.chains)))];
 
   //// Build airseeker.json ////
 
@@ -59,8 +59,7 @@ const main = async () => {
         airnode: beacon.airnodeAddress,
         templateId: beacon.templateId,
         fetchInterval: Math.ceil(
-          // TODO I think this should be `find`
-          Math.min(...beacon.chains.map((chain) => chain.airseekerConfig.updateInterval)) / 2
+          Math.min(...Object.values(beacon.chains).map((chain) => chain.airseekerConfig.updateInterval)) / 2
         ),
       },
     }),
@@ -126,16 +125,16 @@ const main = async () => {
 
   const airseekerTriggers = beacons.reduce(
     (curr1, beacon) =>
-      beacon.chains.reduce(
-        (curr2, chain) => ({
+      Object.entries(beacon.chains).reduce(
+        (curr2, [chainName, chain]) => ({
           ...curr2,
           beaconUpdates: {
             ...curr2.beaconUpdates,
-            [`${chainNameToChainId[chain.name]}`]: {
-              ...curr2?.beaconUpdates?.[`${chainNameToChainId[chain.name]}`],
-              [beacon.sponsor]: {
+            [`${chainNameToChainId[chainName]}`]: {
+              ...curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`],
+              [chain.sponsor]: {
                 beacons: [
-                  ...(curr2?.beaconUpdates?.[`${chainNameToChainId[chain.name]}`]?.[beacon.sponsor]?.beacons || []),
+                  ...(curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`]?.[chain.sponsor]?.beacons || []),
                   {
                     beaconId: beacon.beaconId,
                     deviationThreshold: chain.airseekerConfig.deviationThreshold,
