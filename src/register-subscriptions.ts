@@ -49,7 +49,7 @@ const main = async () => {
       const airnodeAddress = beacon.airnodeAddress;
       const templateId = beacon.templateId;
       const threshold = ethers.BigNumber.from(100000000)
-        .mul(beacon.chains.find((chain) => chain.name === chainName)!.updateConditionPercentage * 100)
+        .mul(beacon.chains[chainName].updateConditionPercentage * 100)
         .div(10000);
       const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(['uint256'], [threshold]);
       const encodedBeaconUpdateSubscriptionConditions = encode([

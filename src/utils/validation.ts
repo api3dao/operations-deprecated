@@ -18,7 +18,6 @@ export const topUpWalletSchema = z.object({
 });
 
 export const extendedChainDescriptionSchema = z.object({
-  name: z.string(),
   active: z.boolean(),
   sponsor: z.string(),
   topUpWallets: z.array(topUpWalletSchema),
@@ -36,7 +35,7 @@ export const beaconSchema = z.object({
   beaconId: evmBeaconIdSchema,
   airnodeAddress: evmAddressSchema,
   templateId: evmTemplateIdSchema,
-  chains: z.array(extendedChainDescriptionSchema),
+  chains: z.record(extendedChainDescriptionSchema),
 });
 
 export const beaconsSchema = z.record(beaconSchema);
