@@ -8,21 +8,21 @@
     "polygon": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
-      "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
+      "topUpWallets": [{ "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
     },
     "rsk": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
-      "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
+      "topUpWallets": [{ "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
     },
     "avalanche": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
-      "topUpWallets": [{ "walletType": "Provider", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
+      "topUpWallets": [{ "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
       "updateConditionPercentage": 1,
       "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
     }
