@@ -1,6 +1,6 @@
 {
   "name": "AmberData BNB/USD",
-  "description": "",
+  "description": "AmberData - BNB/USD - Pair",
   "beaconId": "0xe2aa4ac2c739ed61a0c0bb5b7423e8e7b58f6fd6ae476b6dc3ae47a5b7221a0e",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x53cb3e6d0f90f74c138f7370b4edd0902ae8a2880a8205a1d08452a20d69783e",
@@ -9,8 +9,8 @@
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" }],
-      "updateConditionPercentage": 1,
-      "airseekerConfig": { "deviationThreshold": 0.5, "heartbeatInterval": 86400, "updateInterval": 30 }
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
     }
   }
 }
