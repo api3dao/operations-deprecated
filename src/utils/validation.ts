@@ -10,11 +10,11 @@ export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z0-9]{107}$/);
 
-export const walletTypeSchema = z.enum(['Provider', 'API3']);
+export const walletTypeSchema = z.enum(['Provider', 'API3', 'Provider-Sponsor', 'API3-Sponsor']);
 
 export const topUpWalletSchema = z.object({
   walletType: walletTypeSchema,
-  address: evmAddressSchema,
+  address: evmAddressSchema.optional(),
 });
 
 export const extendedChainDescriptionSchema = z.object({

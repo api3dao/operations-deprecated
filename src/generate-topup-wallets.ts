@@ -40,7 +40,7 @@ const main = async () => {
               topUpWallets: [
                 ...chain.topUpWallets,
                 {
-                  walletType: 'Provider',
+                  walletType: 'Provider-Sponsor',
                   address: providerTopUpWallet,
                 },
               ],
