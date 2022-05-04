@@ -1,5 +1,5 @@
-// NOTE Copied from Airseeker
 import { z } from 'zod';
+import { chainOptionsSchema, providerSchema } from '@api3/airnode-validator';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -23,34 +23,23 @@ export const beaconSetsSchema = emptyObjectSchema;
 export const chainSchema = z
   .object({
     contracts: z.record(evmAddressSchema),
-    providers: z.record(
-      z.object({
-        url: z.string().url(),
-      })
-    ),
-    options: z.object({
-      txType: z.string(),
-      priorityFee: z.object({
-        value: z.number(),
-        unit: z.string(),
-      }),
-      baseFeeMultiplier: z.number(),
-    }),
+    providers: z.record(providerSchema),
+    options: chainOptionsSchema,
   })
   .strict();
 
 export const chainsSchema = z.record(chainSchema);
 
-export const gatewaySchema = z.array(
-  z
-    .object({
-      apiKey: z.string(),
-      url: z.string().url(),
-    })
-    .strict()
-);
+export const gatewaySchema = z
+  .object({
+    apiKey: z.string(),
+    url: z.string().url(),
+  })
+  .strict();
 
-export const gatewaysSchema = z.record(evmAddressSchema, gatewaySchema);
+export const gatewayArraySchema = z.array(gatewaySchema);
+
+export const gatewaysSchema = z.record(gatewayArraySchema);
 
 export const templateSchema = z
   .object({
@@ -87,6 +76,7 @@ export const triggersSchema = z.object({
 
 export const configSchema = z
   .object({
+    airseekerWalletMnemonic: z.string(),
     beacons: beaconsSchema,
     beaconSets: beaconSetsSchema,
     chains: chainsSchema,
@@ -95,6 +85,13 @@ export const configSchema = z
     triggers: triggersSchema,
   })
   .strict();
+
+export const encodedValueSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
+export const signatureSchema = z.string().regex(/^0x[a-fA-F0-9]{130}$/);
+export const signedDataSchema = z.object({
+  data: z.object({ timestamp: z.string(), value: encodedValueSchema }),
+  signature: signatureSchema,
+});
 
 export type Config = z.infer<typeof configSchema>;
 export type Beacon = z.infer<typeof beaconSchema>;
@@ -112,3 +109,4 @@ export type Address = z.infer<typeof evmAddressSchema>;
 export type BeaconId = z.infer<typeof evmBeaconIdSchema>;
 export type TemplateId = z.infer<typeof evmTemplateIdSchema>;
 export type EndpointId = z.infer<typeof evmEndpointIdSchema>;
+export type SignedData = z.infer<typeof signedDataSchema>;
