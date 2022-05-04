@@ -15,7 +15,7 @@ export const normalize = (payload: OperationsRepository) => {
       const beacons = Object.fromEntries(
         Object.entries(api.beacons).map(([_key, beacon]) => {
           const beaconId = ethers.utils.keccak256(
-            ethers.utils.defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
+            ethers.utils.solidityPack(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
           );
 
           return [
