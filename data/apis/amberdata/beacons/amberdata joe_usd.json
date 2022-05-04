@@ -1,9 +1,9 @@
 {
   "name": "AmberData JOE/USD",
   "description": "",
-  "beaconId": "0xd08e6ed763f9859c9ea47af2ae7976019de887c915246088ad736cf0f4e394c3",
+  "beaconId": "0xa5b0b108bf924f7d48089e3ee4997a8555b078ad99259607541b7136cf19dcfc",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x56323660d50a5f03c6907f61a3cc8f501f28beae7bbe3a1917eea7630b8be1f7",
+  "templateId": "0xec22c6ad19d47d245b880c6808a2e3a644e35157992f6a8a0894c6a9e63e34a0",
   "chains": {
     "avalanche": {
       "active": true,

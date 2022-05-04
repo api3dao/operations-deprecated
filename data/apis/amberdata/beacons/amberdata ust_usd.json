@@ -1,9 +1,9 @@
 {
   "name": "AmberData UST/USD",
   "description": "",
-  "beaconId": "0x8c7e06eb555b03ec9fd991f9d7a92573a4402a327209e1be4fdbeef1e8014f2a",
+  "beaconId": "0xc1ca116cec3b39e8a1ec7d1ec5e8c5240565c615ad6e753a5f73febec8e400a1",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x0b4feb388e78945de14c25a5968bae2f401ca2cfa47d0ef765773449f08716c9",
+  "templateId": "0x1bab8014c068e6871bf4043a74c51164d05d482d8cb6f1f66f8edcd7f3b6bb0f",
   "chains": {
     "avalanche": {
       "active": true,

@@ -46,7 +46,7 @@
     }
   ],
   "nodeSettings": {
-    "nodeVersion": "0.6.0",
+    "nodeVersion": "0.6.2",
     "cloudProvider": { "type": "aws", "region": "us-east-1", "disableConcurrencyReservations": false },
     "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
     "heartbeat": { "enabled": false },

@@ -1,9 +1,9 @@
 {
   "name": "AmberData AVAX/USD",
   "description": "",
-  "beaconId": "0xa85042185001391b446f5819776f04e5efdd2cfb5dcf1b4c2c032faa51c747d4",
+  "beaconId": "0x8f093a7e0359742d1ef59bee109b8ba15e325f0fd84727bfc7f76514798de40e",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x4dd3bc12e20cb0c288c8c3746aa3e8363574f42c941277d59f017b277912ecc8",
+  "templateId": "0x26cb2638f5c9400a6eef7a8b6c13e266c6bd735f692e56bf19f2c911c227cad8",
   "chains": {
     "avalanche": {
       "active": true,
