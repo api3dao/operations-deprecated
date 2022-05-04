@@ -1,7 +1,7 @@
 {
   "name": "AmberData AAVE/USD",
   "description": "AmberData - AAVE/USD - Pair",
-  "beaconId": "0xc1540c5143434db44b8fe91bc8adf599ce638446bd57aec489f9cfd086e72049",
+  "beaconId": "0xa5ebc55c0b2dfc72e9a48d1a6f299b57ac9a9d4d4bf739d7443d731b2e819d0e",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x4ea5398d313d6b8a70fe8690f884a311de7f0a15d76e44d14b21a7c9ee471e31",
   "chains": {

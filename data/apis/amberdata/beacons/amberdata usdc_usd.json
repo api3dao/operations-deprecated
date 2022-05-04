@@ -1,7 +1,7 @@
 {
   "name": "AmberData USDC/USD",
   "description": "AmberData - USDC/USD - Pair",
-  "beaconId": "0x47cf500b18a3ba8ed515162b0579afbba7afd3093fe9701332c291824708aa6a",
+  "beaconId": "0x854d372c9d23077c3f57c56289acb5b59993d4caf253282ca8ebe160b89fb1cb",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x21fd97d7dc3abd5b788895c61e07c244e6369e39d1139d1626fecfc4042fbf29",
   "chains": {
