@@ -3,7 +3,7 @@
   "description": "AmberData - CRV/USD - Pair",
   "beaconId": "0x62848b1159261c29be2df9dc47539862287c3c212a65846de4ea465b577f39fc",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0xd134648fca35f44b88f020dbc0d9274511d5c85732a1e7259fa09a9360af371c",
+  "templateId": "0x60a89c316a78d29387cd92eca79702ab0f02f0ab786d92749d5874a919876d3f",
   "chains": {
     "avalanche": {
       "active": true,

@@ -3,7 +3,7 @@
   "description": "AmberData - RBTC/BTC - Pair",
   "beaconId": "0x6ae359d0fce85481bb82804dbb1b9900f98e8039f8834207de2982884f25ef15",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x5de0f343299b85e80ed717fa9f0f890048ad6fd97aeb33d03d53ae947afab09b",
+  "templateId": "0xd1c4bd38d88d67c4cc336caf7fd48e7eebc3701cbbc952b3abe5dd5861a98a22",
   "chains": {
     "rsk": {
       "active": true,

@@ -3,7 +3,7 @@
   "description": "AmberData - BUSD/USD - Pair",
   "beaconId": "0xba5b03b6806bb43f8d89c156095d9ae1d8fd9beaf78a9cddc4b99b2721a81857",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0xcf8486170ffe597a1069553cb37310038d69220b8e6cf841c4fc5bfdbcf9de57",
+  "templateId": "0x3eccbdf3e97f2ac1faa0833e2546254aaa02aed5d8429f28b0b997858d8fe6cc",
   "chains": {
     "bsc": {
       "active": true,
