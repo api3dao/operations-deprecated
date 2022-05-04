@@ -152,7 +152,7 @@ const main = async () => {
     {} as Triggers
   );
 
-  const config = {
+  const airseeker = {
     airseekerWalletMnemonic: '${AIRSEEKER_WALLET_MNEMONIC}',
     beacons: airseekerBeacons,
     beaconSets: {},
@@ -192,7 +192,7 @@ const main = async () => {
       airseeker: {
         ...operationsRepository.api3?.airseeker,
         [response.name]: {
-          config,
+          airseeker,
           secrets,
         },
       },
