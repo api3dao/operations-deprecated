@@ -74,7 +74,7 @@ const main = async () => {
           DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
         },
         providers: {
-          provider1: {
+          [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
             url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
           },
         },
@@ -153,6 +153,7 @@ const main = async () => {
   );
 
   const config = {
+    airseekerWalletMnemonic: '${AIRSEEKER_WALLET_MNEMONIC}',
     beacons: airseekerBeacons,
     beaconSets: {},
     chains: airseekerChains,
@@ -172,7 +173,11 @@ const main = async () => {
     ).toUpperCase()}_${cloudProviderType.toUpperCase()}=`,
   ]);
 
-  const secretsArray = [...gatewaySecrets, ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase())];
+  const secretsArray = [
+    `AIRSEEKER_WALLET_MNEMONIC=`,
+    ...gatewaySecrets,
+    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+  ];
 
   const secrets = {
     filename: '.env',
