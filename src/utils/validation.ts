@@ -123,7 +123,7 @@ export const documentationSchema = z.object({
 });
 
 const airseekerDeploymentSetSchema = z.object({
-  config: airseekerConfigSchema,
+  airseeker: airseekerConfigSchema,
   secrets: secretsSchema,
 });
 
