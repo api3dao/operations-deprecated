@@ -5,14 +5,14 @@
         "beaconId": "0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846",
         "name": "AmberData AAVE/BTC",
         "description": "AmberData - AAVE/BTC - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata aave_btc.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata aave_btc.json",
         "chains": { "rsk": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xaa95f479e5eb12e9a175df161063e2e35572e5e39f6140831808c69174dbeb24",
         "name": "AmberData AAVE/USD",
         "description": "AmberData - AAVE/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata aave_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata aave_usd.json",
         "chains": {
           "polygon": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 },
           "rsk": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 },
@@ -23,91 +23,91 @@
         "beaconId": "0xeab45a41346d283d42b6d1f71bcb8fabc3c8f75ee978bf27df1c8e5590e82196",
         "name": "AmberData ALPACA/USDT",
         "description": "AmberData - ALPACA/USDT - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata alpaca_usdt.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata alpaca_usdt.json",
         "chains": { "bsc": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xee0eebdd2c1fa2185fc0d2a46c6557781fbdc7a588a8bbe64e73295c18288c8d",
         "name": "AmberData AVAX/USD",
         "description": "AmberData - AVAX/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata avax_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata avax_usd.json",
         "chains": { "avalanche": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xa3ebd22a5633ca53bb74f1ff545d32c6c69254f1b89ae070658bf358cab8a282",
         "name": "AmberData BNB/USD",
         "description": "AmberData - BNB/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata bnb_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata bnb_usd.json",
         "chains": { "bsc": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x417dd7ea638087ba9b9fdc320c58a83405f9562b699b01152e9f685653968c55",
         "name": "AmberData BUSD/USD",
         "description": "AmberData - BUSD/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata busd_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata busd_usd.json",
         "chains": { "bsc": { "airkeeperDeviationThreshold": 0.4, "airseekerDeviationThreshold": 0.2 } }
       },
       {
         "beaconId": "0xc8d512e8db42a1e4fd2f8ad9acbf72d1c8adeabf14562c72b3d64758905b5a9b",
         "name": "AmberData CAKE/USDT",
         "description": "AmberData - CAKE/USDT - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata cake_usdt.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata cake_usdt.json",
         "chains": { "bsc": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xd304a329cb1c2472c36de0c0aecc1da83f132a8d9d9777338b81d989e9f7d1c8",
         "name": "AmberData CRV/USD",
         "description": "AmberData - CRV/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata crv_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata crv_usd.json",
         "chains": { "avalanche": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x8616a48c48261b1b03430b61ddbb7df073aa31635b22c1f099f0210504550faf",
         "name": "AmberData JOE/USD",
         "description": "AmberData - JOE/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata joe_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata joe_usd.json",
         "chains": { "avalanche": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xc06f8abc8ceb254781f12071ceee5c02103580df309d79b6b66fa40edc1ff9e7",
         "name": "AmberData MATIC/USD",
         "description": "AmberData - MATIC/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata matic_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata matic_usd.json",
         "chains": { "polygon": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x5b4e1550f636c4e06478d5d8cd2a9ee106ffb2b7c227d0de57284c2952216c97",
         "name": "AmberData OOKI/ETH",
         "description": "AmberData - OOKI/ETH - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata ooki_eth.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata ooki_eth.json",
         "chains": { "polygon": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x08d9d222b7e1e77a93ebbc8c69614af636e47a6c71eb3fcab4708c6455fabfd1",
         "name": "AmberData QUICK/USD",
         "description": "AmberData - QUICK/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata quick_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata quick_usd.json",
         "chains": { "polygon": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x0639ffa36d0dd116fddf5dad4559d2dba303b99ab7771bf3d1b7e3af86d89ced",
         "name": "AmberData RBTC/BTC",
         "description": "AmberData - RBTC/BTC - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata rbtc_btc.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata rbtc_btc.json",
         "chains": { "rsk": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0xc7d143e56da695e6d63f9c408932378e9130486fbb1c2bb8a8a9f74c9bbdf2d2",
         "name": "AmberData RBTC/USD",
         "description": "AmberData - RBTC/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata rbtc_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata rbtc_usd.json",
         "chains": { "rsk": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
       },
       {
         "beaconId": "0x814e3c84e0e63b8dd483a92f951259e18bfd1e9c2d11e850343fb15d8bd6c245",
         "name": "AmberData USDC/USD",
         "description": "AmberData - USDC/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata usdc_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata usdc_usd.json",
         "chains": {
           "polygon": { "airkeeperDeviationThreshold": 0.4, "airseekerDeviationThreshold": 0.2 },
           "rsk": { "airkeeperDeviationThreshold": 0.4, "airseekerDeviationThreshold": 0.2 }
@@ -117,24 +117,15 @@
         "beaconId": "0x472ccf005a6ee77277c6262321c4228aa31eabfb199ccd216ebc486302df0f4d",
         "name": "AmberData UST/USD",
         "description": "AmberData - UST/USD - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata ust_usd.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata ust_usd.json",
         "chains": { "avalanche": { "airkeeperDeviationThreshold": 0.4, "airseekerDeviationThreshold": 0.2 } }
       },
       {
         "beaconId": "0x66834ab57b5d8ccdca8366187c971d412706349fc625398dee5a97c89e39e49f",
         "name": "AmberData XVS/USDT",
         "description": "AmberData - XVS/USDT - Pair",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/amberdata xvs_usdt.json",
+        "templateUrl": "https://github.com/api3dao/operations/blob/de9099b08bfe0496f4f8453b023720a41dcbe0bd/data/apis/api3/templates/amberdata xvs_usdt.json",
         "chains": { "bsc": { "airkeeperDeviationThreshold": 2, "airseekerDeviationThreshold": 1 } }
-      }
-    ],
-    "api3": [
-      {
-        "beaconId": "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e",
-        "name": "CoinGecko BTC/USD 0.1 percent deviation",
-        "description": "The public CoinGecko BTC/USD price ticker",
-        "templateUrl": "https://github.com/api3dao/operations/blob/8aeec6d8bfc72bb5ba15ad263e0c9ee18f8fd82b/data/apis/api3/templates/coingecko btc_usd.json",
-        "chains": { "ropsten": { "airkeeperDeviationThreshold": 0.1, "airseekerDeviationThreshold": 0.2 } }
       }
     ]
   },
@@ -144,24 +135,24 @@
       "id": "43114",
       "contracts": { "DapiServer": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4" },
       "nativeToken": "AVAX",
-      "blockTime": 1,
-      "logoPath": ""
+      "blockTime": 19.8,
+      "logoPath": "https://operations-logos.s3.amazonaws.com/avalanche/avalanche-avax-logo.svg"
     },
     "bsc": {
       "name": "bsc",
       "id": "56",
       "contracts": { "DapiServer": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c" },
       "nativeToken": "BNB",
-      "blockTime": 1,
-      "logoPath": ""
+      "blockTime": 3.01,
+      "logoPath": "https://operations-logos.s3.amazonaws.com/BSC-Logo-SVG/BSC-white.svg"
     },
     "polygon": {
       "name": "polygon",
       "id": "137",
       "contracts": { "DapiServer": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5" },
       "nativeToken": "MATIC",
-      "blockTime": 1,
-      "logoPath": ""
+      "blockTime": 2.3,
+      "logoPath": "https://operations-logos.s3.amazonaws.com/polygon/polygon-matic-logo.svg"
     },
     "ropsten": {
       "name": "ropsten",
@@ -176,8 +167,8 @@
       "id": "30",
       "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
       "nativeToken": "RBTC",
-      "blockTime": 1,
-      "logoPath": ""
+      "blockTime": 30,
+      "logoPath": "https://operations-logos.s3.amazonaws.com/rsk_r-btc_logo_rgb/RSK_R-BTC_Logo_RGB-01.svg"
     }
   }
 }
