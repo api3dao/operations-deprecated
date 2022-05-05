@@ -1,3 +1,2 @@
 yarn run normalize-and-validate
 yarn run lint
-git add data/documentation.json

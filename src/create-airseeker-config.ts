@@ -29,7 +29,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 
 const main = async () => {
   const operationsRepository = readOperationsRepository();
-  const documentation = operationsRepository.documentation;
+
   const beaconChoices = Object.values(operationsRepository.apis).flatMap((api) =>
     Object.values(api.beacons).map((beacon) => ({
       title: `${api.apiMetadata.name}\t${beacon.name}`,
@@ -71,7 +71,7 @@ const main = async () => {
       [`${chainNameToChainId[chainName]}`]: {
         contracts: {
           AirnodeRrp: AirnodeRrpAddresses[chainNameToChainId[chainName]] || '',
-          DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
+          // TODO check this          DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
         },
         providers: {
           [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {

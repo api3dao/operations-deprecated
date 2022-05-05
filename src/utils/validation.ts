@@ -155,6 +155,11 @@ export const replaceInterpolatedVariables = (object: any): any => {
     return Object.fromEntries(Object.entries(object).map(([key, value]) => [key, replaceInterpolatedVariables(value)]));
   }
 
+  // TODO why is this sometimes null. Edit: because of api3 being included when optional and/or unset
+  if (!object) {
+    return object;
+  }
+
   const stringObject = object.toString().toLowerCase();
   if (stringObject.includes('${') && stringObject.includes('url')) {
     return 'https://blank.url';

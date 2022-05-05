@@ -6,7 +6,7 @@ import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { chains, dapis, explorer, api3 } = payload;
+  const { chains, dapis, explorer } = payload;
 
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -133,7 +133,7 @@ export const normalize = (payload: OperationsRepository) => {
   //   chains,
   // };
 
-  return { apis, chains, dapis, explorer, api3 } as OperationsRepository;
+  return { ...payload, apis, chains, dapis, explorer } as OperationsRepository; // TODO add api3 and airseeker
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
