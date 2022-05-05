@@ -6,7 +6,7 @@ import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { chains } = payload;
+  const { chains, dapis, explorer, api3 } = payload;
 
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -98,42 +98,42 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
-  const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+  // const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
 
-  // TODO break this up
-  const documentation = {
-    beacons: Object.fromEntries(
-      Object.entries(apis)
-        .filter(([_key, value]) => value.apiMetadata.active)
-        .map(([apiKey, api]) => [
-          apiKey,
-          Object.entries(api.beacons)
-            .filter(([_key, value]) => Object.values(value.chains).filter((chain) => chain.active).length > 0)
-            .map(([_, beacon]) => ({
-              beaconId: beacon.beaconId,
-              name: beacon.name,
-              description: beacon.description,
-              templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
-                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
-              }.json`,
-              chains: Object.entries(beacon.chains).reduce(
-                (acc, [chainName, chain]) => ({
-                  ...acc,
-                  [chainName]: {
-                    airkeeperDeviationThreshold: chain.updateConditionPercentage,
-                    airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
-                  },
-                }),
-                {}
-              ),
-            })),
-        ])
-        .filter(([_key, value]) => value.length > 0)
-    ),
-    chains,
-  };
+  // // TODO break this up
+  // const documentation = {
+  //   beacons: Object.fromEntries(
+  //     Object.entries(apis)
+  //       .filter(([_key, value]) => value.apiMetadata.active)
+  //       .map(([apiKey, api]) => [
+  //         apiKey,
+  //         Object.entries(api.beacons)
+  //           .filter(([_key, value]) => Object.values(value.chains).filter((chain) => chain.active).length > 0)
+  //           .map(([_, beacon]) => ({
+  //             beaconId: beacon.beaconId,
+  //             name: beacon.name,
+  //             description: beacon.description,
+  //             templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
+  //               Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
+  //             }.json`,
+  //             chains: Object.entries(beacon.chains).reduce(
+  //               (acc, [chainName, chain]) => ({
+  //                 ...acc,
+  //                 [chainName]: {
+  //                   airkeeperDeviationThreshold: chain.updateConditionPercentage,
+  //                   airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
+  //                 },
+  //               }),
+  //               {}
+  //             ),
+  //           })),
+  //       ])
+  //       .filter(([_key, value]) => value.length > 0)
+  //   ),
+  //   chains,
+  // };
 
-  return { apis, documentation, chains } as OperationsRepository;
+  return { apis, chains, dapis, explorer, api3 } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {

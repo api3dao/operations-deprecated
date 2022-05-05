@@ -75,6 +75,22 @@ export const writeOperationsRepository = (
         });
       });
 
+    if (payload.explorer) {
+      const explorerBasePath = join(tmpBasePath, 'explorer');
+      mkdirSync(join(tmpBasePath, 'explorer'), { recursive: true });
+      Object.entries(payload.explorer).forEach(([name, explorer]) => {
+        writeJsonFile(join(explorerBasePath, name), explorer);
+      });
+    }
+
+    if (payload.dapis) {
+      const dapisBasePath = join(tmpBasePath, 'dapis');
+      mkdirSync(join(tmpBasePath, 'dapis'), { recursive: true });
+      Object.entries(payload.dapis).forEach(([name, dapi]) => {
+        writeJsonFile(join(dapisBasePath, name), dapi);
+      });
+    }
+
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
   } catch (e) {
