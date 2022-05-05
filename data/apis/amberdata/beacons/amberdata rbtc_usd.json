@@ -1,7 +1,7 @@
 {
   "name": "AmberData RBTC/USD",
   "description": "AmberData - RBTC/USD - Pair",
-  "beaconId": "0xa0a9ddc04445f625513ed9222295315ba2ca762808eb581efb493286247130ff",
+  "beaconId": "0xc7d143e56da695e6d63f9c408932378e9130486fbb1c2bb8a8a9f74c9bbdf2d2",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x5f51da1c10f3e3989c462fcb90bbe304206825f98a5239b4f35209078300d09e",
   "chains": {

@@ -1,7 +1,7 @@
 {
   "name": "AmberData UST/USD",
   "description": "AmberData - UST/USD - Pair",
-  "beaconId": "0xc1ca116cec3b39e8a1ec7d1ec5e8c5240565c615ad6e753a5f73febec8e400a1",
+  "beaconId": "0x472ccf005a6ee77277c6262321c4228aa31eabfb199ccd216ebc486302df0f4d",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x1bab8014c068e6871bf4043a74c51164d05d482d8cb6f1f66f8edcd7f3b6bb0f",
   "chains": {

@@ -1,7 +1,7 @@
 {
   "name": "AmberData ALPACA/USDT",
   "description": "AmberData - ALPACA/USDT - Pair",
-  "beaconId": "0xa6537ddf922a84dc2952fe9135c4ad6574e1e5d7245a56e456d7ac45cfcefb8f",
+  "beaconId": "0xeab45a41346d283d42b6d1f71bcb8fabc3c8f75ee978bf27df1c8e5590e82196",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0x316b55a49ae702580708ba624eb7b82b7e9a03de664f07364e29a950c7b4a554",
   "chains": {

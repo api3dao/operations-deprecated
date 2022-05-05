@@ -1,7 +1,7 @@
 {
   "name": "AmberData BNB/USD",
   "description": "AmberData - BNB/USD - Pair",
-  "beaconId": "0xd530f1db6a7b8e7e13614a01fc746ff3c0a4b3bd1e5be9c3c5427f143a2531e1",
+  "beaconId": "0xa3ebd22a5633ca53bb74f1ff545d32c6c69254f1b89ae070658bf358cab8a282",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
   "templateId": "0xa1ee143b874a7c8eba3d1b5095a783a1e5ff67906a1586b6f09556c6b47f06ac",
   "chains": {

@@ -1,7 +1,7 @@
 {
   "name": "CoinGecko BTC/USD 0.1 percent deviation",
   "description": "The public CoinGecko BTC/USD price ticker",
-  "beaconId": "0xb5087bcd2a04f5653ad8a6b39fa4fb10fabbdec124b8b489b4d8d610e6392198",
+  "beaconId": "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e",
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "templateId": "0x40e1b4429f78b22a82e161c3137d151859a4801ceac0fd6015e3318e26f30f98",
   "chains": {
