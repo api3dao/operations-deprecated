@@ -6,7 +6,7 @@ import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { chains, dapis, explorer } = payload;
+  const { chains, dapis } = payload;
 
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -98,40 +98,15 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
-  // const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
-
-  // // TODO break this up
-  // const documentation = {
-  //   beacons: Object.fromEntries(
-  //     Object.entries(apis)
-  //       .filter(([_key, value]) => value.apiMetadata.active)
-  //       .map(([apiKey, api]) => [
-  //         apiKey,
-  //         Object.entries(api.beacons)
-  //           .filter(([_key, value]) => Object.values(value.chains).filter((chain) => chain.active).length > 0)
-  //           .map(([_, beacon]) => ({
-  //             beaconId: beacon.beaconId,
-  //             name: beacon.name,
-  //             description: beacon.description,
-  //             templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
-  //               Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
-  //             }.json`,
-  //             chains: Object.entries(beacon.chains).reduce(
-  //               (acc, [chainName, chain]) => ({
-  //                 ...acc,
-  //                 [chainName]: {
-  //                   airkeeperDeviationThreshold: chain.updateConditionPercentage,
-  //                   airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
-  //                 },
-  //               }),
-  //               {}
-  //             ),
-  //           })),
-  //       ])
-  //       .filter(([_key, value]) => value.length > 0)
-  //   ),
-  //   chains,
-  // };
+  const explorer = {
+    ...payload.explorer,
+    beaconSets: Object.fromEntries(
+      Object.values(payload.explorer.beaconSets).map((set) => {
+        const beaconSetIt = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [set]));
+        return [beaconSetIt, set];
+      })
+    ),
+  };
 
   return { ...payload, apis, chains, dapis, explorer } as OperationsRepository; // TODO add api3 and airseeker
 };
