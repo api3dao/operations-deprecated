@@ -71,7 +71,7 @@ const main = async () => {
       [`${chainNameToChainId[chainName]}`]: {
         contracts: {
           AirnodeRrp: AirnodeRrpAddresses[chainNameToChainId[chainName]] || '',
-          // TODO check this          DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
+          DapiServer: operationsRepository.chains[chainName].contracts.DapiServer || '',
         },
         providers: {
           [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {

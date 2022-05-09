@@ -17,78 +17,7 @@
     "skipValidation": true
   },
   "triggers": {
-    "rrp": [
-      {
-        "endpointId": "0xbc42130df8705f5a8261d3f56e456dce2f8e3bb1b8cb0eeba2e60c37c9b0d6b8",
-        "endpointName": "GET /market/defi/lending/exchanges/information/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x065987956a8757d7be3aaad4d289433583872a4f499b28d4e9ebf2063294eebb",
-        "endpointName": "GET /market/tokens/prices/{hash}/latest",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x70e32408423662a1753cdb56f05c486b2ad9e3236c836f3c88018c29b9506f51",
-        "endpointName": "GET /market/spot/prices/assets/information/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x1c238369a3a59207b5bcaab8b805fba62c1a27c06d0b3acfd46a10e0cb82da92",
-        "endpointName": "GET /market/spot/prices/assets/{asset}/latest/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x3234979f15c3c8ea3e929a08fe953293e2169137236457304da7c394acf6a90a",
-        "endpointName": "GET /market/spot/prices/assets/{asset}/historical/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x9ed95ffc4f81021d624d9723d2128fd65f9afe185c078a4e3b74e6c9c3c919a7",
-        "endpointName": "GET /market/spot/prices/pairs/information/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0xfb06622b49fe57977e0cf9db96b5318f24bbcd28692901b7381b22ef32128e87",
-        "endpointName": "GET /market/spot/prices/pairs/{pair}/latest/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x8e41f9499ce961269491158c82c621da10b0b74ec648c4de7f5bb07ef21d5125",
-        "endpointName": "GET /market/spot/prices/pairs/{pair}/historical/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x4e03a708d165d6645487c2b4df7407b33a3edf8e333a5e31ddaf66366e868561",
-        "endpointName": "GET /market/defi/prices/asset/{asset}/latest",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x2331fed97ee0dab449398d69351ddf11ecf4d62e8cb2ca0517c7255b87ef2144",
-        "endpointName": "GET /market/defi/prices/asset/{asset}/historical",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x5eb6afa56c74cdcac3ba1bf0ac4b8711196e33816dac8173286efc79e5ee04c0",
-        "endpointName": "GET /market/defi/prices/asset/information/",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x592da7070110dc650c34b31f2b0ec1d45456ed8bca4ccdc28ef879f41655f006",
-        "endpointName": "GET /market/spot/vwap/pairs/{pair}/latest",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x504d861ba3be5792b23a370a33ca63829f9316325e1463101472a1bc414b3a4e",
-        "endpointName": "GET /transactions/gas/predictions",
-        "oisTitle": "Amberdata-Lite"
-      },
-      {
-        "endpointId": "0x3d72b8e380366c5a10a3436dd98131b2b8905244ca5da54641fa0d871fe3913a",
-        "endpointName": "GET /market/defi/vwap/pairs/bases/{base}/quotes/{quote}/latest",
-        "oisTitle": "Amberdata-Lite"
-      }
-    ],
+    "rrp": [],
     "http": [
       {
         "endpointId": "0xbc42130df8705f5a8261d3f56e456dce2f8e3bb1b8cb0eeba2e60c37c9b0d6b8",
