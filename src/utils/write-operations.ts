@@ -14,7 +14,6 @@ export const writeOperationsRepository = (
   try {
     rmdirSync(tmpBasePath, { recursive: true });
     mkdirSync(join(tmpBasePath, 'apis'), { recursive: true });
-    writeJsonFile(join(tmpBasePath, 'documentation.json'), payload.documentation);
 
     Object.entries(payload.apis).forEach(([filename, api]) => {
       const apiBasePath = join(tmpBasePath, 'apis', filename);
@@ -59,9 +58,9 @@ export const writeOperationsRepository = (
     });
 
     const api3BasePath = join(tmpBasePath, 'api3');
-    mkdirSync(api3BasePath, { recursive: true });
 
-    payload.api3 &&
+    if (payload.api3) {
+      mkdirSync(api3BasePath, { recursive: true });
       Object.entries(payload.api3).forEach(([filename, api3directory]) => {
         const api3directoryBasePath = join(api3BasePath, filename);
         mkdirSync(api3directoryBasePath, { recursive: true });
@@ -74,6 +73,23 @@ export const writeOperationsRepository = (
           });
         });
       });
+    }
+
+    if (payload.explorer) {
+      const explorerBasePath = join(tmpBasePath, 'explorer');
+      mkdirSync(join(tmpBasePath, 'explorer'), { recursive: true });
+      Object.entries(payload.explorer).forEach(([name, explorer]) => {
+        writeJsonFile(join(explorerBasePath, name), explorer);
+      });
+    }
+
+    if (payload.dapis) {
+      const dapisBasePath = join(tmpBasePath, 'dapis');
+      mkdirSync(join(tmpBasePath, 'dapis'), { recursive: true });
+      Object.entries(payload.dapis).forEach(([name, dapi]) => {
+        writeJsonFile(join(dapisBasePath, name), dapi);
+      });
+    }
 
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);

@@ -15,6 +15,10 @@
     "multisig": "0x4923968942E8aae4656ae4913874EB7312e0F7c7",
     "manager": "0x7f5AF7a37a33898544717AAa6c35c111dCe95b28"
   },
+  "polygon-testnet": {
+    "multisig": "0x50f8f227DEbA0028607a37B615A4EbBbF0E5b42E",
+    "manager": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c"
+  },
   "rsk": {
     "multisig": "0x4923968942E8aae4656ae4913874EB7312e0F7c7",
     "manager": "0x7f5AF7a37a33898544717AAa6c35c111dCe95b28"

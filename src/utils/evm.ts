@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { ethers } from 'ethers';
 
+export const PROTOCOL_ID_PSP = '2';
+
 export const chainNameToChainId: { [chainName: string]: number } = {
   mainnet: 1,
   ropsten: 3,
@@ -9,8 +11,11 @@ export const chainNameToChainId: { [chainName: string]: number } = {
   kovan: 42,
   goerli: 5,
   polygon: 137,
-  polygonMumbai: 80001,
+  bsc: 56,
+  avalanche: 43114,
+  rsk: 30,
   fantom: 250,
+  polygonMumbai: 80001,
 };
 
 export const DapiServerInterface = () => {

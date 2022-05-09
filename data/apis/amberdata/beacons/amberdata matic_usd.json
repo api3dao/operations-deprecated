@@ -1,0 +1,19 @@
+{
+  "name": "AmberData MATIC/USD",
+  "description": "AmberData - MATIC/USD - Pair",
+  "beaconId": "0xc06f8abc8ceb254781f12071ceee5c02103580df309d79b6b66fa40edc1ff9e7",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x84a3a09582fa3e8604e6056584bf61345157d502fd818fff31f355fac3957feb",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

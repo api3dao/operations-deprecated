@@ -29,7 +29,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 
 const main = async () => {
   const operationsRepository = readOperationsRepository();
-  const documentation = operationsRepository.documentation;
+
   const beaconChoices = Object.values(operationsRepository.apis).flatMap((api) =>
     Object.values(api.beacons).map((beacon) => ({
       title: `${api.apiMetadata.name}\t${beacon.name}`,
@@ -71,10 +71,10 @@ const main = async () => {
       [`${chainNameToChainId[chainName]}`]: {
         contracts: {
           AirnodeRrp: AirnodeRrpAddresses[chainNameToChainId[chainName]] || '',
-          DapiServer: documentation.chains[chainName].contracts.DapiServer || '',
+          DapiServer: operationsRepository.chains[chainName].contracts.DapiServer || '',
         },
         providers: {
-          provider1: {
+          [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
             url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
           },
         },
@@ -152,7 +152,8 @@ const main = async () => {
     {} as Triggers
   );
 
-  const config = {
+  const airseeker = {
+    airseekerWalletMnemonic: '${AIRSEEKER_WALLET_MNEMONIC}',
     beacons: airseekerBeacons,
     beaconSets: {},
     chains: airseekerChains,
@@ -172,7 +173,11 @@ const main = async () => {
     ).toUpperCase()}_${cloudProviderType.toUpperCase()}=`,
   ]);
 
-  const secretsArray = [...gatewaySecrets, ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase())];
+  const secretsArray = [
+    `AIRSEEKER_WALLET_MNEMONIC=`,
+    ...gatewaySecrets,
+    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+  ];
 
   const secrets = {
     filename: '.env',
@@ -187,7 +192,7 @@ const main = async () => {
       airseeker: {
         ...operationsRepository.api3?.airseeker,
         [response.name]: {
-          config,
+          airseeker,
           secrets,
         },
       },

@@ -10,11 +10,11 @@ export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z0-9]{107}$/);
 
-export const walletTypeSchema = z.enum(['Provider', 'API3']);
+export const walletTypeSchema = z.enum(['Provider', 'API3', 'Provider-Sponsor', 'API3-Sponsor']);
 
 export const topUpWalletSchema = z.object({
   walletType: walletTypeSchema,
-  address: evmAddressSchema,
+  address: evmAddressSchema.optional(),
 });
 
 export const extendedChainDescriptionSchema = z.object({
@@ -62,12 +62,18 @@ export const deploymentSetSchema = z.object({
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
 
+export const templateDecodedParametersSchema = z.object({
+  name: z.string(),
+  type: z.string(),
+  value: z.string(),
+});
+
 export const templateSchema = z.object({
   name: z.string(),
   templateId: evmTemplateIdSchema,
   endpointId: evmEndpointIdSchema,
   parameters: z.string(),
-  decodedParameters: z.record(z.string()),
+  decodedParameters: z.array(templateDecodedParametersSchema),
 });
 
 export const templatesSchema = z.record(templateSchema);
@@ -80,6 +86,7 @@ export const apiMetadataSchema = z.object({
   airnode: evmAddressSchema,
   xpub: evmXpubSchema,
   logoPath: z.string(),
+  maxSubscriptionPeriod: z.number(),
 });
 
 export const apiSchema = z.object({
@@ -88,18 +95,6 @@ export const apiSchema = z.object({
   templates: templatesSchema,
   deployments: deploymentsSchema,
   ois: oisesSchema,
-});
-
-export const beaconChainDocumentationSchema = z.object({
-  airkeeperDeviationThreshold: z.number(),
-  airseekerDeviationThreshold: z.number(),
-});
-
-export const beaconDocumentationSchema = z.object({
-  beaconId: evmBeaconIdSchema,
-  name: z.string(),
-  description: z.string(),
-  chains: z.record(beaconChainDocumentationSchema),
 });
 
 export const chainsMetadataSchema = z.object({
@@ -111,13 +106,8 @@ export const chainsMetadataSchema = z.object({
   logoPath: z.string(),
 });
 
-export const documentationSchema = z.object({
-  beacons: z.record(z.array(beaconDocumentationSchema)),
-  chains: z.record(chainsMetadataSchema),
-});
-
 const airseekerDeploymentSetSchema = z.object({
-  config: airseekerConfigSchema,
+  airseeker: airseekerConfigSchema,
   secrets: secretsSchema,
 });
 
@@ -128,11 +118,32 @@ export const api3Schema = z.object({
   airseeker: airseekerDeploymentsSchema,
 });
 
+export const beaconSetSchema = z.record(z.array(z.string()));
+
+export const explorerSchema = z.object({
+  beaconMetadata: z.record(
+    z.object({
+      category: z.string(),
+      pricingCoverage: z.string(), // must be present in pricingCoverage
+    })
+  ),
+  pricingCoverage: z.record(
+    z.array(
+      z.object({
+        subscriptionFee: z.number(),
+        coverage: z.number(),
+      })
+    )
+  ),
+  beaconSets: beaconSetSchema,
+});
+
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
-  documentation: documentationSchema,
   chains: z.record(chainsMetadataSchema),
   api3: api3Schema.optional(),
+  dapis: z.record(z.record(z.string())),
+  explorer: explorerSchema,
 });
 
 export const replaceInterpolatedVariables = (object: any): any => {
@@ -142,6 +153,11 @@ export const replaceInterpolatedVariables = (object: any): any => {
 
   if (object instanceof Object) {
     return Object.fromEntries(Object.entries(object).map(([key, value]) => [key, replaceInterpolatedVariables(value)]));
+  }
+
+  // TODO why is this sometimes null. Edit: because of api3 being included when optional and/or unset
+  if (!object) {
+    return object;
   }
 
   const stringObject = object.toString().toLowerCase();

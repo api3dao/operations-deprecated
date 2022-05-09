@@ -2,13 +2,11 @@ import { z } from 'zod';
 import {
   apiMetadataSchema,
   apiSchema,
-  beaconDocumentationSchema,
   beaconSchema,
   beaconsSchema,
   chainsMetadataSchema,
   deploymentSetSchema,
   deploymentsSchema,
-  documentationSchema,
   extendedChainDescriptionSchema,
   oisesSchema,
   operationsRepositorySchema,
@@ -28,9 +26,7 @@ export type Templates = z.infer<typeof templatesSchema>;
 export type Oises = z.infer<typeof oisesSchema>;
 export type ApiMetadata = z.infer<typeof apiMetadataSchema>;
 export type Api = z.infer<typeof apiSchema>;
-export type BeaconDocumentation = z.infer<typeof beaconDocumentationSchema>;
 export type ChainsMetadata = z.infer<typeof chainsMetadataSchema>;
-export type Documentation = z.infer<typeof documentationSchema>;
 export type Secrets = z.infer<typeof secretsSchema>;
 export type TopUpWalletSchema = z.infer<typeof topUpWalletSchema>;
 export type WalletType = z.infer<typeof walletTypeSchema>;

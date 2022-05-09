@@ -1,4 +1,5 @@
 import { existsSync } from 'fs';
+import path from 'path';
 
 export const sanitiseFilename = (filename: string) => {
   const illegalRe = /[\/?<>\\:*|"]/g;
@@ -16,8 +17,9 @@ export const sanitiseFilename = (filename: string) => {
 };
 
 export const loadCredentials = () => {
-  if (existsSync('../../credentials.json')) {
-    return require('../../credentials.json');
+  const chainsPath = path.resolve(__dirname, '../../chain');
+  if (existsSync(path.join(chainsPath, 'credentials.json'))) {
+    return require(path.join(chainsPath, 'credentials.json'));
   }
-  return require('../../credentials.example.json');
+  return require(path.join(chainsPath, 'credentials.example.json'));
 };

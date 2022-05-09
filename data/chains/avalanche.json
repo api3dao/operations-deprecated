@@ -1,0 +1,8 @@
+{
+  "name": "avalanche",
+  "id": "43114",
+  "contracts": { "DapiServer": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4" },
+  "nativeToken": "AVAX",
+  "blockTime": 19.8,
+  "logoPath": "https://operations-logos.s3.amazonaws.com/avalanche/avalanche-avax-logo.svg"
+}

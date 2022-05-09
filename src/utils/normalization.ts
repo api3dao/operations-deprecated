@@ -1,13 +1,12 @@
 import { Buffer } from 'buffer';
-import { defaultAbiCoder, keccak256 } from 'ethers/lib/utils';
 import { ethers } from 'ethers';
-import { decode } from '@api3/airnode-abi';
+import { encode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
 import { OperationsRepository, Secrets } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { chains } = payload;
+  const { chains, dapis } = payload;
 
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -15,8 +14,8 @@ export const normalize = (payload: OperationsRepository) => {
 
       const beacons = Object.fromEntries(
         Object.entries(api.beacons).map(([_key, beacon]) => {
-          const beaconId = keccak256(
-            defaultAbiCoder.encode(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
+          const beaconId = ethers.utils.keccak256(
+            ethers.utils.solidityPack(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
           );
 
           return [
@@ -31,16 +30,15 @@ export const normalize = (payload: OperationsRepository) => {
 
       const templates = Object.fromEntries(
         Object.entries(api.templates).map(([_key, value]) => {
-          const templateId = ethers.utils.solidityKeccak256(['bytes32', 'bytes'], [value.endpointId, value.parameters]);
-
-          const decodedParameters = decode(value.parameters);
+          const parameters = encode(value.decodedParameters);
+          const templateId = ethers.utils.solidityKeccak256(['bytes32', 'bytes'], [value.endpointId, parameters]);
 
           return [
             sanitiseFilename(value.name),
             {
               ...value,
               templateId,
-              decodedParameters,
+              parameters,
             },
           ];
         })
@@ -100,45 +98,29 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
-  const shaHash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
-
-  // TODO break this up
-  const documentation = {
-    beacons: Object.fromEntries(
-      Object.entries(apis)
-        .filter(([_key, value]) => value.apiMetadata.active)
-        .map(([apiKey, api]) => [
-          apiKey,
-          Object.entries(api.beacons)
-            .filter(([_key, value]) => Object.values(value.chains).filter((chain) => chain.active).length > 0)
-            .map(([_, beacon]) => ({
-              beaconId: beacon.beaconId,
-              name: beacon.name,
-              description: beacon.description,
-              templateUrl: `https://github.com/api3dao/operations/blob/${shaHash}/data/apis/api3/templates/${
-                Object.entries(api.templates).find(([_key, template]) => template.templateId === beacon.templateId)![0]
-              }.json`,
-              chains: Object.entries(beacon.chains).reduce(
-                (acc, [chainName, chain]) => ({
-                  ...acc,
-                  [chainName]: {
-                    airkeeperDeviationThreshold: chain.updateConditionPercentage,
-                    airseekerDeviationThreshold: chain.airseekerConfig.deviationThreshold,
-                  },
-                }),
-                {}
-              ),
-            })),
-        ])
-        .filter(([_key, value]) => value.length > 0)
+  const explorer = {
+    ...payload.explorer,
+    beaconSets: Object.fromEntries(
+      Object.values(payload.explorer.beaconSets).map((set) => {
+        const beaconSetIt = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [set]));
+        return [beaconSetIt, set];
+      })
     ),
-    chains,
   };
 
-  return { apis, documentation, chains } as OperationsRepository;
+  return { ...payload, apis, chains, dapis, explorer } as OperationsRepository; // TODO add api3 and airseeker
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
+  if (Array.isArray(object)) {
+    return object.map((value) => {
+      if (typeof value === 'object' && !ignoreNestedKeys.includes(value)) {
+        return emptyObject(value, preserveValueKeys, ignoreNestedKeys);
+      }
+
+      return preserveValueKeys.includes(value) ? object[value] : emptyReturn(object[value]);
+    });
+  }
   const processedTuples = Object.entries(object).map(([key, value]) => {
     if (typeof value === 'object' && !ignoreNestedKeys.includes(key)) {
       return [key, emptyObject(value, preserveValueKeys, ignoreNestedKeys)];

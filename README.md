@@ -83,7 +83,7 @@ to be human-browsable.
 - `templateId`: Template ID
 - `endpointId`: Endpoint ID
 - `parameters`: Airnode ABI-encoded parameters
-- `decodedParameters`: `parameters` decoded to be human-readable for convenience, not to be used in production.
+- `decodedParameters`: `parameters` used to derive the Airnode ABI-encoded parameters, not used in production
 
 #### Beacons — `/data/apis/{sanitizedApiName}/beacons`
 

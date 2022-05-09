@@ -1,0 +1,8 @@
+{
+  "name": "bsc",
+  "id": "56",
+  "contracts": { "DapiServer": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c" },
+  "nativeToken": "BNB",
+  "blockTime": 3.01,
+  "logoPath": "https://operations-logos.s3.amazonaws.com/BSC-Logo-SVG/BSC-white.svg"
+}

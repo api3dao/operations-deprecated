@@ -1,0 +1,19 @@
+{
+  "name": "AmberData RBTC/BTC",
+  "description": "AmberData - RBTC/BTC - Pair",
+  "beaconId": "0x0639ffa36d0dd116fddf5dad4559d2dba303b99ab7771bf3d1b7e3af86d89ced",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xd1c4bd38d88d67c4cc336caf7fd48e7eebc3701cbbc952b3abe5dd5861a98a22",
+  "chains": {
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

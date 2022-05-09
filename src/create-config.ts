@@ -65,8 +65,8 @@ const main = async () => {
       baseFeeMultiplier: 2,
     };
     const providers = {
-      provider1: {
-        url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
+      [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
+        url: `\${${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL}`.toUpperCase(),
       },
     };
 
@@ -129,7 +129,7 @@ const main = async () => {
   );
 
   const triggers = {
-    rrp: oisTriggers,
+    rrp: [],
     http: oisTriggers,
     httpSignedData: oisTriggers,
   };
@@ -138,7 +138,7 @@ const main = async () => {
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) => ({
       oisTitle: ois.title,
       securitySchemeName: security,
-      securitySchemeValue: `\${SS_${security.toUpperCase()}}`.replace(/ /g, '_'),
+      securitySchemeValue: `\${SS_${sanitiseFilename(security).toUpperCase()}}`.replace(/ /g, '_').replace(/\-/g, '_'),
     }))
   );
 
@@ -154,7 +154,7 @@ const main = async () => {
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
-      `SS_${security.toUpperCase()}=`.replace(/ /g, '_')
+      `SS_${sanitiseFilename(security).toUpperCase()}=`.replace(/ /g, '_').replace(/\-/g, '_')
     )
   );
 
@@ -166,7 +166,7 @@ const main = async () => {
       ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
     ...oisSecrets,
-    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
   ];
 
   const secrets = {
@@ -176,7 +176,7 @@ const main = async () => {
 
   //// Build aws.env ////
 
-  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`, `# Optional`, `AWS_SESSION_TOKEN=`];
+  const awsSecretsArray = [`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`, `AWS_SESSION_TOKEN=`];
 
   const aws = {
     filename: '.env',
