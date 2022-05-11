@@ -21,12 +21,14 @@ export const extendedChainDescriptionSchema = z.object({
   active: z.boolean(),
   sponsor: z.string(),
   topUpWallets: z.array(topUpWalletSchema),
-  updateConditionPercentage: z.number(),
-  airseekerConfig: z.object({
-    deviationThreshold: z.number(),
-    heartbeatInterval: z.number(),
-    updateInterval: z.number(),
-  }),
+  updateConditionPercentage: z.number().optional(),
+  airseekerConfig: z
+    .object({
+      deviationThreshold: z.number(),
+      heartbeatInterval: z.number(),
+      updateInterval: z.number(),
+    })
+    .optional(),
 });
 
 export const beaconSchema = z.object({
