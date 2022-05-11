@@ -28,11 +28,11 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
   ];
 };
 
-const main = async () => {
+const main = async (operationRepositoryTarget?: string) => {
   const httpGatewayKey = randomBytes(48).toString('hex');
   const signedHttpGatewayKey = randomBytes(48).toString('hex');
 
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
   const response = await promptQuestions(questions(operationsRepository));
 
   const api = operationsRepository.apis[response.name];
@@ -79,7 +79,9 @@ const main = async () => {
   console.log(`🔑 Generated HTTP Gateway API Key: ${httpGatewayKey}`);
   console.log(`🔑 Generated HTTP Signed Data Gateway API Key: ${signedHttpGatewayKey}`);
 
-  writeOperationsRepository(updatedOpsData);
+  writeOperationsRepository(updatedOpsData, operationRepositoryTarget);
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as generateGatewayKey };

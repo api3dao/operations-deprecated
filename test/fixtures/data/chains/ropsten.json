@@ -1,0 +1,8 @@
+{
+  "name": "ropsten",
+  "id": "3",
+  "contracts": { "DapiServer": "0x2760876c617cC03B4EEb3c9065E4332089968EB4" },
+  "nativeToken": "ropEth",
+  "blockTime": 10,
+  "logoPath": "https://api.anyblock.tools/ethereum/ewf/ewc/icon/"
+}

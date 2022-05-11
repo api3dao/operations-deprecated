@@ -58,4 +58,6 @@ const main = async () => {
   rmSync(importPath, { recursive: true });
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as importReceipt };
