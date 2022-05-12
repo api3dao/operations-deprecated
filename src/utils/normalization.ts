@@ -1,12 +1,14 @@
 import { Buffer } from 'buffer';
+import { join } from 'path';
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
 import { sanitiseFilename } from './filesystem';
-import { OperationsRepository, Secrets } from '../types';
+import { readJsonFile } from './read-operations';
+import { OperationsRepository, Secrets, ChainDeploymentReferences } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { chains, dapis } = payload;
+  const { dapis } = payload;
 
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -93,6 +95,30 @@ export const normalize = (payload: OperationsRepository) => {
           ois,
           deployments,
           apiMetadata: api.apiMetadata,
+        },
+      ];
+    })
+  );
+
+  const chainDeploymentReferences = readJsonFile(
+    join(__dirname, '..', '..', 'chain', 'deployments', 'references.json')
+  ) as ChainDeploymentReferences;
+
+  const chains = Object.fromEntries(
+    Object.entries(chainDeploymentReferences.chainNames).map(([chainId, chainName]) => {
+      return [
+        chainName,
+        {
+          ...payload.chains[chainName],
+          name: chainName,
+          id: chainId,
+          contracts: Object.entries(chainDeploymentReferences.contracts).reduce(
+            (acc, [contractName, contractChains]) => ({
+              ...acc,
+              [contractName]: contractChains[chainId],
+            }),
+            {}
+          ),
         },
       ];
     })

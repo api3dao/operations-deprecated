@@ -15,6 +15,7 @@ import {
   topUpWalletSchema,
   templatesSchema,
   walletTypeSchema,
+  chainDeploymentReferencesSchema,
 } from './utils/validation';
 
 export type Beacon = z.infer<typeof beaconSchema>;
@@ -27,6 +28,7 @@ export type Oises = z.infer<typeof oisesSchema>;
 export type ApiMetadata = z.infer<typeof apiMetadataSchema>;
 export type Api = z.infer<typeof apiSchema>;
 export type ChainsMetadata = z.infer<typeof chainsMetadataSchema>;
+export type ChainDeploymentReferences = z.infer<typeof chainDeploymentReferencesSchema>;
 export type Secrets = z.infer<typeof secretsSchema>;
 export type TopUpWalletSchema = z.infer<typeof topUpWalletSchema>;
 export type WalletType = z.infer<typeof walletTypeSchema>;

@@ -138,6 +138,11 @@ export const explorerSchema = z.object({
   beaconSets: beaconSetSchema,
 });
 
+export const chainDeploymentReferencesSchema = z.object({
+  chainNames: z.record(z.string()),
+  contracts: z.record(z.record(z.string())),
+});
+
 export const operationsRepositorySchema = z.object({
   apis: z.record(apiSchema),
   chains: z.record(chainsMetadataSchema),
