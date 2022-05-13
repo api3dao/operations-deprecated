@@ -43,97 +43,102 @@ const main = async () => {
   );
 
   const subscriptionPromises = Object.entries(apiData.beacons).flatMap(([beaconName, beacon]) =>
-    Object.entries(beacon.chains).map(async ([chainName, chain]) => {
-      const DapiServerInteface = DapiServerInterface();
-      const parameters = '0x';
-      const airnodeAddress = beacon.airnodeAddress;
-      const templateId = beacon.templateId;
-      const threshold = ethers.BigNumber.from(100000000)
-        .mul(beacon.chains[chainName].updateConditionPercentage * 100)
-        .div(10000);
-      const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(['uint256'], [threshold]);
-      const encodedBeaconUpdateSubscriptionConditions = encode([
-        {
-          type: 'bytes32',
-          name: '_conditionFunctionId',
-          value: ethers.utils.defaultAbiCoder.encode(
-            ['bytes4'],
-            [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
-          ),
-        },
-        { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
-      ]);
+    Object.entries(beacon.chains)
+      .filter(([, chain]) => 'updateConditionPercentage' in chain)
+      .map(async ([chainName, chain]) => {
+        const DapiServerInteface = DapiServerInterface();
+        const parameters = '0x';
+        const airnodeAddress = beacon.airnodeAddress;
+        const templateId = beacon.templateId;
+        const threshold = ethers.BigNumber.from(100000000)
+          .mul(beacon.chains[chainName].updateConditionPercentage! * 100)
+          .div(10000);
+        const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(
+          ['uint256'],
+          [threshold]
+        );
+        const encodedBeaconUpdateSubscriptionConditions = encode([
+          {
+            type: 'bytes32',
+            name: '_conditionFunctionId',
+            value: ethers.utils.defaultAbiCoder.encode(
+              ['bytes4'],
+              [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
+            ),
+          },
+          { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
+        ]);
 
-      const chainId = chainNameToChainId[chainName];
-      if (!chainId) throw new Error(`🛑 Unknown chain name: ${chainName}`);
+        const chainId = chainNameToChainId[chainName];
+        if (!chainId) throw new Error(`🛑 Unknown chain name: ${chainName}`);
 
-      if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
-      const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
-      const gasPrice = await provider.getGasPrice();
-      const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-      if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
-      const DapiServer = DapiServerContract(DapiServerAddress, provider);
+        if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
+        const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
+        const gasPrice = await provider.getGasPrice();
+        const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
+        if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
+        const DapiServer = DapiServerContract(DapiServerAddress, provider);
 
-      const sponsor = chain.sponsor;
+        const sponsor = chain.sponsor;
 
-      const expectedSubscriptionId = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(
-          ['uint256', 'address', 'bytes32', 'bytes', 'bytes', 'address', 'address', 'address', 'bytes4'],
-          [
-            chainId,
+        const expectedSubscriptionId = ethers.utils.keccak256(
+          ethers.utils.defaultAbiCoder.encode(
+            ['uint256', 'address', 'bytes32', 'bytes', 'bytes', 'address', 'address', 'address', 'bytes4'],
+            [
+              chainId,
+              airnodeAddress,
+              templateId,
+              parameters,
+              encodedBeaconUpdateSubscriptionConditions,
+              airnodeAddress,
+              sponsor,
+              DapiServerAddress,
+              DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
+            ]
+          )
+        );
+        try {
+          console.log(`🔎 checking if subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`);
+
+          const beaconId = await DapiServer.connect(nonceManagers[chainName]).subscriptionIdToBeaconId(
+            expectedSubscriptionId
+          );
+
+          if (beaconId !== ethers.constants.HashZero)
+            return `✅ subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`;
+
+          console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chainName}`);
+
+          const registerBeaconUpdateSubscription = await DapiServer.connect(
+            nonceManagers[chainName]
+          ).registerBeaconUpdateSubscription(
             airnodeAddress,
             templateId,
-            parameters,
             encodedBeaconUpdateSubscriptionConditions,
             airnodeAddress,
             sponsor,
-            DapiServerAddress,
-            DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
-          ]
-        )
-      );
-      try {
-        console.log(`🔎 checking if subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`);
-
-        const beaconId = await DapiServer.connect(nonceManagers[chainName]).subscriptionIdToBeaconId(
-          expectedSubscriptionId
-        );
-
-        if (beaconId !== ethers.constants.HashZero)
-          return `✅ subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`;
-
-        console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chainName}`);
-
-        const registerBeaconUpdateSubscription = await DapiServer.connect(
-          nonceManagers[chainName]
-        ).registerBeaconUpdateSubscription(
-          airnodeAddress,
-          templateId,
-          encodedBeaconUpdateSubscriptionConditions,
-          airnodeAddress,
-          sponsor,
-          { gasPrice }
-        );
-
-        // Check that the transaction is complete
-        const tx = await registerBeaconUpdateSubscription.wait();
-
-        const subscriptionId = tx.events.find(
-          (event: { event: string }) => event.event === 'RegisteredBeaconUpdateSubscription'
-        ).args.subscriptionId;
-
-        if (subscriptionId !== expectedSubscriptionId) {
-          throw new Error(
-            `🛑 The subscription ID ${subscriptionId} does not match the expected ID ${expectedSubscriptionId}`
+            { gasPrice }
           );
-        }
 
-        return `✅ Subscription registered with ID ${subscriptionId} for beacon ${beaconName} on chain ${chainName}`;
-      } catch (error) {
-        console.error(error);
-        throw new Error(`🛑 Error registering subscription for beacon ${beaconName} on chain ${chainName}`);
-      }
-    })
+          // Check that the transaction is complete
+          const tx = await registerBeaconUpdateSubscription.wait();
+
+          const subscriptionId = tx.events.find(
+            (event: { event: string }) => event.event === 'RegisteredBeaconUpdateSubscription'
+          ).args.subscriptionId;
+
+          if (subscriptionId !== expectedSubscriptionId) {
+            throw new Error(
+              `🛑 The subscription ID ${subscriptionId} does not match the expected ID ${expectedSubscriptionId}`
+            );
+          }
+
+          return `✅ Subscription registered with ID ${subscriptionId} for beacon ${beaconName} on chain ${chainName}`;
+        } catch (error) {
+          console.error(error);
+          throw new Error(`🛑 Error registering subscription for beacon ${beaconName} on chain ${chainName}`);
+        }
+      })
   );
 
   const results = await Promise.allSettled(subscriptionPromises);
