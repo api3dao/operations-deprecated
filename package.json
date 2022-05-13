@@ -1,13 +1,20 @@
 {
   "name": "@api3/operations",
   "license": "MIT",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "0.0.1b",
+  "description": "A package to parse API3 operations metadata",
   "main": "./dist/index",
   "types": "./dist/types",
   "files": [
-    "dist"
+    "dist",
+    "data",
+    "chain"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
@@ -31,8 +38,7 @@
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "pack": "yarn pack",
     "start": "ts-node src/index.ts",
-    "prepare": "husky install",
-    "postinstall": "yarn build"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
