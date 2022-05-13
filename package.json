@@ -2,7 +2,7 @@
   "name": "@api3/operations",
   "license": "MIT",
   "private": false,
-  "version": "0.0.1-c",
+  "version": "0.0.1-d",
   "description": "A package to parse API3 operations metadata",
   "main": "./dist/index",
   "types": "./dist/types",
@@ -71,13 +71,12 @@
     "hardhat-deploy": "^0.11.4",
     "husky": "^7.0.4",
     "jest": "^27.4.5",
+    "prettier": "^2.5.1",
     "prompts": "^2.4.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
     "zod": "^3.14.2"
   },
-  "dependencies": {
-    "prettier": "^2.5.1"
-  }
+  "dependencies": {}
 }
