@@ -103,9 +103,9 @@ export const chainsMetadataSchema = z.object({
   name: z.string(),
   id: z.string(),
   contracts: z.record(z.string()),
-  nativeToken: z.string(),
-  blockTime: z.number(),
-  logoPath: z.string(),
+  nativeToken: z.string().optional(),
+  blockTime: z.number().optional(),
+  logoPath: z.string().optional(),
 });
 
 const airseekerDeploymentSetSchema = z.object({
