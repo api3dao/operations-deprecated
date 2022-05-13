@@ -2,6 +2,8 @@
 
 > A package that houses data and utilities required for API3 operations
 
+For development usage refer to the [development usage guide](DEVELOPMENT_USAGE.md)
+
 ## Branches and versioning
 
 `main` represents the current state of the system. Deprecated versions are housed in individual branches. Deprecated
