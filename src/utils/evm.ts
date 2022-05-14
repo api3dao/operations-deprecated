@@ -15,7 +15,7 @@ export const chainNameToChainId: { [chainName: string]: number } = {
   avalanche: 43114,
   rsk: 30,
   fantom: 250,
-  polygonMumbai: 80001,
+  'polygon-testnet': 80001,
 };
 
 export const DapiServerInterface = () => {
