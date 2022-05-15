@@ -34,6 +34,7 @@ export const extendedChainDescriptionSchema = z.object({
 export const beaconSchema = z.object({
   name: z.string(),
   description: z.string(),
+  logoPath: z.string().optional(),
   beaconId: evmBeaconIdSchema,
   airnodeAddress: evmAddressSchema,
   templateId: evmTemplateIdSchema,

@@ -1,13 +1,20 @@
 {
   "name": "@api3/operations",
   "license": "MIT",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "0.0.1-d",
+  "description": "A package to parse API3 operations metadata",
   "main": "./dist/index",
   "types": "./dist/types",
   "files": [
-    "dist"
+    "dist",
+    "data",
+    "chain"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
@@ -31,8 +38,7 @@
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "pack": "yarn pack",
     "start": "ts-node src/index.ts",
-    "prepare": "husky install",
-    "postinstall": "yarn build"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,16 +46,16 @@
   },
   "devDependencies": {
     "@api3/airkeeper": "0.0.6",
+    "@api3/airnode-abi": "^0.6.2",
+    "@api3/airnode-admin": "^0.6.2",
+    "@api3/airnode-node": "^0.6.2",
+    "@api3/airnode-ois": "^0.6.2",
+    "@api3/airnode-protocol": "^0.6.2",
     "@api3/airnode-protocol-v1": "0.5.0",
     "@ethersproject/experimental": "5.6.0",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
-    "@api3/airnode-abi": "^0.6.2",
-    "@api3/airnode-node": "^0.6.2",
-    "@api3/airnode-ois": "^0.6.2",
-    "@api3/airnode-protocol": "^0.6.2",
-    "@api3/airnode-admin": "^0.6.2",
     "@types/node": "^17.0.2",
     "@types/prompts": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^5.8.0",

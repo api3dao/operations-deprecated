@@ -1,5 +1,8 @@
 {
   "name": "avalanche-testnet",
   "id": "43113",
-  "contracts": { "DapiServer": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a" }
+  "contracts": { "DapiServer": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a" },
+  "nativeToken": "AVAX",
+  "blockTime": 19.8,
+  "logoPath": "https://operations-logos.s3.amazonaws.com/general/Avalanche_white.svg"
 }
