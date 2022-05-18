@@ -34,8 +34,8 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-const main = async () => {
-  const operationsRepository = readOperationsRepository();
+const main = async (operationRepositoryTarget?: string) => {
+  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })) as Choice[];
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
@@ -63,6 +63,7 @@ const main = async () => {
         unit: 'gwei' as const,
       },
       baseFeeMultiplier: 2,
+      fulfillmentGasLimit: 500000,
     };
     const providers = {
       [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
@@ -337,7 +338,9 @@ const main = async () => {
     },
   };
 
-  writeOperationsRepository(updatedOpsData);
+  writeOperationsRepository(updatedOpsData, operationRepositoryTarget);
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as createConfig };

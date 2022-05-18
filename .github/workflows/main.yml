@@ -20,7 +20,7 @@ jobs:
           config-file: .github/workflows/mlc_config.json
 
   lint-compile:
-    name: Lint, build, validate
+    name: Lint, build, validate, test
     runs-on: ubuntu-latest
     steps:
       - name: Clone
@@ -38,3 +38,5 @@ jobs:
         run: yarn build
       - name: Validate
         run: yarn validate
+      - name: Test
+        run: yarn test

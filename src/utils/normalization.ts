@@ -128,8 +128,8 @@ export const normalize = (payload: OperationsRepository) => {
     ...payload.explorer,
     beaconSets: Object.fromEntries(
       Object.values(payload.explorer.beaconSets).map((set) => {
-        const beaconSetIt = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [set]));
-        return [beaconSetIt, set];
+        const beaconSetId = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [set]));
+        return [beaconSetId, set];
       })
     ),
   };
