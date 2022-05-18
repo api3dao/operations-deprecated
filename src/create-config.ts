@@ -203,63 +203,65 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const airkeeperSubscriptions = Object.values(apiData.beacons)
     .flatMap((beacon) =>
-      Object.entries(beacon.chains).map(([chainName, chain]) => {
-        const chainId = chainNameToChainId[chainName] || 1;
-        const DapiServerInteface = DapiServerInterface();
-        const parameters = '0x';
-        const airnodeAddress = beacon.airnodeAddress;
-        const templateId = beacon.templateId;
+      Object.entries(beacon.chains)
+        .filter(([, chain]) => 'updateConditionPercentage' in chain)
+        .map(([chainName, chain]) => {
+          const chainId = chainNameToChainId[chainName] || 1;
+          const DapiServerInteface = DapiServerInterface();
+          const parameters = '0x';
+          const airnodeAddress = beacon.airnodeAddress;
+          const templateId = beacon.templateId;
 
-        const threshold = ethers.BigNumber.from(100000000)
-          .mul(chain.updateConditionPercentage * 100)
-          .div(10000);
-        const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(
-          ['uint256'],
-          [threshold]
-        );
-        const encodedBeaconUpdateSubscriptionConditions = encode([
-          {
-            type: 'bytes32',
-            name: '_conditionFunctionId',
-            value: ethers.utils.defaultAbiCoder.encode(
-              ['bytes4'],
-              [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
-            ),
-          },
-          { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
-        ]);
-        const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-        const sponsor = chain.sponsor;
-        const beaconUpdateSubscriptionId = ethers.utils.keccak256(
-          ethers.utils.defaultAbiCoder.encode(
-            ['uint256', 'address', 'bytes32', 'bytes', 'bytes', 'address', 'address', 'address', 'bytes4'],
-            [
-              chainId,
+          const threshold = ethers.BigNumber.from(100000000)
+            .mul(chain.updateConditionPercentage! * 100)
+            .div(10000);
+          const beaconUpdateSubscriptionConditionParameters = ethers.utils.defaultAbiCoder.encode(
+            ['uint256'],
+            [threshold]
+          );
+          const encodedBeaconUpdateSubscriptionConditions = encode([
+            {
+              type: 'bytes32',
+              name: '_conditionFunctionId',
+              value: ethers.utils.defaultAbiCoder.encode(
+                ['bytes4'],
+                [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
+              ),
+            },
+            { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
+          ]);
+          const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
+          const sponsor = chain.sponsor;
+          const beaconUpdateSubscriptionId = ethers.utils.keccak256(
+            ethers.utils.defaultAbiCoder.encode(
+              ['uint256', 'address', 'bytes32', 'bytes', 'bytes', 'address', 'address', 'address', 'bytes4'],
+              [
+                chainId,
+                airnodeAddress,
+                templateId,
+                parameters,
+                encodedBeaconUpdateSubscriptionConditions,
+                airnodeAddress,
+                sponsor,
+                DapiServerAddress,
+                DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
+              ]
+            )
+          );
+          return {
+            [beaconUpdateSubscriptionId]: {
+              chainId: `${chainId}`,
+              parameters,
               airnodeAddress,
               templateId,
-              parameters,
-              encodedBeaconUpdateSubscriptionConditions,
-              airnodeAddress,
+              conditions: encodedBeaconUpdateSubscriptionConditions,
+              relayer: airnodeAddress,
               sponsor,
-              DapiServerAddress,
-              DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
-            ]
-          )
-        );
-        return {
-          [beaconUpdateSubscriptionId]: {
-            chainId: `${chainId}`,
-            parameters,
-            airnodeAddress,
-            templateId,
-            conditions: encodedBeaconUpdateSubscriptionConditions,
-            relayer: airnodeAddress,
-            sponsor,
-            requester: DapiServerAddress,
-            fulfillFunctionId: DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
-          },
-        };
-      })
+              requester: DapiServerAddress,
+              fulfillFunctionId: DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
+            },
+          };
+        })
     )
     .reduce((subscriptionsObject, subscription) => ({ ...subscriptionsObject, ...subscription }), {});
 

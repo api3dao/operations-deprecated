@@ -1,13 +1,20 @@
 {
   "name": "@api3/operations",
   "license": "MIT",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "0.0.1-d",
+  "description": "A package to parse API3 operations metadata",
   "main": "./dist/index",
   "types": "./dist/types",
   "files": [
-    "dist"
+    "dist",
+    "data",
+    "chain"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
@@ -32,8 +39,7 @@
     "test": "jest --verbose --runInBand",
     "pack": "yarn pack",
     "start": "ts-node src/index.ts",
-    "prepare": "husky install",
-    "postinstall": "yarn build"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -46,7 +52,7 @@
     "@api3/airnode-node": "^0.6.2",
     "@api3/airnode-ois": "^0.6.2",
     "@api3/airnode-protocol": "^0.6.2",
-    "@api3/airnode-protocol-v1": "0.4.0",
+    "@api3/airnode-protocol-v1": "0.5.0",
     "@ethersproject/experimental": "5.6.0",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",

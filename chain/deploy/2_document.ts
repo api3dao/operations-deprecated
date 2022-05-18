@@ -13,17 +13,19 @@ export default async () => {
     chainNames: networks.reduce((acc: any, network: any) => {
       return { ...acc, [hre.config.networks[network].chainId]: network };
     }, {}),
-    ...contractNames.reduce((acc, contractName) => {
-      return {
-        ...acc,
-        [contractName]: networks.reduce((acc: any, network: any) => {
-          const deployment = JSON.parse(
-            fs.readFileSync(path.join('deployments', network, `${contractName}.json`), 'utf8')
-          );
-          return { ...acc, [hre.config.networks[network].chainId]: deployment.address };
-        }, {}),
-      };
-    }, {}),
+    contacts: {
+      ...contractNames.reduce((acc, contractName) => {
+        return {
+          ...acc,
+          [contractName]: networks.reduce((acc: any, network: any) => {
+            const deployment = JSON.parse(
+              fs.readFileSync(path.join('deployments', network, `${contractName}.json`), 'utf8')
+            );
+            return { ...acc, [hre.config.networks[network].chainId]: deployment.address };
+          }, {}),
+        };
+      }, {}),
+    },
   };
   fs.writeFileSync(path.join('deployments', 'references.json'), JSON.stringify(references, null, 2));
 };

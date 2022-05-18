@@ -21,17 +21,20 @@ export const extendedChainDescriptionSchema = z.object({
   active: z.boolean(),
   sponsor: z.string(),
   topUpWallets: z.array(topUpWalletSchema),
-  updateConditionPercentage: z.number(),
-  airseekerConfig: z.object({
-    deviationThreshold: z.number(),
-    heartbeatInterval: z.number(),
-    updateInterval: z.number(),
-  }),
+  updateConditionPercentage: z.number().optional(),
+  airseekerConfig: z
+    .object({
+      deviationThreshold: z.number(),
+      heartbeatInterval: z.number(),
+      updateInterval: z.number(),
+    })
+    .optional(),
 });
 
 export const beaconSchema = z.object({
   name: z.string(),
   description: z.string(),
+  logoPath: z.string().optional(),
   beaconId: evmBeaconIdSchema,
   airnodeAddress: evmAddressSchema,
   templateId: evmTemplateIdSchema,
@@ -101,9 +104,9 @@ export const chainsMetadataSchema = z.object({
   name: z.string(),
   id: z.string(),
   contracts: z.record(z.string()),
-  nativeToken: z.string(),
-  blockTime: z.number(),
-  logoPath: z.string(),
+  nativeToken: z.string().optional(),
+  blockTime: z.number().optional(),
+  logoPath: z.string().optional(),
 });
 
 const airseekerDeploymentSetSchema = z.object({
@@ -136,6 +139,11 @@ export const explorerSchema = z.object({
     )
   ),
   beaconSets: beaconSetSchema,
+});
+
+export const chainDeploymentReferencesSchema = z.object({
+  chainNames: z.record(z.string()),
+  contracts: z.record(z.record(z.string())),
 });
 
 export const operationsRepositorySchema = z.object({

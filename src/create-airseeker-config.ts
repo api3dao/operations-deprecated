@@ -59,7 +59,11 @@ const main = async () => {
         airnode: beacon.airnodeAddress,
         templateId: beacon.templateId,
         fetchInterval: Math.ceil(
-          Math.min(...Object.values(beacon.chains).map((chain) => chain.airseekerConfig.updateInterval)) / 2
+          Math.min(
+            ...Object.values(beacon.chains)
+              .filter((chain) => 'airseekerConfig' in chain)
+              .map((chain) => chain.airseekerConfig!.updateInterval)
+          ) / 2
         ),
       },
     }),
@@ -125,30 +129,32 @@ const main = async () => {
 
   const airseekerTriggers = beacons.reduce(
     (curr1, beacon) =>
-      Object.entries(beacon.chains).reduce(
-        (curr2, [chainName, chain]) => ({
-          ...curr2,
-          beaconUpdates: {
-            ...curr2.beaconUpdates,
-            [`${chainNameToChainId[chainName]}`]: {
-              ...curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`],
-              [chain.sponsor]: {
-                beacons: [
-                  ...(curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`]?.[chain.sponsor]?.beacons || []),
-                  {
-                    beaconId: beacon.beaconId,
-                    deviationThreshold: chain.airseekerConfig.deviationThreshold,
-                    heartbeatInterval: chain.airseekerConfig.heartbeatInterval,
-                  },
-                ],
-                updateInterval: chain.airseekerConfig.updateInterval,
+      Object.entries(beacon.chains)
+        .filter(([, chain]) => 'airseekerConfig' in chain)
+        .reduce(
+          (curr2, [chainName, chain]) => ({
+            ...curr2,
+            beaconUpdates: {
+              ...curr2.beaconUpdates,
+              [`${chainNameToChainId[chainName]}`]: {
+                ...curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`],
+                [chain.sponsor]: {
+                  beacons: [
+                    ...(curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`]?.[chain.sponsor]?.beacons || []),
+                    {
+                      beaconId: beacon.beaconId,
+                      deviationThreshold: chain.airseekerConfig!.deviationThreshold,
+                      heartbeatInterval: chain.airseekerConfig!.heartbeatInterval,
+                    },
+                  ],
+                  updateInterval: chain.airseekerConfig!.updateInterval,
+                },
               },
             },
-          },
-          beaconSetUpdates: {},
-        }),
-        curr1
-      ),
+            beaconSetUpdates: {},
+          }),
+          curr1
+        ),
     {} as Triggers
   );
 
