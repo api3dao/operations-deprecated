@@ -40,3 +40,19 @@ jobs:
         run: yarn validate
       - name: Test
         run: yarn test
+      - name: Export S3 Payloads
+        run: yarn export-ops-json-payloads
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Upload JSON Payloads to S3
+        run: aws s3 cp json-exports/* s3://operations-development/ --acl public-read
+#      - uses: shallwefootball/s3-upload-action@master
+#        with:
+#          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+#          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+#          aws_bucket: operations-development/lol
+#          source_dir: 'json-exports'

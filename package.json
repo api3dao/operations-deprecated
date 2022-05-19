@@ -19,6 +19,7 @@
     "create-boilerplate": "ts-node src/create-boilerplate.ts",
     "create-config": "ts-node src/create-config.ts",
     "create-airseeker-config": "ts-node src/create-airseeker-config.ts",
+    "export-ops-json-payloads": "ts-node src/export-ops-json-payloads.ts",
     "import-receipt": "ts-node src/import-receipt.ts",
     "eth:deploy": "cd chain && hardhat deploy --network $NETWORK",
     "deploy-all": "yarn deploy-airnode; yarn deploy-airkeeper",
