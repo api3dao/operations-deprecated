@@ -16,7 +16,8 @@ const main = () => {
     writeJsonFile(join(basePath, `${key}.json`), value);
   });
 
-  // Resurrected from https://github.com/api3dao/operations/blob/eadde827d78ddbe1858c5fe7f5b00f953d77dc14/src/utils/normalization.ts#L105
+  // Grabbed from https://github.com/api3dao/operations/blob/eadde827d78ddbe1858c5fe7f5b00f953d77dc14/src/utils/normalization.ts#L105
+  // with changes
   const documentation = {
     beacons: Object.fromEntries(
       Object.entries(opsFull.apis)
@@ -56,7 +57,7 @@ const main = () => {
       Object.values(opsFull.apis).map((api) => [
         api.apiMetadata.name,
         {
-          homepage: 'TBC',
+          homepage: api.apiMetadata.homepage,
           logo: api.apiMetadata.logoPath,
         },
       ])
