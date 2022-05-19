@@ -128,6 +128,7 @@ export const chainsMetadataSchema = z
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
+    explorerUrl: z.string().optional(),
   })
   .strict();
 
@@ -176,6 +177,23 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
+export const subscriptionsSchema = z.record(
+  z
+    .object({
+      paymentTxHash: z.string(),
+      resourceId: evmBeaconIdSchema,
+      claimaintAddress: evmAddressSchema,
+      beneficiaryAddress: evmAddressSchema,
+      whitelistAddress: evmAddressSchema,
+      coverageAmount: z.string(),
+      startDate: z.number(),
+      endDate: z.number(),
+      ipfsPolicyHash: z.string(),
+      ipfsServicePolicyHash: z.string(),
+    })
+    .strict()
+);
+
 export const operationsRepositorySchema = z
   .object({
     apis: z.record(apiSchema),
@@ -183,6 +201,7 @@ export const operationsRepositorySchema = z
     api3: api3Schema.optional(),
     dapis: z.record(z.record(z.string())),
     explorer: explorerSchema,
+    subscriptions: z.record(subscriptionsSchema).optional(),
   })
   .strict();
 

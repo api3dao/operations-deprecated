@@ -97,5 +97,3 @@ try {
   console.error('An error occurred while writing JSON payloads:', err.message);
   console.error(err.stack);
 }
-
-//// aws s3 cp lol s3://operations-development/lol --acl public-read
