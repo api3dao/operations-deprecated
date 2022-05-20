@@ -6,12 +6,7 @@
       "id": "30",
       "providers": { "provider_rsk": { "url": "${RSK_PROVIDER_URL}" } },
       "type": "evm",
-      "options": {
-        "txType": "eip1559",
-        "priorityFee": { "value": 3.12, "unit": "gwei" },
-        "baseFeeMultiplier": 2,
-        "fulfillmentGasLimit": 500000
-      },
+      "options": { "txType": "legacy" },
       "maxConcurrency": 100,
       "blockHistoryLimit": 300,
       "minConfirmations": 0
@@ -22,12 +17,7 @@
       "id": "137",
       "providers": { "provider_polygon": { "url": "${POLYGON_PROVIDER_URL}" } },
       "type": "evm",
-      "options": {
-        "txType": "eip1559",
-        "priorityFee": { "value": 3.12, "unit": "gwei" },
-        "baseFeeMultiplier": 2,
-        "fulfillmentGasLimit": 500000
-      },
+      "options": { "txType": "legacy" },
       "maxConcurrency": 100,
       "blockHistoryLimit": 300,
       "minConfirmations": 0
@@ -54,12 +44,7 @@
       "id": "56",
       "providers": { "provider_bsc": { "url": "${BSC_PROVIDER_URL}" } },
       "type": "evm",
-      "options": {
-        "txType": "eip1559",
-        "priorityFee": { "value": 3.12, "unit": "gwei" },
-        "baseFeeMultiplier": 2,
-        "fulfillmentGasLimit": 500000
-      },
+      "options": { "txType": "legacy" },
       "maxConcurrency": 100,
       "blockHistoryLimit": 300,
       "minConfirmations": 0
