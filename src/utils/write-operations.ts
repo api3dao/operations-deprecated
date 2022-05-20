@@ -9,9 +9,7 @@ const writeBaseDirectory = (basePath: string, payload: any, name: string) => {
     const thisBasePath = join(basePath, name);
 
     mkdirSync(thisBasePath, { recursive: true });
-    Object.entries(payload[name]).forEach(([name, value]) =>
-      writeJsonFile(join(thisBasePath, name), value)
-    );
+    Object.entries(payload[name]).forEach(([name, value]) => writeJsonFile(join(thisBasePath, name), value));
   }
 };
 
@@ -82,7 +80,11 @@ export const writeOperationsRepository = (
     writeBaseDirectory(tmpBasePath, payload, 'chains');
     writeBaseDirectory(tmpBasePath, payload, 'dapis');
     writeBaseDirectory(tmpBasePath, payload, 'explorer');
-    writeBaseDirectory(tmpBasePath, payload, 'subscriptions');
+
+    if (payload.subscriptions)
+      Object.keys(payload.subscriptions).map((key) =>
+        writeBaseDirectory(join(tmpBasePath, 'subscriptions'), payload.subscriptions, key)
+      );
 
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
