@@ -1,16 +1,16 @@
 import { mkdirSync, renameSync, rmdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { format } from 'prettier';
-import { sanitiseFilename } from './filesystem';
 import { OperationsRepository } from '../types';
 import { PRETTIER_CONFIG } from '../constants';
 
 const writeBaseDirectory = (basePath: string, payload: any, name: string) => {
   if (payload[name]) {
-    const subscriptionsBasePath = join(basePath, name);
-    mkdirSync(subscriptionsBasePath, { recursive: true });
+    const thisBasePath = join(basePath, name);
+
+    mkdirSync(thisBasePath, { recursive: true });
     Object.entries(payload[name]).forEach(([name, value]) =>
-      writeJsonFile(join(subscriptionsBasePath, sanitiseFilename(name)), value)
+      writeJsonFile(join(thisBasePath, name), value)
     );
   }
 };
