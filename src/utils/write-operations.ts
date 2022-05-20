@@ -5,6 +5,16 @@ import { sanitiseFilename } from './filesystem';
 import { OperationsRepository } from '../types';
 import { PRETTIER_CONFIG } from '../constants';
 
+const writeBaseDirectory = (basePath: string, payload: any, name: string) => {
+  if (payload[name]) {
+    const subscriptionsBasePath = join(basePath, name);
+    mkdirSync(subscriptionsBasePath, { recursive: true });
+    Object.entries(payload[name]).forEach(([name, value]) =>
+      writeJsonFile(join(subscriptionsBasePath, sanitiseFilename(name)), value)
+    );
+  }
+};
+
 export const writeOperationsRepository = (
   payload: OperationsRepository,
   targetBasePath = join(__dirname, '..', '..', 'data')
@@ -51,12 +61,6 @@ export const writeOperationsRepository = (
       });
     });
 
-    const chainsBasePath = join(tmpBasePath, 'chains');
-    mkdirSync(join(tmpBasePath, 'chains'), { recursive: true });
-    Object.entries(payload.chains).forEach(([_, chain]) => {
-      writeJsonFile(join(chainsBasePath, sanitiseFilename(chain.name)), chain);
-    });
-
     const api3BasePath = join(tmpBasePath, 'api3');
 
     if (payload.api3) {
@@ -75,21 +79,10 @@ export const writeOperationsRepository = (
       });
     }
 
-    if (payload.explorer) {
-      const explorerBasePath = join(tmpBasePath, 'explorer');
-      mkdirSync(join(tmpBasePath, 'explorer'), { recursive: true });
-      Object.entries(payload.explorer).forEach(([name, explorer]) => {
-        writeJsonFile(join(explorerBasePath, name), explorer);
-      });
-    }
-
-    if (payload.dapis) {
-      const dapisBasePath = join(tmpBasePath, 'dapis');
-      mkdirSync(join(tmpBasePath, 'dapis'), { recursive: true });
-      Object.entries(payload.dapis).forEach(([name, dapi]) => {
-        writeJsonFile(join(dapisBasePath, name), dapi);
-      });
-    }
+    writeBaseDirectory(tmpBasePath, payload, 'chains');
+    writeBaseDirectory(tmpBasePath, payload, 'dapis');
+    writeBaseDirectory(tmpBasePath, payload, 'explorer');
+    writeBaseDirectory(tmpBasePath, payload, 'subscriptions');
 
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);

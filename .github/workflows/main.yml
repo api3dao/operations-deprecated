@@ -23,7 +23,7 @@ jobs:
           config-file: .github/workflows/mlc_config.json
 
   lint-build-publish:
-    name: Lint, build, validate, test, publish
+    name: Lint, build, publish
     runs-on: ubuntu-latest
     steps:
       - name: Clone

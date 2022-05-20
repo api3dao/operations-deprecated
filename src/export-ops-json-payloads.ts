@@ -1,9 +1,13 @@
 import { join } from 'path';
 import fs from 'fs';
+import * as child_process from 'child_process';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeJsonFile } from './utils/write-operations';
+import { sanitiseFilename } from './utils/filesystem';
 
 const main = () => {
+  const commitHash = child_process.execSync('git rev-parse HEAD').toString().trim();
+
   const basePath = join(__dirname, '../json-exports');
   fs.rmdirSync(basePath, { recursive: true });
   fs.mkdirSync(basePath);
@@ -75,7 +79,9 @@ const main = () => {
           template.templateId,
           {
             ...template,
-            templateUrl: `https://github.com/api3dao/operations/blob/main/data/apis/${template.apiName}/templates/${template.templateId}.json`,
+            templateUrl: `https://github.com/api3dao/operations/blob/${commitHash}/data/apis/${sanitiseFilename(
+              template.apiName
+            )}/templates/${template.templateId}.json`,
           },
         ])
     ),
