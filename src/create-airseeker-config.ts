@@ -5,7 +5,6 @@ import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId } from './utils/evm';
 import { Beacons, Gateways, Templates, Triggers } from './utils/airseeker-validation';
 import { sanitiseFilename } from './utils/filesystem';
 
@@ -71,27 +70,30 @@ const main = async () => {
   );
 
   const airseekerChains = apiChains
-    .map((chainName) => ({
-      [`${chainNameToChainId[chainName]}`]: {
-        contracts: {
-          AirnodeRrp: AirnodeRrpAddresses[chainNameToChainId[chainName]] || '',
-          DapiServer: operationsRepository.chains[chainName].contracts.DapiServer || '',
-        },
-        providers: {
-          [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
-            url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
+    .map((chainName) => {
+      const chainId = parseInt(operationsRepository.chains[chainName].id);
+      return {
+        [`${chainId}`]: {
+          contracts: {
+            AirnodeRrp: AirnodeRrpAddresses[chainId] || '',
+            DapiServer: operationsRepository.chains[chainName].contracts.DapiServer || '',
+          },
+          providers: {
+            [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
+              url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
+            },
+          },
+          options: {
+            txType: 'eip1559' as const,
+            priorityFee: {
+              value: 3.12,
+              unit: 'gwei' as const,
+            },
+            baseFeeMultiplier: 2,
           },
         },
-        options: {
-          txType: 'eip1559' as const,
-          priorityFee: {
-            value: 3.12,
-            unit: 'gwei' as const,
-          },
-          baseFeeMultiplier: 2,
-        },
-      },
-    }))
+      };
+    })
     .reduce((chainsObject, chain) => ({ ...chainsObject, ...chain }), {});
 
   const airseekerGateways = apis.reduce(
@@ -131,16 +133,17 @@ const main = async () => {
     (curr1, beacon) =>
       Object.entries(beacon.chains)
         .filter(([, chain]) => 'airseekerConfig' in chain)
-        .reduce(
-          (curr2, [chainName, chain]) => ({
+        .reduce((curr2, [chainName, chain]) => {
+          const chainId = parseInt(operationsRepository.chains[chainName].id);
+          return {
             ...curr2,
             beaconUpdates: {
               ...curr2.beaconUpdates,
-              [`${chainNameToChainId[chainName]}`]: {
-                ...curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`],
+              [`${chainId}`]: {
+                ...curr2?.beaconUpdates?.[`${chainId}`],
                 [chain.sponsor]: {
                   beacons: [
-                    ...(curr2?.beaconUpdates?.[`${chainNameToChainId[chainName]}`]?.[chain.sponsor]?.beacons || []),
+                    ...(curr2?.beaconUpdates?.[`${chainId}`]?.[chain.sponsor]?.beacons || []),
                     {
                       beaconId: beacon.beaconId,
                       deviationThreshold: chain.airseekerConfig!.deviationThreshold,
@@ -152,9 +155,8 @@ const main = async () => {
               },
             },
             beaconSetUpdates: {},
-          }),
-          curr1
-        ),
+          };
+        }, curr1),
     {} as Triggers
   );
 
