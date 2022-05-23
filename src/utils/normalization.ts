@@ -8,8 +8,6 @@ import { readJsonFile } from './read-operations';
 import { OperationsRepository, Secrets, ChainDeploymentReferences } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { dapis, api3 } = payload;
-
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
@@ -145,7 +143,7 @@ export const normalize = (payload: OperationsRepository) => {
       )
     : {};
 
-  return { ...payload, api3, apis, chains, dapis, explorer, subscriptions } as OperationsRepository;
+  return { ...payload, apis, chains, explorer, subscriptions } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
