@@ -1,9 +1,10 @@
+import { join } from 'path';
 import { PromptObject } from 'prompts';
 import { runAndHandleErrors } from './utils/cli';
 import { sanitiseFilename } from './utils/filesystem';
 import { emptyObject } from './utils/normalization';
 import { promptQuestions } from './utils/prompts';
-import { readApiData, readOperationsRepository } from './utils/read-operations';
+import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 
 const questions: PromptObject[] = [
@@ -31,7 +32,9 @@ const questions: PromptObject[] = [
 
 const main = async () => {
   const { name, contact, description } = await promptQuestions(questions);
-  const apiDataTemplate = readApiData();
+  // Import the mock operations repository
+  const operationsRepository = readOperationsRepository(join(__dirname, '..', 'test', 'fixtures', 'data'));
+  const apiDataTemplate = operationsRepository.apis.api3;
 
   // Create the boilerplate apiMetadata
   const apiMetadata = emptyObject(apiDataTemplate.apiMetadata, ['active'], []);
