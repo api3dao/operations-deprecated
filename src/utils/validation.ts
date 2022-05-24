@@ -53,16 +53,16 @@ export const secretsSchema = z.object({ filename: z.string(), content: z.string(
 
 export const airnodeDeploymentSchema = z
   .object({
-    config: airnodeConfigSchema,
-    secrets: secretsSchema,
+    config: z.any(), //airnodeConfigSchema,
+    secrets: secretsSchema.optional(),
     aws: secretsSchema.optional(),
   })
   .strict();
 
 export const airkeeperDeploymentSchema = z
   .object({
-    config: airnodeConfigSchema,
-    airkeeper: airkeeperConfigSchema,
+    config: z.any(), //airnodeConfigSchema,
+    airkeeper: z.any(), //airkeeperConfigSchema,
     secrets: secretsSchema,
     aws: secretsSchema.optional(),
   })
@@ -134,7 +134,7 @@ export const chainsMetadataSchema = z
 
 const airseekerDeploymentSetSchema = z
   .object({
-    airseeker: airseekerConfigSchema,
+    airseeker: z.object({}), // airseekerConfigSchema,
     secrets: secretsSchema,
   })
   .strict();
