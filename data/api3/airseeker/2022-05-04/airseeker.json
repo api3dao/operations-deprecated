@@ -1,9 +1,6 @@
 {
   "airseekerWalletMnemonic": "${AIRSEEKER_WALLET_MNEMONIC}",
-  "log": {
-    "format": "plain",
-    "level": "INFO"
-  },
+  "log": { "format": "plain", "level": "INFO" },
   "beacons": {
     "0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846": {
       "airnode": "0x5b1243308f56156553F067D354b162f71E581b28",

@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { oisSchema, configSchema as airnodeConfigSchema } from '@api3/airnode-validator';
-import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
-import { configSchema as airseekerConfigSchema } from './airseeker-validation';
+// TODO Commented until we decide on versioning for config schema
+import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
+// import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
+// import { configSchema as airseekerConfigSchema } from './airseeker-validation';
 import { OperationsRepository } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
@@ -54,14 +55,14 @@ export const secretsSchema = z.object({ filename: z.string(), content: z.string(
 export const airnodeDeploymentSchema = z
   .object({
     config: z.any(), //airnodeConfigSchema,
-    secrets: secretsSchema.optional(),
+    secrets: secretsSchema,
     aws: secretsSchema.optional(),
   })
   .strict();
 
 export const airkeeperDeploymentSchema = z
   .object({
-    config: z.any(), //airnodeConfigSchema,
+    config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
     airkeeper: z.any(), //airkeeperConfigSchema,
     secrets: secretsSchema,
     aws: secretsSchema.optional(),
@@ -134,7 +135,7 @@ export const chainsMetadataSchema = z
 
 const airseekerDeploymentSetSchema = z
   .object({
-    airseeker: z.object({}), // airseekerConfigSchema,
+    airseeker: z.object({}), //TODO commented until we decide on versioning: airseekerConfigSchema,
     secrets: secretsSchema,
   })
   .strict();
@@ -155,7 +156,7 @@ export const explorerSchema = z
     beaconMetadata: z.record(
       z.object({
         category: z.string(),
-        pricingCoverage: z.string(), // must be present in pricingCoverage
+        pricingCoverage: z.string(), //TODO must be present in pricingCoverage
       })
     ),
     pricingCoverage: z.record(
