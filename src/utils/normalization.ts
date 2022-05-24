@@ -137,7 +137,12 @@ export const normalize = (payload: OperationsRepository) => {
         Object.entries(payload.subscriptions).map(([chain, subs]) => {
           return [
             chain,
-            Object.fromEntries(Object.values(subs).map((subscription) => [subscription.paymentTxHash, subscription])),
+            Object.fromEntries(
+              Object.values(subs).map((subscription) => [
+                `${subscription.paymentTxHash}-${subscription.resourceId}`,
+                subscription,
+              ])
+            ),
           ];
         })
       )
