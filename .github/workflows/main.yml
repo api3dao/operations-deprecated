@@ -60,3 +60,21 @@ jobs:
         run: aws s3 cp json-exports s3://operations-development/${{ github.sha }} --acl public-read --recursive
       - name: Upload JSON Payloads as latest to S3
         run: aws s3 sync s3://operations-development/${{ github.sha }} s3://operations-development/latest --acl public-read
+
+  chain-verification:
+    name: Chain verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Verify SubscriptionIds on chain
+        run: yarn check-subscriptions
+      - name: Verify DAPI Name on chain
+        run: yarn check-dapi-name
