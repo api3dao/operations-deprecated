@@ -16,6 +16,11 @@ const questions = (choices: Choice[]): PromptObject[] => {
       message: 'What is the name of the API Integration?',
       choices: choices,
     },
+    {
+      type: 'text',
+      name: 'api3TopUpWallet',
+      message: 'What is the wallet address of API3 Top Up Wallet? (leave empty to skip)',
+    },
   ];
 };
 
@@ -42,6 +47,10 @@ const main = async (operationRepositoryTarget?: string) => {
                   walletType: 'Provider-Sponsor',
                   address: providerTopUpWallet,
                 },
+                ...(response.api3TopUpWallet && {
+                  walletType: 'API3',
+                  address: response.api3TopUpWallet,
+                }),
               ],
             },
           ];
