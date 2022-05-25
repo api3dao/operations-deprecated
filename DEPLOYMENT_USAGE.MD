@@ -136,7 +136,7 @@ run the following command to create a set of config files for deployment
 yarn create-config
 ```
 
-This will create following files for both the airnode and airkeeper deployment
+This will create following files for both the airnode and airkeeper deployment in `/data/apis/<PROVIDER_NAME>/deployments/<DEPLOYMENT_DATE>`
 
 - `airnode`
   - `config.json`: The Airnode config file, should not require editing.
@@ -168,7 +168,7 @@ Checkout using `git checkout -b ...`. Use a new descriptively-named branch, eg. 
 
 - Clone the repository and switch to the earlier-created branch
 - Forward the API provider the contents of `secrets.env` (Provider URLs, gateway keys).
-- Guide the API provider through populating the `secrets.env` and `aws.env` .
+- Guide the API provider through populating the `secrets.env` and `aws.env` in `/data/apis/<PROVIDER_NAME>/deployments/<DEPLOYMENT_DATE>`.
 - Deploy Airnode and Airkeeper with the following command:
 
 ```
