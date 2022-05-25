@@ -8,13 +8,13 @@ Before you begin, run `yarn install`.
 
 ### 1. Have the API provider generate the mnemonic
 
-prior to deploying beacon systems, the provider needs to run the following command to generate a secret mnemonic
+prior to deploying a beacon system, the provider needs to run the following command to generate a secret mnemonic
 
 ```
 npx @api3/airnode-admin generate-mnemonic
 ```
 
-The provider needs to keep the mnemonic private (ask them to not share it with anyone) and use it to generate the airnode address and xpub (extended public key) and forward it to the API3 team ahead of deployment.
+The provider needs to keep the mnemonic private and use it to generate the `airnode` address and `xpub` (extended public key). Ask them to forward these to the API3 team ahead of deployment.
 
 To generate the airnode address the provider needs to run the following command:
 
@@ -48,7 +48,7 @@ Populate the `/data/apis/<PROVIDER_NAME>/OIS/*.json` according to the [OIS speci
 
 ### 4. Populate the templates
 
-within the `/data/apis/<PROVIDER_NAME>/templates` folder you will need to create a file for every template. Each template should match the structure below:
+within the `/data/apis/<PROVIDER_NAME>/templates` folder you will need to create a file for every template used in the beacon system. Each template should match the structure below:
 
 ```
 {
@@ -66,7 +66,7 @@ within the `/data/apis/<PROVIDER_NAME>/templates` folder you will need to create
 ```
 
 `templateId` and `parameters` can be empty when populating the template data.  
-For populating `decodedParamters`, more information on the can be found [here](https://docs.api3.org/airnode/v0.6/grp-developers/call-an-airnode.html#request-parameters).
+For populating `decodedParamters`, you can refer to [this](https://docs.api3.org/airnode/v0.6/grp-developers/call-an-airnode.html#request-parameters).
 
 > Note that the above files can have any name initially as the validator will name them according to their `templateName`.
 
@@ -116,11 +116,11 @@ within the `/data/apis/<PROVIDER_NAME>/beacons` folder you will need to create a
 
 Once populated run the following command to generate the `Provider-Sponsor` TopUp Wallet used by airkeeper
 
-There is also a prompt to specify the `API3` TopUp Wallet which is used by airseeker:
-
 ```
 yarn generate-topup-wallets
 ```
+
+> There is also a prompt to specify the `API3` TopUp Wallet which is used by airseeker:
 
 When complete run the following command to normalize the repository (this will also generate the beaconIds).
 
