@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import * as protocol from '@api3/airnode-protocol-v1';
 import { ethers } from 'ethers';
 
 export const PROTOCOL_ID_PSP = '2';
@@ -20,11 +19,9 @@ export const chainNameToChainId: { [chainName: string]: number } = {
 };
 
 export const DapiServerInterface = () => {
-  const dapiServerAbi = JSON.parse(fs.readFileSync(path.resolve('./src/utils/artifacts/DapiServer.json')).toString());
-  return new ethers.utils.Interface(dapiServerAbi.abi);
+  return new ethers.utils.Interface(protocol.DapiServer__factory.abi);
 };
 
 export const DapiServerContract = (dapiServerAddress: string, provider: ethers.providers.JsonRpcProvider) => {
-  const dapiServerAbi = JSON.parse(fs.readFileSync(path.resolve('./src/utils/artifacts/DapiServer.json')).toString());
-  return new ethers.Contract(dapiServerAddress, dapiServerAbi.abi, provider);
+  return new ethers.Contract(dapiServerAddress, protocol.DapiServer__factory.abi, provider);
 };
