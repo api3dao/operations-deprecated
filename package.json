@@ -27,6 +27,7 @@
     "generate-gateway-key": "ts-node src/generate-gateway-key.ts",
     "register-subscriptions": "ts-node src/register-subscriptions.ts",
     "check-subscriptions": "ts-node src/check-subscriptions.ts",
+    "check-dapi-name": "ts-node src/check-dapi-name.ts",
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",
