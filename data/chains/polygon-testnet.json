@@ -1,5 +1,6 @@
 {
   "name": "polygon-testnet",
+  "fullName": "Polygon Mumbai Testnet",
   "id": "80001",
   "contracts": { "DapiServer": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14" },
   "nativeToken": "MATIC",

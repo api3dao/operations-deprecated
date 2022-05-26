@@ -148,10 +148,7 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
@@ -165,10 +162,7 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
@@ -182,10 +176,7 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
@@ -199,10 +190,7 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
@@ -216,10 +204,7 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
@@ -379,20 +364,37 @@ describe('writeOperationsRepository', () => {
   describe('subscriptions', () => {
     it('writes changes to subscriptions', async () => {
       const mockSubscriptions = {
-        '3': {
-          '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
-            {
-              paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
-              resourceId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
-              claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
-              beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-              whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-              coverageAmount: '10001',
-              startDate: 1653048764,
-              endDate: 1653038764,
-              ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
-              ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
-            },
+        ropsten: {
+          dapis: {
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
+              {
+                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
+                dapiName: 'USDC/AAVE',
+                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                coverageAmount: '10001',
+                startDate: 1653048764,
+                endDate: 1653038764,
+                ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
+                ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+              },
+          },
+          dataFeeds: {
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12':
+              {
+                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12',
+                dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
+                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                coverageAmount: '10001',
+                startDate: 1653048764,
+                endDate: 1653038764,
+                ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
+                ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+              },
+          },
         },
       };
 
@@ -402,15 +404,15 @@ describe('writeOperationsRepository', () => {
       };
 
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
-      // writeOperationsRepository(updatedOpsRepo, '/home/aquarat/Projects/operations/opstest');
 
       expect(
         existsSync(
           join(
             tempTestPath,
             'subscriptions',
-            '3',
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11.json'
+            'ropsten',
+            'dataFeeds',
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'
           )
         )
       ).toBe(true);

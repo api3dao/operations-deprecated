@@ -124,6 +124,7 @@ export const apiSchema = z
 export const chainsMetadataSchema = z
   .object({
     name: z.string(),
+    fullName: z.string(),
     id: z.string(),
     contracts: z.record(z.string()),
     nativeToken: z.string().optional(),
@@ -178,22 +179,43 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
-export const subscriptionsSchema = z.record(
-  z
-    .object({
-      paymentTxHash: z.string(),
-      resourceId: evmBeaconIdSchema,
-      claimaintAddress: evmAddressSchema,
-      beneficiaryAddress: evmAddressSchema,
-      whitelistAddress: evmAddressSchema,
-      coverageAmount: z.string(),
-      startDate: z.number(),
-      endDate: z.number(),
-      ipfsPolicyHash: z.string(),
-      ipfsServicePolicyHash: z.string(),
-    })
-    .strict()
-);
+export const dapiSubscriptionSchema = z
+  .object({
+    paymentTxHash: z.string(),
+    dapiName: z.string(),
+    claimaintAddress: evmAddressSchema,
+    beneficiaryAddress: evmAddressSchema,
+    whitelistAddress: evmAddressSchema,
+    coverageAmount: z.string(),
+    startDate: z.number(),
+    endDate: z.number(),
+    ipfsPolicyHash: z.string(),
+    ipfsServicePolicyHash: z.string(),
+  })
+  .strict();
+
+export const dataFeedSubscriptionSchema = z
+  .object({
+    paymentTxHash: z.string(),
+    dataFeedId: evmBeaconIdSchema,
+    claimaintAddress: evmAddressSchema,
+    beneficiaryAddress: evmAddressSchema,
+    whitelistAddress: evmAddressSchema,
+    coverageAmount: z.string(),
+    startDate: z.number(),
+    endDate: z.number(),
+    ipfsPolicyHash: z.string(),
+    ipfsServicePolicyHash: z.string(),
+  })
+  .strict();
+
+// Chain -> [dapis dataFeeds]
+export const subscriptionsSchema = z
+  .object({
+    dapis: z.record(dapiSubscriptionSchema),
+    dataFeeds: z.record(dataFeedSubscriptionSchema),
+  })
+  .strict();
 
 export const operationsRepositorySchema = z
   .object({

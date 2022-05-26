@@ -4,13 +4,15 @@ import { format } from 'prettier';
 import { OperationsRepository } from '../types';
 import { PRETTIER_CONFIG } from '../constants';
 
-const writeBaseDirectory = (basePath: string, payload: any, name: string) => {
-  if (payload[name]) {
-    const thisBasePath = join(basePath, name);
-
-    mkdirSync(thisBasePath, { recursive: true });
-    Object.entries(payload[name]).forEach(([name, value]) => writeJsonFile(join(thisBasePath, name), value));
+const writeBaseDirectory = (basePath: string, payload?: any, name?: string) => {
+  if (payload === undefined || name === undefined || payload[name] === undefined) {
+    return;
   }
+
+  const thisBasePath = join(basePath, name);
+
+  mkdirSync(thisBasePath, { recursive: true });
+  Object.entries(payload[name]).forEach(([name, value]) => writeJsonFile(join(thisBasePath, name), value));
 };
 
 export const writeOperationsRepository = (
@@ -82,9 +84,15 @@ export const writeOperationsRepository = (
     writeBaseDirectory(tmpBasePath, payload, 'explorer');
 
     if (payload.subscriptions)
-      Object.keys(payload.subscriptions).map((key) =>
-        writeBaseDirectory(join(tmpBasePath, 'subscriptions'), payload.subscriptions, key)
-      );
+      Object.keys(payload.subscriptions).map((key) => {
+        const subscriptionsChainBasePath = join(tmpBasePath, 'subscriptions', key);
+        mkdirSync(subscriptionsChainBasePath, { recursive: true });
+
+        const subscriptionChain = payload?.subscriptions?.[key];
+
+        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dapis');
+        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dataFeeds');
+      });
 
     rmdirSync(targetBasePath, { recursive: true });
     renameSync(tmpBasePath, targetBasePath);
