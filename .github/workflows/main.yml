@@ -59,4 +59,4 @@ jobs:
       - name: Upload JSON Payloads with commit hash to S3
         run: aws s3 cp json-exports s3://operations-development/${{ github.sha }} --acl public-read --recursive
       - name: Upload JSON Payloads as latest to S3
-        run: aws s3 sync s3://operations-development/${{ github.sha }} s3://operations-development/latest --acl public-read --recursive
+        run: aws s3 sync s3://operations-development/${{ github.sha }} s3://operations-development/latest --acl public-read
