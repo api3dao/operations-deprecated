@@ -1,6 +1,7 @@
 {
   "name": "avalanche",
   "fullName": "Avalanche",
+  "decimalPlaces": 2,
   "id": "43114",
   "contracts": { "DapiServer": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4" },
   "nativeToken": "AVAX",

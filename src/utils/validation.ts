@@ -125,6 +125,7 @@ export const chainsMetadataSchema = z
   .object({
     name: z.string(),
     fullName: z.string(),
+    decimalPlaces: z.number(),
     id: z.string(),
     contracts: z.record(z.string()),
     nativeToken: z.string().optional(),
