@@ -52,7 +52,7 @@ const main = async (operationRepositoryTarget?: string) => {
   const cloudProviderRegionAWS = 'us-east-1';
 
   const cloudProviderTypeGCP = 'gcp' as const;
-  const cloudProviderRegionGCP = 'us-east1-b';
+  const cloudProviderRegionGCP = 'us-east1';
 
   // Get all the chains the API will be deployed on
   const apiChains = [...new Set(Object.values(apiData.beacons).flatMap((beacon) => Object.keys(beacon.chains)))];

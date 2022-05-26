@@ -45,11 +45,18 @@ describe('normalize', () => {
             ...originalMockData.apis.api3.deployments,
             ['2022-04-17']: {
               ...originalMockData.apis.api3.deployments['2022-04-17'],
-              airnode: {
-                ...originalMockData.apis.api3.deployments['2022-04-17'].airnode,
+              airnodeAWS: {
+                ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeAWS,
                 secrets: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.secrets,
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeAWS.secrets,
                   content: 'TEST=',
+                },
+              },
+              airnodeGCP: {
+                ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeGCP!,
+                gcp: {
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeGCP!.gcp,
+                  projectId: 'TEST',
                 },
               },
               airkeeper: {
@@ -121,8 +128,8 @@ describe('normalize', () => {
 
     it('sanitises the deployment secrets', async () => {
       const normalizedData = await normalize(unsanitizedMockData);
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.secrets.content).toEqual('TEST=""\n');
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.secrets.content).toEqual('TEST=""\n');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnodeAWS.secrets.content).toEqual('TEST=""');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.secrets.content).toEqual('TEST=""');
     });
   });
 

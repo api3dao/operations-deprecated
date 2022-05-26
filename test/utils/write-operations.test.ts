@@ -103,21 +103,21 @@ describe('writeOperationsRepository', () => {
             content: 'THIS IS EMPTY',
           },
         },
-        airnode: {
-          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode,
+        airnodeAWS: {
+          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnodeAWS,
           config: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.config,
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnodeAWS.config,
             triggers: {
               rrp: [],
               http: [],
               httpSignedData: [],
             },
           },
-        },
-        secrets: {
-          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.secrets,
-          filename: 'secrets.env',
-          content: 'THIS IS EMPTY',
+          secrets: {
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnodeAWS.secrets,
+            filename: 'secrets.env',
+            content: 'THIS IS EMPTY',
+          },
         },
       };
 
@@ -199,7 +199,7 @@ describe('writeOperationsRepository', () => {
             'api3',
             'deployments',
             '2022-05-01',
-            'airnode',
+            'airnodeAWS',
             'config.json'
           )
         )
@@ -216,7 +216,7 @@ describe('writeOperationsRepository', () => {
             'api3',
             'deployments',
             '2022-05-01',
-            'airnode',
+            'airnodeAWS',
             'secrets.env'
           )
         )
