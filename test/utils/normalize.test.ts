@@ -45,25 +45,32 @@ describe('normalize', () => {
             ...originalMockData.apis.api3.deployments,
             ['2022-04-17']: {
               ...originalMockData.apis.api3.deployments['2022-04-17'],
-              airnodeAWS: {
-                ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeAWS,
-                secrets: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeAWS.secrets,
-                  content: 'TEST=',
+              airnode: {
+                ...originalMockData.apis.api3.deployments['2022-04-17'].airnode,
+                aws: {
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws,
+                  secrets: {
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws.secrets,
+                    content: 'TEST=',
+                  },
                 },
-              },
-              airnodeGCP: {
-                ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeGCP!,
                 gcp: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnodeGCP!.gcp,
-                  projectId: 'TEST',
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!,
+                  gcp: {
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!.gcp,
+                    projectId: 'TEST',
+                  },
                 },
               },
+
               airkeeper: {
                 ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper,
-                secrets: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper.secrets,
-                  content: 'TEST=',
+                aws: {
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper.aws,
+                  secrets: {
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets,
+                    content: 'TEST=',
+                  },
                 },
               },
             },
@@ -128,8 +135,9 @@ describe('normalize', () => {
 
     it('sanitises the deployment secrets', async () => {
       const normalizedData = await normalize(unsanitizedMockData);
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnodeAWS.secrets.content).toEqual('TEST=""');
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.secrets.content).toEqual('TEST=""');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws.secrets.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.gcp?.gcp).toEqual({ projectId: '' });
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets.content).toEqual('TEST=');
     });
   });
 

@@ -41,11 +41,15 @@ export const writeOperationsRepository = (
       Object.entries(api.deployments).forEach(([directoryName, deployments]) => {
         const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
         mkdirSync(subDeploymentBasePath);
-        Object.entries(deployments).forEach(([deploymentName, deployment]) => {
+        Object.entries(deployments).forEach(([deploymentName, deploymentProvider]) => {
           const deploymentBasePath = join(subDeploymentBasePath, deploymentName);
           mkdirSync(deploymentBasePath);
-          Object.entries(deployment).forEach(([filename, configContent]) => {
-            writeJsonFile(join(deploymentBasePath, filename), configContent);
+          Object.entries(deploymentProvider).forEach(([deploymentProviderName, deployment]) => {
+            const deploymentProviderBasePath = join(deploymentBasePath, deploymentProviderName);
+            mkdirSync(deploymentProviderBasePath);
+            Object.entries(deployment).forEach(([filename, configContent]) => {
+              writeJsonFile(join(deploymentProviderBasePath, filename), configContent);
+            });
           });
         });
       });

@@ -45,28 +45,36 @@ export const beaconsSchema = z.record(beaconSchema);
 
 export const secretsSchema = z.object({ filename: z.string(), content: z.string() });
 
-export const airnodeDeploymentSchemaAWS = z.object({
+export const airnodeDeploymentAWSSchema = z.object({
   config: airnodeConfigSchema,
   secrets: secretsSchema,
   aws: secretsSchema.optional(),
 });
 
-export const airnodeDeploymentSchemaGCP = z.object({
+export const airnodeDeploymentGCPSchema = z.object({
   config: airnodeConfigSchema,
   secrets: secretsSchema,
   gcp: z.any().optional(),
 });
 
-export const airkeeperDeploymentSchema = z.object({
+export const airnodeDeploymentSchema = z.object({
+  aws: airnodeDeploymentAWSSchema,
+  gcp: airnodeDeploymentGCPSchema.optional(),
+});
+
+export const airkeeperDeploymentAWSSchema = z.object({
   config: airnodeConfigSchema,
   airkeeper: airkeeperConfigSchema,
   secrets: secretsSchema,
   aws: secretsSchema.optional(),
 });
 
+export const airkeeperDeploymentSchema = z.object({
+  aws: airkeeperDeploymentAWSSchema,
+});
+
 export const deploymentSetSchema = z.object({
-  airnodeAWS: airnodeDeploymentSchemaAWS,
-  airnodeGCP: airnodeDeploymentSchemaGCP.optional(),
+  airnode: airnodeDeploymentSchema,
   airkeeper: airkeeperDeploymentSchema,
 });
 

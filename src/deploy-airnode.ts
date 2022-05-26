@@ -19,10 +19,12 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
       name: 'deployment',
       message: (prev) => `Which deployment of ${prev} do you want to deploy?`,
       choices: (prev) =>
-        Object.keys(operationsRepository.apis[prev].deployments).map((deployment) => ({
-          title: deployment,
-          value: deployment,
-        })),
+        Object.keys(operationsRepository.apis[prev].deployments)
+          .map((deployment) => ({
+            title: deployment,
+            value: deployment,
+          }))
+          .reverse(),
     },
     {
       type: 'multiselect',
@@ -41,7 +43,7 @@ const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
-  const deploymentDirectoryAWS = join(
+  const baseDeploymentDirectory = join(
     __dirname,
     '..',
     'data',
@@ -49,22 +51,24 @@ const main = async () => {
     response.name,
     'deployments',
     response.deployment,
-    'airnodeAWS'
+    'airnode'
   );
-  const awsSecretsFilePath = join(deploymentDirectoryAWS, 'aws.env');
-  const receiptPath = join(deploymentDirectoryAWS, 'receipt.json');
-
-  const airnodeDeployCommand = [
-    `docker run -it --rm`,
-    `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
-    `--env-file ${awsSecretsFilePath}`,
-    `-v ${deploymentDirectoryAWS}:/app/config`,
-    `-v ${deploymentDirectoryAWS}:/app/output`,
-    `api3/airnode-deployer:${nodeVersion} deploy`,
-  ].join(' ');
 
   if (response.cloudProviders.includes('aws')) {
     console.log(`⏳ - Deploying Airnode to AWS...`);
+
+    const deploymentDirectoryAWS = join(baseDeploymentDirectory, 'aws');
+    const awsSecretsFilePath = join(deploymentDirectoryAWS, 'aws.env');
+    const receiptPath = join(deploymentDirectoryAWS, 'receipt.json');
+
+    const airnodeDeployCommand = [
+      `docker run -it --rm`,
+      `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
+      `--env-file ${awsSecretsFilePath}`,
+      `-v ${deploymentDirectoryAWS}:/app/config`,
+      `-v ${deploymentDirectoryAWS}:/app/output`,
+      `api3/airnode-deployer:${nodeVersion} deploy`,
+    ].join(' ');
 
     const deployment = runShellCommand(airnodeDeployCommand);
 
@@ -72,30 +76,20 @@ const main = async () => {
       return cliPrint.error('🛑 Airnode deployment to AWS failed.');
   }
 
-  const deploymentDirectoryGCP = join(
-    __dirname,
-    '..',
-    'data',
-    'apis',
-    response.name,
-    'deployments',
-    response.deployment,
-    'airnodeGCP'
-  );
-
-  const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
-
-  const airnodeDeployCommandGCP = [
-    `docker run -it --rm`,
-    `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
-    `-v ${deploymentDirectoryGCP}/gcp.json:/app/gcp.json`,
-    `-v ${deploymentDirectoryGCP}:/app/config`,
-    `-v ${deploymentDirectoryGCP}:/app/output`,
-    `api3/airnode-deployer:${nodeVersion} deploy`,
-  ].join(' ');
-
   if (response.cloudProviders.includes('gcp')) {
     console.log(`⏳ - Deploying Airnode to GCP...`);
+
+    const deploymentDirectoryGCP = join(baseDeploymentDirectory, 'gcp');
+    const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
+
+    const airnodeDeployCommandGCP = [
+      `docker run -it --rm`,
+      `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
+      `-v ${deploymentDirectoryGCP}/gcp.json:/app/gcp.json`,
+      `-v ${deploymentDirectoryGCP}:/app/config`,
+      `-v ${deploymentDirectoryGCP}:/app/output`,
+      `api3/airnode-deployer:${nodeVersion} deploy`,
+    ].join(' ');
 
     const deployment = runShellCommand(airnodeDeployCommandGCP);
 

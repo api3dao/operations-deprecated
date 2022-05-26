@@ -40,9 +40,7 @@ const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
-  /// AWS Removal ///
-
-  const deploymentDirectoryAWS = join(
+  const baseDeploymentDirectory = join(
     __dirname,
     '..',
     'data',
@@ -50,13 +48,17 @@ const main = async () => {
     response.name,
     'deployments',
     response.deployment,
-    'airnodeAWS'
+    'airnode'
   );
-  const awsSecretsFilePath = join(deploymentDirectoryAWS, 'aws.env');
-  const receiptPathAWS = join(deploymentDirectoryAWS, 'receipt.json');
+
+  /// AWS Removal ///
 
   if (response.cloudProviders.includes('aws')) {
     console.log(`⏳ - Removing Airnode from AWS...`);
+
+    const deploymentDirectoryAWS = join(baseDeploymentDirectory, 'aws');
+    const awsSecretsFilePath = join(deploymentDirectoryAWS, 'aws.env');
+    const receiptPathAWS = join(deploymentDirectoryAWS, 'receipt.json');
 
     if (!existsSync(receiptPathAWS)) return cliPrint.error('🛑 Airnode reciept does not exist for AWS');
 
@@ -77,21 +79,11 @@ const main = async () => {
 
   /// GCP Removal ///
 
-  const deploymentDirectoryGCP = join(
-    __dirname,
-    '..',
-    'data',
-    'apis',
-    response.name,
-    'deployments',
-    response.deployment,
-    'airnodeGCP'
-  );
-
-  const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
-
   if (response.cloudProviders.includes('gcp')) {
     console.log(`⏳ - Removing Airnode from GCP...`);
+
+    const deploymentDirectoryGCP = join(baseDeploymentDirectory, 'gcp');
+    const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
 
     if (!existsSync(receiptPathGCP)) return cliPrint.error('🛑 Airnode reciept does not exist for GCP');
 
@@ -111,7 +103,7 @@ const main = async () => {
   }
 
   console.log(
-    ['🎉 - Airnode successfully removed from the following cloud providers:', ...response.cloudProviders],
+    ['✅ - Airnode successfully removed from the following cloud providers:', ...response.cloudProviders],
     join('\n')
   );
 };

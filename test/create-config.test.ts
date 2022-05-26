@@ -19,12 +19,12 @@ describe('create-config', () => {
     await createConfig(join(__dirname, 'fixtures', 'data'));
 
     const newMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
-    expect(newMockOpsRepo.apis.api3.deployments[date].airnodeAWS).toEqual(
-      originalMockOpsRepo.apis.api3.deployments['2022-04-17'].airnodeAWS
+    expect(newMockOpsRepo.apis.api3.deployments[date].airnode.aws).toEqual(
+      originalMockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws
     );
 
-    expect(newMockOpsRepo.apis.api3.deployments[date].airnodeGCP).toEqual(
-      originalMockOpsRepo.apis.api3.deployments['2022-04-17'].airnodeGCP
+    expect(newMockOpsRepo.apis.api3.deployments[date].airnode.gcp).toEqual(
+      originalMockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.gcp
     );
 
     expect(newMockOpsRepo.apis.api3.deployments[date].airkeeper).toEqual(

@@ -110,9 +110,7 @@ const main = async (operationRepositoryTarget?: string) => {
       }),
     },
     httpGateway: {
-      enabled: true,
-      apiKey: `\${HTTP_GATEWAY_KEY_${secretAppend}}`,
-      maxConcurrency: 200,
+      enabled: false,
     },
     httpSignedDataGateway: {
       enabled: true,
@@ -138,7 +136,7 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const triggers = {
     rrp: [],
-    http: oisTriggers,
+    http: [],
     httpSignedData: oisTriggers,
   };
 
@@ -162,16 +160,16 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
-      `SS_${sanitiseFilename(security).toUpperCase()}=""`.replace(/ /g, '_').replace(/\-/g, '_')
+      `SS_${sanitiseFilename(security).toUpperCase()}=`.replace(/ /g, '_').replace(/\-/g, '_')
     )
   );
 
   const airnodeSecretsArray = [
-    `AIRNODE_WALLET_MNEMONIC=""`,
-    `HTTP_GATEWAY_KEY_${secretAppend}=""`,
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=""`,
+    `AIRNODE_WALLET_MNEMONIC=`,
+    `HTTP_GATEWAY_KEY_${secretAppend}=`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
     ...(response.airnodeHeartbeat
-      ? [`HEARTBEAT_KEY_${secretAppend}=""`, `HEARTBEAT_ID_${secretAppend}=""`, `HEARTBEAT_URL_${secretAppend}=""`]
+      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
     ...oisSecrets,
   ];
@@ -183,7 +181,7 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const airkeeperSecretsArray = [
     ...airnodeSecretsArray,
-    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=""`.toUpperCase()),
+    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
   ];
 
   const airkeeperSecrets = {
@@ -333,38 +331,42 @@ const main = async (operationRepositoryTarget?: string) => {
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
           [date]: {
-            airnodeAWS: {
-              config: {
-                ...config,
-                chains: [],
-              },
-              secrets: airnodeSecrets,
-              aws,
-            },
-            ...(response.gcp && {
-              airnodeGCP: {
+            airnode: {
+              aws: {
                 config: {
                   ...config,
-                  nodeSettings: {
-                    ...config.nodeSettings,
-                    cloudProvider: {
-                      ...config.nodeSettings.cloudProvider,
-                      type: cloudProviderTypeGCP,
-                      region: cloudProviderRegionGCP,
-                      projectId: response.gcpProjectId,
-                    },
-                  },
                   chains: [],
                 },
                 secrets: airnodeSecrets,
-                gcp: {},
+                aws,
               },
-            }),
+              ...(response.gcp && {
+                gcp: {
+                  config: {
+                    ...config,
+                    nodeSettings: {
+                      ...config.nodeSettings,
+                      cloudProvider: {
+                        ...config.nodeSettings.cloudProvider,
+                        type: cloudProviderTypeGCP,
+                        region: cloudProviderRegionGCP,
+                        projectId: response.gcpProjectId,
+                      },
+                    },
+                    chains: [],
+                  },
+                  secrets: airnodeSecrets,
+                  gcp: {},
+                },
+              }),
+            },
             airkeeper: {
-              airkeeper,
-              config,
-              secrets: airkeeperSecrets,
-              aws,
+              aws: {
+                airkeeper,
+                config,
+                secrets: airkeeperSecrets,
+                aws,
+              },
             },
           },
         },

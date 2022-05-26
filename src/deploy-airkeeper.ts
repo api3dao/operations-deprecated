@@ -18,10 +18,12 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
       name: 'deployment',
       message: (prev) => `Which deployment of ${prev} do you want to deploy?`,
       choices: (prev) =>
-        Object.keys(operationsRepository.apis[prev].deployments).map((deployment) => ({
-          title: deployment,
-          value: deployment,
-        })),
+        Object.keys(operationsRepository.apis[prev].deployments)
+          .map((deployment) => ({
+            title: deployment,
+            value: deployment,
+          }))
+          .reverse(),
     },
   ];
 };
