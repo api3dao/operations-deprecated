@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
-import { AirnodeRrpAddresses, RequesterAuthorizerWithAirnodeAddresses } from '@api3/airnode-protocol';
+import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { OperationsRepository } from './types';
 import { promptQuestions } from './utils/prompts';
@@ -21,9 +21,15 @@ const questions = (choices: Choice[]): PromptObject[] => {
     },
     {
       type: 'confirm',
-      name: 'airnodeAuthorizer',
-      message: 'Do you want to include the Airnode Authorizer?',
-      initial: false,
+      name: 'gcp',
+      message: 'Do you want to create a configuration for GCP?',
+      initial: true,
+    },
+    {
+      type: (prev) => (prev ? 'text' : null),
+      name: 'gcpProjectId',
+      message: 'What is the GCP project ID?',
+      initial: '',
     },
     {
       type: 'confirm',
@@ -42,8 +48,11 @@ const main = async (operationRepositoryTarget?: string) => {
 
   //// Build config.json  ////
 
-  const cloudProviderType = 'aws' as const;
-  const cloudProviderRegion = 'us-east-1';
+  const cloudProviderTypeAWS = 'aws' as const;
+  const cloudProviderRegionAWS = 'us-east-1';
+
+  const cloudProviderTypeGCP = 'gcp' as const;
+  const cloudProviderRegionGCP = 'us-east1-b';
 
   // Get all the chains the API will be deployed on
   const apiChains = [...new Set(Object.values(apiData.beacons).flatMap((beacon) => Object.keys(beacon.chains)))];
@@ -51,10 +60,7 @@ const main = async (operationRepositoryTarget?: string) => {
   const chains = apiChains.map((chainName) => {
     const chainId = chainNameToChainId[chainName];
     //TODO: Add RequesterAuthorizerWithManager
-    const authorizers =
-      response.airnodeAuthorizer && RequesterAuthorizerWithAirnodeAddresses[chainId]
-        ? [RequesterAuthorizerWithAirnodeAddresses[chainId]]
-        : [];
+    const authorizers = [] as string[];
     const contracts = { AirnodeRrp: AirnodeRrpAddresses[chainId] || '' };
     const options = {
       txType: 'eip1559' as const,
@@ -84,13 +90,14 @@ const main = async (operationRepositoryTarget?: string) => {
     };
   });
 
-  const secretAppend = sanitiseFilename(apiData.apiMetadata.name).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
+  const secretAppend =
+    sanitiseFilename(apiData.apiMetadata.name).toUpperCase() + `_${cloudProviderTypeAWS.toUpperCase()}`;
 
   const nodeSettings = {
     nodeVersion: require('@api3/airnode-node/package.json').version,
     cloudProvider: {
-      type: cloudProviderType,
-      region: cloudProviderRegion,
+      type: cloudProviderTypeAWS,
+      region: cloudProviderRegionAWS,
       disableConcurrencyReservations: false,
     },
     airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
@@ -151,28 +158,37 @@ const main = async (operationRepositoryTarget?: string) => {
     apiCredentials,
   };
 
-  //// Build secrets.env ////
+  //// Build secrets.env for airnode and airkeeper ////
 
   const oisSecrets = Object.values(apiData.ois).flatMap((ois) =>
     Object.keys(ois.apiSpecifications.components.securitySchemes).map((security) =>
-      `SS_${sanitiseFilename(security).toUpperCase()}=`.replace(/ /g, '_').replace(/\-/g, '_')
+      `SS_${sanitiseFilename(security).toUpperCase()}=""`.replace(/ /g, '_').replace(/\-/g, '_')
     )
   );
 
-  const secretsArray = [
-    `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_GATEWAY_KEY_${secretAppend}=`,
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
+  const airnodeSecretsArray = [
+    `AIRNODE_WALLET_MNEMONIC=""`,
+    `HTTP_GATEWAY_KEY_${secretAppend}=""`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=""`,
     ...(response.airnodeHeartbeat
-      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
+      ? [`HEARTBEAT_KEY_${secretAppend}=""`, `HEARTBEAT_ID_${secretAppend}=""`, `HEARTBEAT_URL_${secretAppend}=""`]
       : []),
     ...oisSecrets,
-    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
   ];
 
-  const secrets = {
+  const airnodeSecrets = {
     filename: '.env',
-    content: secretsArray.join('\n'),
+    content: airnodeSecretsArray.join('\n'),
+  };
+
+  const airkeeperSecretsArray = [
+    ...airnodeSecretsArray,
+    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=""`.toUpperCase()),
+  ];
+
+  const airkeeperSecrets = {
+    filename: '.env',
+    content: airkeeperSecretsArray.join('\n'),
   };
 
   //// Build aws.env ////
@@ -317,19 +333,37 @@ const main = async (operationRepositoryTarget?: string) => {
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
           [date]: {
-            ...operationsRepository.apis[response.apiName].deployments[date],
-            airnode: {
+            airnodeAWS: {
               config: {
                 ...config,
                 chains: [],
               },
-              secrets,
+              secrets: airnodeSecrets,
               aws,
             },
+            ...(response.gcp && {
+              airnodeGCP: {
+                config: {
+                  ...config,
+                  nodeSettings: {
+                    ...config.nodeSettings,
+                    cloudProvider: {
+                      ...config.nodeSettings.cloudProvider,
+                      type: cloudProviderTypeGCP,
+                      region: cloudProviderRegionGCP,
+                      projectId: response.gcpProjectId,
+                    },
+                  },
+                  chains: [],
+                },
+                secrets: airnodeSecrets,
+                gcp: {},
+              },
+            }),
             airkeeper: {
               airkeeper,
               config,
-              secrets,
+              secrets: airkeeperSecrets,
               aws,
             },
           },

@@ -52,14 +52,15 @@ export const normalize = (payload: OperationsRepository) => {
 
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
-          const airnode = Object.fromEntries(
-            Object.entries(value.airnode).map(([key, value]) => {
+          const airnodeAWS = Object.fromEntries(
+            Object.entries(value.airnodeAWS).map(([key, value]) => {
               if (key === 'secrets') {
                 const envBuffer = Buffer.from((value as Secrets).content);
                 const content = Object.entries(parse(envBuffer))
                   .map(([key, _value]) => key)
                   .concat([''])
-                  .join('=""\n');
+                  .join('=""\n')
+                  .trim();
 
                 return [key, { ...value, content }];
               }
@@ -67,6 +68,25 @@ export const normalize = (payload: OperationsRepository) => {
               return [key, value];
             })
           );
+
+          const airnodeGCP =
+            value.airnodeGCP &&
+            Object.fromEntries(
+              Object.entries(value.airnodeGCP).map(([key, value]) => {
+                if (key === 'secrets') {
+                  const envBuffer = Buffer.from((value as Secrets).content);
+                  const content = Object.entries(parse(envBuffer))
+                    .map(([key, _value]) => key)
+                    .concat([''])
+                    .join('=""\n')
+                    .trim();
+
+                  return [key, { ...value, content }];
+                }
+
+                return [key, value];
+              })
+            );
 
           const airkeeper = Object.fromEntries(
             Object.entries(value.airkeeper).map(([key, value]) => {
@@ -75,7 +95,8 @@ export const normalize = (payload: OperationsRepository) => {
                 const content = Object.entries(parse(envBuffer))
                   .map(([key, _value]) => key)
                   .concat([''])
-                  .join('=""\n');
+                  .join('=""\n')
+                  .trim();
 
                 return [key, { ...value, content }];
               }
@@ -83,7 +104,7 @@ export const normalize = (payload: OperationsRepository) => {
               return [key, value];
             })
           );
-          return [key, { airnode, airkeeper }];
+          return [key, { ...(value.airnodeGCP && { airnodeGCP }), airnodeAWS, airkeeper }];
         })
       );
 

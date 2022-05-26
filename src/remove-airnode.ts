@@ -27,7 +27,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
     {
       type: 'multiselect',
       name: 'cloudProviders',
-      message: 'Which cloud Providers do you want to deploy to?',
+      message: 'Which cloud Providers do you want to remove?',
       choices: [
         { title: 'AWS', value: 'aws', selected: true },
         { title: 'GCP', value: 'gcp', selected: true },
@@ -37,9 +37,10 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 };
 
 const main = async () => {
-  const nodeVersion = require('@api3/airnode-node/package.json').version;
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
+
+  /// AWS Removal ///
 
   const deploymentDirectoryAWS = join(
     __dirname,
@@ -52,25 +53,29 @@ const main = async () => {
     'airnodeAWS'
   );
   const awsSecretsFilePath = join(deploymentDirectoryAWS, 'aws.env');
-  const receiptPath = join(deploymentDirectoryAWS, 'receipt.json');
-
-  const airnodeDeployCommand = [
-    `docker run -it --rm`,
-    `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
-    `--env-file ${awsSecretsFilePath}`,
-    `-v ${deploymentDirectoryAWS}:/app/config`,
-    `-v ${deploymentDirectoryAWS}:/app/output`,
-    `api3/airnode-deployer:${nodeVersion} deploy`,
-  ].join(' ');
+  const receiptPathAWS = join(deploymentDirectoryAWS, 'receipt.json');
 
   if (response.cloudProviders.includes('aws')) {
-    console.log(`⏳ - Deploying Airnode to AWS...`);
+    console.log(`⏳ - Removing Airnode from AWS...`);
 
-    const deployment = runShellCommand(airnodeDeployCommand);
+    if (!existsSync(receiptPathAWS)) return cliPrint.error('🛑 Airnode reciept does not exist for AWS');
 
-    if (deployment.status !== 0 || !existsSync(receiptPath))
-      return cliPrint.error('🛑 Airnode deployment to AWS failed.');
+    const nodeVersionAWS = require(receiptPathAWS).deployment.nodeVersion;
+
+    const airnodeRemoveCommandAWS = [
+      `docker run -it --rm`,
+      `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
+      `--env-file ${awsSecretsFilePath}`,
+      `-v ${deploymentDirectoryAWS}:/app/output`,
+      `api3/airnode-deployer:${nodeVersionAWS} remove -r output/receipt.json`,
+    ].join(' ');
+
+    const deployment = runShellCommand(airnodeRemoveCommandAWS);
+
+    if (deployment.status !== 0) return cliPrint.error('🛑 Airnode removal from AWS failed.');
   }
+
+  /// GCP Removal ///
 
   const deploymentDirectoryGCP = join(
     __dirname,
@@ -85,30 +90,28 @@ const main = async () => {
 
   const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
 
-  const airnodeDeployCommandGCP = [
-    `docker run -it --rm`,
-    `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
-    `-v ${deploymentDirectoryGCP}/gcp.json:/app/gcp.json`,
-    `-v ${deploymentDirectoryGCP}:/app/config`,
-    `-v ${deploymentDirectoryGCP}:/app/output`,
-    `api3/airnode-deployer:${nodeVersion} deploy`,
-  ].join(' ');
-
   if (response.cloudProviders.includes('gcp')) {
-    console.log(`⏳ - Deploying Airnode to GCP...`);
+    console.log(`⏳ - Removing Airnode from GCP...`);
 
-    const deployment = runShellCommand(airnodeDeployCommandGCP);
+    if (!existsSync(receiptPathGCP)) return cliPrint.error('🛑 Airnode reciept does not exist for GCP');
 
-    if (deployment.status !== 0 || !existsSync(receiptPathGCP))
-      return cliPrint.error('🛑 Airnode deployment to GCP failed.');
+    const nodeVersionGCP = require(receiptPathGCP).deployment.nodeVersion;
+
+    const airnodeRemoveCommandGCP = [
+      `docker run -it --rm`,
+      `-e USER_ID=$(id -u) -e GROUP_ID=$(id -g)`,
+      `-v ${deploymentDirectoryGCP}/gcp.json:/app/gcp.json`,
+      `-v ${deploymentDirectoryGCP}:/app/output`,
+      `api3/airnode-deployer:${nodeVersionGCP} remove -r output/receipt.json`,
+    ].join(' ');
+
+    const deployment = runShellCommand(airnodeRemoveCommandGCP);
+
+    if (deployment.status !== 0) return cliPrint.error('🛑 Airnode removal of GCP failed.');
   }
 
   console.log(
-    [
-      `🎉 - Airnode deployment succeeded!`,
-      `⏩ - Please forward the "receipt.json" in the deployments folder to the API3 team.`,
-      `The "receipt.json" contains sensitive information and should not be shared or made public.`,
-    ],
+    ['🎉 - Airnode successfully removed from the following cloud providers:', ...response.cloudProviders],
     join('\n')
   );
 };
