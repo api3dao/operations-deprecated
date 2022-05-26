@@ -166,7 +166,6 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const airnodeSecretsArray = [
     `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_GATEWAY_KEY_${secretAppend}=`,
     `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
     ...(response.airnodeHeartbeat
       ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
