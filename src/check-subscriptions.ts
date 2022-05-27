@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId, DapiServerContract, DapiServerInterface } from './utils/evm';
+import { DapiServerContract, DapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
@@ -14,7 +14,7 @@ const main = async () => {
     Object.entries(beacon.chains)
       .filter(([, chain]) => 'updateConditionPercentage' in chain)
       .map(async ([chainName, chain]) => {
-        const DapiServerInteface = DapiServerInterface();
+        const dapiServerInteface = DapiServerInterface();
         const parameters = '0x';
         const airnodeAddress = beacon.airnodeAddress;
         const templateId = beacon.templateId;
@@ -31,21 +31,21 @@ const main = async () => {
             name: '_conditionFunctionId',
             value: ethers.utils.defaultAbiCoder.encode(
               ['bytes4'],
-              [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
+              [dapiServerInteface.getSighash('conditionPspBeaconUpdate')]
             ),
           },
           { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
         ]);
 
-        const chainId = chainNameToChainId[chainName];
+        const chainId = parseInt(operationsRepository.chains[chainName].id);
         if (!chainId) throw new Error(`🛑 Unknown chain name: ${chainName}`);
 
         if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
         const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
 
-        const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-        if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
-        const DapiServer = DapiServerContract(DapiServerAddress, provider);
+        const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
+        if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
+        const dapiServer = DapiServerContract(dapiServerAddress, provider);
 
         const sponsor = chain.sponsor;
 
@@ -60,8 +60,8 @@ const main = async () => {
               encodedBeaconUpdateSubscriptionConditions,
               airnodeAddress,
               sponsor,
-              DapiServerAddress,
-              DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
+              dapiServerAddress,
+              dapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
             ]
           )
         );
@@ -72,14 +72,14 @@ const main = async () => {
         try {
           console.log(`🔎 checking if subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`);
 
-          const beaconId = await DapiServer.subscriptionIdToBeaconId(expectedSubscriptionId);
+          const beaconId = await dapiServer.subscriptionIdToBeaconId(expectedSubscriptionId);
 
-          if (beaconId !== expectedBeaconId) {
-            throw new Error(`🛑 The subscription ID ${expectedSubscriptionId} does not exist`);
+          if (beaconId === expectedBeaconId) {
+            console.log(`✅ subscriptionId ${expectedSubscriptionId} exists for chain ${chainName}`);
+            return;
           }
 
-          if (beaconId === expectedBeaconId)
-            return `✅ subscriptionId ${expectedSubscriptionId} exists for chain ${chainName}`;
+          throw new Error(`🛑 The subscription ID ${expectedSubscriptionId} does not exist`);
         } catch (error) {
           console.error(error);
           throw new Error(`🛑 Error checking subscription for beacon ${beaconName} on chain ${chainName}`);
@@ -87,17 +87,11 @@ const main = async () => {
       })
   );
 
-  const results = await Promise.allSettled(subscriptionPromises);
+  const subscriptionChecks = await Promise.allSettled(subscriptionPromises);
 
-  results.forEach((result) => {
-    if (result.status === 'fulfilled') {
-      console.log(result.value);
-    } else {
-      console.log(result.reason);
-    }
-  });
+  const failedSubscriptionChecks = subscriptionChecks.filter((result) => result.status === 'rejected');
 
-  if (results.some((result) => result.status !== 'fulfilled')) throw new Error('🛑 Some subscription checks failed');
+  if (failedSubscriptionChecks.length > 0) throw new Error('🛑 Some subscription checks failed');
 };
 
 if (require.main === module) runAndHandleErrors(main);
