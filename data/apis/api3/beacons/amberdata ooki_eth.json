@@ -1,9 +1,9 @@
 {
   "name": "AmberData OOKI/ETH",
   "description": "AmberData - OOKI/ETH - Pair",
-  "beaconId": "0x5b4e1550f636c4e06478d5d8cd2a9ee106ffb2b7c227d0de57284c2952216c97",
+  "beaconId": "0x27d0e093b6245c065ef1a4770614fc05e0c2dee751a3b5e687e80373c0c5b333",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x021e15b08969326858ce157f37765cd0c2d1b97873309134fa2c664474f56d11",
+  "templateId": "0x5c3d4955ad596b6596d5c21fdb8bcda8c2120a63b8c635e4b3862f9c0a02fda5",
   "chains": {
     "polygon": {
       "active": true,

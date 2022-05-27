@@ -1,9 +1,9 @@
 {
   "name": "AmberData AAVE/BTC",
   "description": "AmberData - AAVE/BTC - Pair",
-  "beaconId": "0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846",
+  "beaconId": "0x2c76182b93ab6d486710f745bdbc0acf1c503d78921bd4babd58f93cba1257f7",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0xb0039a5af9f6c937f3d1c7af36a5dc83c53961d0356a373185e7972d6daf6b5a",
+  "templateId": "0x35b2fc057bc51b3d36f706f68ae3512414f58a6487d0e38a4663e994bb3791bf",
   "chains": {
     "rsk": {
       "active": true,

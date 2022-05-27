@@ -1,9 +1,9 @@
 {
   "name": "AmberData QUICK/USD",
   "description": "AmberData - QUICK/USD - Pair",
-  "beaconId": "0x08d9d222b7e1e77a93ebbc8c69614af636e47a6c71eb3fcab4708c6455fabfd1",
+  "beaconId": "0x1c47bd6e5e6ff0136e38447aef7b716da28cb5455a9ea0e8bdf6b6958b2f13c4",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x7ca1551b7f36564bd0fb519bc46643c10642c41ce3066f36867a8062a0796896",
+  "templateId": "0x70c0ff576505db6a689ce8e44331ab7d592f2c936dc96e63ab89194021b34b4a",
   "chains": {
     "polygon": {
       "active": true,
