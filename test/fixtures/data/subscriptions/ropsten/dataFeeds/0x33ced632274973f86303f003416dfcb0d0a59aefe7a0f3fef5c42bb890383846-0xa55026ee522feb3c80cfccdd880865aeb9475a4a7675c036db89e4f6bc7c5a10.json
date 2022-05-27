@@ -1,6 +1,6 @@
 {
   "paymentTxHash": "0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a10",
-  "resourceId": "0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846",
+  "dataFeedId": "0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846",
   "claimaintAddress": "0x1a2633190693307d47145098fFd1d4669D3aE9eE",
   "beneficiaryAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",
   "whitelistAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",

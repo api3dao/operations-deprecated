@@ -213,8 +213,8 @@ export const dataFeedSubscriptionSchema = z
 // Chain -> [dapis dataFeeds]
 export const subscriptionsSchema = z
   .object({
-    dapis: z.record(dapiSubscriptionSchema),
-    dataFeeds: z.record(dataFeedSubscriptionSchema),
+    dapis: z.record(dapiSubscriptionSchema).optional(),
+    dataFeeds: z.record(dataFeedSubscriptionSchema).optional(),
   })
   .strict();
 
