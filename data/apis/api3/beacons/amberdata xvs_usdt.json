@@ -1,9 +1,9 @@
 {
   "name": "AmberData XVS/USDT",
   "description": "AmberData - XVS/USDT - Pair",
-  "beaconId": "0x66834ab57b5d8ccdca8366187c971d412706349fc625398dee5a97c89e39e49f",
+  "beaconId": "0xaad0dbe43b9bf9e7a2393058ba9ea6616596fdf79ccfbe484e8d1a1c067638ec",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x6fe33b9efe33a762f703f4b390af3fbc45296a70361b8f1b6f48fdfaab4fdf66",
+  "templateId": "0xa0e96818bb0199d834650b591720458ad0fce7de15a328f62e1cdb7d5bc76148",
   "chains": {
     "bsc": {
       "active": true,

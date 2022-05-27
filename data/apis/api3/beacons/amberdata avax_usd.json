@@ -1,11 +1,21 @@
 {
   "name": "AmberData AVAX/USD",
   "description": "AmberData - AVAX/USD - Pair",
-  "beaconId": "0xee0eebdd2c1fa2185fc0d2a46c6557781fbdc7a588a8bbe64e73295c18288c8d",
+  "beaconId": "0x981fb212c961973cb0e36c2ba003ab0d43e61f01035284e8c9917a296b78dbcb",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x26cb2638f5c9400a6eef7a8b6c13e266c6bd735f692e56bf19f2c911c227cad8",
+  "templateId": "0x32a6c9c2afb1fa1accd988bab39ea85c7cf5480c6fbb40147d334e27d5c684ea",
   "chains": {
     "avalanche": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "avalanche-testnet": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [

@@ -1,9 +1,9 @@
 {
   "name": "AmberData CAKE/USDT",
   "description": "AmberData - CAKE/USDT - Pair",
-  "beaconId": "0xc8d512e8db42a1e4fd2f8ad9acbf72d1c8adeabf14562c72b3d64758905b5a9b",
+  "beaconId": "0xc68467f56961433c0ac24eb4cbf7296549d11f73622f47aa9e6c8bec44a36f64",
   "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
-  "templateId": "0x68196c5c5af7d35dba17e7b180ae08aa1febe95d487b4eeb3a0e8c8c04c8c4e9",
+  "templateId": "0x06c39862e580c806c43e0f27f6c2f3c9fb634348763d953f05432eac0f339751",
   "chains": {
     "bsc": {
       "active": true,
