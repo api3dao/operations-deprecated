@@ -2,7 +2,7 @@
 
 > Documentation for integrating and deploying Beacon systems
 
-Before you begin, run `yarn install`.
+Before you begin, run `yarn make`.
 
 ## Beacon Deployment Process
 
