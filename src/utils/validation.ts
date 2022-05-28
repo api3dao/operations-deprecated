@@ -50,31 +50,40 @@ export const beaconSchema = z
 
 export const beaconsSchema = z.record(beaconSchema);
 
-export const secretsSchema = z.object({ filename: z.string(), content: z.string() }).strict();
+export const secretsSchema = z.object({ filename: z.string(), content: z.string() });
 
-export const airnodeDeploymentSchema = z
-  .object({
-    config: z.any(), //airnodeConfigSchema,
-    secrets: secretsSchema,
-    aws: secretsSchema.optional(),
-  })
-  .strict();
+export const airnodeDeploymentAWSSchema = z.object({
+  config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
+  secrets: secretsSchema,
+  aws: secretsSchema.optional(),
+});
 
-export const airkeeperDeploymentSchema = z
-  .object({
-    config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
-    airkeeper: z.any(), //airkeeperConfigSchema,
-    secrets: secretsSchema,
-    aws: secretsSchema.optional(),
-  })
-  .strict();
+export const airnodeDeploymentGCPSchema = z.object({
+  config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
+  secrets: secretsSchema,
+  gcp: z.any().optional(),
+});
 
-export const deploymentSetSchema = z
-  .object({
-    airnode: airnodeDeploymentSchema,
-    airkeeper: airkeeperDeploymentSchema,
-  })
-  .strict();
+export const airnodeDeploymentSchema = z.object({
+  aws: airnodeDeploymentAWSSchema,
+  gcp: airnodeDeploymentGCPSchema.optional(),
+});
+
+export const airkeeperDeploymentAWSSchema = z.object({
+  config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
+  airkeeper: z.any(),
+  secrets: secretsSchema,
+  aws: secretsSchema.optional(),
+});
+
+export const airkeeperDeploymentSchema = z.object({
+  aws: airkeeperDeploymentAWSSchema,
+});
+
+export const deploymentSetSchema = z.object({
+  airnode: airnodeDeploymentSchema,
+  airkeeper: airkeeperDeploymentSchema,
+});
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
 

@@ -91,41 +91,45 @@ describe('writeOperationsRepository', () => {
       const coingeckoTestDeployment = {
         ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate],
         airkeeper: {
-          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper,
-          airkeeper: {
-            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.airkeeper,
-            airnodeAddress: '0x0000000000000000000000000000000000000000',
-            airnodeXpub: '',
-          },
-          config: {
-            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.config,
-            triggers: {
-              rrp: [],
-              http: [],
-              httpSignedData: [],
+          aws: {
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws,
+            airkeeper: {
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.airkeeper,
+              airnodeAddress: '0x0000000000000000000000000000000000000000',
+              airnodeXpub: '',
             },
-          },
-          secrets: {
-            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.secrets,
-            filename: 'secrets.env',
-            content: 'THIS IS EMPTY',
+            config: {
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.config,
+              triggers: {
+                rrp: [],
+                http: [],
+                httpSignedData: [],
+              },
+            },
+            secrets: {
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets,
+              filename: 'secrets.env',
+              content: 'THIS IS EMPTY',
+            },
           },
         },
         airnode: {
-          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode,
-          config: {
-            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode.config,
-            triggers: {
-              rrp: [],
-              http: [],
-              httpSignedData: [],
+          aws: {
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws,
+            config: {
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws.config,
+              triggers: {
+                rrp: [],
+                http: [],
+                httpSignedData: [],
+              },
+            },
+            secrets: {
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws.secrets,
+              filename: 'secrets.env',
+              content: 'THIS IS EMPTY',
             },
           },
-        },
-        secrets: {
-          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode.secrets,
-          filename: 'secrets.env',
-          content: 'THIS IS EMPTY',
         },
       };
 
@@ -154,6 +158,7 @@ describe('writeOperationsRepository', () => {
             'deployments',
             mockDeploymentDate,
             'airkeeper',
+            'aws',
             'airkeeper.json'
           )
         )
@@ -168,6 +173,7 @@ describe('writeOperationsRepository', () => {
             'deployments',
             mockDeploymentDate,
             'airkeeper',
+            'aws',
             'config.json'
           )
         )
@@ -182,6 +188,7 @@ describe('writeOperationsRepository', () => {
             'deployments',
             mockDeploymentDate,
             'airkeeper',
+            'aws',
             'secrets.env'
           )
         )
@@ -196,6 +203,7 @@ describe('writeOperationsRepository', () => {
             'deployments',
             mockDeploymentDate,
             'airnode',
+            'aws',
             'config.json'
           )
         )
@@ -210,6 +218,7 @@ describe('writeOperationsRepository', () => {
             'deployments',
             mockDeploymentDate,
             'airnode',
+            'aws',
             'secrets.env'
           )
         )
