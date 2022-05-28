@@ -51,10 +51,10 @@ export const writeOperationsRepository = (
       Object.entries(api.deployments).forEach(([directoryName, deployments]) => {
         const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
         mkdirSync(subDeploymentBasePath);
-        Object.entries(deployments).forEach(([deploymentName, deploymentProvider]) => {
+        Object.entries(deployments).forEach(([deploymentName, cloudProvider]) => {
           const deploymentBasePath = join(subDeploymentBasePath, deploymentName);
           mkdirSync(deploymentBasePath);
-          Object.entries(deploymentProvider).forEach(([deploymentProviderName, deployment]) => {
+          Object.entries(cloudProvider).forEach(([deploymentProviderName, deployment]) => {
             const deploymentProviderBasePath = join(deploymentBasePath, deploymentProviderName);
             mkdirSync(deploymentProviderBasePath);
             Object.entries(deployment).forEach(([filename, configContent]) => {

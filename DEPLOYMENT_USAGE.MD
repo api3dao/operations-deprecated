@@ -140,14 +140,20 @@ yarn create-config
 This will create following files for both the airnode and airkeeper deployment in `/data/apis/<PROVIDER_NAME>/deployments/<DEPLOYMENT_DATE>`
 
 - `airnode`
-  - `config.json`: The Airnode config file, should not require editing.
-  - `secrets.env`: This file will need to be populated by the provider during deployment.
-  - `aws.env`: This file will need to be populated by the provider during deployment
+  - `aws`
+    - `config.json`: The Airnode config file, should not require editing.
+    - `secrets.env`: This file will need to be populated by the provider during deployment.
+    - `aws.env`: This file will need to be populated by the provider during deployment
+  - `gcp` (if selected in the prompts of create-config)
+    - `config.json`: The Airnode config file, should not require editing.
+    - `secrets.env`: This file will need to be populated by the provider during deployment.
+    - `gcp.json`: This file will need to be populated by the provider during
 - `airkeeper`
-  - `config.json`: The Airnode config file, should not require editing.
-  - `airkeeper.json`: The Airkeeper config file, should not require editing.
-  - `secrets.env`: This file will need to be populated by the provider during deployment.
-  - `aws.env`: This file will need to be populated by the provider during deployment
+  - `aws`
+    - `config.json`: The Airnode config file, should not require editing.
+    - `airkeeper.json`: The Airkeeper config file, should not require editing.
+    - `secrets.env`: This file will need to be populated by the provider during deployment.
+    - `aws.env`: This file will need to be populated by the provider during deployment
 
 ### 7. Generate the gateway keys
 
@@ -165,7 +171,17 @@ Once you have populated the config files, avoiding populating them with any secr
 
 Checkout using `git checkout -b ...`. Use a new descriptively-named branch, eg. "nasa-deployment" and push the branch to the operations repository.
 
-### 9. Deployment at the client's premises:
+### 9. Register the subscriptionsIds
+
+You will need to register the subscriptionIds for each beacon on chain. To do this fill in the credentials with your mnemonic in `/chain/credentials.example.json` (fill in the mnemonic for all the chains the beacons will be deployed on). Then run the following command:
+
+```
+yarn register-subscriptions
+```
+
+> Make sure your mnemonic is funded on chain, otherwise the register transaction will revert
+
+### 10. Deployment at the client's premises:
 
 - Clone the repository and switch to the branch created in step 8
 - Forward the API provider the contents of `secrets.env` (Provider URLs, gateway keys).
