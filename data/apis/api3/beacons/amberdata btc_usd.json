@@ -1,0 +1,29 @@
+{
+  "name": "AmberData BTC/USD",
+  "description": "AmberData - BTC/USD - Pair",
+  "beaconId": "0xc2daf3e2dfa9638bc83ba1229d1dd63637132cf961900fbe6d19d95e7d46ffd9",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xd52fd2fb8d024a1a95407cf5bf752963af3508cc1ee70ea39cf98be56d917fd2",
+  "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 0.4,
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "avalanche-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 0.4,
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

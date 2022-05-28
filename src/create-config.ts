@@ -8,7 +8,7 @@ import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId, DapiServerInterface } from './utils/evm';
+import { DapiServerInterface } from './utils/evm';
 import { sanitiseFilename } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
@@ -58,7 +58,7 @@ const main = async (operationRepositoryTarget?: string) => {
   const apiChains = [...new Set(Object.values(apiData.beacons).flatMap((beacon) => Object.keys(beacon.chains)))];
 
   const chains = apiChains.map((chainName) => {
-    const chainId = chainNameToChainId[chainName];
+    const chainId = parseInt(operationsRepository.chains[chainName].id);
     //TODO: Add RequesterAuthorizerWithManager
     const authorizers = [] as string[];
     const contracts = { AirnodeRrp: AirnodeRrpAddresses[chainId] || '' };
@@ -200,7 +200,7 @@ const main = async (operationRepositoryTarget?: string) => {
   //// Build airkeeper.json ////
 
   const airkeeperChains = apiChains.map((chainName) => {
-    const chainId = chainNameToChainId[chainName];
+    const chainId = parseInt(operationsRepository.chains[chainName].id);
     //TODO: Add RrpBeaconServer and DapiServer contracts based on chain
     const RrpBeaconServer = '';
     const DapiServer = operationsRepository.chains[chainName].contracts.DapiServer;
@@ -219,7 +219,7 @@ const main = async (operationRepositoryTarget?: string) => {
       Object.entries(beacon.chains)
         .filter(([, chain]) => 'updateConditionPercentage' in chain)
         .map(([chainName, chain]) => {
-          const chainId = chainNameToChainId[chainName] || 1;
+          const chainId = parseInt(operationsRepository.chains[chainName].id);
           const DapiServerInteface = DapiServerInterface();
           const parameters = '0x';
           const airnodeAddress = beacon.airnodeAddress;

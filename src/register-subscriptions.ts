@@ -5,7 +5,7 @@ import { encode } from '@api3/airnode-abi';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { chainNameToChainId, DapiServerContract, DapiServerInterface } from './utils/evm';
+import { DapiServerContract, DapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
@@ -69,7 +69,7 @@ const main = async () => {
           { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
         ]);
 
-        const chainId = chainNameToChainId[chainName];
+        const chainId = parseInt(operationsRepository.chains[chainName].id);
         if (!chainId) throw new Error(`🛑 Unknown chain name: ${chainName}`);
 
         if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);

@@ -8,8 +8,6 @@ import { readJsonFile } from './read-operations';
 import { OperationsRepository, Secrets, ChainDeploymentReferences } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { dapis } = payload;
-
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
@@ -155,7 +153,35 @@ export const normalize = (payload: OperationsRepository) => {
     ),
   };
 
-  return { ...payload, apis, chains, dapis, explorer } as OperationsRepository; // TODO add api3 and airseeker
+  const subscriptions = payload.subscriptions
+    ? Object.fromEntries(
+        Object.entries(payload.subscriptions).map(([chain, subs]) => {
+          return [
+            chain,
+            {
+              dapis: subs.dapis
+                ? Object.fromEntries(
+                    Object.values(subs.dapis).map((subscription) => [
+                      `${subscription.paymentTxHash}-${subscription.dapiName}`,
+                      subscription,
+                    ])
+                  )
+                : undefined,
+              dataFeeds: subs.dataFeeds
+                ? Object.fromEntries(
+                    Object.values(subs.dataFeeds).map((subscription) => [
+                      `${subscription.paymentTxHash}-${subscription.dataFeedId}`,
+                      subscription,
+                    ])
+                  )
+                : undefined,
+            },
+          ];
+        })
+      )
+    : {};
+
+  return { ...payload, apis, chains, explorer, subscriptions } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {

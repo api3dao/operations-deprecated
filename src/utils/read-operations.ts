@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
-import { OperationsRepository } from '../types';
+import { Api, OperationsRepository } from '../types';
 
 export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
 
@@ -14,8 +14,30 @@ interface FilePayload {
   readonly filename: string;
 }
 
-export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) =>
-  readFileOrDirectoryRecursively(target) as OperationsRepository;
+export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) => {
+  const rawOperations = readFileOrDirectoryRecursively(target) as OperationsRepository;
+
+  const apis = Object.fromEntries(
+    Object.entries(rawOperations.apis).map(([apiName, apiValue]) => {
+      const { beacons, deployments, ois, templates, apiMetadata } = apiValue;
+
+      const outputApiValue = {
+        beacons: beacons ?? {},
+        deployments: deployments ?? {},
+        ois: ois ?? {},
+        templates: templates ?? {},
+        apiMetadata,
+      };
+
+      return [apiName, outputApiValue];
+    })
+  ) as unknown as Record<string, Api>;
+
+  return {
+    ...rawOperations,
+    apis,
+  } as OperationsRepository;
+};
 
 export const readFileOrDirectoryRecursively = (target: string): any => {
   const stats = statSync(target);
