@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { chainOptionsSchema, providerSchema } from '@api3/airnode-validator';
+import { chainOptionsSchema } from '@api3/airnode-validator';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -23,7 +23,7 @@ export const beaconSetsSchema = emptyObjectSchema;
 export const chainSchema = z
   .object({
     contracts: z.record(evmAddressSchema),
-    providers: z.record(providerSchema),
+    providers: z.record(z.object({ url: z.string() })),
     options: chainOptionsSchema,
   })
   .strict();
@@ -33,7 +33,7 @@ export const chainsSchema = z.record(chainSchema);
 export const gatewaySchema = z
   .object({
     apiKey: z.string(),
-    url: z.string().url(),
+    url: z.string(),
   })
   .strict();
 
@@ -74,9 +74,15 @@ export const triggersSchema = z.object({
   beaconSetUpdates: emptyObjectSchema,
 });
 
+export const logSchema = z.object({
+  format: z.union([z.literal('plain'), z.literal('json')]),
+  level: z.union([z.literal('DEBUG'), z.literal('INFO'), z.literal('WARN'), z.literal('ERROR')]),
+});
+
 export const configSchema = z
   .object({
     airseekerWalletMnemonic: z.string(),
+    log: logSchema,
     beacons: beaconsSchema,
     beaconSets: beaconSetsSchema,
     chains: chainsSchema,

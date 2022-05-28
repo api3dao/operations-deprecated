@@ -1,13 +1,33 @@
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync, rmdirSync } from 'fs';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { readOperationsRepository } from '../../src/utils/read-operations';
 
+const tempTestPath = join(__dirname, '../temporary_test_folder');
+const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+
+it('checks if read/write cycle reproduces first read', () => {
+  writeOperationsRepository(mockOpsRepo, tempTestPath);
+  const tempWrittenRepoData = readOperationsRepository(tempTestPath);
+
+  expect(tempWrittenRepoData).toEqual(mockOpsRepo);
+});
+
 describe('writeOperationsRepository', () => {
+  // Start with a clean directory
+  beforeEach(() => {
+    rmdirSync(tempTestPath, { recursive: true });
+    mkdirSync(tempTestPath);
+    writeOperationsRepository(mockOpsRepo, tempTestPath);
+  });
+
+  // End with a clean directory
+  afterEach(() => {
+    rmdirSync(tempTestPath, { recursive: true });
+  });
+
   describe('apis', () => {
     it('writes changes to beacons', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestBeacon = {
         ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
         name: 'coingecko test beacon',
@@ -28,22 +48,15 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(
-        existsSync(join(__dirname, '..', 'fixtures', 'data', 'apis', 'api3', 'beacons', 'coingeckoTestBeacon.json'))
-      ).toBe(true);
+      expect(existsSync(join(tempTestPath, 'apis', 'api3', 'beacons', 'coingeckoTestBeacon.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to ois', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestOis = {
         ...mockOpsRepo.apis.api3.ois['coingecko basic request-1.0.0'],
         title: 'coingecko Test Ois',
@@ -65,32 +78,27 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
-      expect(
-        existsSync(join(__dirname, '..', 'fixtures', 'data', 'apis', 'api3', 'ois', 'coingeckoTestOis.json'))
-      ).toBe(true);
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
+      expect(existsSync(join(tempTestPath, 'apis', 'api3', 'ois', 'coingeckoTestOis.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to deployments', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const mockDeploymentDate = '2022-04-17';
 
       const coingeckoTestDeployment = {
-        ...mockOpsRepo.apis.api3.deployments['2022-04-17'],
+        ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate],
         airkeeper: {
-          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper,
+          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper,
           airkeeper: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.airkeeper,
+            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.airkeeper,
             airnodeAddress: '0x0000000000000000000000000000000000000000',
             airnodeXpub: '',
           },
           config: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.config,
+            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.config,
             triggers: {
               rrp: [],
               http: [],
@@ -98,15 +106,15 @@ describe('writeOperationsRepository', () => {
             },
           },
           secrets: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.secrets,
+            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airkeeper.secrets,
             filename: 'secrets.env',
             content: 'THIS IS EMPTY',
           },
         },
         airnode: {
-          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode,
+          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode,
           config: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.config,
+            ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode.config,
             triggers: {
               rrp: [],
               http: [],
@@ -115,7 +123,7 @@ describe('writeOperationsRepository', () => {
           },
         },
         secrets: {
-          ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.secrets,
+          ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate].airnode.secrets,
           filename: 'secrets.env',
           content: 'THIS IS EMPTY',
         },
@@ -135,19 +143,16 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
-            '2022-05-01',
+            mockDeploymentDate,
             'airkeeper',
             'airkeeper.json'
           )
@@ -157,14 +162,11 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
-            '2022-05-01',
+            mockDeploymentDate,
             'airkeeper',
             'config.json'
           )
@@ -174,14 +176,11 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
-            '2022-05-01',
+            mockDeploymentDate,
             'airkeeper',
             'secrets.env'
           )
@@ -191,14 +190,11 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
-            '2022-05-01',
+            mockDeploymentDate,
             'airnode',
             'config.json'
           )
@@ -208,30 +204,22 @@ describe('writeOperationsRepository', () => {
       expect(
         existsSync(
           join(
-            __dirname,
-            '..',
-            'fixtures',
-            'data',
+            join(__dirname, '../temporary_test_folder'),
             'apis',
             'api3',
             'deployments',
-            '2022-05-01',
+            mockDeploymentDate,
             'airnode',
             'secrets.env'
           )
         )
       ).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to templates', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestTemplate = {
         ...mockOpsRepo.apis.api3.templates['coingecko btc_usd'],
         name: 'coingeckoTestTemplate',
@@ -251,22 +239,15 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(
-        existsSync(join(__dirname, '..', 'fixtures', 'data', 'apis', 'api3', 'templates', 'coingeckoTestTemplate.json'))
-      ).toBe(true);
+      expect(existsSync(join(tempTestPath, 'apis', 'api3', 'templates', 'coingeckoTestTemplate.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to metadata', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestMetadata = {
         ...mockOpsRepo.apis.api3.apiMetadata,
         name: 'coingeckoTestMetadata',
@@ -283,21 +264,17 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'apis', 'api3', 'apiMetadata.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'apis', 'api3', 'apiMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
   });
+
   describe('chains', () => {
     it('writes changes to chains', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestChain = {
         ...mockOpsRepo.chains.ropsten,
         name: 'testChain',
@@ -312,24 +289,21 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'chains', 'testchain.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'chains', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
   });
 
   describe('api3', () => {
     it('writes changes to airseeker', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const airseekerDeploymentDate = '2022-03-05';
 
       const coingeckoTestAirseeker = {
-        ...mockOpsRepo.api3!.airseeker.coingecko.airseeker,
+        ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate].airseeker,
         airseekerWalletMnemonic: '',
         chains: {},
       };
@@ -340,8 +314,8 @@ describe('writeOperationsRepository', () => {
           ...mockOpsRepo.api3,
           airseeker: {
             ...mockOpsRepo.api3!.airseeker,
-            ['coingecko']: {
-              ...mockOpsRepo.api3!.airseeker['coingecko'],
+            [airseekerDeploymentDate]: {
+              ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate],
               airseeker: coingeckoTestAirseeker,
               secrets: {
                 filename: 'secrets.env',
@@ -352,28 +326,19 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(
-        existsSync(join(__dirname, '..', 'fixtures', 'data', 'api3', 'airseeker', 'coingecko', 'airseeker.json'))
-      ).toBe(true);
+      expect(existsSync(join(tempTestPath, 'api3', 'airseeker', airseekerDeploymentDate, 'airseeker.json'))).toBe(true);
 
-      expect(
-        existsSync(join(__dirname, '..', 'fixtures', 'data', 'api3', 'airseeker', 'coingecko', 'secrets.env'))
-      ).toBe(true);
+      expect(existsSync(join(tempTestPath, 'api3', 'airseeker', airseekerDeploymentDate, 'secrets.env'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
   });
 
   describe('dapis', () => {
     it('writes changes to dapis', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestDapi = {
         ...mockOpsRepo.dapis.polygon,
         beaconId: 'test',
@@ -387,22 +352,78 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'dapis', 'testchain.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'dapis', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
+    });
+  });
 
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+  describe('subscriptions', () => {
+    it('writes changes to subscriptions', async () => {
+      const mockSubscriptions = {
+        ropsten: {
+          dapis: {
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
+              {
+                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
+                dapiName: 'USDC/AAVE',
+                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                coverageAmount: '10001',
+                startDate: 1653048764,
+                endDate: 1653038764,
+                ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
+                ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+              },
+          },
+          dataFeeds: {
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12':
+              {
+                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12',
+                dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
+                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                coverageAmount: '10001',
+                startDate: 1653048764,
+                endDate: 1653038764,
+                ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
+                ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+              },
+          },
+        },
+      };
+
+      const updatedOpsRepo = {
+        ...mockOpsRepo,
+        subscriptions: mockSubscriptions,
+      };
+
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
+
+      expect(
+        existsSync(
+          join(
+            tempTestPath,
+            'subscriptions',
+            'ropsten',
+            'dataFeeds',
+            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'
+          )
+        )
+      ).toBe(true);
+
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('explorer', () => {
     it('writes changes to beaconMetadata', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestBeaconMetaData = {
         ...mockOpsRepo.explorer.beaconMetadata,
         testbeacon: {
@@ -419,20 +440,15 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'explorer', 'beaconMetadata.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'explorer', 'beaconMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to beaconSets', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestBeaconSets = {
         ...mockOpsRepo.explorer.beaconSets,
         testbeacon: [],
@@ -446,20 +462,15 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'explorer', 'beaconSets.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
 
     it('writes changes to pricingCoverage', async () => {
-      const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-
       const coingeckoTestPricingCoverage = {
         ...mockOpsRepo.explorer.pricingCoverage,
         pricingCoverage: [],
@@ -473,15 +484,12 @@ describe('writeOperationsRepository', () => {
         },
       };
 
-      writeOperationsRepository(updatedOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(__dirname, '..', 'fixtures', 'data', 'explorer', 'pricingCoverage.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'explorer', 'pricingCoverage.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
-
-      //revert the changes
-      writeOperationsRepository(mockOpsRepo, join(__dirname, '..', 'fixtures', 'data'));
     });
   });
 });

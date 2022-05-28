@@ -1,0 +1,45 @@
+{
+  "name": "AmberData AAVE/USD",
+  "description": "AmberData - AAVE/USD - Pair",
+  "beaconId": "0x6b1d92efa7d87e2185595819828f7f884ee4ff09fe468cb2100f86649aa09ebe",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xc23fbe617c071487f2f9d8dabe716445c990d404f981c002c21be7f39da985a3",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "avalanche": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [
+        { "walletType": "Provider-Sponsor", "address": "0x1a2633190693307d47145098fFd1d4669D3aE9eE" },
+        { "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }
+      ],
+      "updateConditionPercentage": 2,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
