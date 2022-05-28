@@ -67,6 +67,7 @@ within the `/data/apis/<PROVIDER_NAME>/templates` folder you will need to create
 
 `templateId` and `parameters` can be empty when populating the template data.  
 For populating `decodedParamters`, you can refer to [this](https://docs.api3.org/airnode/v0.6/grp-developers/call-an-airnode.html#request-parameters).
+For deriving the `endpointId`, you can refer to [this](https://docs.api3.org/airnode/v0.6/reference/packages/admin-cli.html#derive-endpoint-id)
 
 > Note that the above files can have any name initially as the validator will name them according to their `templateName`.
 
@@ -130,7 +131,7 @@ yarn normalize
 
 ### 6. Generate the Deployment files
 
-run the following command to create a set of config files for deployment
+Run the following command to create a set of config files for deployment
 
 ```
 yarn create-config
@@ -156,7 +157,7 @@ Use the following command to generate the gateway keys
 yarn generate-gateway-key
 ```
 
-These keys need to be stored on the API3 keybase account and will be forwarded to the API provider during deployment to be filled in `secrets.env` .
+These keys need to be stored on the API3 keybase account and will be forwarded to the API provider during deployment to be filled in `secrets.env`.
 
 ### 8. Checkout and publish
 
@@ -166,7 +167,7 @@ Checkout using `git checkout -b ...`. Use a new descriptively-named branch, eg. 
 
 ### 9. Deployment at the client's premises:
 
-- Clone the repository and switch to the earlier-created branch
+- Clone the repository and switch to the branch created in step 8
 - Forward the API provider the contents of `secrets.env` (Provider URLs, gateway keys).
 - Guide the API provider through populating the `secrets.env` and `aws.env` in `/data/apis/<PROVIDER_NAME>/deployments/<DEPLOYMENT_DATE>`.
 - Deploy Airnode and Airkeeper with the following command:
