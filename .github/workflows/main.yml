@@ -61,20 +61,3 @@ jobs:
         run: yarn check-subscriptions
       - name: Verify DAPI Name on chain
         run: yarn check-dapi-name
-      - uses: actions/cache@v2
-        id: cache-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}
-      - name: Export S3 Payloads
-        run: yarn export-ops-json-payloads
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Upload JSON Payloads with commit hash to S3
-        run: aws s3 cp json-exports s3://operations-development/${{ github.sha }} --acl public-read --recursive
-      - name: Upload JSON Payloads as latest to S3
-        run: aws s3 sync s3://operations-development/${{ github.sha }} s3://operations-development/latest --acl public-read
