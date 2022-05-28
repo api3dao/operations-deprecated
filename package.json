@@ -30,6 +30,8 @@
     "generate-templateIds": "ts-node src/generate-templateIds.ts",
     "generate-topup-wallets": "ts-node src/generate-topup-wallets.ts",
     "register-subscriptions": "ts-node src/register-subscriptions.ts",
+    "check-subscriptions": "ts-node src/check-subscriptions.ts",
+    "check-dapi-name": "ts-node src/check-dapi-name.ts",
     "make": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",
