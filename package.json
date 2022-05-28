@@ -26,6 +26,8 @@
     "deploy-airkeeper": "yarn ts-node src/deploy-airkeeper",
     "deploy-airnode": "yarn ts-node src/deploy-airnode",
     "generate-gateway-key": "ts-node src/generate-gateway-key.ts",
+    "generate-templateIds": "ts-node src/generate-templateIds.ts",
+    "generate-topup-wallets": "ts-node src/generate-topup-wallets.ts",
     "register-subscriptions": "ts-node src/register-subscriptions.ts",
     "make": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist *.tgz",
