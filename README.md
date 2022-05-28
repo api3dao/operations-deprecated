@@ -122,7 +122,7 @@ _TODO_
 
 _TODO, possibly as additional fields under Beacon.chains and Feed.chains_
 
-## Utilities
+## Deployment Usage
 
 This repository contains utilities that are used to create some of the contents in `/data`. You can see the instructions
-for these [here](./UTILITIES.MD).
+for these [here](./DEPLOYMENT_USAGE.MD).

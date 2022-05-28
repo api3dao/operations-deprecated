@@ -1,8 +1,11 @@
 {
   "name": "bsc",
+  "fullName": "Binance Smart Chain",
+  "decimalPlaces": 2,
   "id": "56",
   "contracts": { "DapiServer": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c" },
   "nativeToken": "BNB",
   "blockTime": 3.01,
-  "logoPath": "https://operations-logos.s3.amazonaws.com/general/Binance_white.svg"
+  "logoPath": "https://operations-logos.s3.amazonaws.com/general/Binance_white.svg",
+  "explorerUrl": "https://bscscan.com"
 }

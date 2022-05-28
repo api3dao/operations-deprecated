@@ -8,8 +8,6 @@ import { readJsonFile } from './read-operations';
 import { OperationsRepository, Secrets, ChainDeploymentReferences } from '../types';
 
 export const normalize = (payload: OperationsRepository) => {
-  const { dapis } = payload;
-
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
@@ -52,14 +50,15 @@ export const normalize = (payload: OperationsRepository) => {
 
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
-          const airnode = Object.fromEntries(
-            Object.entries(value.airnode).map(([key, value]) => {
+          const airnodeAWS = Object.fromEntries(
+            Object.entries(value.airnode.aws).map(([key, value]) => {
               if (key === 'secrets') {
                 const envBuffer = Buffer.from((value as Secrets).content);
                 const content = Object.entries(parse(envBuffer))
                   .map(([key, _value]) => key)
                   .concat([''])
-                  .join('=""\n');
+                  .join('=\n')
+                  .trim();
 
                 return [key, { ...value, content }];
               }
@@ -68,14 +67,27 @@ export const normalize = (payload: OperationsRepository) => {
             })
           );
 
-          const airkeeper = Object.fromEntries(
-            Object.entries(value.airkeeper).map(([key, value]) => {
+          const airnodeGCP =
+            value.airnode.gcp &&
+            Object.fromEntries(
+              Object.entries(value.airnode.gcp).map(([key, value]) => {
+                if (key === 'gcp') {
+                  const content = Object.fromEntries(Object.entries(value).map(([key, _value]) => [key, '']));
+                  return [key, { ...content }];
+                }
+                return [key, value];
+              })
+            );
+
+          const airkeeperAWS = Object.fromEntries(
+            Object.entries(value.airkeeper.aws).map(([key, value]) => {
               if (key === 'secrets') {
                 const envBuffer = Buffer.from((value as Secrets).content);
                 const content = Object.entries(parse(envBuffer))
                   .map(([key, _value]) => key)
                   .concat([''])
-                  .join('=""\n');
+                  .join('=\n')
+                  .trim();
 
                 return [key, { ...value, content }];
               }
@@ -83,7 +95,14 @@ export const normalize = (payload: OperationsRepository) => {
               return [key, value];
             })
           );
-          return [key, { airnode, airkeeper }];
+          return [
+            key,
+            {
+              ...value,
+              airnode: { aws: airnodeAWS, ...(value.airnode.gcp && { gcp: airnodeGCP }) },
+              airkeeper: { aws: airkeeperAWS },
+            },
+          ];
         })
       );
 
@@ -134,7 +153,35 @@ export const normalize = (payload: OperationsRepository) => {
     ),
   };
 
-  return { ...payload, apis, chains, dapis, explorer } as OperationsRepository; // TODO add api3 and airseeker
+  const subscriptions = payload.subscriptions
+    ? Object.fromEntries(
+        Object.entries(payload.subscriptions).map(([chain, subs]) => {
+          return [
+            chain,
+            {
+              dapis: subs.dapis
+                ? Object.fromEntries(
+                    Object.values(subs.dapis).map((subscription) => [
+                      `${subscription.paymentTxHash}-${subscription.dapiName}`,
+                      subscription,
+                    ])
+                  )
+                : undefined,
+              dataFeeds: subs.dataFeeds
+                ? Object.fromEntries(
+                    Object.values(subs.dataFeeds).map((subscription) => [
+                      `${subscription.paymentTxHash}-${subscription.dataFeedId}`,
+                      subscription,
+                    ])
+                  )
+                : undefined,
+            },
+          ];
+        })
+      )
+    : {};
+
+  return { ...payload, apis, chains, explorer, subscriptions } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
