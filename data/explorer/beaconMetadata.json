@@ -1,15 +1,15 @@
 {
   "0x2c76182b93ab6d486710f745bdbc0acf1c503d78921bd4babd58f93cba1257f7": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-free"
   },
   "0x6b1d92efa7d87e2185595819828f7f884ee4ff09fe468cb2100f86649aa09ebe": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-two"
   },
   "0x43442a225f83168907c82d86d69d0799160c0bf3fc221eb9e77bd3940da3205e": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-free"
   },
   "0x981fb212c961973cb0e36c2ba003ab0d43e61f01035284e8c9917a296b78dbcb": {
     "category": "Cryptocurrency",
@@ -17,11 +17,11 @@
   },
   "0x5237b1d9dbbb7fcfabf646bcad0054abda328cee9d9d1fe2488cbed3a33cd47e": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0xc2daf3e2dfa9638bc83ba1229d1dd63637132cf961900fbe6d19d95e7d46ffd9": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-free"
   },
   "0x6387581478cde8d52dfd3c917e686837335be858da1f6e64f0c92cab21fa2fb8": {
     "category": "Cryptocurrency",
@@ -29,19 +29,19 @@
   },
   "0xc68467f56961433c0ac24eb4cbf7296549d11f73622f47aa9e6c8bec44a36f64": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0x74cbde08a4ffac34a664994307485258b38fc1f508111c627b4c23b95ae93d74": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0x9b7b7b53992879f20f35781ed66d8d32379348189bf3deea09a232e79f1157e2": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0x1e455f28cd0c027f0894aa67b5883d78859c7b39d6977a16fbe1e25a61ab2a6c": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0x27d0e093b6245c065ef1a4770614fc05e0c2dee751a3b5e687e80373c0c5b333": {
     "category": "Cryptocurrency",
@@ -49,7 +49,7 @@
   },
   "0x1c47bd6e5e6ff0136e38447aef7b716da28cb5455a9ea0e8bdf6b6958b2f13c4": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": "test-pricing-set-free"
   },
   "0x0be1962c8154cc61e1986dc6a6a50209a378b5439f0f9249474d36439b647a24": {
     "category": "Cryptocurrency",
@@ -57,18 +57,18 @@
   },
   "0x40a6bd691e0db6fd3ada8e8e873ec8e64bb3670a67146c4b339513fbef63fd00": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-one"
   },
   "0x37c86d5b00fc6eb0a74418c183302a3778e07b1590bc781f8bc663829b01850d": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-three"
   },
   "0x1794588706d3a6dbf583857c5f29f18e6b45af3f413b81ee69499c656b0a4bd4": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-free"
   },
   "0xaad0dbe43b9bf9e7a2393058ba9ea6616596fdf79ccfbe484e8d1a1c067638ec": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two"
+    "pricingCoverage": "test-pricing-set-free"
   }
 }
