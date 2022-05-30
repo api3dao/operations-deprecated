@@ -194,10 +194,9 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
-export const dapiSubscriptionSchema = z
+const basePaymentSchema = z
   .object({
     paymentTxHash: z.string(),
-    dapiName: z.string(),
     claimaintAddress: evmAddressSchema,
     beneficiaryAddress: evmAddressSchema,
     whitelistAddress: evmAddressSchema,
@@ -209,18 +208,15 @@ export const dapiSubscriptionSchema = z
   })
   .strict();
 
-export const dataFeedSubscriptionSchema = z
-  .object({
-    paymentTxHash: z.string(),
+export const dapiSubscriptionSchema = basePaymentSchema
+  .extend({
+    dapiName: z.string(),
+  })
+  .strict();
+
+export const dataFeedSubscriptionSchema = basePaymentSchema
+  .extend({
     dataFeedId: evmBeaconIdSchema,
-    claimaintAddress: evmAddressSchema,
-    beneficiaryAddress: evmAddressSchema,
-    whitelistAddress: evmAddressSchema,
-    coverageAmount: z.string(),
-    startDate: z.number(),
-    endDate: z.number(),
-    ipfsPolicyHash: z.string(),
-    ipfsServicePolicyHash: z.string(),
   })
   .strict();
 
