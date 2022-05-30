@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { DapiServerContract } from './utils/evm';
+import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
@@ -18,7 +18,7 @@ const main = async () => {
 
       const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
       if (!dapiServerAddress) throw new Error(`🛑 No dapiServer contract address for chain ${chainName}`);
-      const dapiServer = DapiServerContract(dapiServerAddress, provider);
+      const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
       try {
         console.log(
