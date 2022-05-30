@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { DapiServerContract, DapiServerInterface } from './utils/evm';
+import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
@@ -14,7 +14,7 @@ const main = async () => {
     Object.entries(beacon.chains)
       .filter(([, chain]) => 'updateConditionPercentage' in chain)
       .map(async ([chainName, chain]) => {
-        const dapiServerInteface = DapiServerInterface();
+        const dapiServerInteface = getDapiServerInterface();
         const parameters = '0x';
         const airnodeAddress = beacon.airnodeAddress;
         const templateId = beacon.templateId;
@@ -45,7 +45,7 @@ const main = async () => {
 
         const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
         if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
-        const dapiServer = DapiServerContract(dapiServerAddress, provider);
+        const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
         const sponsor = chain.sponsor;
 

@@ -5,7 +5,7 @@ import { encode } from '@api3/airnode-abi';
 import { promptQuestions } from './utils/prompts';
 import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
-import { DapiServerContract, DapiServerInterface } from './utils/evm';
+import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
@@ -46,7 +46,7 @@ const main = async () => {
     Object.entries(beacon.chains)
       .filter(([, chain]) => 'updateConditionPercentage' in chain)
       .map(async ([chainName, chain]) => {
-        const DapiServerInteface = DapiServerInterface();
+        const dapiServerInteface = getDapiServerInterface();
         const parameters = '0x';
         const airnodeAddress = beacon.airnodeAddress;
         const templateId = beacon.templateId;
@@ -63,7 +63,7 @@ const main = async () => {
             name: '_conditionFunctionId',
             value: ethers.utils.defaultAbiCoder.encode(
               ['bytes4'],
-              [DapiServerInteface.getSighash('conditionPspBeaconUpdate')]
+              [dapiServerInteface.getSighash('conditionPspBeaconUpdate')]
             ),
           },
           { type: 'bytes', name: '_conditionParameters', value: beaconUpdateSubscriptionConditionParameters },
@@ -75,9 +75,9 @@ const main = async () => {
         if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
         const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
         const gasPrice = await provider.getGasPrice();
-        const DapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-        if (!DapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
-        const DapiServer = DapiServerContract(DapiServerAddress, provider);
+        const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
+        if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
+        const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
         const sponsor = chain.sponsor;
 
@@ -92,33 +92,33 @@ const main = async () => {
               encodedBeaconUpdateSubscriptionConditions,
               airnodeAddress,
               sponsor,
-              DapiServerAddress,
-              DapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
+              dapiServerAddress,
+              dapiServerInteface.getSighash('fulfillPspBeaconUpdate'),
             ]
           )
         );
         try {
           console.log(`🔎 checking if subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`);
 
-          const beaconId = await DapiServer.connect(nonceManagers[chainName]).subscriptionIdToBeaconId(
-            expectedSubscriptionId
-          );
+          const beaconId = await dapiServer
+            .connect(nonceManagers[chainName])
+            .subscriptionIdToBeaconId(expectedSubscriptionId);
 
           if (beaconId !== ethers.constants.HashZero)
             return `✅ subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`;
 
           console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chainName}`);
 
-          const registerBeaconUpdateSubscription = await DapiServer.connect(
-            nonceManagers[chainName]
-          ).registerBeaconUpdateSubscription(
-            airnodeAddress,
-            templateId,
-            encodedBeaconUpdateSubscriptionConditions,
-            airnodeAddress,
-            sponsor,
-            { gasPrice }
-          );
+          const registerBeaconUpdateSubscription = await dapiServer
+            .connect(nonceManagers[chainName])
+            .registerBeaconUpdateSubscription(
+              airnodeAddress,
+              templateId,
+              encodedBeaconUpdateSubscriptionConditions,
+              airnodeAddress,
+              sponsor,
+              { gasPrice }
+            );
 
           // Check that the transaction is complete
           const tx = await registerBeaconUpdateSubscription.wait();

@@ -3,10 +3,10 @@ import { ethers } from 'ethers';
 
 export const PROTOCOL_ID_PSP = '2';
 
-export const DapiServerInterface = () => {
+export const getDapiServerInterface = () => {
   return new ethers.utils.Interface(protocol.DapiServer__factory.abi);
 };
 
-export const DapiServerContract = (dapiServerAddress: string, provider: ethers.providers.JsonRpcProvider) => {
+export const getDapiServerContract = (dapiServerAddress: string, provider: ethers.providers.JsonRpcProvider) => {
   return new ethers.Contract(dapiServerAddress, protocol.DapiServer__factory.abi, provider);
 };
