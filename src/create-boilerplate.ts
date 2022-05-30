@@ -28,10 +28,20 @@ const questions: PromptObject[] = [
     name: 'contact',
     message: 'Please enter a contact email for the API integration',
   },
+  {
+    type: 'text',
+    name: 'airnode',
+    message: 'Please enter the airnode address for the API integration',
+  },
+  {
+    type: 'text',
+    name: 'xpub',
+    message: 'Please enter the Extended Public Key (xpub) for the API integration',
+  },
 ];
 
 const main = async () => {
-  const { name, contact, description } = await promptQuestions(questions);
+  const { name, contact, description, airnode, xpub } = await promptQuestions(questions);
   // Import the mock operations repository
   const operationsRepository = readOperationsRepository(join(__dirname, '..', 'test', 'fixtures', 'data'));
   const apiDataTemplate = operationsRepository.apis.api3;
@@ -43,6 +53,8 @@ const main = async () => {
     name,
     contact,
     description,
+    airnode,
+    xpub,
   };
 
   // Create the boilerplate ois
@@ -67,7 +79,7 @@ const main = async () => {
   const beacons = emptyObject(
     apiDataTemplate.beacons,
     ['updateConditionPercentage', 'active', 'walletType', 'deviationFactorThreshold', 'ttlMinutes'],
-    ['decodedParameters']
+    ['decodedParameters', 'topUpWallets']
   );
   const beaconBoilerPlate = { [sanitiseFilename(`${name}-beacon01.json`)]: beacons[Object.keys(beacons)[0]] };
 
