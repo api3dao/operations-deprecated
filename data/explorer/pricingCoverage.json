@@ -1,4 +1,5 @@
 {
+  "test-pricing-set-free": [{ "subscriptionFee": 0, "coverage": 0 }],
   "test-pricing-set-one": [
     { "subscriptionFee": 50, "coverage": 5000 },
     { "subscriptionFee": 100, "coverage": 50000 },
@@ -12,5 +13,12 @@
     { "subscriptionFee": 20000, "coverage": 600000 },
     { "subscriptionFee": 30000, "coverage": 700000 },
     { "subscriptionFee": 30000, "coverage": 700000 }
+  ],
+  "test-pricing-set-three": [
+    { "subscriptionFee": 6000, "coverage": 51000 },
+    { "subscriptionFee": 11000, "coverage": 520000 },
+    { "subscriptionFee": 22000, "coverage": 630000 },
+    { "subscriptionFee": 33000, "coverage": 740000 },
+    { "subscriptionFee": 34000, "coverage": 750000 }
   ]
 }
