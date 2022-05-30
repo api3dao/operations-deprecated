@@ -38,7 +38,7 @@ jobs:
       - name: Lint
         run: yarn lint
       - name: Build
-        run: yarn make
+        run: yarn build
       - name: Validate
         run: yarn validate
       - name: Test
