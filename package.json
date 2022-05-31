@@ -33,6 +33,7 @@
     "build": "yarn run clean && yarn run compile",
     "check-subscriptions": "ts-node src/check-subscriptions.ts",
     "check-dapi-name": "ts-node src/check-dapi-name.ts",
+    "check-whitelist": "ts-node src/check-whitelist.ts",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",
     "normalize-and-validate": "ts-node src/normalize-and-validate.ts",
