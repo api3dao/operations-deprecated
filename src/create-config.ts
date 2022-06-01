@@ -164,7 +164,7 @@ const main = async (operationRepositoryTarget?: string) => {
     ...(response.airnodeHeartbeat
       ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
-    ...(response.gcp ? [`GCP_PROJECT_ID`] : []),
+    ...(response.gcp ? [`GCP_PROJECT_ID=`] : []),
     ...oisSecrets,
   ];
 
