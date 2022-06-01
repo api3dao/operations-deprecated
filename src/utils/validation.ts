@@ -26,7 +26,6 @@ export const extendedChainDescriptionSchema = z
     sponsor: z.string(),
     topUpWallets: z.array(topUpWalletSchema),
     updateConditionPercentage: z.number().optional(),
-    testnet: z.boolean().optional(),
     airseekerConfig: z
       .object({
         deviationThreshold: z.number(),
@@ -140,6 +139,7 @@ export const chainsMetadataSchema = z
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
+    testnet: z.boolean().optional(),
     explorerUrl: z.string().optional(),
   })
   .strict();
