@@ -2,7 +2,7 @@
   "name": "@api3/operations",
   "license": "MIT",
   "private": false,
-  "version": "0.0.1-d",
+  "version": "0.0.1-b3633b652b2809d59260ac2855d797ca1b3e86d9",
   "description": "A package to parse API3 operations metadata",
   "main": "./dist/index",
   "types": "./dist/types",

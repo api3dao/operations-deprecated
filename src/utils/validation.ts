@@ -40,7 +40,6 @@ export const beaconSchema = z
   .object({
     name: z.string(),
     description: z.string(),
-    logoPath: z.string().optional(),
     beaconId: evmBeaconIdSchema,
     airnodeAddress: evmAddressSchema,
     templateId: evmTemplateIdSchema,
@@ -168,6 +167,8 @@ export const explorerSchema = z
       z.object({
         category: z.string(),
         pricingCoverage: z.string(), //TODO must be present in pricingCoverage
+        decimalPlaces: z.number().optional(),
+        logoPath: z.string().optional(),
       })
     ),
     pricingCoverage: z.record(
