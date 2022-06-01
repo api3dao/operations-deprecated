@@ -51,6 +51,11 @@ const main = async () => {
 
   const cloudProviderType = 'aws';
 
+  const airseekerLogs = {
+    format: 'plain',
+    level: 'INFO',
+  };
+
   const airseekerBeacons = beacons.reduce(
     (beaconObj, beacon) => ({
       ...beaconObj,
@@ -90,6 +95,7 @@ const main = async () => {
               unit: 'gwei' as const,
             },
             baseFeeMultiplier: 2,
+            fulfillmentGasLimit: 500000,
           },
         },
       };
@@ -162,6 +168,7 @@ const main = async () => {
 
   const airseeker = {
     airseekerWalletMnemonic: '${AIRSEEKER_WALLET_MNEMONIC}',
+    log: airseekerLogs,
     beacons: airseekerBeacons,
     beaconSets: {},
     chains: airseekerChains,
