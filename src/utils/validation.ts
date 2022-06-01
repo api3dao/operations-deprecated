@@ -26,6 +26,7 @@ export const extendedChainDescriptionSchema = z
     sponsor: z.string(),
     topUpWallets: z.array(topUpWalletSchema),
     updateConditionPercentage: z.number().optional(),
+    testnet: z.boolean().optional(),
     airseekerConfig: z
       .object({
         deviationThreshold: z.number(),
