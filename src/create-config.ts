@@ -164,13 +164,17 @@ const main = async (operationRepositoryTarget?: string) => {
     ...(response.airnodeHeartbeat
       ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
-    ...(response.gcp ? [`GCP_PROJECT_ID=`] : []),
     ...oisSecrets,
   ];
 
-  const airnodeSecrets = {
+  const airnodeSecretsAWS = {
     filename: '.env',
     content: airnodeSecretsArray.join('\n'),
+  };
+
+  const airnodeSecretsGCP = {
+    filename: '.env',
+    content: [...airnodeSecretsArray, ...(response.gcp ? [`GCP_PROJECT_ID=`] : [])].join('\n'),
   };
 
   const airkeeperSecretsArray = [
@@ -331,7 +335,7 @@ const main = async (operationRepositoryTarget?: string) => {
                   ...config,
                   chains: [],
                 },
-                secrets: airnodeSecrets,
+                secrets: airnodeSecretsAWS,
                 aws,
               },
               ...(response.gcp && {
@@ -349,7 +353,7 @@ const main = async (operationRepositoryTarget?: string) => {
                     },
                     chains: [],
                   },
-                  secrets: airnodeSecrets,
+                  secrets: airnodeSecretsGCP,
                   gcp: {},
                 },
               }),

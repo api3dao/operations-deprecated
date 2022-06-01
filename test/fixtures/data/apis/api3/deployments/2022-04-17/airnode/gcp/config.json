@@ -5,7 +5,7 @@
       "type": "gcp",
       "region": "us-east1",
       "disableConcurrencyReservations": false,
-      "projectId": "test123"
+      "projectId": "${GCP_PROJECT_ID}"
     },
     "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
     "heartbeat": { "enabled": false },
