@@ -26,12 +26,6 @@ const questions = (choices: Choice[]): PromptObject[] => {
       initial: true,
     },
     {
-      type: (prev) => (prev ? 'text' : null),
-      name: 'gcpProjectId',
-      message: 'What is the GCP project ID?',
-      initial: '',
-    },
-    {
       type: 'confirm',
       name: 'airnodeHeartbeat',
       message: 'Do you want to enable the Airnode Heartbeat?',
@@ -170,6 +164,7 @@ const main = async (operationRepositoryTarget?: string) => {
     ...(response.airnodeHeartbeat
       ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
       : []),
+    ...(response.gcp ? [`GCP_PROJECT_ID`] : []),
     ...oisSecrets,
   ];
 
@@ -349,7 +344,7 @@ const main = async (operationRepositoryTarget?: string) => {
                         ...config.nodeSettings.cloudProvider,
                         type: cloudProviderTypeGCP,
                         region: cloudProviderRegionGCP,
-                        projectId: response.gcpProjectId,
+                        projectId: '${GCP_PROJECT_ID}',
                       },
                     },
                     chains: [],
