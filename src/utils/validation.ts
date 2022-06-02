@@ -26,6 +26,7 @@ export const extendedChainDescriptionSchema = z
     sponsor: z.string(),
     topUpWallets: z.array(topUpWalletSchema),
     updateConditionPercentage: z.number().optional(),
+    displayDisabled: z.boolean().optional(),
     airseekerConfig: z
       .object({
         deviationThreshold: z.number(),
@@ -40,7 +41,6 @@ export const beaconSchema = z
   .object({
     name: z.string(),
     description: z.string(),
-    logoPath: z.string().optional(),
     beaconId: evmBeaconIdSchema,
     airnodeAddress: evmAddressSchema,
     templateId: evmTemplateIdSchema,
@@ -140,6 +140,7 @@ export const chainsMetadataSchema = z
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
+    testnet: z.boolean().optional(),
     explorerUrl: z.string().optional(),
   })
   .strict();
@@ -168,6 +169,8 @@ export const explorerSchema = z
       z.object({
         category: z.string(),
         pricingCoverage: z.string(), //TODO must be present in pricingCoverage
+        decimalPlaces: z.number().optional(),
+        logoPath: z.string().optional(),
       })
     ),
     pricingCoverage: z.record(

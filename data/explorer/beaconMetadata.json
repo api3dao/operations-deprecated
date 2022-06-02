@@ -62,13 +62,5 @@
   "0x37c86d5b00fc6eb0a74418c183302a3778e07b1590bc781f8bc663829b01850d": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-three"
-  },
-  "0x1794588706d3a6dbf583857c5f29f18e6b45af3f413b81ee69499c656b0a4bd4": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-free"
-  },
-  "0xaad0dbe43b9bf9e7a2393058ba9ea6616596fdf79ccfbe484e8d1a1c067638ec": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-free"
   }
 }
