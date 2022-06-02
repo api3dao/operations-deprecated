@@ -6,6 +6,7 @@
   "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
   "nativeToken": "RBTC",
   "blockTime": 30,
-  "logoPath": "https://operations-logos.s3.amazonaws.com/general/RSK-4_icon.svg",
+  "logoPath": "https://operations-logos.s3.amazonaws.com/general/pinned_versions/RSK-4_icon_white.svg",
+  "orderLogoPath": "https://operations-logos.s3.amazonaws.com/general/pinned_versions/RSK-4_icon.svg",
   "explorerUrl": "https://explorer.rsk.co"
 }
