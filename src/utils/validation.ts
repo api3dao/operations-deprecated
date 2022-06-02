@@ -116,6 +116,7 @@ export const apiMetadataSchema = z
     airnode: evmAddressSchema,
     xpub: evmXpubSchema,
     logoPath: z.string(),
+    orderLogoPath: z.string().optional(),
     maxSubscriptionPeriod: z.number(),
   })
   .strict();
@@ -140,6 +141,7 @@ export const chainsMetadataSchema = z
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
+    orderLogoPath: z.string().optional(),
     testnet: z.boolean().optional(),
     explorerUrl: z.string().optional(),
   })
