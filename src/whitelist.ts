@@ -57,10 +57,14 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const whitelistPromises = Object.entries(groupBy(response.selectedSubscriptions, 'chainName')).flatMap(
     ([chainName, subscriptions]) => {
-      if (!credentials.networks[chainName].url) throw new Error(`Public RPC URL for chain ${chainName} is not defined`);
+      if (!credentials.networks[chainName].url) {
+        throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
+      }
       const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
       const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-      if (!dapiServerAddress) throw new Error(`DapiServer contract address for chain ${chainName} is not defined`);
+      if (!dapiServerAddress) {
+        throw new Error(`🛑 DapiServer contract address for chain ${chainName} is not defined`);
+      }
       const dapiServer = getDapiServerContract(dapiServerAddress, provider).connect(nonceManager.connect(provider));
 
       return subscriptions.map(({ subscription: { dapiName, dataFeedId, whitelistAddress, endDate } }) => {
@@ -82,7 +86,9 @@ const main = async (operationRepositoryTarget?: string) => {
       const tx: ethers.ContractReceipt = await pendingTx.wait();
       const event = tx.events?.filter((e) => e.event === 'ExtendedWhitelistExpiration')[0];
       const address = (event?.args || [])[2];
-      console.log(`Successfully whitelisted address ${address} on chain ${pendingTx.chainId} : ${tx.transactionHash}`);
+      console.log(
+        `🎉 Successfully whitelisted address ${address} on chain ${pendingTx.chainId} : ${tx.transactionHash}`
+      );
     }
   }
 };

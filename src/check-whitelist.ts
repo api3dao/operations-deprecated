@@ -10,10 +10,14 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const whitelistCheckPromises = Object.entries(operationsRepository.subscriptions || {}).flatMap(
     ([chainName, subscriptions]) => {
-      if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
+      if (!credentials.networks[chainName].url) {
+        throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
+      }
       const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
       const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
-      if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
+      if (!dapiServerAddress) {
+        throw new Error(`🛑 DapiServer contract address for chain ${chainName} is not defined`);
+      }
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
       const dapiChecks = Object.values(subscriptions.dapis || {}).map(({ dapiName, whitelistAddress }) =>
