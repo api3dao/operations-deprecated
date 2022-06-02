@@ -34,6 +34,67 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
+const buildNodeSettings = (
+  apiName: string,
+  cloudProviderType: string,
+  cloudProviderRegion: string,
+  airnodeHeartbeat: boolean
+) => {
+  const secretAppend = sanitiseFilename(apiName).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
+
+  return {
+    nodeVersion: require('@api3/airnode-node/package.json').version,
+    cloudProvider: {
+      type: cloudProviderType,
+      region: cloudProviderRegion,
+      disableConcurrencyReservations: false,
+      ...(cloudProviderType === 'gcp' && {
+        projectId: '${GCP_PROJECT_ID}',
+      }),
+    },
+    airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
+    heartbeat: {
+      enabled: airnodeHeartbeat,
+      ...(airnodeHeartbeat && {
+        apiKey: `\${HEARTBEAT_KEY_${secretAppend}}`,
+        id: `\${HEARTBEAT_ID_${secretAppend}}`,
+        url: `\${HEARTBEAT_URL_${secretAppend}}`,
+      }),
+    },
+    httpGateway: {
+      enabled: false,
+    },
+    httpSignedDataGateway: {
+      enabled: true,
+      apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}}`,
+      maxConcurrency: 200,
+    },
+    logFormat: 'plain' as const,
+    logLevel: 'INFO' as const,
+    stage: 'dev',
+    skipValidation: true,
+  };
+};
+
+const buildSecretsArray = (
+  apiName: string,
+  cloudProviderType: string,
+  oisSecrets: string[],
+  airnodeHeartbeat: boolean
+) => {
+  const secretAppend = sanitiseFilename(apiName).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
+
+  return [
+    `AIRNODE_WALLET_MNEMONIC=`,
+    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
+    ...(airnodeHeartbeat
+      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
+      : []),
+    ...oisSecrets,
+    ...(cloudProviderType === 'gcp' ? [`GCP_PROJECT_ID=`] : []),
+  ];
+};
+
 const main = async (operationRepositoryTarget?: string) => {
   const operationsRepository = readOperationsRepository(operationRepositoryTarget);
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })) as Choice[];
@@ -84,38 +145,19 @@ const main = async (operationRepositoryTarget?: string) => {
     };
   });
 
-  const secretAppend =
-    sanitiseFilename(apiData.apiMetadata.name).toUpperCase() + `_${cloudProviderTypeAWS.toUpperCase()}`;
+  const nodeSettingsAWS = buildNodeSettings(
+    apiData.apiMetadata.name,
+    cloudProviderTypeAWS,
+    cloudProviderRegionAWS,
+    response.airnodeHeartbeat
+  );
 
-  const nodeSettings = {
-    nodeVersion: require('@api3/airnode-node/package.json').version,
-    cloudProvider: {
-      type: cloudProviderTypeAWS,
-      region: cloudProviderRegionAWS,
-      disableConcurrencyReservations: false,
-    },
-    airnodeWalletMnemonic: '${AIRNODE_WALLET_MNEMONIC}',
-    heartbeat: {
-      enabled: response.airnodeHeartbeat,
-      ...(response.airnodeHeartbeat && {
-        apiKey: `\${HEARTBEAT_KEY_${secretAppend}}`,
-        id: `\${HEARTBEAT_ID_${secretAppend}}`,
-        url: `\${HEARTBEAT_URL_${secretAppend}}`,
-      }),
-    },
-    httpGateway: {
-      enabled: false,
-    },
-    httpSignedDataGateway: {
-      enabled: true,
-      apiKey: `\${HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}}`,
-      maxConcurrency: 200,
-    },
-    logFormat: 'plain' as const,
-    logLevel: 'INFO' as const,
-    stage: 'dev',
-    skipValidation: true,
-  };
+  const nodeSettingsGCP = buildNodeSettings(
+    apiData.apiMetadata.name,
+    cloudProviderTypeGCP,
+    cloudProviderRegionGCP,
+    response.airnodeHeartbeat
+  );
 
   //generate the triggers from the OISes
   const oisTriggers = await Promise.all(
@@ -142,9 +184,17 @@ const main = async (operationRepositoryTarget?: string) => {
     }))
   );
 
-  const config = {
+  const configAWS = {
     chains,
-    nodeSettings,
+    nodeSettings: nodeSettingsAWS,
+    triggers,
+    ois: Object.values(apiData.ois),
+    apiCredentials,
+  };
+
+  const configGCP = {
+    chains,
+    nodeSettings: nodeSettingsGCP,
     triggers,
     ois: Object.values(apiData.ois),
     apiCredentials,
@@ -158,27 +208,32 @@ const main = async (operationRepositoryTarget?: string) => {
     )
   );
 
-  const airnodeSecretsArray = [
-    `AIRNODE_WALLET_MNEMONIC=`,
-    `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
-    ...(response.airnodeHeartbeat
-      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
-      : []),
-    ...oisSecrets,
-  ];
+  const airnodeSecretsAWSArray = buildSecretsArray(
+    apiData.apiMetadata.name,
+    cloudProviderTypeAWS,
+    oisSecrets,
+    response.airnodeHeartbeat
+  );
+
+  const airnodeSecretsGCPArray = buildSecretsArray(
+    apiData.apiMetadata.name,
+    cloudProviderTypeGCP,
+    oisSecrets,
+    response.airnodeHeartbeat
+  );
 
   const airnodeSecretsAWS = {
     filename: '.env',
-    content: airnodeSecretsArray.join('\n'),
+    content: airnodeSecretsAWSArray.join('\n'),
   };
 
   const airnodeSecretsGCP = {
     filename: '.env',
-    content: [...airnodeSecretsArray, ...(response.gcp ? [`GCP_PROJECT_ID=`] : [])].join('\n'),
+    content: airnodeSecretsGCPArray.join('\n'),
   };
 
   const airkeeperSecretsArray = [
-    ...airnodeSecretsArray,
+    ...airnodeSecretsAWSArray,
     ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
   ];
 
@@ -332,7 +387,7 @@ const main = async (operationRepositoryTarget?: string) => {
             airnode: {
               aws: {
                 config: {
-                  ...config,
+                  ...configAWS,
                   chains: [],
                 },
                 secrets: airnodeSecretsAWS,
@@ -341,16 +396,7 @@ const main = async (operationRepositoryTarget?: string) => {
               ...(response.gcp && {
                 gcp: {
                   config: {
-                    ...config,
-                    nodeSettings: {
-                      ...config.nodeSettings,
-                      cloudProvider: {
-                        ...config.nodeSettings.cloudProvider,
-                        type: cloudProviderTypeGCP,
-                        region: cloudProviderRegionGCP,
-                        projectId: '${GCP_PROJECT_ID}',
-                      },
-                    },
+                    ...configGCP,
                     chains: [],
                   },
                   secrets: airnodeSecretsGCP,
@@ -361,7 +407,7 @@ const main = async (operationRepositoryTarget?: string) => {
             airkeeper: {
               aws: {
                 airkeeper,
-                config,
+                config: configAWS,
                 secrets: airkeeperSecrets,
                 aws,
               },

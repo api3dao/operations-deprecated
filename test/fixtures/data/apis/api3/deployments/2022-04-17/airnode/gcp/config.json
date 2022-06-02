@@ -12,7 +12,7 @@
     "httpGateway": { "enabled": false },
     "httpSignedDataGateway": {
       "enabled": true,
-      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_API3_AWS}",
+      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_API3_GCP}",
       "maxConcurrency": 200
     },
     "logFormat": "plain",
