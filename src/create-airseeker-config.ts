@@ -26,8 +26,8 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-const main = async () => {
-  const operationsRepository = readOperationsRepository();
+const main = async (operationRepositoryTarget?: string) => {
+  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
   const beaconChoices = Object.values(operationsRepository.apis).flatMap((api) =>
     Object.values(api.beacons).map((beacon) => ({
@@ -214,7 +214,9 @@ const main = async () => {
     },
   };
 
-  writeOperationsRepository(updatedOpsData);
+  writeOperationsRepository(updatedOpsData, operationRepositoryTarget);
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as createAirseekerConfig };
