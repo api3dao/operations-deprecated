@@ -115,9 +115,9 @@ describe('writeOperationsRepository', () => {
         },
         airnode: {
           aws: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws,
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!,
             config: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws.config,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!.config,
               triggers: {
                 rrp: [],
                 http: [],
@@ -125,7 +125,7 @@ describe('writeOperationsRepository', () => {
               },
             },
             secrets: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws.secrets,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!.secrets,
               filename: 'secrets.env',
               content: 'THIS IS EMPTY',
             },
