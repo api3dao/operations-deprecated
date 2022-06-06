@@ -20,10 +20,13 @@ const questions = (choices: Choice[]): PromptObject[] => {
       choices: choices,
     },
     {
-      type: 'confirm',
-      name: 'gcp',
-      message: 'Do you want to create a configuration for GCP?',
-      initial: true,
+      type: 'multiselect',
+      name: 'cloudProviders',
+      message: 'Which cloud providers do you want to deploy Airnode to?',
+      choices: [
+        { title: 'AWS', value: 'aws', selected: true },
+        { title: 'GCP', value: 'gcp', selected: true },
+      ],
     },
     {
       type: 'confirm',
@@ -385,15 +388,17 @@ const main = async (operationRepositoryTarget?: string) => {
           ...operationsRepository.apis[response.apiName].deployments,
           [date]: {
             airnode: {
-              aws: {
-                config: {
-                  ...configAWS,
-                  chains: [],
+              ...(response.cloudProviders.includes('aws') && {
+                aws: {
+                  config: {
+                    ...configAWS,
+                    chains: [],
+                  },
+                  secrets: airnodeSecretsAWS,
+                  aws,
                 },
-                secrets: airnodeSecretsAWS,
-                aws,
-              },
-              ...(response.gcp && {
+              }),
+              ...(response.cloudProviders.includes('gcp') && {
                 gcp: {
                   config: {
                     ...configGCP,
