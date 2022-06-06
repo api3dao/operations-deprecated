@@ -26,8 +26,8 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-const main = async () => {
-  const operationsRepository = readOperationsRepository();
+const main = async (operationRepositoryTarget?: string) => {
+  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
   const beaconChoices = Object.values(operationsRepository.apis).flatMap((api) =>
     Object.values(api.beacons).map((beacon) => ({
@@ -50,6 +50,11 @@ const main = async () => {
   //// Build airseeker.json ////
 
   const cloudProviderType = 'aws';
+
+  const airseekerLogs = {
+    format: 'plain',
+    level: 'INFO',
+  };
 
   const airseekerBeacons = beacons.reduce(
     (beaconObj, beacon) => ({
@@ -90,6 +95,7 @@ const main = async () => {
               unit: 'gwei' as const,
             },
             baseFeeMultiplier: 2,
+            fulfillmentGasLimit: 500000,
           },
         },
       };
@@ -162,6 +168,7 @@ const main = async () => {
 
   const airseeker = {
     airseekerWalletMnemonic: '${AIRSEEKER_WALLET_MNEMONIC}',
+    log: airseekerLogs,
     beacons: airseekerBeacons,
     beaconSets: {},
     chains: airseekerChains,
@@ -207,7 +214,9 @@ const main = async () => {
     },
   };
 
-  writeOperationsRepository(updatedOpsData);
+  writeOperationsRepository(updatedOpsData, operationRepositoryTarget);
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as createAirseekerConfig };
