@@ -16,19 +16,6 @@ const questions = (choices: Choice[]): PromptObject[] => {
       message: 'Please select subscriptions for which to whitelist an address to read from DapiServer contract?',
       choices: choices,
     },
-    {
-      type: 'text',
-      name: 'mnemonic',
-      message: [
-        'Please enter a mnemonic phrase for the DapiServer contract mananger account',
-        'or an account with the whitelist extender role set',
-      ].join('\n'),
-      initial: 'test test test test test test test test test test test junk',
-      validate: (value) => {
-        if (!ethers.utils.isValidMnemonic(value)) return 'Please enter a valid mnemonic phrase';
-        return true;
-      },
-    },
   ];
 };
 
@@ -53,26 +40,34 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const response = await promptQuestions(questions(subscriptionChoices));
 
-  const nonceManager = new NonceManager(ethers.Wallet.fromMnemonic(response.mnemonic));
+  let nonceManagerCache: { [chainName: string]: NonceManager } = {};
 
   const whitelistPromises = Object.entries(groupBy(response.selectedSubscriptions, 'chainName')).flatMap(
     ([chainName, subscriptions]) => {
-      if (!credentials.networks[chainName].url) {
+      const chainRpcUrl = credentials.networks[chainName].url;
+      if (!chainRpcUrl) {
         throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
       }
-      const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
+      const chainMnemonic = credentials.networks[chainName].accounts.mnemonic;
+      if (!chainMnemonic || !ethers.utils.isValidMnemonic(chainMnemonic)) {
+        throw new Error(`🛑 Mnemonic for chain ${chainName} is not defined or invalid`);
+      }
+      const provider = new ethers.providers.JsonRpcProvider(chainRpcUrl);
+      if (!nonceManagerCache[chainName]) {
+        nonceManagerCache = {
+          ...nonceManagerCache,
+          [chainName]: new NonceManager(ethers.Wallet.fromMnemonic(chainMnemonic)).connect(provider),
+        };
+      }
       const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
       if (!dapiServerAddress) {
         throw new Error(`🛑 DapiServer contract address for chain ${chainName} is not defined`);
       }
-      const dapiServer = getDapiServerContract(dapiServerAddress, provider).connect(nonceManager.connect(provider));
+      const dapiServer = getDapiServerContract(dapiServerAddress, provider).connect(nonceManagerCache[chainName]);
 
-      return subscriptions.map(({ subscription: { dapiName, dataFeedId, whitelistAddress, endDate } }) => {
-        const tx = dapiServer.extendWhitelistExpiration(dapiName ?? dataFeedId, whitelistAddress, endDate);
-        nonceManager.incrementTransactionCount();
-
-        return tx;
-      });
+      return subscriptions.map(({ subscription: { dapiName, dataFeedId, whitelistAddress, endDate } }) =>
+        dapiServer.extendWhitelistExpiration(dapiName ?? dataFeedId, whitelistAddress, endDate)
+      );
     }
   );
 
@@ -85,9 +80,13 @@ const main = async (operationRepositoryTarget?: string) => {
       const pendingTx = result.value as ContractTransaction;
       const tx: ethers.ContractReceipt = await pendingTx.wait();
       const event = tx.events?.filter((e) => e.event === 'ExtendedWhitelistExpiration')[0];
-      const address = (event?.args || [])[2];
+      const dataFeed = (event?.args || [])['serviceId'];
+      const whitelistAddress = (event?.args || [])['user'];
+      const expirationTimestamp = (event?.args || [])['expiration'];
       console.log(
-        `🎉 Successfully whitelisted address ${address} on chain ${pendingTx.chainId} : ${tx.transactionHash}`
+        `🎉 Address ${whitelistAddress} can now read data feed ${dataFeed} on chain ${
+          pendingTx.chainId
+        } up until ${new Date(expirationTimestamp.toNumber() * 1000).toISOString()}. Tx hash: ${tx.transactionHash}`
       );
     }
   }

@@ -20,11 +20,19 @@ const main = async (operationRepositoryTarget?: string) => {
       }
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
-      const dapiChecks = Object.values(subscriptions.dapis || {}).map(({ dapiName, whitelistAddress }) =>
-        dapiServer.readerCanReadDataFeed(dapiName, whitelistAddress)
-      );
-      const dataFeedChecks = Object.values(subscriptions.dataFeeds || {}).map(({ dataFeedId, whitelistAddress }) =>
-        dapiServer.readerCanReadDataFeed(dataFeedId, whitelistAddress)
+      const dapiChecks = Object.values(subscriptions.dapis || {}).map(async ({ dapiName, whitelistAddress }) => ({
+        chainName,
+        dapiName,
+        whitelistAddress,
+        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName, whitelistAddress),
+      }));
+      const dataFeedChecks = Object.values(subscriptions.dataFeeds || {}).map(
+        async ({ dataFeedId, whitelistAddress }) => ({
+          chainName,
+          dataFeedId,
+          whitelistAddress,
+          readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dataFeedId, whitelistAddress),
+        })
       );
 
       return [...dapiChecks, ...dataFeedChecks];
@@ -35,9 +43,13 @@ const main = async (operationRepositoryTarget?: string) => {
 
   whitelistCheckResults.forEach((result) => {
     if (result.status === 'rejected') {
-      throw new Error(`🛑 ${result.reason}`);
-    } else if (result.value === false) {
-      throw new Error('🛑 Some consumers are not whitelisted to read data feeds');
+      console.error(`🛑 ${result.reason}`);
+    } else if (!result.value.readerCanReadDataFeed) {
+      console.error(
+        `🛑 Address ${result.value.whitelistAddress} cannot read data feed ${
+          (result.value as any).dapiName ?? (result.value as any).dataFeedId
+        } on chain ${result.value.chainName}`
+      );
     }
   });
 };
