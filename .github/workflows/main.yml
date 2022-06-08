@@ -23,7 +23,7 @@ jobs:
           config-file: .github/workflows/mlc_config.json
 
   lint-build-test-publish:
-    name: Lint, build, test, publish
+    name: Lint, build, validate, test, export to S3
     runs-on: ubuntu-latest
     steps:
       - name: Clone
@@ -42,6 +42,7 @@ jobs:
       - name: Validate
         run: yarn validate
       - name: Test
+        run: yarn test
       - name: Export S3 Payloads
         run: yarn export-ops-json-payloads
       - name: Set AWS credentials

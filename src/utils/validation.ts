@@ -65,7 +65,7 @@ export const airnodeDeploymentGCPSchema = z.object({
 });
 
 export const airnodeDeploymentSchema = z.object({
-  aws: airnodeDeploymentAWSSchema,
+  aws: airnodeDeploymentAWSSchema.optional(),
   gcp: airnodeDeploymentGCPSchema.optional(),
 });
 

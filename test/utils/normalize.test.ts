@@ -48,9 +48,9 @@ describe('normalize', () => {
               airnode: {
                 ...originalMockData.apis.api3.deployments['2022-04-17'].airnode,
                 aws: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws,
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!,
                   secrets: {
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws.secrets,
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!.secrets,
                     content: 'TEST=',
                   },
                 },
@@ -135,9 +135,9 @@ describe('normalize', () => {
 
     it('sanitises the deployment secrets', async () => {
       const normalizedData = await normalize(unsanitizedMockData);
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws.secrets.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws?.secrets.content).toEqual('TEST=');
       expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.gcp?.gcp).toEqual({ projectId: '' });
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.aws?.secrets.content).toEqual('TEST=');
     });
   });
 

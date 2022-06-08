@@ -5,14 +5,14 @@
       "type": "gcp",
       "region": "us-east1",
       "disableConcurrencyReservations": false,
-      "projectId": "test123"
+      "projectId": "${GCP_PROJECT_ID}"
     },
     "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
     "heartbeat": { "enabled": false },
     "httpGateway": { "enabled": false },
     "httpSignedDataGateway": {
       "enabled": true,
-      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_API3_AWS}",
+      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_API3_GCP}",
       "maxConcurrency": 200
     },
     "logFormat": "plain",
