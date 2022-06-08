@@ -15,7 +15,7 @@ describe('create-config', () => {
   it('builds the airnode and airkeeper configs for AWS and GCP', async () => {
     const date = new Date().toISOString().split('T')[0];
 
-    prompts.inject(['api3', true, 'test123', false]);
+    prompts.inject(['api3', ['aws', 'gcp'], false]);
     await createConfig(join(__dirname, 'fixtures', 'data'));
 
     const newMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));

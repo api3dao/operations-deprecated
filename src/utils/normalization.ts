@@ -50,22 +50,24 @@ export const normalize = (payload: OperationsRepository) => {
 
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
-          const airnodeAWS = Object.fromEntries(
-            Object.entries(value.airnode.aws).map(([key, value]) => {
-              if (key === 'secrets') {
-                const envBuffer = Buffer.from((value as Secrets).content);
-                const content = Object.entries(parse(envBuffer))
-                  .map(([key, _value]) => key)
-                  .concat([''])
-                  .join('=\n')
-                  .trim();
+          const airnodeAWS =
+            value.airnode.aws &&
+            Object.fromEntries(
+              Object.entries(value.airnode.aws).map(([key, value]) => {
+                if (key === 'secrets') {
+                  const envBuffer = Buffer.from((value as Secrets).content);
+                  const content = Object.entries(parse(envBuffer))
+                    .map(([key, _value]) => key)
+                    .concat([''])
+                    .join('=\n')
+                    .trim();
 
-                return [key, { ...value, content }];
-              }
+                  return [key, { ...value, content }];
+                }
 
-              return [key, value];
-            })
-          );
+                return [key, value];
+              })
+            );
 
           const airnodeGCP =
             value.airnode.gcp &&
@@ -99,7 +101,7 @@ export const normalize = (payload: OperationsRepository) => {
             key,
             {
               ...value,
-              airnode: { aws: airnodeAWS, ...(value.airnode.gcp && { gcp: airnodeGCP }) },
+              airnode: { ...(value.airnode.aws && { aws: airnodeAWS }), ...(value.airnode.gcp && { gcp: airnodeGCP }) },
               airkeeper: { aws: airkeeperAWS },
             },
           ];
