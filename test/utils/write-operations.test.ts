@@ -370,9 +370,9 @@ describe('writeOperationsRepository', () => {
     });
   });
 
-  describe('subscriptions', () => {
-    it('writes changes to subscriptions', async () => {
-      const mockSubscriptions = {
+  describe('policies', () => {
+    it('writes changes to policies', async () => {
+      const mockPolicies = {
         ropsten: {
           dapis: {
             '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
@@ -381,7 +381,7 @@ describe('writeOperationsRepository', () => {
                 dapiName: 'USDC/AAVE',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-                subscriberAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
                 startDate: 1653048764,
                 endDate: 1653038764,
@@ -396,7 +396,7 @@ describe('writeOperationsRepository', () => {
                 dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-                subscriberAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
                 startDate: 1653048764,
                 endDate: 1653038764,
@@ -409,7 +409,7 @@ describe('writeOperationsRepository', () => {
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
-        subscriptions: mockSubscriptions,
+        policies: mockPolicies,
       };
 
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
@@ -418,7 +418,7 @@ describe('writeOperationsRepository', () => {
         existsSync(
           join(
             tempTestPath,
-            'subscriptions',
+            'policies',
             'ropsten',
             'dataFeeds',
             '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'

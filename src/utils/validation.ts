@@ -194,12 +194,12 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
-export const basePaymentSchema = z
+export const basePolicySchema = z
   .object({
     paymentTxHash: z.string(),
     claimaintAddress: evmAddressSchema,
     beneficiaryAddress: evmAddressSchema,
-    subscriberAddress: evmAddressSchema,
+    readerAddress: evmAddressSchema,
     coverageAmount: z.string(),
     startDate: z.number(),
     endDate: z.number(),
@@ -208,23 +208,23 @@ export const basePaymentSchema = z
   })
   .strict();
 
-export const dapiSubscriptionSchema = basePaymentSchema
+export const dapiPolicySchema = basePolicySchema
   .extend({
     dapiName: z.string(),
   })
   .strict();
 
-export const dataFeedSubscriptionSchema = basePaymentSchema
+export const dataFeedPolicySchema = basePolicySchema
   .extend({
     dataFeedId: evmBeaconIdSchema,
   })
   .strict();
 
 // Chain -> [dapis dataFeeds]
-export const subscriptionsSchema = z
+export const policiesSchema = z
   .object({
-    dapis: z.record(dapiSubscriptionSchema).optional(),
-    dataFeeds: z.record(dataFeedSubscriptionSchema).optional(),
+    dapis: z.record(dapiPolicySchema).optional(),
+    dataFeeds: z.record(dataFeedPolicySchema).optional(),
   })
   .strict();
 
@@ -235,7 +235,7 @@ export const operationsRepositorySchema = z
     api3: api3Schema.optional(),
     dapis: z.record(z.record(z.string())),
     explorer: explorerSchema,
-    subscriptions: z.record(subscriptionsSchema).optional(),
+    policies: z.record(policiesSchema).optional(),
   })
   .strict();
 

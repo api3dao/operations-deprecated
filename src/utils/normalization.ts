@@ -155,25 +155,25 @@ export const normalize = (payload: OperationsRepository) => {
     ),
   };
 
-  const subscriptions = payload.subscriptions
+  const policies = payload.policies
     ? Object.fromEntries(
-        Object.entries(payload.subscriptions).map(([chain, subs]) => {
+        Object.entries(payload.policies).map(([chain, policies]) => {
           return [
             chain,
             {
-              dapis: subs.dapis
+              dapis: policies.dapis
                 ? Object.fromEntries(
-                    Object.values(subs.dapis).map((subscription) => [
-                      `${subscription.paymentTxHash}-${subscription.dapiName}`,
-                      subscription,
+                    Object.values(policies.dapis).map((policy) => [
+                      `${policy.paymentTxHash}-${policy.dapiName}`,
+                      policy,
                     ])
                   )
                 : undefined,
-              dataFeeds: subs.dataFeeds
+              dataFeeds: policies.dataFeeds
                 ? Object.fromEntries(
-                    Object.values(subs.dataFeeds).map((subscription) => [
-                      `${subscription.paymentTxHash}-${subscription.dataFeedId}`,
-                      subscription,
+                    Object.values(policies.dataFeeds).map((policy) => [
+                      `${policy.paymentTxHash}-${policy.dataFeedId}`,
+                      policy,
                     ])
                   )
                 : undefined,
@@ -183,7 +183,7 @@ export const normalize = (payload: OperationsRepository) => {
       )
     : {};
 
-  return { ...payload, apis, chains, explorer, subscriptions } as OperationsRepository;
+  return { ...payload, apis, chains, explorer, policies } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {

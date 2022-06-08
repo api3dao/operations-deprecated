@@ -8,8 +8,8 @@ const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
   const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
-  const allowedReaderCheckPromises = Object.entries(operationsRepository.subscriptions || {}).flatMap(
-    ([chainName, subscriptions]) => {
+  const readerCanReadDataFeedPromises = Object.entries(operationsRepository.policies || {}).flatMap(
+    ([chainName, policies]) => {
       if (!credentials.networks[chainName].url) {
         throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
       }
@@ -20,33 +20,31 @@ const main = async (operationRepositoryTarget?: string) => {
       }
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
-      const dapiChecks = Object.values(subscriptions.dapis || {}).map(async ({ dapiName, subscriberAddress }) => ({
+      const dapiChecks = Object.values(policies.dapis || {}).map(async ({ dapiName, readerAddress }) => ({
         chainName,
         dapiName,
-        subscriberAddress,
-        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName, subscriberAddress),
+        readerAddress,
+        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName, readerAddress),
       }));
-      const dataFeedChecks = Object.values(subscriptions.dataFeeds || {}).map(
-        async ({ dataFeedId, subscriberAddress }) => ({
-          chainName,
-          dataFeedId,
-          subscriberAddress,
-          readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dataFeedId, subscriberAddress),
-        })
-      );
+      const dataFeedChecks = Object.values(policies.dataFeeds || {}).map(async ({ dataFeedId, readerAddress }) => ({
+        chainName,
+        dataFeedId,
+        readerAddress,
+        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dataFeedId, readerAddress),
+      }));
 
       return [...dapiChecks, ...dataFeedChecks];
     }
   );
 
-  const allowedReaderCheckResults = await Promise.allSettled(allowedReaderCheckPromises);
+  const readerCanReadDataFeedResults = await Promise.allSettled(readerCanReadDataFeedPromises);
 
-  allowedReaderCheckResults.forEach((result) => {
+  readerCanReadDataFeedResults.forEach((result) => {
     if (result.status === 'rejected') {
       throw new Error(`🛑 ${result.reason}`);
     } else if (!result.value.readerCanReadDataFeed) {
       throw new Error(
-        `🛑 Address ${result.value.subscriberAddress} cannot read data feed ${
+        `🛑 Address ${result.value.readerAddress} cannot read data feed ${
           (result.value as any).dapiName ?? (result.value as any).dataFeedId
         } on chain ${result.value.chainName}`
       );
@@ -56,4 +54,4 @@ const main = async (operationRepositoryTarget?: string) => {
 
 if (require.main === module) runAndHandleErrors(main);
 
-export { main as checkAllowedReaders };
+export { main as checkPolicyReaders };

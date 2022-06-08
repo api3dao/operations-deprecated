@@ -92,15 +92,15 @@ export const writeOperationsRepository = (
     writeBaseDirectory(tmpBasePath, payload, 'dapis');
     writeBaseDirectory(tmpBasePath, payload, 'explorer');
 
-    if (payload.subscriptions)
-      Object.keys(payload.subscriptions).map((key) => {
-        const subscriptionsChainBasePath = join(tmpBasePath, 'subscriptions', key);
-        mkdirSync(subscriptionsChainBasePath, { recursive: true });
+    if (payload.policies)
+      Object.keys(payload.policies).map((key) => {
+        const policiesChainBasePath = join(tmpBasePath, 'policies', key);
+        mkdirSync(policiesChainBasePath, { recursive: true });
 
-        const subscriptionChain = payload?.subscriptions?.[key];
+        const policyChain = payload?.policies?.[key];
 
-        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dapis');
-        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dataFeeds');
+        writeBaseDirectory(policiesChainBasePath, policyChain, 'dapis');
+        writeBaseDirectory(policiesChainBasePath, policyChain, 'dataFeeds');
       });
 
     rmdirSync(targetBasePath, { recursive: true });

@@ -1,9 +1,9 @@
 import { join } from 'path';
 import * as evm from '../src/utils/evm';
-import { checkAllowedReaders } from '../src/check-allowed-readers';
+import { checkPolicyReaders } from '../src/check-policy-readers';
 
 describe('check-allowed-readers', () => {
-  it('succeeds in checking allowed consumer subscriptions on the DapiServer contract', async () => {
+  it('succeeds if all reader addresses are allowed to read from DapiServer', async () => {
     const readerCanReadDataFeedSpy = jest.fn();
     const readerCanReadDataFeedMock = readerCanReadDataFeedSpy.mockImplementation(async () => true);
     const dapiServerSpy = jest.spyOn(evm, 'getDapiServerContract');
@@ -14,7 +14,7 @@ describe('check-allowed-readers', () => {
         } as any)
     );
 
-    await checkAllowedReaders(join(__dirname, 'fixtures', 'data'));
+    await checkPolicyReaders(join(__dirname, 'fixtures', 'data'));
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
     expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
@@ -34,13 +34,13 @@ describe('check-allowed-readers', () => {
         } as any)
     );
 
-    await expect(checkAllowedReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow('Unexpected error');
+    await expect(checkPolicyReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow('Unexpected error');
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
     expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
   });
 
-  it('fails if DapiServer contract returns false for a consumer payment', async () => {
+  it('fails if DapiServer contract returns false for a reader', async () => {
     const readerCanReadDataFeedSpy = jest.fn();
     const readerCanReadDataFeedMock = readerCanReadDataFeedSpy
       .mockResolvedValueOnce(true)
@@ -54,7 +54,7 @@ describe('check-allowed-readers', () => {
         } as any)
     );
 
-    await expect(checkAllowedReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
+    await expect(checkPolicyReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
       '🛑 Address 0x25B246C3bA7B7353e286859FaE8913600b96B719 cannot read data feed 0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846 on chain ropsten'
     );
 
