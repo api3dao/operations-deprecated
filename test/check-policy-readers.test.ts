@@ -17,7 +17,7 @@ describe('check-allowed-readers', () => {
     await checkPolicyReaders(join(__dirname, 'fixtures', 'data'));
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
-    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
+    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(2);
   });
 
   it('fails if DapiServer contract call reverts', async () => {
@@ -34,10 +34,12 @@ describe('check-allowed-readers', () => {
         } as any)
     );
 
-    await expect(checkPolicyReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow('Unexpected error');
+    await expect(checkPolicyReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
+      'Some errors occurred while checking policy readers or they are not allowed to read data feeds'
+    );
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
-    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
+    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(2);
   });
 
   it('fails if DapiServer contract returns false for a reader', async () => {
@@ -55,10 +57,10 @@ describe('check-allowed-readers', () => {
     );
 
     await expect(checkPolicyReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
-      '🛑 Address 0x25B246C3bA7B7353e286859FaE8913600b96B719 cannot read data feed 0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383846 on chain ropsten'
+      'Some errors occurred while checking policy readers or they are not allowed to read data feeds'
     );
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
-    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
+    expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(2);
   });
 });
