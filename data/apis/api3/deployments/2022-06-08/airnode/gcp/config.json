@@ -23,7 +23,7 @@
     },
     "logFormat": "plain",
     "logLevel": "INFO",
-    "stage": "dev",
+    "stage": "dev1",
     "skipValidation": true
   },
   "triggers": {
