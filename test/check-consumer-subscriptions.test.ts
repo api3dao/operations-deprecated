@@ -1,6 +1,6 @@
 import { join } from 'path';
 import * as evm from '../src/utils/evm';
-import { checkWhitelist } from '../src/check-whitelist';
+import { checkAllowedReaders } from '../src/check-allowed-readers';
 
 describe('check-whitelist', () => {
   it('succeeds to check that all consumer payments have been whitelisted to read value on DapiServer contract', async () => {
@@ -14,7 +14,7 @@ describe('check-whitelist', () => {
         } as any)
     );
 
-    await checkWhitelist(join(__dirname, 'fixtures', 'data'));
+    await checkAllowedReaders(join(__dirname, 'fixtures', 'data'));
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
     expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
@@ -34,7 +34,7 @@ describe('check-whitelist', () => {
         } as any)
     );
 
-    await expect(checkWhitelist(join(__dirname, 'fixtures', 'data'))).rejects.toThrow('Unexpected error');
+    await expect(checkAllowedReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow('Unexpected error');
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);
     expect(readerCanReadDataFeedSpy).toHaveBeenCalledTimes(3);
@@ -54,8 +54,8 @@ describe('check-whitelist', () => {
         } as any)
     );
 
-    await expect(checkWhitelist(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
-      '🛑 Some consumers are not whitelisted to read data feeds'
+    await expect(checkAllowedReaders(join(__dirname, 'fixtures', 'data'))).rejects.toThrow(
+      '🛑 Some consumer subscriptions have not been allowed to read data feeds'
     );
 
     expect(dapiServerSpy).toHaveBeenCalledTimes(1);

@@ -8,7 +8,7 @@ const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
   const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
-  const whitelistCheckPromises = Object.entries(operationsRepository.subscriptions || {}).flatMap(
+  const allowedReaderCheckPromises = Object.entries(operationsRepository.subscriptions || {}).flatMap(
     ([chainName, subscriptions]) => {
       if (!credentials.networks[chainName].url) {
         throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
@@ -20,18 +20,18 @@ const main = async (operationRepositoryTarget?: string) => {
       }
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
-      const dapiChecks = Object.values(subscriptions.dapis || {}).map(async ({ dapiName, whitelistAddress }) => ({
+      const dapiChecks = Object.values(subscriptions.dapis || {}).map(async ({ dapiName, subscriberAddress }) => ({
         chainName,
         dapiName,
-        whitelistAddress,
-        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName, whitelistAddress),
+        subscriberAddress,
+        readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName, subscriberAddress),
       }));
       const dataFeedChecks = Object.values(subscriptions.dataFeeds || {}).map(
-        async ({ dataFeedId, whitelistAddress }) => ({
+        async ({ dataFeedId, subscriberAddress }) => ({
           chainName,
           dataFeedId,
-          whitelistAddress,
-          readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dataFeedId, whitelistAddress),
+          subscriberAddress,
+          readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dataFeedId, subscriberAddress),
         })
       );
 
@@ -39,14 +39,14 @@ const main = async (operationRepositoryTarget?: string) => {
     }
   );
 
-  const whitelistCheckResults = await Promise.allSettled(whitelistCheckPromises);
+  const allowedReaderCheckResults = await Promise.allSettled(allowedReaderCheckPromises);
 
-  whitelistCheckResults.forEach((result) => {
+  allowedReaderCheckResults.forEach((result) => {
     if (result.status === 'rejected') {
       console.error(`🛑 ${result.reason}`);
     } else if (!result.value.readerCanReadDataFeed) {
       console.error(
-        `🛑 Address ${result.value.whitelistAddress} cannot read data feed ${
+        `🛑 Address ${result.value.subscriberAddress} cannot read data feed ${
           (result.value as any).dapiName ?? (result.value as any).dataFeedId
         } on chain ${result.value.chainName}`
       );
@@ -56,4 +56,4 @@ const main = async (operationRepositoryTarget?: string) => {
 
 if (require.main === module) runAndHandleErrors(main);
 
-export { main as checkWhitelist };
+export { main as checkAllowedReaders };

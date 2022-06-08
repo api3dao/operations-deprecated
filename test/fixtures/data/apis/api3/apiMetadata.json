@@ -1,10 +1,10 @@
 {
   "name": "API3",
   "active": true,
+  "description": "API3 delivers efficient and secure first party oracle solutions.",
   "homepage": "https://api3.org",
   "airnode": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "xpub": "xpub661MyMwAqRbcFeZ1CUvUpMs5bBSVLPHiuTqj7dZPertAGtd3xyTW1vrPspz7B34A7sdPahw7psrJjCXmn8KpF92jQssoqmsTk8fZ9PZN8xK",
   "logoPath": "https://api3.org/img/logo.png",
-  "description": "API3 delivers efficient and secure first party oracle solutions.",
   "maxSubscriptionPeriod": 3
 }
