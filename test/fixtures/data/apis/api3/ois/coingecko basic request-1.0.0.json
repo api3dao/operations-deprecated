@@ -3,7 +3,7 @@
   "title": "CoinGecko basic request",
   "version": "1.0.0",
   "apiSpecifications": {
-    "servers": [{ "url": "https://api.coingecko.com/api/v3" }],
+    "components": { "securitySchemes": {} },
     "paths": {
       "/coins/{id}": {
         "get": {
@@ -19,13 +19,11 @@
         }
       }
     },
-    "components": { "securitySchemes": {} },
+    "servers": [{ "url": "https://api.coingecko.com/api/v3" }],
     "security": {}
   },
   "endpoints": [
     {
-      "name": "coinMarketData",
-      "operation": { "method": "get", "path": "/coins/{id}" },
       "fixedOperationParameters": [
         { "operationParameter": { "in": "query", "name": "localization" }, "value": "false" },
         { "operationParameter": { "in": "query", "name": "tickers" }, "value": "false" },
@@ -34,12 +32,14 @@
         { "operationParameter": { "in": "query", "name": "developer_data" }, "value": "false" },
         { "operationParameter": { "in": "query", "name": "sparkline" }, "value": "false" }
       ],
+      "name": "coinMarketData",
+      "operation": { "method": "get", "path": "/coins/{id}" },
+      "parameters": [{ "name": "coinId", "operationParameter": { "in": "path", "name": "id" } }],
       "reservedParameters": [
         { "name": "_type", "fixed": "int256" },
         { "name": "_path", "fixed": "market_data.current_price.usd" },
         { "name": "_times", "fixed": "1000000" }
-      ],
-      "parameters": [{ "name": "coinId", "operationParameter": { "in": "path", "name": "id" } }]
+      ]
     }
   ]
 }

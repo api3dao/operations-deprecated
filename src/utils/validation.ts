@@ -194,12 +194,12 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
-const basePaymentSchema = z
+export const basePaymentSchema = z
   .object({
     paymentTxHash: z.string(),
     claimaintAddress: evmAddressSchema,
     beneficiaryAddress: evmAddressSchema,
-    whitelistAddress: evmAddressSchema,
+    subscriberAddress: evmAddressSchema,
     coverageAmount: z.string(),
     startDate: z.number(),
     endDate: z.number(),
