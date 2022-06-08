@@ -1,20 +1,25 @@
+// Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
+import { mkdirSync, rmdirSync } from 'fs';
 import prompts from 'prompts';
-import { OperationsRepository } from '../src/types';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { createAirseekerConfig } from '../src/create-airseeker-config';
 import { writeOperationsRepository } from '../src/utils/write-operations';
 
-describe('create-airseeker-config', () => {
-  let originalMockOpsRepo: OperationsRepository;
+const tempTestPath = join(__dirname, '../temporary_test_folder');
+const mockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
+describe('create-airseeker-config', () => {
+  // Start with a clean directory
   beforeEach(() => {
-    originalMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+    rmdirSync(tempTestPath, { recursive: true });
+    mkdirSync(tempTestPath);
+    writeOperationsRepository(mockOpsRepo, tempTestPath);
   });
 
+  // End with a clean directory
   afterEach(() => {
-    // revert the changes
-    writeOperationsRepository(originalMockOpsRepo, join(__dirname, 'fixtures', 'data'));
+    rmdirSync(tempTestPath, { recursive: true });
   });
 
   it('builds the airseeker config for AWS', async () => {
@@ -65,9 +70,9 @@ describe('create-airseeker-config', () => {
         },
       ],
     ]);
-    await createAirseekerConfig(join(__dirname, 'fixtures', 'data'));
+    await createAirseekerConfig(tempTestPath);
 
-    const newMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
-    expect(newMockOpsRepo.api3?.airseeker[date]).toEqual(originalMockOpsRepo.api3?.airseeker['2022-03-05']);
+    const newMockOpsRepo = readOperationsRepository(tempTestPath);
+    expect(newMockOpsRepo.api3?.airseeker[date].airseeker).toEqual(mockOpsRepo.api3?.airseeker['2022-03-05'].airseeker);
   });
 });

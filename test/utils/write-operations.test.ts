@@ -1,3 +1,4 @@
+// Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
 import { existsSync, mkdirSync, rmdirSync } from 'fs';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
@@ -60,7 +61,6 @@ describe('writeOperationsRepository', () => {
       const coingeckoTestOis = {
         ...mockOpsRepo.apis.api3.ois['coingecko basic request-1.0.0'],
         title: 'coingecko Test Ois',
-        apiSpecification: {},
         endpoints: [],
       };
 
@@ -312,7 +312,7 @@ describe('writeOperationsRepository', () => {
       const airseekerDeploymentDate = '2022-03-05';
 
       const coingeckoTestAirseeker = {
-        ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate].airseeker,
+        ...mockOpsRepo.api3?.airseeker[airseekerDeploymentDate].airseeker,
         airseekerWalletMnemonic: '',
         chains: {},
       };
@@ -322,9 +322,9 @@ describe('writeOperationsRepository', () => {
         api3: {
           ...mockOpsRepo.api3,
           airseeker: {
-            ...mockOpsRepo.api3!.airseeker,
+            ...mockOpsRepo.api3?.airseeker,
             [airseekerDeploymentDate]: {
-              ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate],
+              ...mockOpsRepo.api3?.airseeker[airseekerDeploymentDate],
               airseeker: coingeckoTestAirseeker,
               secrets: {
                 filename: 'secrets.env',

@@ -149,7 +149,7 @@ export const chainsMetadataSchema = z
 
 const airseekerDeploymentSetSchema = z
   .object({
-    airseeker: z.object({}), //TODO commented until we decide on versioning: airseekerConfigSchema,
+    airseeker: z.any(), //TODO commented until we decide on versioning: airseekerConfigSchema,
     secrets: secretsSchema,
   })
   .strict();

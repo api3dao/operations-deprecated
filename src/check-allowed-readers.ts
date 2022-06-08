@@ -43,9 +43,9 @@ const main = async (operationRepositoryTarget?: string) => {
 
   allowedReaderCheckResults.forEach((result) => {
     if (result.status === 'rejected') {
-      console.error(`🛑 ${result.reason}`);
+      throw new Error(`🛑 ${result.reason}`);
     } else if (!result.value.readerCanReadDataFeed) {
-      console.error(
+      throw new Error(
         `🛑 Address ${result.value.subscriberAddress} cannot read data feed ${
           (result.value as any).dapiName ?? (result.value as any).dataFeedId
         } on chain ${result.value.chainName}`
