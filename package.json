@@ -44,7 +44,7 @@
     "lint:eslint": "eslint . --ext .js,.ts",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
-    "test": "jest --verbose --runInBand --bail",
+    "test": "jest --verbose --runInBand --bail --detectOpenHandles",
     "pack": "yarn pack",
     "start": "ts-node src/index.ts",
     "prepare": "husky install"
