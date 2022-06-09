@@ -1,66 +1,62 @@
 import { NonceManager } from '@ethersproject/experimental';
 import { ContractTransaction, ethers } from 'ethers';
-import groupBy from 'lodash/groupBy';
-import { z } from 'zod';
+import { BasePolicy } from './types';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 import { readOperationsRepository } from './utils/read-operations';
-import { basePolicySchema } from './utils/validation';
+
+type Policy = BasePolicy & {
+  dataFeedId?: string;
+  dapiName?: string;
+};
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
   const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
-  const policiesToAdd = Object.values(operationsRepository.policies || {})
-    .flatMap((policies) => {
-      const dapiPolicies = Object.entries(policies.dapis || {});
-      const dataFeedPolicies = Object.entries(policies.dataFeeds || {});
-
-      return [...dapiPolicies, ...dataFeedPolicies];
-    })
-    // Filter for policies that are currently valid or will be valid
-    .filter((policy) => Date.now() < policy[1].endDate)
-    .map((policy) => ({ chainName: policy[0], ...policy[1] }));
-
-  let nonceManagerCache: { [chainName: string]: NonceManager } = {};
-
-  const allowedReaderPromises = Object.entries(groupBy(policiesToAdd, 'chainName')).flatMap(([chainName, policies]) => {
+  const allowedReaderPromises: Promise<ContractTransaction>[] = [];
+  for (const [chainName, policiesByType] of Object.entries(operationsRepository.policies || {})) {
     const chainRpcUrl = credentials.networks[chainName].url;
     if (!chainRpcUrl) {
       throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
     }
-
     const chainMnemonic = credentials.networks[chainName].accounts.mnemonic;
     if (!chainMnemonic || !ethers.utils.isValidMnemonic(chainMnemonic)) {
       throw new Error(`🛑 Mnemonic for chain ${chainName} is not defined or invalid`);
     }
-
-    const provider = new ethers.providers.JsonRpcProvider(chainRpcUrl);
-    if (!nonceManagerCache[chainName]) {
-      nonceManagerCache = {
-        ...nonceManagerCache,
-        [chainName]: new NonceManager(ethers.Wallet.fromMnemonic(chainMnemonic)).connect(provider),
-      };
-    }
-
     const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
     if (!dapiServerAddress) {
       throw new Error(`🛑 DapiServer contract address for chain ${chainName} is not defined`);
     }
+    const provider = new ethers.providers.JsonRpcProvider(chainRpcUrl);
+    const nonceManager = new NonceManager(ethers.Wallet.fromMnemonic(chainMnemonic).connect(provider));
+    const dapiServer = getDapiServerContract(dapiServerAddress, provider).connect(nonceManager);
 
-    const dapiServer = getDapiServerContract(dapiServerAddress, provider).connect(nonceManagerCache[chainName]);
+    const policiesToProcess = [];
+    for (const policyGroup of Object.values(policiesByType || {})) {
+      // For each chain/policyType we only process policies that
+      // have an endDate in the future and have not been whitelisted
+      for (const policy of Object.values(policyGroup)) {
+        const { dapiName, dataFeedId, readerAddress, endDate } = policy as Policy;
+        if (
+          Date.now() / 1000 < endDate &&
+          !(await dapiServer.readerCanReadDataFeed(dapiName ?? dataFeedId, readerAddress))
+        ) {
+          policiesToProcess.push(policy);
+        }
+      }
+    }
 
-    return policies.map((policy) => {
-      const typedSubscription = policy as z.infer<typeof basePolicySchema> & {
-        dataFeedId?: string;
-        dapiName?: string;
-      };
-      const { readerAddress, endDate, dataFeedId, dapiName } = typedSubscription;
-
-      return dapiServer.extendWhitelistExpiration(dataFeedId ?? dapiName, readerAddress, endDate);
-    });
-  });
+    const calldatas = policiesToProcess.map(({ readerAddress, endDate, dataFeedId, dapiName }) =>
+      dapiServer.interface.encodeFunctionData('extendWhitelistExpiration', [
+        dataFeedId ?? dapiName,
+        readerAddress,
+        endDate,
+      ])
+    );
+    allowedReaderPromises.push(dapiServer.multicall(calldatas));
+  }
 
   const allowedReaderResults = await Promise.allSettled(allowedReaderPromises);
 
@@ -70,15 +66,18 @@ const main = async (operationRepositoryTarget?: string) => {
     } else {
       const pendingTx = result.value as ContractTransaction;
       const tx = await pendingTx.wait();
-      const event = tx.events?.filter((e) => e.event === 'ExtendedWhitelistExpiration')[0];
-      const dataFeed = (event?.args || [])['serviceId'];
-      const readerAddress = (event?.args || [])['user'];
-      const expirationTimestamp = (event?.args || [])['expiration'];
-      console.log(
-        `🎉 Address ${readerAddress} can now read data feed ${dataFeed} on chain ${
-          pendingTx.chainId
-        } up until ${new Date(expirationTimestamp.toNumber() * 1000).toISOString()}. Tx hash: ${tx.transactionHash}`
-      );
+      tx.events
+        ?.filter((e) => e.event === 'ExtendedWhitelistExpiration')
+        .forEach((e) => {
+          const dataFeed = (e.args || [])['serviceId'];
+          const readerAddress = (e.args || [])['user'];
+          const expirationTimestamp = (e.args || [])['expiration'];
+          console.log(
+            `🎉 Address ${readerAddress} can now read data feed ${dataFeed} on chain ${
+              pendingTx.chainId
+            } up until ${new Date(expirationTimestamp.toNumber() * 1000).toISOString()}. Tx hash: ${tx.transactionHash}`
+          );
+        });
     }
   }
 };

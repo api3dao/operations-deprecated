@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
-import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
+import { readOperationsRepository } from './utils/read-operations';
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
@@ -10,14 +10,15 @@ const main = async (operationRepositoryTarget?: string) => {
 
   const readerCanReadDataFeedPromises = Object.entries(operationsRepository.policies || {}).flatMap(
     ([chainName, policiesByType]) => {
-      if (!credentials.networks[chainName].url) {
+      const chainRpcUrl = credentials.networks[chainName].url;
+      if (!chainRpcUrl) {
         throw new Error(`🛑 Public RPC URL for chain ${chainName} is not defined`);
       }
-      const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
       const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
       if (!dapiServerAddress) {
         throw new Error(`🛑 DapiServer contract address for chain ${chainName} is not defined`);
       }
+      const provider = new ethers.providers.JsonRpcProvider(chainRpcUrl);
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
       return Object.values(policiesByType || {}).flatMap((policies) =>
