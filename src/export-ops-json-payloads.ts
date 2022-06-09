@@ -1,5 +1,5 @@
 import { join } from 'path';
-import fs from 'fs';
+import fs, { mkdirSync } from 'fs';
 import * as child_process from 'child_process';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeJsonFile } from './utils/write-operations';
@@ -20,8 +20,10 @@ const main = () => {
     writeJsonFile(join(basePath, `${key}.json`), value);
   });
 
-  // Grabbed from https://github.com/api3dao/operations/blob/eadde827d78ddbe1858c5fe7f5b00f953d77dc14/src/utils/normalization.ts#L105
-  // with changes
+  const dapisBasePath = join(basePath, 'dapis');
+  mkdirSync(dapisBasePath);
+  Object.entries(opsFull.dapis).forEach(([key, value]) => writeJsonFile(join(dapisBasePath, `${key}.json`), value));
+
   const documentation = {
     beacons: Object.fromEntries(
       Object.entries(opsFull.apis)
