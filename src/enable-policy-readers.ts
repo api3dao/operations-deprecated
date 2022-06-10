@@ -11,11 +11,26 @@ type Policy = BasePolicy & {
   dapiName?: string;
 };
 
+const printTransactionEvents = (tx: ethers.ContractReceipt, chainId: number) => {
+  tx.events
+    ?.filter((e) => e.event === 'ExtendedWhitelistExpiration')
+    .forEach((e) => {
+      const dataFeed = (e.args || [])['serviceId'];
+      const readerAddress = (e.args || [])['user'];
+      const expirationTimestamp = (e.args || [])['expiration'];
+      console.log(
+        `🎉 Address ${readerAddress} can now read data feed ${dataFeed} on chain ${chainId} up until ${new Date(
+          expirationTimestamp.toNumber() * 1000
+        ).toISOString()}. Tx hash: ${tx.transactionHash}`
+      );
+    });
+};
+
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
   const operationsRepository = readOperationsRepository(operationRepositoryTarget);
 
-  const allowedReaderPromises: Promise<ContractTransaction>[] = [];
+  const enablePoliciesPromises: Promise<ContractTransaction>[] = [];
   for (const [chainName, policiesByType] of Object.entries(operationsRepository.policies || {})) {
     const chainRpcUrl = credentials.networks[chainName].url;
     if (!chainRpcUrl) {
@@ -55,10 +70,10 @@ const main = async (operationRepositoryTarget?: string) => {
         endDate,
       ])
     );
-    allowedReaderPromises.push(dapiServer.multicall(calldatas));
+    enablePoliciesPromises.push(dapiServer.multicall(calldatas));
   }
 
-  const allowedReaderResults = await Promise.allSettled(allowedReaderPromises);
+  const allowedReaderResults = await Promise.allSettled(enablePoliciesPromises);
 
   for (const result of allowedReaderResults) {
     if (result.status === 'rejected') {
@@ -66,18 +81,7 @@ const main = async (operationRepositoryTarget?: string) => {
     } else {
       const pendingTx = result.value as ContractTransaction;
       const tx = await pendingTx.wait();
-      tx.events
-        ?.filter((e) => e.event === 'ExtendedWhitelistExpiration')
-        .forEach((e) => {
-          const dataFeed = (e.args || [])['serviceId'];
-          const readerAddress = (e.args || [])['user'];
-          const expirationTimestamp = (e.args || [])['expiration'];
-          console.log(
-            `🎉 Address ${readerAddress} can now read data feed ${dataFeed} on chain ${
-              pendingTx.chainId
-            } up until ${new Date(expirationTimestamp.toNumber() * 1000).toISOString()}. Tx hash: ${tx.transactionHash}`
-          );
-        });
+      printTransactionEvents(tx, pendingTx.chainId);
     }
   }
 };
@@ -85,11 +89,3 @@ const main = async (operationRepositoryTarget?: string) => {
 if (require.main === module) runAndHandleErrors(main);
 
 export { main as enablePolicyReaders };
-
-// TODO
-// I don't believe this will work in practice; in time the list of consumer subscriptions will be come very big and it won't
-// be tenable for API3 staff to manually select entries.
-//
-// Ideally the script should check for subscriptions that are valid (based on their start and end times) and then
-// for all of those check them against the contract to see if they're already registered, if not, register all of them.
-// There won't be a scenario where we selectively register consumer subscriptions.
