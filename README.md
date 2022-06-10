@@ -35,6 +35,7 @@ including:
   - Beacons
 - Managed feeds
 - Pricing parameters
+- Coverage policies
 
 ### Chains — `/data/chains`
 
@@ -121,6 +122,28 @@ _TODO_
 ### Pricing parameters
 
 _TODO, possibly as additional fields under Beacon.chains and Feed.chains_
+
+### Coverage policies — `/data/policies`
+
+`/data/policies` hosts one directory per chain, where the directory name is the chain name. This directory name needs to
+match a file with the same name under `/data/chains`.
+
+An API3 staff member will add new files whenever a user buys insuarance against potential system failures. After adding
+and pushing to Github a new file under either `/data/policies/{chainName}/dapis` or
+`/data/policies/{chainName}/dataFeed` directories, the Github CI will run a script to verify that the address specified
+in the `readerAddress` field is able to read the data feed. If this checks fails then the user must run
+`yarn enable-policy-readers` to enable the reader address (as a previous step the user must also add the mnemonics for
+each chain to the `chains/credentials.json` file).
+
+#### dapis — `/data/policies/{chainName}/dapis`
+
+Files containing coverage policy details for using dAPIs. The files are named as
+`/data/policies/{chainName}/dapis/{paymentTxHash}-{dapiName}`.
+
+#### dataFeeds — `/data/policies/{chainName}/dataFeeds`
+
+Files containing coverage policy details for using data feeds. The files are named as
+`/data/policies/{chainName}/dapis/{paymentTxHash}-{dataFeedId}`.
 
 ## Deployment Usage
 
