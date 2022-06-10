@@ -20,6 +20,22 @@ const main = () => {
     writeJsonFile(join(basePath, `${key}.json`), value);
   });
 
+  // For Warren; generate a compound file with all templates in it
+  const allTemplates = Object.fromEntries(
+    Object.values(opsFull.apis)
+      .flatMap((api) => Object.values(api.templates))
+      .map((template) => [template.templateId, template])
+  );
+  writeJsonFile(join(basePath, `templates.json`), allTemplates);
+
+  // For Warren; generate a directory with all templates in it
+  const templatesBasePath = join(basePath, 'templates');
+  fs.mkdirSync(templatesBasePath);
+
+  Object.values(allTemplates).forEach((template) =>
+    writeJsonFile(join(templatesBasePath, `${template.templateId}.json`), template)
+  );
+
   const dapisBasePath = join(basePath, 'dapis');
   mkdirSync(dapisBasePath);
   Object.entries(opsFull.dapis).forEach(([key, value]) => writeJsonFile(join(dapisBasePath, `${key}.json`), value));
