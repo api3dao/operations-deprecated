@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
@@ -21,7 +22,7 @@ const main = async (operationRepositoryTarget?: string) => {
       const provider = new ethers.providers.JsonRpcProvider(chainRpcUrl);
       const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
-      return Object.values(policiesByType || {}).flatMap((policies) =>
+      return Object.values(policiesByType || {}).flatMap((policies: Record<string, Policy>) =>
         Object.values(policies)
           .filter((policy) => Date.now() / 1000 < policy.endDate)
           .map(async ({ dapiName, dataFeedId, readerAddress }) => ({

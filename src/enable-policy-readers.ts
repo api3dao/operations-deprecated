@@ -1,15 +1,10 @@
 import { NonceManager } from '@ethersproject/experimental';
 import { ContractTransaction, ethers } from 'ethers';
-import { BasePolicy } from './types';
+import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 import { readOperationsRepository } from './utils/read-operations';
-
-type Policy = BasePolicy & {
-  dataFeedId?: string;
-  dapiName?: string;
-};
 
 const printTransactionEvents = (tx: ethers.ContractReceipt, chainId: number) => {
   tx.events

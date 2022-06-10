@@ -37,3 +37,8 @@ export type ExtendedChainDescription = z.infer<typeof extendedChainDescriptionSc
 export type BasePolicy = z.infer<typeof basePolicySchema>;
 
 export type OperationsRepository = z.infer<typeof operationsRepositorySchema>;
+
+export type Policy = BasePolicy & {
+  dataFeedId?: string;
+  dapiName?: string;
+};
