@@ -80,13 +80,10 @@ export const airkeeperDeploymentSchema = z.object({
   aws: airkeeperDeploymentAWSSchema,
 });
 
-export const deploymentSetSchema = z
-  .object({
-    airnode: airnodeDeploymentSchema.optional(),
-    airkeeper: airkeeperDeploymentSchema.optional(),
-  })
-  .partial()
-  .refine((data) => data.airnode || data.airkeeper, 'Must have Airnode or Airkeeper deployment.');
+export const deploymentSetSchema = z.object({
+  airnode: airnodeDeploymentSchema,
+  airkeeper: airkeeperDeploymentSchema,
+});
 
 export const deploymentsSchema = z.record(deploymentSetSchema);
 
