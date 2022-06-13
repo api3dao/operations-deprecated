@@ -1,7 +1,7 @@
 {
   "chains": [],
   "nodeSettings": {
-    "nodeVersion": "0.6.4",
+    "nodeVersion": "0.6.5",
     "cloudProvider": {
       "type": "gcp",
       "region": "us-east1",
