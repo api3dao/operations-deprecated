@@ -14,7 +14,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
       type: 'text',
       name: 'name',
       message: ['What is the Airseeker configuration name?'].join('\n'),
-      initial: 'global',
+      initial: new Date().toISOString().split('T')[0],
     },
     {
       type: 'autocompleteMultiselect',
@@ -85,7 +85,7 @@ const main = async (operationRepositoryTarget?: string) => {
           },
           providers: {
             [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
-              url: `\${${chainName}_PROVIDER_URL}`.toUpperCase(),
+              url: `\${${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL}`.toUpperCase(),
             },
           },
           options: {
@@ -191,7 +191,7 @@ const main = async (operationRepositoryTarget?: string) => {
   const secretsArray = [
     `AIRSEEKER_WALLET_MNEMONIC=`,
     ...gatewaySecrets,
-    ...apiChains.map((chainName) => `${chainName}_PROVIDER_URL=`.toUpperCase()),
+    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
   ];
 
   const secrets = {
