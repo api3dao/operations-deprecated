@@ -1,5 +1,5 @@
 {
-  "paymentTxHash": "0x04557655ea4a84976e2780ddd92d84a40c911f58f309429f56ea0d602af9ccff",
+  "paymentTxHash": "0xdd0b0686c14434b2856e5137f7d7adbb68d2c21f9542f20ab841d931812792ec",
   "claimaintAddress": "0x1a2633190693307d47145098fFd1d4669D3aE9eE",
   "beneficiaryAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",
   "readerAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",
@@ -8,5 +8,5 @@
   "endDate": 4810403026,
   "ipfsPolicyHash": "QmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd",
   "ipfsServicePolicyHash": "QmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6",
-  "dapiName": "0x4554482f55534400000000000000000000000000000000000000000000000000"
+  "dataFeedId": "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e"
 }

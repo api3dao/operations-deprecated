@@ -375,10 +375,9 @@ describe('writeOperationsRepository', () => {
       const mockPolicies = {
         ropsten: {
           dapis: {
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
+            '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11-0x4554482f55534400000000000000000000000000000000000000000000000000':
               {
                 paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
-                dapiName: 'USDC/AAVE',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
@@ -387,21 +386,22 @@ describe('writeOperationsRepository', () => {
                 endDate: 1653038764,
                 ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
                 ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+                dapiName: '0x4554482f55534400000000000000000000000000000000000000000000000000', // 'BTC/USD'
               },
           },
           dataFeeds: {
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12':
+            '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4-0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e':
               {
-                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12',
-                dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
+                paymentTxHash: '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
-                startDate: 1653048764,
-                endDate: 1653038764,
+                startDate: 1655234896,
+                endDate: 1718404085,
                 ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
                 ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+                dataFeedId: '0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e',
               },
           },
         },
@@ -420,8 +420,20 @@ describe('writeOperationsRepository', () => {
             tempTestPath,
             'policies',
             'ropsten',
+            'dapis',
+            '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11-0x4554482f55534400000000000000000000000000000000000000000000000000.json'
+          )
+        )
+      ).toBe(true);
+
+      expect(
+        existsSync(
+          join(
+            tempTestPath,
+            'policies',
+            'ropsten',
             'dataFeeds',
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'
+            '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4-0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e.json'
           )
         )
       ).toBe(true);
