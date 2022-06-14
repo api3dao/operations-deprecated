@@ -2,27 +2,23 @@ import { join } from 'path';
 import { ethers } from 'ethers';
 import prompts from 'prompts';
 import { encode } from '@api3/airnode-abi';
-import { OperationsRepository } from '../src/types';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { generateTemplateIds } from '../src/generate-templateIds';
-import { writeOperationsRepository } from '../src/utils/write-operations';
+
+const mockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
 describe('generate-templateIds', () => {
-  let unsanitizedMockOpsData: OperationsRepository;
-  let originalMockOpsData: OperationsRepository;
-
-  beforeAll(() => {
-    originalMockOpsData = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
-    unsanitizedMockOpsData = {
-      ...originalMockOpsData,
+  it('generates the templateIds and parameters', async () => {
+    const unsanitizedMockOpsData = {
+      ...mockOpsRepo,
       apis: {
-        ...originalMockOpsData.apis,
+        ...mockOpsRepo.apis,
         api3: {
-          ...originalMockOpsData.apis.api3,
+          ...mockOpsRepo.apis.api3,
           templates: {
-            ...originalMockOpsData.apis.api3.templates,
+            ...mockOpsRepo.apis.api3.templates,
             ['coingecko btc_usd']: {
-              ...originalMockOpsData.apis.api3.templates['coingecko btc_usd'],
+              ...mockOpsRepo.apis.api3.templates['coingecko btc_usd'],
               templateId: ethers.constants.HashZero,
               parameters: ethers.constants.HashZero,
             },
@@ -30,9 +26,7 @@ describe('generate-templateIds', () => {
         },
       },
     };
-  });
 
-  it('generates the templateIds and parameters', async () => {
     expect(unsanitizedMockOpsData.apis.api3.templates['coingecko btc_usd'].templateId).toBe(ethers.constants.HashZero);
 
     prompts.inject(['api3']);
@@ -49,8 +43,5 @@ describe('generate-templateIds', () => {
     );
 
     expect(newMockOpsRepo.apis.api3.templates['coingecko btc_usd'].templateId).toEqual(templateId);
-
-    // revert the changes
-    writeOperationsRepository(originalMockOpsData, join(__dirname, 'fixtures', 'data'));
   });
 });

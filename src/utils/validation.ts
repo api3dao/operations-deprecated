@@ -149,7 +149,7 @@ export const chainsMetadataSchema = z
 
 const airseekerDeploymentSetSchema = z
   .object({
-    airseeker: z.object({}), //TODO commented until we decide on versioning: airseekerConfigSchema,
+    airseeker: z.any(), //TODO commented until we decide on versioning: airseekerConfigSchema,
     secrets: secretsSchema,
   })
   .strict();
@@ -194,13 +194,12 @@ export const chainDeploymentReferencesSchema = z
   })
   .strict();
 
-export const dapiSubscriptionSchema = z
+export const basePolicySchema = z
   .object({
     paymentTxHash: z.string(),
-    dapiName: z.string(),
     claimaintAddress: evmAddressSchema,
     beneficiaryAddress: evmAddressSchema,
-    whitelistAddress: evmAddressSchema,
+    readerAddress: evmAddressSchema,
     coverageAmount: z.string(),
     startDate: z.number(),
     endDate: z.number(),
@@ -209,26 +208,23 @@ export const dapiSubscriptionSchema = z
   })
   .strict();
 
-export const dataFeedSubscriptionSchema = z
-  .object({
-    paymentTxHash: z.string(),
+export const dapiPolicySchema = basePolicySchema
+  .extend({
+    dapiName: z.string(),
+  })
+  .strict();
+
+export const dataFeedPolicySchema = basePolicySchema
+  .extend({
     dataFeedId: evmBeaconIdSchema,
-    claimaintAddress: evmAddressSchema,
-    beneficiaryAddress: evmAddressSchema,
-    whitelistAddress: evmAddressSchema,
-    coverageAmount: z.string(),
-    startDate: z.number(),
-    endDate: z.number(),
-    ipfsPolicyHash: z.string(),
-    ipfsServicePolicyHash: z.string(),
   })
   .strict();
 
 // Chain -> [dapis dataFeeds]
-export const subscriptionsSchema = z
+export const policiesSchema = z
   .object({
-    dapis: z.record(dapiSubscriptionSchema).optional(),
-    dataFeeds: z.record(dataFeedSubscriptionSchema).optional(),
+    dapis: z.record(dapiPolicySchema).optional(),
+    dataFeeds: z.record(dataFeedPolicySchema).optional(),
   })
   .strict();
 
@@ -239,7 +235,7 @@ export const operationsRepositorySchema = z
     api3: api3Schema.optional(),
     dapis: z.record(z.record(z.string())),
     explorer: explorerSchema,
-    subscriptions: z.record(subscriptionsSchema).optional(),
+    policies: z.record(policiesSchema).optional(),
   })
   .strict();
 

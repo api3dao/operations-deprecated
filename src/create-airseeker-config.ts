@@ -13,7 +13,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
     {
       type: 'text',
       name: 'name',
-      message: ['What is the Airseeker configuration name?'].join('\n'),
+      message: 'What is the Airseeker configuration name?',
       initial: new Date().toISOString().split('T')[0],
     },
     {

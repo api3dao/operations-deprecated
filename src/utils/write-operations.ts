@@ -51,6 +51,7 @@ export const writeOperationsRepository = (
       Object.entries(api.deployments).forEach(([directoryName, deployments]) => {
         const subDeploymentBasePath = join(deploymentsBasePath, directoryName);
         mkdirSync(subDeploymentBasePath);
+
         Object.entries(deployments).forEach(([deploymentName, cloudProvider]) => {
           const deploymentBasePath = join(subDeploymentBasePath, deploymentName);
           mkdirSync(deploymentBasePath);
@@ -71,12 +72,16 @@ export const writeOperationsRepository = (
       mkdirSync(api3BasePath, { recursive: true });
       Object.entries(payload.api3).forEach(([filename, api3directory]) => {
         const api3directoryBasePath = join(api3BasePath, filename);
+        // Airseeker
         mkdirSync(api3directoryBasePath, { recursive: true });
 
-        Object.entries(api3directory).forEach(([filename, api3config]) => {
+        Object.entries(api3directory).forEach(([filename, api3Config]) => {
           const api3configBasePath = join(api3directoryBasePath, filename);
+          // Date of deployment
           mkdirSync(api3configBasePath);
-          Object.entries(api3config).forEach(([filename, api3configs]) => {
+
+          Object.entries(api3Config).forEach(([filename, api3configs]) => {
+            // Deployment file
             writeJsonFile(join(api3configBasePath, filename), api3configs);
           });
         });
@@ -87,15 +92,15 @@ export const writeOperationsRepository = (
     writeBaseDirectory(tmpBasePath, payload, 'dapis');
     writeBaseDirectory(tmpBasePath, payload, 'explorer');
 
-    if (payload.subscriptions)
-      Object.keys(payload.subscriptions).map((key) => {
-        const subscriptionsChainBasePath = join(tmpBasePath, 'subscriptions', key);
-        mkdirSync(subscriptionsChainBasePath, { recursive: true });
+    if (payload.policies)
+      Object.keys(payload.policies).map((key) => {
+        const policiesChainBasePath = join(tmpBasePath, 'policies', key);
+        mkdirSync(policiesChainBasePath, { recursive: true });
 
-        const subscriptionChain = payload?.subscriptions?.[key];
+        const policyChain = payload?.policies?.[key];
 
-        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dapis');
-        writeBaseDirectory(subscriptionsChainBasePath, subscriptionChain, 'dataFeeds');
+        writeBaseDirectory(policiesChainBasePath, policyChain, 'dapis');
+        writeBaseDirectory(policiesChainBasePath, policyChain, 'dataFeeds');
       });
 
     rmdirSync(targetBasePath, { recursive: true });

@@ -43,11 +43,6 @@ jobs:
         run: yarn validate
       - name: Test
         run: yarn test
-      - uses: actions/cache@v2
-        id: cache-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}
       - name: Export S3 Payloads
         run: yarn export-ops-json-payloads
       - name: Set AWS credentials
@@ -78,3 +73,5 @@ jobs:
         run: yarn check-subscriptions
       - name: Verify DAPI Name on chain
         run: yarn check-dapi-name
+      - name: Verify DapiServer allowed readers on chain
+        run: yarn check-policy-readers

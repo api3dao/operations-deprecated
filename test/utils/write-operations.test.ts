@@ -1,3 +1,4 @@
+// Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
 import { existsSync, mkdirSync, rmdirSync } from 'fs';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
@@ -60,7 +61,6 @@ describe('writeOperationsRepository', () => {
       const coingeckoTestOis = {
         ...mockOpsRepo.apis.api3.ois['coingecko basic request-1.0.0'],
         title: 'coingecko Test Ois',
-        apiSpecification: {},
         endpoints: [],
       };
 
@@ -312,7 +312,7 @@ describe('writeOperationsRepository', () => {
       const airseekerDeploymentDate = '2022-03-05';
 
       const coingeckoTestAirseeker = {
-        ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate].airseeker,
+        ...mockOpsRepo.api3?.airseeker[airseekerDeploymentDate].airseeker,
         airseekerWalletMnemonic: '',
         chains: {},
       };
@@ -322,9 +322,9 @@ describe('writeOperationsRepository', () => {
         api3: {
           ...mockOpsRepo.api3,
           airseeker: {
-            ...mockOpsRepo.api3!.airseeker,
+            ...mockOpsRepo.api3?.airseeker,
             [airseekerDeploymentDate]: {
-              ...mockOpsRepo.api3!.airseeker[airseekerDeploymentDate],
+              ...mockOpsRepo.api3?.airseeker[airseekerDeploymentDate],
               airseeker: coingeckoTestAirseeker,
               secrets: {
                 filename: 'secrets.env',
@@ -370,9 +370,9 @@ describe('writeOperationsRepository', () => {
     });
   });
 
-  describe('subscriptions', () => {
-    it('writes changes to subscriptions', async () => {
-      const mockSubscriptions = {
+  describe('policies', () => {
+    it('writes changes to policies', async () => {
+      const mockPolicies = {
         ropsten: {
           dapis: {
             '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
@@ -381,7 +381,7 @@ describe('writeOperationsRepository', () => {
                 dapiName: 'USDC/AAVE',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
                 startDate: 1653048764,
                 endDate: 1653038764,
@@ -396,7 +396,7 @@ describe('writeOperationsRepository', () => {
                 dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
                 claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
-                whitelistAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
+                readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
                 startDate: 1653048764,
                 endDate: 1653038764,
@@ -409,7 +409,7 @@ describe('writeOperationsRepository', () => {
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
-        subscriptions: mockSubscriptions,
+        policies: mockPolicies,
       };
 
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
@@ -418,7 +418,7 @@ describe('writeOperationsRepository', () => {
         existsSync(
           join(
             tempTestPath,
-            'subscriptions',
+            'policies',
             'ropsten',
             'dataFeeds',
             '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'

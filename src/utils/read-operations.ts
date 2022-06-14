@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
+import { operationsRepositorySchema } from './validation';
 import { Api, OperationsRepository } from '../types';
 
 export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
@@ -33,10 +34,19 @@ export const readOperationsRepository = (target = join(__dirname, '..', '..', 'd
     })
   ) as unknown as Record<string, Api>;
 
-  return {
+  const operations = {
     ...rawOperations,
     apis,
-  } as OperationsRepository;
+  };
+
+  const result = operationsRepositorySchema.safeParse(operations);
+
+  if (result.success) {
+    return result.data;
+  }
+
+  console.error('Validation failed:');
+  throw result.error;
 };
 
 export const readFileOrDirectoryRecursively = (target: string): any => {
