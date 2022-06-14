@@ -1,9 +1,10 @@
-import { z } from 'zod';
+import { ethers } from 'ethers';
+import { SuperRefinement, z } from 'zod';
 // TODO Commented until we decide on versioning for config schema
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { OperationsRepository } from '../types';
+import { Api, OperationsRepository, Policies } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -147,6 +148,7 @@ export const chainsMetadataSchema = z
   })
   .strict();
 
+// Deployment date -> [airkeeper.json, secrets.env]
 const airseekerDeploymentSetSchema = z
   .object({
     airseeker: z.any(), //TODO commented until we decide on versioning: airseekerConfigSchema,
@@ -228,6 +230,50 @@ export const policiesSchema = z
   })
   .strict();
 
+const validatePoliciesReferences: SuperRefinement<{
+  apis: Record<string, Api>;
+  dapis: Record<string, Record<string, string>>;
+  policies?: Record<string, Policies>;
+}> = ({ apis, dapis, policies: policiesByChain }, ctx) => {
+  Object.entries(policiesByChain || {}).forEach(([chainName, policiesByType]) => {
+    Object.entries(policiesByType || {}).forEach(([policyType, policies]) => {
+      Object.entries(policies).forEach(([policyId, policy]) => {
+        switch (policyType.toLowerCase()) {
+          case 'dapis'.toLowerCase():
+            // Check if /data/dapis/{chainName} contains the dapiName
+            if (
+              !Object.keys(dapis).includes(chainName) ||
+              !Object.keys(dapis[chainName]).includes(ethers.utils.parseBytes32String(policy.dapiName))
+            ) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `Referenced dAPI ${policy.dapiName} (${ethers.utils.parseBytes32String(
+                  policy.dapiName
+                )}) is not defined in /data/dapis`,
+                path: ['policies', chainName, 'dapis', policyId],
+              });
+            }
+            break;
+          case 'dataFeeds'.toLowerCase():
+            // Check if /data/apis/api3/beacons contains a file with the beaconId
+            if (
+              !Object.values(apis['api3'].beacons).some((beacon) => {
+                return beacon.beaconId === policy.dataFeedId && Object.keys(beacon.chains).includes(chainName);
+              })
+            ) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `Referenced beacon ${policy.dataFeedId} is not defined in /data/apis/api3/beacons`,
+                path: ['policies', chainName, 'dataFeeds', policyId],
+              });
+            }
+            break;
+        }
+      });
+    });
+  });
+};
+
 export const operationsRepositorySchema = z
   .object({
     apis: z.record(apiSchema),
@@ -237,7 +283,8 @@ export const operationsRepositorySchema = z
     explorer: explorerSchema,
     policies: z.record(policiesSchema).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine(validatePoliciesReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {
