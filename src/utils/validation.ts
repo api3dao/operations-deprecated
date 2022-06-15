@@ -4,7 +4,7 @@ import { SuperRefinement, z } from 'zod';
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { Api, OperationsRepository, Policies } from '../types';
+import { Api, Beacons, OperationsRepository, Policies, Templates } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -122,6 +122,21 @@ export const apiMetadataSchema = z
   })
   .strict();
 
+const validateBeaconsTemplateIdReferences: SuperRefinement<{
+  beacons: Beacons;
+  templates: Templates;
+}> = (arg, ctx) => {
+  Object.entries(arg.beacons).forEach(([beaconName, beacon]) => {
+    if (!Object.values(arg.templates).some((template) => template.templateId === beacon.templateId)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced template ${beacon.templateId} is not defined in /templates`,
+        path: ['beacons', beaconName],
+      });
+    }
+  });
+};
+
 export const apiSchema = z
   .object({
     apiMetadata: apiMetadataSchema,
@@ -130,7 +145,8 @@ export const apiSchema = z
     deployments: deploymentsSchema,
     ois: oisesSchema,
   })
-  .strict();
+  .strict()
+  .superRefine(validateBeaconsTemplateIdReferences);
 
 export const chainsMetadataSchema = z
   .object({
@@ -230,7 +246,7 @@ export const policiesSchema = z
   })
   .strict();
 
-const validatePoliciesReferences: SuperRefinement<{
+const validatePoliciesDatafeedReferences: SuperRefinement<{
   apis: Record<string, Api>;
   dapis: Record<string, Record<string, string>>;
   policies?: Record<string, Policies>;
@@ -284,7 +300,7 @@ export const operationsRepositorySchema = z
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
-  .superRefine(validatePoliciesReferences);
+  .superRefine(validatePoliciesDatafeedReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {
