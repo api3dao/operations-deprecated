@@ -1,0 +1,15 @@
+{
+  "name": "Amberdata XVS/USDT",
+  "description": "Amberdata - XVS/USDT - Pair",
+  "beaconId": "0x4fa0baa2cb5d60e3e5641944ebc4f17238307962da1fd5b21e0f0933eae4a9a6",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x287743e26ae45087a111caa02ef0ce770b547507f7d0a1b183c6be263a16a39e",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

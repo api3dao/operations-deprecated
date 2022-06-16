@@ -1,0 +1,15 @@
+{
+  "name": "Amberdata JOE/USD",
+  "description": "Amberdata - JOE/USD - Pair",
+  "beaconId": "0x2a7485ec580e6dc6c5e13f75dc1190ca4e791f6a9f05edce23c53423a25848c5",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x18c4c5fc36cf94554f05ffe2e96c8184d4bc9d396dc23d191ad02e88027f32ea",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

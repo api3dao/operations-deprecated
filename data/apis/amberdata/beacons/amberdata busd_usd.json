@@ -1,0 +1,16 @@
+{
+  "name": "Amberdata BUSD/USD",
+  "description": "Amberdata - BUSD/USD - Pair",
+  "beaconId": "0x122bac2e01839331b22a137872f46ed98c0ac933e44f8e5e9fb6cb4265a23482",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x6e67fa679cb27b7a17bf112b2104dcf2ef708a20fb679612141215640e762247",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "displayDisabled": true,
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
