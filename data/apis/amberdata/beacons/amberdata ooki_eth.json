@@ -1,0 +1,15 @@
+{
+  "name": "Amberdata OOKI/ETH",
+  "description": "Amberdata - OOKI/ETH - Pair",
+  "beaconId": "0xa19412e7dedd480bfef92b03aa8a24741de505ec38755a87cf46e234f2f4959c",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0xa9c6ab8f29b6c4360f593b5c4df28b2a71bf1c9b945ac53c37d93c0a19bd7ebc",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

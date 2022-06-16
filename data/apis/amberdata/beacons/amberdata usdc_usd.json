@@ -1,0 +1,15 @@
+{
+  "name": "Amberdata USDC/USD",
+  "description": "Amberdata - USDC/USD - Pair",
+  "beaconId": "0x327fa8736daada06c74a254d00ae9c86b47fb9291dbc467354f08b33f1fcc794",
+  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "templateId": "0x8682ecb5b6a56bcd858582f5c585a63d05b9959e139994fb421153a4cbbd5975",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
