@@ -18,7 +18,7 @@
     },
     "logFormat": "plain",
     "logLevel": "INFO",
-    "stage": "dev"
+    "stage": "220616-2000"
   },
   "triggers": {
     "rrp": [],
