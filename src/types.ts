@@ -18,6 +18,7 @@ import {
   chainDeploymentReferencesSchema,
   basePolicySchema,
   policiesSchema,
+  explorerSchema,
 } from './utils/validation';
 
 export type Beacon = z.infer<typeof beaconSchema>;
@@ -35,6 +36,7 @@ export type Secrets = z.infer<typeof secretsSchema>;
 export type TopUpWalletSchema = z.infer<typeof topUpWalletSchema>;
 export type WalletType = z.infer<typeof walletTypeSchema>;
 export type ExtendedChainDescription = z.infer<typeof extendedChainDescriptionSchema>;
+export type Explorer = z.infer<typeof explorerSchema>;
 export type Policies = z.infer<typeof policiesSchema>;
 export type BasePolicy = z.infer<typeof basePolicySchema>;
 

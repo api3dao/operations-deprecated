@@ -4,7 +4,7 @@ import { SuperRefinement, z } from 'zod';
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { Api, Beacons, OperationsRepository, Policies, Templates } from '../types';
+import { Api, Beacons, Explorer, OperationsRepository, Policies, Templates } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -246,6 +246,26 @@ export const policiesSchema = z
   })
   .strict();
 
+const validateBeaconMetadataReferences: SuperRefinement<{
+  apis: Record<string, Api>;
+  explorer: Explorer;
+}> = ({ apis, explorer }, ctx) => {
+  Object.keys(explorer.beaconMetadata).forEach((beaconId) => {
+    // Check if /data/apis/api3/beacons contains a file with the beaconId
+    if (
+      !Object.values(apis['api3'].beacons).some((beacon) => {
+        return beacon.beaconId === beaconId;
+      })
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced beacon ${beaconId} is not defined in /data/apis/api3/beacons`,
+        path: ['explorer', 'beaconMetadata', beaconId],
+      });
+    }
+  });
+};
+
 const validatePoliciesDatafeedReferences: SuperRefinement<{
   apis: Record<string, Api>;
   dapis: Record<string, Record<string, string>>;
@@ -300,6 +320,7 @@ export const operationsRepositorySchema = z
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
+  .superRefine(validateBeaconMetadataReferences)
   .superRefine(validatePoliciesDatafeedReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
