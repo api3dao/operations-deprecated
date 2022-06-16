@@ -74,8 +74,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: 'dev',
-    skipValidation: true,
+    stage: 'dev'
   };
 };
 
