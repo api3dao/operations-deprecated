@@ -74,7 +74,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: 'dev'
+    stage: 'dev',
   };
 };
 
