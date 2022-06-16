@@ -1,10 +1,10 @@
 {
   "oisFormat": "1.0.0",
-  "title": "Amberdata-Lite",
-  "version": "2",
+  "title": "Amberdata",
+  "version": "1.0.0",
   "apiSpecifications": {
     "components": {
-      "securitySchemes": { "Amberdata-Lite_x-api-key": { "type": "apiKey", "in": "header", "name": "x-api-key" } }
+      "securitySchemes": { "Amberdata_x-api-key": { "type": "apiKey", "in": "header", "name": "x-api-key" } }
     },
     "paths": {
       "/market/defi/lending/exchanges/information/": {
@@ -166,7 +166,7 @@
       }
     },
     "servers": [{ "url": "https://web3api.io/api/v2" }],
-    "security": { "Amberdata-Lite_x-api-key": [] }
+    "security": { "Amberdata_x-api-key": [] }
   },
   "endpoints": [
     {
