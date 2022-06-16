@@ -4,7 +4,7 @@ import { SuperRefinement, z } from 'zod';
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { Api, Beacons, Explorer, OperationsRepository, Policies, Templates } from '../types';
+import { Api, Beacons, ChainsMetadata, Explorer, OperationsRepository, Policies, Templates } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -246,6 +246,23 @@ export const policiesSchema = z
   })
   .strict();
 
+const validateApi3BeaconsChainReferences: SuperRefinement<{
+  apis: Record<string, Api>;
+  chains: Record<string, ChainsMetadata>;
+}> = ({ apis, chains }, ctx) => {
+  Object.entries(apis['api3'].beacons).forEach(([beaconName, beacon]) => {
+    Object.keys(beacon.chains).forEach((chainName) => {
+      if (!Object.keys(chains).includes(chainName)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Referenced chain ${chainName} is not defined in /data/chains`,
+          path: ['apis', 'api3', 'beacons', beaconName],
+        });
+      }
+    });
+  });
+};
+
 const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Record<string, Api>;
   explorer: Explorer;
@@ -320,6 +337,7 @@ export const operationsRepositorySchema = z
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
+  .superRefine(validateApi3BeaconsChainReferences)
   .superRefine(validateBeaconMetadataReferences)
   .superRefine(validatePoliciesDatafeedReferences);
 
