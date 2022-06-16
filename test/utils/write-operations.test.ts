@@ -1,6 +1,7 @@
 // Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
 import { existsSync, mkdirSync, rmdirSync } from 'fs';
+import { ethers } from 'ethers';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { readOperationsRepository } from '../../src/utils/read-operations';
 
@@ -445,9 +446,19 @@ describe('writeOperationsRepository', () => {
 
   describe('explorer', () => {
     it('writes changes to beaconMetadata', async () => {
+      // Add new test beacon first
+      const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+      const coingeckoTestBeacon = {
+        ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
+        beaconId: coingeckoTestBeaconId,
+        name: 'coingecko test beacon',
+        description: 'test beacon',
+      };
+
+      // Then add the beaconId reference to beaconMetadata
       const coingeckoTestBeaconMetaData = {
         ...mockOpsRepo.explorer.beaconMetadata,
-        testbeacon: {
+        [coingeckoTestBeaconId]: {
           category: 'test',
           pricingCoverage: 'test',
         },
@@ -455,6 +466,16 @@ describe('writeOperationsRepository', () => {
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        apis: {
+          ...mockOpsRepo.apis,
+          ['api3']: {
+            ...mockOpsRepo.apis['api3'],
+            beacons: {
+              ...mockOpsRepo.apis['api3'].beacons,
+              ['coingeckoTestBeacon']: coingeckoTestBeacon,
+            },
+          },
+        },
         explorer: {
           ...mockOpsRepo.explorer,
           beaconMetadata: coingeckoTestBeaconMetaData,
