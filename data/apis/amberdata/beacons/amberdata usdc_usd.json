@@ -2,7 +2,7 @@
   "name": "Amberdata USDC/USD",
   "description": "Amberdata - USDC/USD - Pair",
   "beaconId": "0x327fa8736daada06c74a254d00ae9c86b47fb9291dbc467354f08b33f1fcc794",
-  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x8682ecb5b6a56bcd858582f5c585a63d05b9959e139994fb421153a4cbbd5975",
   "chains": {
     "polygon-testnet": {

@@ -2,7 +2,7 @@
   "name": "Amberdata BTC/USD",
   "description": "Amberdata - BTC/USD - Pair",
   "beaconId": "0x101e33db35471d71fa850fe8799ea6519546a511342f2ee5b98917d0de1218d7",
-  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x7edcf01bc3e962de78a29a819e75c4408aea16a3cb9f9d7b1960614cfeec39b5",
   "chains": {
     "polygon-testnet": {

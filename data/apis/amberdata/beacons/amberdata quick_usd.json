@@ -2,7 +2,7 @@
   "name": "Amberdata QUICK/USD",
   "description": "Amberdata - QUICK/USD - Pair",
   "beaconId": "0x2ca7261b8c354f876461b426851a420aeb8be344e768de017b29f8584d9e0c22",
-  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x4489027b85be3cc52a6f81a8afb6449c89cc986344fdf8ef95a0cc4d0f817454",
   "chains": {
     "polygon-testnet": {
