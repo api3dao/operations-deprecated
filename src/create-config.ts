@@ -37,6 +37,18 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
+export const getStageTimestamp = () => {
+  const now = new Date();
+  const year = now.toLocaleString('en-US', { year: '2-digit' });
+  const month = now.toLocaleString('en-US', { month: '2-digit' });
+  const day = now.toLocaleString('en-US', { day: '2-digit' });
+  const hour = now.toLocaleString('en-US', { hour: '2-digit', hour12: false });
+  // const minute = now.toLocaleString('en-US', { minute: '2-digit' }); // doesn't work
+  const minute = now.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+
+  return `${year}${month}${day}-${hour}${minute}`;
+};
+
 const buildNodeSettings = (
   apiName: string,
   cloudProviderType: string,
@@ -74,7 +86,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: 'dev',
+    stage: `prod-${getStageTimestamp()}`,
     skipValidation: true,
   };
 };
