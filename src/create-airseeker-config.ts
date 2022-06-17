@@ -27,7 +27,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 };
 
 const main = async (operationRepositoryTarget?: string) => {
-  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
 
   const beaconChoices = Object.values(operationsRepository.apis).flatMap((api) =>
     Object.values(api.beacons).map((beacon) => ({

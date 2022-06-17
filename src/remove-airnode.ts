@@ -37,7 +37,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 };
 
 const main = async () => {
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
   const baseDeploymentDirectory = join(

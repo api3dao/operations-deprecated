@@ -2,9 +2,10 @@ import { ethers } from 'ethers';
 import { SuperRefinement, z } from 'zod';
 // TODO Commented until we decide on versioning for config schema
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
+import { deriveEndpointId } from '@api3/airnode-admin';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { Api, Beacons, ChainsMetadata, Explorer, OperationsRepository, Policies, Templates } from '../types';
+import { Api, Beacons, ChainsMetadata, Explorer, Oises, OperationsRepository, Policies, Templates } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -125,13 +126,32 @@ export const apiMetadataSchema = z
 const validateBeaconsTemplateIdReferences: SuperRefinement<{
   beacons: Beacons;
   templates: Templates;
-}> = (arg, ctx) => {
-  Object.entries(arg.beacons).forEach(([beaconName, beacon]) => {
-    if (!Object.values(arg.templates).some((template) => template.templateId === beacon.templateId)) {
+}> = ({ beacons, templates }, ctx) => {
+  Object.entries(beacons).forEach(([beaconName, beacon]) => {
+    if (!Object.values(templates).some((template) => template.templateId === beacon.templateId)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced template ${beacon.templateId} is not defined in /templates`,
         path: ['beacons', beaconName],
+      });
+    }
+  });
+};
+
+const validateTemplatesEndpointIdReferences: SuperRefinement<{
+  templates: Templates;
+  ois: Oises;
+}> = async ({ templates, ois: oises }, ctx) => {
+  const endpointIdPromises = Object.values(oises).flatMap((ois) =>
+    ois.endpoints.map((endpoint) => deriveEndpointId(ois.title, endpoint.name))
+  );
+  const endpointIds = new Set(await Promise.all(endpointIdPromises));
+  Object.entries(templates).forEach(([templateName, template]) => {
+    if (!endpointIds.has(template.endpointId)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced endpointId ${template.endpointId} is not defined in /ois`,
+        path: ['templates', templateName],
       });
     }
   });
@@ -146,7 +166,8 @@ export const apiSchema = z
     ois: oisesSchema,
   })
   .strict()
-  .superRefine(validateBeaconsTemplateIdReferences);
+  .superRefine(validateBeaconsTemplateIdReferences)
+  .superRefine(validateTemplatesEndpointIdReferences);
 
 export const chainsMetadataSchema = z
   .object({
@@ -363,8 +384,8 @@ export const replaceInterpolatedVariables = (object: any): any => {
   return object;
 };
 
-export const validate = (payload: OperationsRepository) => {
-  const result = operationsRepositorySchema.safeParse(replaceInterpolatedVariables(payload));
+export const validate = async (payload: OperationsRepository) => {
+  const result = await operationsRepositorySchema.safeParseAsync(replaceInterpolatedVariables(payload));
   if (!result.success) {
     return [false, result];
   }

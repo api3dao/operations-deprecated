@@ -5,10 +5,10 @@ import { normalize } from './utils/normalization';
 import { validate } from './utils/validation';
 
 const main = async () => {
-  const rawOpsData = readOperationsRepository();
+  const rawOpsData = await readOperationsRepository();
   const conformedOpsData = normalize(rawOpsData);
 
-  const [success, logs] = validate(conformedOpsData);
+  const [success, logs] = await validate(conformedOpsData);
   if (!success) {
     console.log('Validation failed:');
     console.log(JSON.stringify(logs, null, 2));

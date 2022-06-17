@@ -4,13 +4,18 @@ import { existsSync, mkdirSync, rmdirSync } from 'fs';
 import { ethers } from 'ethers';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { readOperationsRepository } from '../../src/utils/read-operations';
+import { OperationsRepository } from '../../src/types';
 
 const tempTestPath = join(__dirname, '../temporary_test_folder');
-const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+let mockOpsRepo: OperationsRepository;
 
-it('checks if read/write cycle reproduces first read', () => {
+beforeAll(async () => {
+  mockOpsRepo = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+});
+
+it('checks if read/write cycle reproduces first read', async () => {
   writeOperationsRepository(mockOpsRepo, tempTestPath);
-  const tempWrittenRepoData = readOperationsRepository(tempTestPath);
+  const tempWrittenRepoData = await readOperationsRepository(tempTestPath);
 
   expect(tempWrittenRepoData).toEqual(mockOpsRepo);
 });
@@ -54,7 +59,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'beacons', 'coingeckoTestBeacon.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -82,7 +87,7 @@ describe('writeOperationsRepository', () => {
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'ois', 'coingeckoTestOis.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -225,7 +230,7 @@ describe('writeOperationsRepository', () => {
         )
       ).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -253,7 +258,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'templates', 'coingeckoTestTemplate.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -278,7 +283,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'apiMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -303,7 +308,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'chains', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -342,7 +347,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'api3', 'airseeker', airseekerDeploymentDate, 'secrets.env'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -366,7 +371,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'dapis', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -439,7 +444,7 @@ describe('writeOperationsRepository', () => {
         )
       ).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -486,7 +491,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -508,7 +513,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -530,7 +535,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'pricingCoverage.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });

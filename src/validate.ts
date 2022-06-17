@@ -3,9 +3,9 @@ import { runAndHandleErrors } from './utils/cli';
 import { validate } from './utils/validation';
 
 const main = async () => {
-  const rawOpsData = readOperationsRepository();
+  const rawOpsData = await readOperationsRepository();
 
-  const [success, logs] = validate(rawOpsData);
+  const [success, logs] = await validate(rawOpsData);
   if (!success) {
     console.log('Validation failed:');
     console.log(JSON.stringify(logs, null, 2));

@@ -30,7 +30,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 
 const main = async () => {
   const airkeeperVersion = require('@api3/airkeeper/package.json').version;
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
   const deploymentDirectory = join(
