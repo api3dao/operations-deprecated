@@ -50,6 +50,7 @@ describe('normalize', () => {
                 aws: {
                   ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!,
                   secrets: {
+                    filename: '',
                     ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!.secrets,
                     content: 'TEST=',
                   },
@@ -57,6 +58,7 @@ describe('normalize', () => {
                 gcp: {
                   ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!,
                   gcp: {
+                    filename: '',
                     ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!.gcp,
                     projectId: 'TEST',
                   },
@@ -66,9 +68,10 @@ describe('normalize', () => {
               airkeeper: {
                 ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper,
                 aws: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper.aws,
+                  ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
                   secrets: {
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets,
+                    filename: '',
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws.secrets,
                     content: 'TEST=',
                   },
                 },
@@ -135,9 +138,9 @@ describe('normalize', () => {
 
     it('sanitises the deployment secrets', async () => {
       const normalizedData = await normalize(unsanitizedMockData);
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws?.secrets.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws?.secrets?.content).toEqual('TEST=');
       expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.gcp?.gcp).toEqual({ projectId: '' });
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper.aws?.secrets.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets?.content).toEqual('TEST=');
     });
   });
 

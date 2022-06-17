@@ -116,6 +116,7 @@ export const airnodeDeploymentAWSSchema = z.object({
 export const airnodeDeploymentGCPSchema = z.object({
   config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
   secrets: secretsSchema.optional(),
+  gcp: z.any().optional(),
 });
 
 /**
