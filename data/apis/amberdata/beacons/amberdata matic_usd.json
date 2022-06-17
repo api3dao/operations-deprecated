@@ -1,7 +1,7 @@
 {
   "name": "Amberdata MATIC/USD",
   "description": "Amberdata - MATIC/USD - Pair",
-  "beaconId": "0x162fe56e9b798d9211bab363ed571069bcba7c415e846fc2a2cc84dfc06f98e1",
+  "beaconId": "0xeb7431cd47bf92b3f01bca784b2c080989d0de4ba1c46887f116b0b7d18f2f57",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xbecf461828b6f24927a1def2a822521cb0292092a5c698e806d138a2e4454605",
   "chains": {

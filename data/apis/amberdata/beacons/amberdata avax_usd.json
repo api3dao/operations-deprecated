@@ -1,7 +1,7 @@
 {
   "name": "Amberdata AVAX/USD",
   "description": "Amberdata - AVAX/USD - Pair",
-  "beaconId": "0x3596f9195b2e5633a75e1f93d7b1471aaf500799caeade5df03c1aa922e71380",
+  "beaconId": "0xb98ee8b25e1746789a8a130853dcbdf307a0b6b5325b1229f99359a550300f77",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xab557fdbbec6213eda2012366ebd9aef035b6cfb00f215565bebe5d3847daaef",
   "chains": {
