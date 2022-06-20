@@ -94,12 +94,12 @@ describe('writeOperationsRepository', () => {
           aws: {
             ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
             airkeeper: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws.airkeeper,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.airkeeper,
               airnodeAddress: '0x0000000000000000000000000000000000000000',
               airnodeXpub: '',
             },
             config: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws.config,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.config,
               triggers: {
                 rrp: [],
                 http: [],
@@ -107,7 +107,7 @@ describe('writeOperationsRepository', () => {
               },
             },
             secrets: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws.secrets,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets,
               filename: 'secrets.env',
               content: 'THIS IS EMPTY',
             },

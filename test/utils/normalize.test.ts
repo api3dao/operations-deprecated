@@ -70,7 +70,7 @@ describe('normalize', () => {
                   ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
                   secrets: {
                     filename: '',
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws.secrets,
+                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets,
                     content: 'TEST=',
                   },
                 },
