@@ -30,8 +30,7 @@
     "logFormat": "plain",
     "logLevel": "INFO",
     "nodeVersion": "0.6.5",
-    "stage": "prod-220616-1954",
-    "skipValidation": true
+    "stage": "prod-220616-1954"
   },
   "triggers": {
     "rrp": [],

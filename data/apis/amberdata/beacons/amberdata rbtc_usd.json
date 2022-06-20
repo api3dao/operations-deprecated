@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata RBTC/USD",
+  "description": "Amberdata - RBTC/USD - Pair",
+  "beaconId": "0x22ac626469420fcbb1d7c59fe6005246a242df8dc9939fa46853d199ffb6c162",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x21484a08b31be1c0d2bb84ced7d465f29d137321766715f950d462c8313096cf",
+  "chains": {
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

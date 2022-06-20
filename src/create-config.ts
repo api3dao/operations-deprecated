@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { format } from 'date-fns';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
@@ -38,15 +39,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 };
 
 export const getStageTimestamp = () => {
-  const now = new Date();
-  const year = now.toLocaleString('en-US', { year: '2-digit' });
-  const month = now.toLocaleString('en-US', { month: '2-digit' });
-  const day = now.toLocaleString('en-US', { day: '2-digit' });
-  const hour = now.toLocaleString('en-US', { hour: '2-digit', hour12: false });
-  // const minute = now.toLocaleString('en-US', { minute: '2-digit' }); // doesn't work
-  const minute = now.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
-
-  return `${year}${month}${day}-${hour}${minute}`;
+  return format(new Date(), 'yyMMdd-HHmm');
 };
 
 const buildNodeSettings = (
@@ -87,7 +80,6 @@ const buildNodeSettings = (
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
     stage: `prod-${getStageTimestamp()}`,
-    skipValidation: true,
   };
 };
 
