@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "apiSpecifications": {
     "components": {
-      "securitySchemes": { "Amberdata_x-api-key": { "type": "apiKey", "in": "header", "name": "x-api-key" } }
+      "securitySchemes": { "Amberdata_x-api-key": { "in": "header", "name": "x-api-key", "type": "apiKey" } }
     },
     "paths": {
       "/market/defi/lending/exchanges/information/": {
