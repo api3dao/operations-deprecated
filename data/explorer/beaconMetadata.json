@@ -2,6 +2,7 @@
   "0x09a5873667837598bd0990ba2f53d750d545ce435ecdcd44e0b4c64ab7d7d20d": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
+    "decimalPlaces": 6,
     "logos": ["AAVE", "BTC"]
   },
   "0x5435ff15ab6447e3b940b94fa582514ecb77a2bde0cad1bdebb990129df74222": {

@@ -20,7 +20,7 @@ const main = () => {
     writeJsonFile(join(basePath, `${key}.json`), value);
   });
 
-  // For Warren; generate a compound file with all templates in it
+  // docs.api3.org Dependency: Generate a compound file with all templates in it
   const allTemplates = Object.fromEntries(
     Object.values(opsFull.apis)
       .flatMap((api) => Object.values(api.templates))
@@ -28,7 +28,7 @@ const main = () => {
   );
   writeJsonFile(join(basePath, `templates.json`), allTemplates);
 
-  // For Warren; generate a directory with all templates in it
+  // docs.api3.org Dependency: generate a directory with all templates in it
   const templatesBasePath = join(basePath, 'templates');
   fs.mkdirSync(templatesBasePath);
 

@@ -58,7 +58,6 @@ describe('normalize', () => {
                 gcp: {
                   ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!,
                   gcp: {
-                    filename: '',
                     ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!.gcp,
                     projectId: 'TEST',
                   },
