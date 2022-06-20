@@ -80,7 +80,6 @@ const buildNodeSettings = (
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
     stage: `prod-${getStageTimestamp()}`,
-    skipValidation: true,
   };
 };
 
