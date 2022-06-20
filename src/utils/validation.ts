@@ -135,8 +135,8 @@ export const airnodeDeploymentSchema = z.object({
  * Describes an Airkeeper deployment to AWS
  */
 export const airkeeperDeploymentAWSSchema = z.object({
-  config: z.any(), // TODO commented until we decide on versioning: airnodeConfigSchema,
-  airkeeper: z.any(),
+  config: z.any().optional(), // TODO commented until we decide on versioning: airnodeConfigSchema,
+  airkeeper: z.any().optional(),
   secrets: secretsSchema.optional(),
 });
 
@@ -146,7 +146,7 @@ export const airkeeperDeploymentAWSSchema = z.object({
  * Describes an Airkeeper deployment
  */
 export const airkeeperDeploymentSchema = z.object({
-  aws: airkeeperDeploymentAWSSchema,
+  aws: airkeeperDeploymentAWSSchema.optional(),
 });
 
 /**
