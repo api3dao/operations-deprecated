@@ -1,82 +1,92 @@
 {
-  "0x2c76182b93ab6d486710f745bdbc0acf1c503d78921bd4babd58f93cba1257f7": {
+  "0x09a5873667837598bd0990ba2f53d750d545ce435ecdcd44e0b4c64ab7d7d20d": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
     "logos": ["AAVE", "BTC"]
   },
-  "0x6b1d92efa7d87e2185595819828f7f884ee4ff09fe468cb2100f86649aa09ebe": {
+  "0x5435ff15ab6447e3b940b94fa582514ecb77a2bde0cad1bdebb990129df74222": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["AAVE", "USD"]
   },
-  "0x43442a225f83168907c82d86d69d0799160c0bf3fc221eb9e77bd3940da3205e": {
+  "0x9c89ecb618ad9fdc70b7b4b5098e552ac3cf68d1c2be57dc4828a740c5dcdd0f": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
     "logos": ["ALPACA", "USDT"]
   },
-  "0x981fb212c961973cb0e36c2ba003ab0d43e61f01035284e8c9917a296b78dbcb": {
+  "0xb98ee8b25e1746789a8a130853dcbdf307a0b6b5325b1229f99359a550300f77": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["AVAX", "USD"]
   },
-  "0x5237b1d9dbbb7fcfabf646bcad0054abda328cee9d9d1fe2488cbed3a33cd47e": {
+  "0xb1b98dd7e10741a2ce969c6a791b7dee3973042ea72a93ca4035714c62359a58": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["BNB", "USD"]
   },
-  "0xc2daf3e2dfa9638bc83ba1229d1dd63637132cf961900fbe6d19d95e7d46ffd9": {
+  "0x01aadef3e56974c0ed8829b34353495191c1362f48bb5aa9533835c00cb2a7af": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
     "logos": ["BTC", "USD"]
   },
-  "0x6387581478cde8d52dfd3c917e686837335be858da1f6e64f0c92cab21fa2fb8": {
+  "0x14f6a018dc7efbf785775f17fb7e56391fdee62dd544fc90e1936e931c509536": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["BUSD", "USD"]
   },
-  "0xc68467f56961433c0ac24eb4cbf7296549d11f73622f47aa9e6c8bec44a36f64": {
+  "0x0077d05d10d48bce3c11597e3f6a840c13ec4a2ccdc5e85ed9d2e3b752785b56": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["CAKE", "USDT"]
   },
-  "0x74cbde08a4ffac34a664994307485258b38fc1f508111c627b4c23b95ae93d74": {
+  "0xafad3a075eb5add32f5c2ca3fa02336c8deed46ed34f7c742733f782e7b8edc0": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["CRV", "USD"]
   },
-  "0x9b7b7b53992879f20f35781ed66d8d32379348189bf3deea09a232e79f1157e2": {
+  "0x2d194d8a731a8f8501175c4430ca1ebd27263ca123bc1f1a5840186d11c1c0f5": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["JOE", "USD"]
   },
-  "0x1e455f28cd0c027f0894aa67b5883d78859c7b39d6977a16fbe1e25a61ab2a6c": {
+  "0xeb7431cd47bf92b3f01bca784b2c080989d0de4ba1c46887f116b0b7d18f2f57": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["MATIC", "USD"]
   },
-  "0x27d0e093b6245c065ef1a4770614fc05e0c2dee751a3b5e687e80373c0c5b333": {
+  "0x4284bc86deabbdf748734f50cae486578bf66b945d6c332197185353005562be": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["OOKI", "ETH"]
   },
-  "0x1c47bd6e5e6ff0136e38447aef7b716da28cb5455a9ea0e8bdf6b6958b2f13c4": {
+  "0x97f52fb8f0e1fb76624e4d7b2ae127381b2f9cd40b5c24f25ef9e3b0bf9871b0": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
     "logos": ["QUICK", "USD"]
   },
-  "0x0be1962c8154cc61e1986dc6a6a50209a378b5439f0f9249474d36439b647a24": {
+  "0x20a1447a7f5d8c039e49ac9007329a68b6e4df8597c1feac6d59586850526749": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-two",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["RBTC", "BTC"]
   },
-  "0x40a6bd691e0db6fd3ada8e8e873ec8e64bb3670a67146c4b339513fbef63fd00": {
+  "0x22ac626469420fcbb1d7c59fe6005246a242df8dc9939fa46853d199ffb6c162": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["RBTC", "USD"]
   },
-  "0x37c86d5b00fc6eb0a74418c183302a3778e07b1590bc781f8bc663829b01850d": {
+  "0x47769628e7c5b0a4e5ef47ee4b22db56cb06a3b651e8884ef456ccf57efe9037": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-three",
+    "pricingCoverage": "test-pricing-set-free",
     "logos": ["SOL", "USD"]
+  },
+  "0x30d5a996aaf0c3371a8034262a6a125e315f75d177dd2c83439d65ae2b406357": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": "test-pricing-set-free",
+    "logos": ["USDC", "USD"]
+  },
+  "0x0119a7670feabc9f887e8949efb47faeb41d21413a13027474850e0cc7397321": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": "test-pricing-set-free",
+    "logos": ["XVS", "USDT"]
   }
 }
