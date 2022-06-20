@@ -2,7 +2,8 @@
   "0x09a5873667837598bd0990ba2f53d750d545ce435ecdcd44e0b4c64ab7d7d20d": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["AAVE", "BTC"]
+    "logos": ["AAVE", "BTC"],
+    "decimalPlaces": "8"
   },
   "0x5435ff15ab6447e3b940b94fa582514ecb77a2bde0cad1bdebb990129df74222": {
     "category": "Cryptocurrency",
@@ -12,7 +13,8 @@
   "0x9c89ecb618ad9fdc70b7b4b5098e552ac3cf68d1c2be57dc4828a740c5dcdd0f": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["ALPACA", "USDT"]
+    "logos": ["ALPACA", "USDT"],
+    "decimalPlaces": "4"
   },
   "0xb98ee8b25e1746789a8a130853dcbdf307a0b6b5325b1229f99359a550300f77": {
     "category": "Cryptocurrency",
@@ -32,7 +34,8 @@
   "0x14f6a018dc7efbf785775f17fb7e56391fdee62dd544fc90e1936e931c509536": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["BUSD", "USD"]
+    "logos": ["BUSD", "USD"],
+    "decimalPlaces": "4"
   },
   "0x0077d05d10d48bce3c11597e3f6a840c13ec4a2ccdc5e85ed9d2e3b752785b56": {
     "category": "Cryptocurrency",
@@ -42,22 +45,26 @@
   "0xafad3a075eb5add32f5c2ca3fa02336c8deed46ed34f7c742733f782e7b8edc0": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["CRV", "USD"]
+    "logos": ["CRV", "USD"],
+    "decimalPlaces": "4"
   },
   "0x2d194d8a731a8f8501175c4430ca1ebd27263ca123bc1f1a5840186d11c1c0f5": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["JOE", "USD"]
+    "logos": ["JOE", "USD"],
+    "decimalPlaces": "4"
   },
   "0xeb7431cd47bf92b3f01bca784b2c080989d0de4ba1c46887f116b0b7d18f2f57": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["MATIC", "USD"]
+    "logos": ["MATIC", "USD"],
+    "decimalPlaces": "4"
   },
   "0x4284bc86deabbdf748734f50cae486578bf66b945d6c332197185353005562be": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["OOKI", "ETH"]
+    "logos": ["OOKI", "ETH"],
+    "decimalPlaces": "8"
   },
   "0x97f52fb8f0e1fb76624e4d7b2ae127381b2f9cd40b5c24f25ef9e3b0bf9871b0": {
     "category": "Cryptocurrency",
@@ -67,7 +74,8 @@
   "0x20a1447a7f5d8c039e49ac9007329a68b6e4df8597c1feac6d59586850526749": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["RBTC", "BTC"]
+    "logos": ["RBTC", "BTC"],
+    "decimalPlaces": "8"
   },
   "0x22ac626469420fcbb1d7c59fe6005246a242df8dc9939fa46853d199ffb6c162": {
     "category": "Cryptocurrency",
@@ -82,7 +90,8 @@
   "0x30d5a996aaf0c3371a8034262a6a125e315f75d177dd2c83439d65ae2b406357": {
     "category": "Cryptocurrency",
     "pricingCoverage": "test-pricing-set-free",
-    "logos": ["USDC", "USD"]
+    "logos": ["USDC", "USD"],
+    "decimalPlaces": "8"
   },
   "0x0119a7670feabc9f887e8949efb47faeb41d21413a13027474850e0cc7397321": {
     "category": "Cryptocurrency",
