@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
 import { SuperRefinement, z } from 'zod';
+import { deriveEndpointId } from '@api3/airnode-admin';
 // TODO Commented until we decide on versioning for config schema
 import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
-import { deriveEndpointId } from '@api3/airnode-admin';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
-import { Api, Beacons, ChainsMetadata, Explorer, Oises, OperationsRepository, Policies, Templates } from '../types';
+import { Apis, Beacons, Chains, Dapis, Explorer, Oises, OperationsRepository, Policies, Templates } from '../types';
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
@@ -169,6 +169,8 @@ export const apiSchema = z
   .superRefine(validateBeaconsTemplateIdReferences)
   .superRefine(validateTemplatesEndpointIdReferences);
 
+export const apisSchema = z.record(apiSchema);
+
 export const chainsMetadataContractsSchema = z.object({
   AirnodeRrp: z.string().optional(),
   RrpBeaconServer: z.string().optional(),
@@ -190,6 +192,8 @@ export const chainsMetadataSchema = z
     explorerUrl: z.string().optional(),
   })
   .strict();
+
+export const chainsSchema = z.record(chainsMetadataSchema);
 
 // Deployment date -> [airkeeper.json, secrets.env]
 const airseekerDeploymentSetSchema = z
@@ -219,6 +223,9 @@ const validateBeaconSetIds = (beaconSets: Record<string, string[]>, ctx: z.Refin
     }
   });
 };
+
+// Chain name => Dapi Name => Data feed Id (beacon or beaconSet)
+export const dapisSchema = z.record(z.record(z.string()));
 
 export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(validateBeaconSetIds);
 
@@ -286,8 +293,8 @@ export const policiesSchema = z
   .strict();
 
 const validateApisBeaconsChainReferences: SuperRefinement<{
-  apis: Record<string, Api>;
-  chains: Record<string, ChainsMetadata>;
+  apis: Apis;
+  chains: Chains;
 }> = ({ apis, chains }, ctx) => {
   Object.entries(apis).map(([apiName, api]) => {
     Object.entries(api.beacons).forEach(([beaconName, beacon]) => {
@@ -304,8 +311,23 @@ const validateApisBeaconsChainReferences: SuperRefinement<{
   });
 };
 
+const validateDapisChainReferences: SuperRefinement<{
+  dapis: Dapis;
+  chains: Chains;
+}> = ({ dapis, chains }, ctx) => {
+  Object.keys(dapis).forEach((chainName) => {
+    if (!Object.keys(chains).includes(chainName)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced chain ${chainName} is not defined in /data/chains`,
+        path: ['dapis'],
+      });
+    }
+  });
+};
+
 const validateBeaconMetadataReferences: SuperRefinement<{
-  apis: Record<string, Api>;
+  apis: Apis;
   explorer: Explorer;
 }> = ({ apis, explorer }, ctx) => {
   Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
@@ -336,7 +358,7 @@ const validateBeaconMetadataReferences: SuperRefinement<{
 };
 
 const validateBeaconSetsReferences: SuperRefinement<{
-  apis: Record<string, Api>;
+  apis: Apis;
   explorer: Explorer;
 }> = ({ apis, explorer }, ctx) => {
   Object.entries(explorer.beaconSets).forEach(([beaconSetId, beaconIds]) => {
@@ -360,8 +382,8 @@ const validateBeaconSetsReferences: SuperRefinement<{
 };
 
 const validatePoliciesDatafeedReferences: SuperRefinement<{
-  apis: Record<string, Api>;
-  dapis: Record<string, Record<string, string>>;
+  apis: Apis;
+  dapis: Dapis;
   policies?: Record<string, Policies>;
 }> = ({ apis, dapis, policies: policiesByChain }, ctx) => {
   Object.entries(policiesByChain || {}).forEach(([chainName, policiesByType]) => {
@@ -407,15 +429,16 @@ const validatePoliciesDatafeedReferences: SuperRefinement<{
 
 export const operationsRepositorySchema = z
   .object({
-    apis: z.record(apiSchema),
-    chains: z.record(chainsMetadataSchema),
+    apis: apisSchema,
+    chains: chainsSchema,
     api3: api3Schema.optional(),
-    dapis: z.record(z.record(z.string())),
+    dapis: dapisSchema,
     explorer: explorerSchema,
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
   .superRefine(validateApisBeaconsChainReferences)
+  .superRefine(validateDapisChainReferences)
   .superRefine(validateBeaconMetadataReferences)
   .superRefine(validateBeaconSetsReferences)
   .superRefine(validatePoliciesDatafeedReferences);

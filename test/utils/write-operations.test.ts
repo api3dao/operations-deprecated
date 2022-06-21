@@ -354,6 +354,12 @@ describe('writeOperationsRepository', () => {
 
   describe('dapis', () => {
     it('writes changes to dapis', async () => {
+      const coingeckoTestChain = {
+        ...mockOpsRepo.chains.ropsten,
+        name: 'testChain',
+        id: '9999',
+      };
+
       const coingeckoTestDapi = {
         ...mockOpsRepo.dapis.polygon,
         beaconId: 'test',
@@ -361,6 +367,10 @@ describe('writeOperationsRepository', () => {
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        chains: {
+          ...mockOpsRepo.chains,
+          ['testchain']: coingeckoTestChain,
+        },
         dapis: {
           ...mockOpsRepo.dapis,
           ['testchain']: coingeckoTestDapi,
