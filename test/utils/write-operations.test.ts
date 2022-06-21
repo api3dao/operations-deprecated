@@ -496,15 +496,46 @@ describe('writeOperationsRepository', () => {
     });
 
     it('writes changes to beaconSets', async () => {
+      // Add new test beacon first
+      const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+      const coingeckoTestBeacon = {
+        ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
+        beaconId: coingeckoTestBeaconId,
+        name: 'coingecko test beacon',
+        description: 'test beacon',
+      };
+      // Then add the beaconId reference to beaconMetadata
+      const coingeckoTestBeaconMetaData = {
+        ...mockOpsRepo.explorer.beaconMetadata,
+        [coingeckoTestBeaconId]: {
+          category: 'test',
+          pricingCoverage: 'test',
+        },
+      };
+      // Lastly add the new beaconSet
+      const coingeckoTestBeaconSetId = ethers.utils.keccak256(
+        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [[coingeckoTestBeaconId]])
+      );
       const coingeckoTestBeaconSets = {
         ...mockOpsRepo.explorer.beaconSets,
-        testbeacon: [],
+        [coingeckoTestBeaconSetId]: [coingeckoTestBeaconId],
       };
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        apis: {
+          ...mockOpsRepo.apis,
+          ['api3']: {
+            ...mockOpsRepo.apis['api3'],
+            beacons: {
+              ...mockOpsRepo.apis['api3'].beacons,
+              ['coingeckoTestBeacon']: coingeckoTestBeacon,
+            },
+          },
+        },
         explorer: {
           ...mockOpsRepo.explorer,
+          beaconMetadata: coingeckoTestBeaconMetaData,
           beaconSets: coingeckoTestBeaconSets,
         },
       };

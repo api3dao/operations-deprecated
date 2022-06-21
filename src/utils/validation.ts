@@ -208,7 +208,19 @@ export const api3Schema = z
   })
   .strict();
 
-export const beaconSetSchema = z.record(z.array(z.string()));
+const validateBeaconSetIds = (beaconSets: Record<string, string[]>, ctx: z.RefinementCtx): void => {
+  Object.entries(beaconSets).forEach(([beaconSetId, beaconIds]) => {
+    const derivedBeaconSetId = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [beaconIds]));
+    if (beaconSetId !== derivedBeaconSetId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Invalid beaconSetId: ${beaconSetId}`,
+      });
+    }
+  });
+};
+
+export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(validateBeaconSetIds);
 
 export const explorerSchema = z
   .object({
@@ -228,7 +240,7 @@ export const explorerSchema = z
         })
       )
     ),
-    beaconSets: beaconSetSchema,
+    beaconSets: beaconSetsSchema,
   })
   .strict();
 
@@ -273,19 +285,21 @@ export const policiesSchema = z
   })
   .strict();
 
-const validateApi3BeaconsChainReferences: SuperRefinement<{
+const validateApisBeaconsChainReferences: SuperRefinement<{
   apis: Record<string, Api>;
   chains: Record<string, ChainsMetadata>;
 }> = ({ apis, chains }, ctx) => {
-  Object.entries(apis['api3'].beacons).forEach(([beaconName, beacon]) => {
-    Object.keys(beacon.chains).forEach((chainName) => {
-      if (!Object.keys(chains).includes(chainName)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Referenced chain ${chainName} is not defined in /data/chains`,
-          path: ['apis', 'api3', 'beacons', beaconName],
-        });
-      }
+  Object.entries(apis).map(([apiName, api]) => {
+    Object.entries(api.beacons).forEach(([beaconName, beacon]) => {
+      Object.keys(beacon.chains).forEach((chainName) => {
+        if (!Object.keys(chains).includes(chainName)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `Referenced chain ${chainName} is not defined in /data/chains`,
+            path: ['apis', apiName, 'beacons', beaconName],
+          });
+        }
+      });
     });
   });
 };
@@ -295,18 +309,44 @@ const validateBeaconMetadataReferences: SuperRefinement<{
   explorer: Explorer;
 }> = ({ apis, explorer }, ctx) => {
   Object.keys(explorer.beaconMetadata).forEach((beaconId) => {
-    // Check if /data/apis/api3/beacons contains a file with the beaconId
+    // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
     if (
-      !Object.values(apis['api3'].beacons).some((beacon) => {
-        return beacon.beaconId === beaconId;
-      })
+      !Object.values(apis).some((api) =>
+        Object.values(api.beacons).some((beacon) => {
+          return beacon.beaconId === beaconId;
+        })
+      )
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: `Referenced beacon ${beaconId} is not defined in /data/apis/api3/beacons`,
+        message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
         path: ['explorer', 'beaconMetadata', beaconId],
       });
     }
+  });
+};
+
+const validateBeaconSetsReferences: SuperRefinement<{
+  apis: Record<string, Api>;
+  explorer: Explorer;
+}> = ({ apis, explorer }, ctx) => {
+  Object.entries(explorer.beaconSets).forEach(([beaconSetId, beaconIds]) => {
+    beaconIds.forEach((beaconId) => {
+      // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
+      if (
+        !Object.values(apis).some((api) =>
+          Object.values(api.beacons).some((beacon) => {
+            return beacon.beaconId === beaconId;
+          })
+        )
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
+          path: ['explorer', 'beaconSets', beaconSetId],
+        });
+      }
+    });
   });
 };
 
@@ -335,15 +375,17 @@ const validatePoliciesDatafeedReferences: SuperRefinement<{
             }
             break;
           case 'dataFeeds'.toLowerCase():
-            // Check if /data/apis/api3/beacons contains a file with the beaconId
+            // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
             if (
-              !Object.values(apis['api3'].beacons).some((beacon) => {
-                return beacon.beaconId === policy.dataFeedId && Object.keys(beacon.chains).includes(chainName);
-              })
+              !Object.values(apis).some((api) =>
+                Object.values(api.beacons).some((beacon) => {
+                  return beacon.beaconId === policy.dataFeedId && Object.keys(beacon.chains).includes(chainName);
+                })
+              )
             ) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: `Referenced beacon ${policy.dataFeedId} is not defined in /data/apis/api3/beacons`,
+                message: `Referenced beacon ${policy.dataFeedId} is not defined in /data/apis/<apiName>/beacons`,
                 path: ['policies', chainName, 'dataFeeds', policyId],
               });
             }
@@ -364,8 +406,9 @@ export const operationsRepositorySchema = z
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
-  .superRefine(validateApi3BeaconsChainReferences)
+  .superRefine(validateApisBeaconsChainReferences)
   .superRefine(validateBeaconMetadataReferences)
+  .superRefine(validateBeaconSetsReferences)
   .superRefine(validatePoliciesDatafeedReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
