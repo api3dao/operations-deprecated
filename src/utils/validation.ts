@@ -1,9 +1,11 @@
 import { z } from 'zod';
 // TODO Commented until we decide on versioning for config schema
-import { oisSchema /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator/dist/cjs/src/ois';
+import { ois /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
 // import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
 // import { configSchema as airseekerConfigSchema } from './airseeker-validation';
 import { OperationsRepository } from '../types';
+
+const { oisSchema } = ois;
 
 /**
  * Common EVM Data Schema
@@ -44,14 +46,14 @@ export const topUpWalletSchema = z
  *
  * A description of a parent beacon's on-chain presence and associated resources.
  *
- * active: Whether the beacon is currently actively being updated
- * sponsor: The `sponsor` address (https://docs.api3.org/airnode/latest/concepts/sponsor.html#sponsoraddress)
- * updateConditionPercentage: The API provider's Airkeeper update condition percentage
- * displayDisabled: Should the beacon be displayed in UI applications (TODO this should be moved to explorerMetatda)
- * airseekerConfig: API3's Airkseeker update configuration, including:
- * airseekerConfig.deviationThreshold: API3's Airseeker update threshold
- * airseekerConfig.heartbeatInterval: The interval at which a forced update will be made regardless of deviation
- * airseekerConfig.updateInterval: How often API3's Airseeker checks the deviation
+ * @active: Whether the beacon is currently actively being updated
+ * @sponsor: The `sponsor` address (https://docs.api3.org/airnode/latest/concepts/sponsor.html#sponsoraddress)
+ * @updateConditionPercentage: The API provider's Airkeeper update condition percentage
+ * @displayDisabled: Should the beacon be displayed in UI applications (TODO this should be moved to explorerMetatda)
+ * @airseekerConfig: API3's Airkseeker update configuration, including:
+ * @airseekerConfig.deviationThreshold: API3's Airseeker update threshold
+ * @airseekerConfig.heartbeatInterval: The interval at which a forced update will be made regardless of deviation
+ * @airseekerConfig.updateInterval: How often API3's Airseeker checks the deviation
  */
 export const extendedChainDescriptionSchema = z
   .object({
@@ -73,8 +75,8 @@ export const extendedChainDescriptionSchema = z
 /**
  * Beacon Schema
  *
- * name: A name for a beacon, formatted for UI display.
- * description: A description for a beacon, formatted for UI display.
+ * @name: A name for a beacon, formatted for UI display.
+ * @description: A description for a beacon, formatted for UI display.
  */
 export const beaconSchema = z
   .object({
@@ -181,11 +183,11 @@ export const templateDecodedParametersSchema = z.object({
 /**
  * Template Schema
  *
- * name: A UI-suitable formatted name
- * templateId: Referenced by beacons and used to generate configuration files for Airnode, Airkeeper and Airseeker
- * endpointId: References an OIS-based endpoint: https://docs.api3.org/airnode/latest/concepts/endpoint.html#endpointid
- * parameters: Encoded parameters - derived from `decodedParameters` and used in consuming applications
- * decodedParameters: Used as an input into the generation of `parameters`. See https://docs.api3.org/airnode/latest/reference/deployment-files/config-json.html#triggers
+ * @name: A UI-suitable formatted name
+ * @templateId: Referenced by beacons and used to generate configuration files for Airnode, Airkeeper and Airseeker
+ * @endpointId: References an OIS-based endpoint: https://docs.api3.org/airnode/latest/concepts/endpoint.html#endpointid
+ * @parameters: Encoded parameters - derived from `decodedParameters` and used in consuming applications
+ * @decodedParameters: Used as an input into the generation of `parameters`. See https://docs.api3.org/airnode/latest/reference/deployment-files/config-json.html#triggers
  */
 export const templateSchema = z
   .object({
@@ -208,7 +210,7 @@ export const templatesSchema = z.record(templateSchema);
  * OISes Schema
  *
  * OISes are keyed by a composite of their `title` and `version`.
- * For more info, visit: https://docs.api3.org/ois
+ * For more information, visit: https://docs.api3.org/ois
  */
 export const oisesSchema = z.record(oisSchema);
 
@@ -217,15 +219,15 @@ export const oisesSchema = z.record(oisSchema);
  *
  * The API provider metadata provides information about an API provider.
  *
- * name: A UI-suitably formatted name for the provider
- * active: Whether any of the provider's beacons are active
- * description: A UI-suitably formatted description of the API provider
- * homepage: The API provider's homepage
- * airnode: The API Provider's Airnode address, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-address
- * xpub: The extended public key of the API Provider's Airnode, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-xpub
- * logoPath: The API Provider's web-accessible logo as a URL
- * orderLogoPath: An alternative logo for the API Provider for light backgrounds
- * maxSubscriptionPeriod: The maximum period that a requester contract may be allowed to read from the API provider's beacons in months
+ * @name: A UI-suitably formatted name for the provider
+ * @active: Whether any of the provider's beacons are active
+ * @description: A UI-suitably formatted description of the API provider
+ * @homepage: The API provider's homepage
+ * @airnode: The API Provider's Airnode address, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-address
+ * @xpub: The extended public key of the API Provider's Airnode, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-xpub
+ * @logoPath: The API Provider's web-accessible logo as a URL
+ * @orderLogoPath: An alternative logo for the API Provider for light backgrounds
+ * @maxSubscriptionPeriod: The maximum period that a requester contract may be allowed to read from the API provider's beacons in months
  */
 export const apiMetadataSchema = z
   .object({
@@ -261,17 +263,17 @@ export const apiSchema = z
  *
  * Data describing chains served by operations services
  *
- * name: The name of the chain as used by `ethers`, eg. 'polygon-mumbai'
- * fullName: The UI-suitable name of the chain, eg. "Polygon Mumbai Testnet"
- * decimalPlaces: The number of decimal places to display for the native token (useful for chains with high native token
- *                values. Defaults to 2 if unspecified.
- * id: The chainId number of the chain
- * contracts: Contract addresses deployed on the target chain, keyed by their name
- * nativeToken: The symbol of the native token of the target chain, eg. "BTC"
- * logoPath: A URL pointing to the logo for the chain
- * orderLogoPath: A URL pointing to an alternative logo for the chain, useful for light backgrounds
- * testnet: Whether the target chain is a testnet
- * explorerUrl: A base URL pointing to an explorer for the target chain
+ * @name: The name of the chain as used by `ethers`, eg. 'polygon-mumbai'
+ * @fullName: The UI-suitable name of the chain, eg. "Polygon Mumbai Testnet"
+ * @decimalPlaces: The number of decimal places to display for the native token (useful for chains with high native token
+ *                 values. Defaults to 2 if unspecified.
+ * @id: The chainId number of the chain
+ * @contracts: Contract addresses deployed on the target chain, keyed by their name
+ * @nativeToken: The symbol of the native token of the target chain, eg. "BTC"
+ * @logoPath: A URL pointing to the logo for the chain
+ * @orderLogoPath: A URL pointing to an alternative logo for the chain, useful for light backgrounds
+ * @testnet: Whether the target chain is a testnet
+ * @explorerUrl: A base URL pointing to an explorer for the target chain
  */
 export const chainsMetadataSchema = z
   .object({
