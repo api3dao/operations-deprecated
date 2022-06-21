@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { format } from 'date-fns';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
@@ -35,6 +36,10 @@ const questions = (choices: Choice[]): PromptObject[] => {
       initial: false,
     },
   ];
+};
+
+export const getStageTimestamp = () => {
+  return format(new Date(), 'yyMMdd-HHmm');
 };
 
 const buildNodeSettings = (
@@ -74,7 +79,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: 'dev',
+    stage: `prod-${getStageTimestamp()}`,
   };
 };
 

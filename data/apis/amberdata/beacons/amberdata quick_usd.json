@@ -1,10 +1,16 @@
 {
   "name": "Amberdata QUICK/USD",
   "description": "Amberdata - QUICK/USD - Pair",
-  "beaconId": "0x2ca7261b8c354f876461b426851a420aeb8be344e768de017b29f8584d9e0c22",
-  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "beaconId": "0x97f52fb8f0e1fb76624e4d7b2ae127381b2f9cd40b5c24f25ef9e3b0bf9871b0",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x4489027b85be3cc52a6f81a8afb6449c89cc986344fdf8ef95a0cc4d0f817454",
   "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
     "polygon-testnet": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",

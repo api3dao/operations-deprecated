@@ -1,10 +1,22 @@
 {
   "name": "Amberdata SOL/USD",
   "description": "Amberdata - SOL/USD - Pair",
-  "beaconId": "0x40d436cf8baf193ebf2b81ed8ec257e1ddc2b2a6f0313d2fc1bf6b32cc92ebde",
-  "airnodeAddress": "0x5b1243308f56156553F067D354b162f71E581b28",
+  "beaconId": "0x47769628e7c5b0a4e5ef47ee4b22db56cb06a3b651e8884ef456ccf57efe9037",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x2a14082e57aa76ce8bec55b520da41756dc54fb1d813fdca3a020b058d8a4160",
   "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "avalanche-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
     "polygon-testnet": {
       "active": true,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
