@@ -296,7 +296,7 @@ const validateApisBeaconsChainReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;
 }> = ({ apis, chains }, ctx) => {
-  Object.entries(apis).map(([apiName, api]) => {
+  Object.entries(apis).forEach(([apiName, api]) => {
     Object.entries(api.beacons).forEach(([beaconName, beacon]) => {
       Object.keys(beacon.chains).forEach((chainName) => {
         if (!Object.keys(chains).includes(chainName)) {
