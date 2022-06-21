@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { cliPrint, runAndHandleErrors } from './utils/cli';
@@ -36,12 +36,12 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
       ],
     },
     {
-      type: (prev) => (prev.includes('aws') ? 'text' : null),
+      type: (prev, values) => (values.cloudProviders.includes('aws') ? 'text' : null),
       name: 'awsSignedDataApiKey',
       message: 'Enter your AWS Signed Data API Key',
     },
     {
-      type: (prev) => (prev.includes('gcp') ? 'text' : null),
+      type: (prev, values) => (values.cloudProviders.includes('gcp') ? 'text' : null),
       name: 'gcpSignedDataApiKey',
       message: 'Enter your GCP Signed Data API Key',
     },
@@ -51,8 +51,8 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
-  const apiData = operationsRepository.apis[response.name];
 
+  const apiData = operationsRepository.apis[response.name];
   const baseDeploymentDirectory = join(
     __dirname,
     '..',
@@ -64,111 +64,39 @@ const main = async () => {
     'airnode'
   );
 
-  /// AWS Test ///
+  for (const cloudProvider of response.cloudProviders) {
+    console.log(`⏳ - Testing Airnode on ${cloudProvider}...`);
 
-  if (response.cloudProviders.includes('aws')) {
-    console.log(`⏳ - Testing AWS Airnode...`);
+    const deploymentDirectory = join(baseDeploymentDirectory, cloudProvider);
 
-    const deploymentDirectoryAWS = join(baseDeploymentDirectory, 'aws');
-    const receiptPathAWS = join(deploymentDirectoryAWS, 'receipt.json');
+    const receiptPath = join(deploymentDirectory, 'receipt.json');
+    if (!existsSync(receiptPath)) return cliPrint.error('🛑 Airnode reciept does not exist for AWS');
 
-    if (!existsSync(receiptPathAWS)) return cliPrint.error('🛑 Airnode reciept does not exist for AWS');
+    const receipt = require(receiptPath);
 
-    const receipt = require(receiptPathAWS);
-
-    const testRequests = Object.values(apiData.templates).map((template) => ({
-      url: `${receipt.api.httpSignedDataGatewayUrl}` + `/${template.endpointId}`,
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': response.awsSignedDataApiKey,
-      },
-      data: {
-        encodedParameters: template.parameters,
-      },
-      templateName: template.name,
-    }));
-
-    const testFullfillments = await Promise.allSettled(
-      testRequests.map((request) => {
-        console.log(`⏳ - Testing AWS Airnode... ${request.url} with template ${request.templateName}`);
-        return axios(request);
-      })
-    );
-
-    const successfulFulfillments = testFullfillments.filter(
-      (result) => result.status === 'fulfilled' && result.value.status === 200
-    );
-
-    successfulFulfillments.forEach((fulfillment) => {
-      if (fulfillment.status === 'fulfilled') {
-        console.log(
-          `✅ - Successfully tested endpoint ${fulfillment.value.config.url} with response ${JSON.stringify(
-            fulfillment.value.data
-          )}`
-        );
+    for (const template of Object.values(apiData.templates)) {
+      console.log(`⏳ - Testing Airnode... ${receipt.api.httpSignedDataGatewayUrl} with template ${template.name}`);
+      const request = {
+        url: `${receipt.api.httpSignedDataGatewayUrl}` + `/${template.endpointId}`,
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': cloudProvider === 'aws' ? response.awsSignedDataApiKey : response.gcpSignedDataApiKey,
+        },
+        data: {
+          encodedParameters: template.parameters,
+        },
+      } as AxiosRequestConfig;
+      const apiResponse = await axios(request);
+      if (apiResponse.status !== 200) {
+        return cliPrint.error(`🛑 - Airnode failed with status ${apiResponse.status}`);
       }
-    });
-
-    if (successfulFulfillments.length !== testFullfillments.length) return cliPrint.error('🛑 AWS Airnode test failed');
-
-    console.log(`✅ - AWS Airnode test complete`);
-  }
-
-  /// GCP Test ///
-
-  if (response.cloudProviders.includes('gcp')) {
-    console.log(`⏳ - Testing GCP Airnode...`);
-
-    const deploymentDirectoryGCP = join(baseDeploymentDirectory, 'gcp');
-    const receiptPathGCP = join(deploymentDirectoryGCP, 'receipt.json');
-
-    if (!existsSync(receiptPathGCP)) return cliPrint.error('🛑 Airnode reciept does not exist for GCP');
-
-    const receipt = require(receiptPathGCP);
-
-    const testRequests = Object.values(apiData.templates).map((template) => ({
-      url: `${receipt.api.httpSignedDataGatewayUrl}` + `/${template.endpointId}`,
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': response.gcpSignedDataApiKey,
-      },
-      data: {
-        encodedParameters: template.parameters,
-      },
-      templateName: template.name,
-    }));
-
-    const testFullfillments = await Promise.allSettled(
-      testRequests.map((request) => {
-        console.log(`⏳ - Testing GCP Airnode... ${request.url} with template ${request.templateName}`);
-        return axios(request);
-      })
-    );
-
-    const successfulFulfillments = testFullfillments.filter(
-      (result) => result.status === 'fulfilled' && result.value.status === 200
-    );
-
-    successfulFulfillments.forEach((fulfillment) => {
-      if (fulfillment.status === 'fulfilled') {
-        console.log(
-          `✅ - Successfully tested endpoint ${fulfillment.value.config.url} with response ${JSON.stringify(
-            fulfillment.value.data
-          )}`
-        );
-      }
-    });
-
-    if (successfulFulfillments.length !== testFullfillments.length) return cliPrint.error('🛑 GCP Airnode test failed');
-
-    console.log(`✅ - GCP Airnode test complete`);
+      console.log(`✅ - template ${template.name} test passed with data ${JSON.stringify(apiResponse.data)}`);
+    }
   }
 
   console.log(
-    ['✅ - Airnode deployment successfully tested for the following cloud providers:', ...response.cloudProviders],
-    join('\n')
+    ['✅ - Airnode deployment tested for the following cloud providers:', ...response.cloudProviders].join('\n')
   );
 };
 
