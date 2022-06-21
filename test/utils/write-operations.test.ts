@@ -461,11 +461,12 @@ describe('writeOperationsRepository', () => {
       };
 
       // Then add the beaconId reference to beaconMetadata
+      const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
       const coingeckoTestBeaconMetaData = {
         ...mockOpsRepo.explorer.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
-          pricingCoverage: 'test',
+          pricingCoverage: 'test-pricing-set',
         },
       };
 
@@ -484,6 +485,10 @@ describe('writeOperationsRepository', () => {
         explorer: {
           ...mockOpsRepo.explorer,
           beaconMetadata: coingeckoTestBeaconMetaData,
+          pricingCoverage: {
+            ...mockOpsRepo.explorer.pricingCoverage,
+            ...testPricingCoverage,
+          },
         },
       };
 
@@ -505,11 +510,12 @@ describe('writeOperationsRepository', () => {
         description: 'test beacon',
       };
       // Then add the beaconId reference to beaconMetadata
+      const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
       const coingeckoTestBeaconMetaData = {
         ...mockOpsRepo.explorer.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
-          pricingCoverage: 'test',
+          pricingCoverage: 'test-pricing-set',
         },
       };
       // Lastly add the new beaconSet
@@ -537,6 +543,10 @@ describe('writeOperationsRepository', () => {
           ...mockOpsRepo.explorer,
           beaconMetadata: coingeckoTestBeaconMetaData,
           beaconSets: coingeckoTestBeaconSets,
+          pricingCoverage: {
+            ...mockOpsRepo.explorer.pricingCoverage,
+            ...testPricingCoverage,
+          },
         },
       };
 

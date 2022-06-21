@@ -308,7 +308,7 @@ const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Record<string, Api>;
   explorer: Explorer;
 }> = ({ apis, explorer }, ctx) => {
-  Object.keys(explorer.beaconMetadata).forEach((beaconId) => {
+  Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
     // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
     if (
       !Object.values(apis).some((api) =>
@@ -320,6 +320,15 @@ const validateBeaconMetadataReferences: SuperRefinement<{
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
+        path: ['explorer', 'beaconMetadata'],
+      });
+    }
+
+    // Check if pricing coverage exists in explorer/pricingCoverage.json
+    if (!explorer.pricingCoverage[beaconMetadata.pricingCoverage]) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced pricing coverage ${beaconMetadata.pricingCoverage} is not defined in /data/explorer/pricingCoverage.json`,
         path: ['explorer', 'beaconMetadata', beaconId],
       });
     }
