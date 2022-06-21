@@ -169,13 +169,19 @@ export const apiSchema = z
   .superRefine(validateBeaconsTemplateIdReferences)
   .superRefine(validateTemplatesEndpointIdReferences);
 
+export const chainsMetadataContractsSchema = z.object({
+  AirnodeRrp: z.string().optional(),
+  RrpBeaconServer: z.string().optional(),
+  DapiServer: z.string(),
+});
+
 export const chainsMetadataSchema = z
   .object({
     name: z.string(),
     fullName: z.string(),
     decimalPlaces: z.number(),
     id: z.string(),
-    contracts: z.record(z.string()),
+    contracts: chainsMetadataContractsSchema,
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
