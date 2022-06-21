@@ -89,9 +89,8 @@ const buildSecretsArray = (
   oisSecrets: string[],
   airnodeHeartbeat: boolean
 ) => {
-  const apiNameUpperCase = sanitiseFilename(apiName).toUpperCase();
-  const cloudProviderUpperCase = cloudProviderType.toUpperCase();
-  const secretAppend = `${apiNameUpperCase}_${cloudProviderUpperCase}`;
+  const sanitisedApiName = sanitiseFilename(apiName);
+  const secretAppend = `${sanitisedApiName.toUpperCase()}_${cloudProviderType.toUpperCase()}`;
 
   return [
     `AIRNODE_WALLET_MNEMONIC=`,
@@ -99,7 +98,7 @@ const buildSecretsArray = (
     ...(airnodeHeartbeat
       ? [
           `HEARTBEAT_KEY_${secretAppend}=`,
-          `HEARTBEAT_ID_${secretAppend}=${getFormattedTimestamp()}-${cloudProviderUpperCase}-${apiNameUpperCase}`,
+          `HEARTBEAT_ID_${secretAppend}=${getFormattedTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
           `HEARTBEAT_URL_${secretAppend}=https://heartbeats.api3data.link/heartbeats`,
         ]
       : []),
