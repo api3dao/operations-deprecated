@@ -1,7 +1,7 @@
 // Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
 import { mkdirSync, rmdirSync } from 'fs';
-import prompts from 'prompts';
+import * as prompts from 'prompts';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { createAirseekerConfig } from '../src/create-airseeker-config';
 import { writeOperationsRepository } from '../src/utils/write-operations';
