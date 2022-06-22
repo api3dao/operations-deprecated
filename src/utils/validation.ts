@@ -1,8 +1,5 @@
 import { z } from 'zod';
-// TODO Commented until we decide on versioning for config schema
-import { ois /*, configSchema as airnodeConfigSchema*/ } from '@api3/airnode-validator';
-// import { configSchema as airkeeperConfigSchema } from './airkeeper-validation';
-// import { configSchema as airseekerConfigSchema } from './airseeker-validation';
+import { ois } from '@api3/airnode-validator';
 import { OperationsRepository } from '../types';
 
 const { oisSchema } = ois;
