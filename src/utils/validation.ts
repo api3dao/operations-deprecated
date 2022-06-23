@@ -365,7 +365,7 @@ export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(valida
 export const commonLogosSchema = z.record(z.string());
 
 /**
- * UI-specific data around display beacons
+ * UI-specific data around display of beacons
  *
  * @param category The category of the beacon as a neatly formatted string, eg. "Cryptocurrency" or "Commodities"
  * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema
@@ -375,9 +375,20 @@ export const commonLogosSchema = z.record(z.string());
 export const beaconMetadataSchema = z.record(
   z.object({
     category: z.string(),
-    pricingCoverage: z.string(), //TODO must be present in pricingCoverage
+    pricingCoverage: z.record(z.string()), //TODO must be present in pricingCoverage
     decimalPlaces: z.number().optional(),
     logos: z.array(z.string()).optional(),
+  })
+);
+
+/**
+ * UI-specific data around display of dapis
+ *
+ * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema
+ */
+export const dapiMetadataSchema = z.record(
+  z.object({
+    pricingCoverage: z.record(z.string()), //TODO must be present in pricingCoverage
   })
 );
 
@@ -405,6 +416,7 @@ export const pricingCoverageSchema = z.record(
 export const explorerSchema = z
   .object({
     beaconMetadata: beaconMetadataSchema,
+    dapiMetadata: dapiMetadataSchema,
     pricingCoverage: pricingCoverageSchema,
     beaconSets: beaconSetsSchema,
     commonLogos: commonLogosSchema,

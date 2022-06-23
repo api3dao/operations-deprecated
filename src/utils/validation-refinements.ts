@@ -87,33 +87,36 @@ export const validateDapisChainReferences: SuperRefinement<{
 
 export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
+  chains: Chains;
   explorer: Explorer;
 }> = ({ apis, explorer }, ctx) => {
-  Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
-    // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
-    if (
-      !Object.values(apis).some((api) =>
-        Object.values(api.beacons).some((beacon) => {
-          return beacon.beaconId === beaconId;
-        })
-      )
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
-        path: ['explorer', 'beaconMetadata'],
-      });
-    }
-
-    // Check if pricing coverage exists in explorer/pricingCoverage.json
-    if (!explorer.pricingCoverage[beaconMetadata.pricingCoverage]) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `Referenced pricing coverage ${beaconMetadata.pricingCoverage} is not defined in /data/explorer/pricingCoverage.json`,
-        path: ['explorer', 'beaconMetadata', beaconId],
-      });
-    }
-  });
+  // Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
+  //   // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
+  //   if (
+  //     !Object.values(apis).some((api) =>
+  //       Object.values(api.beacons).some((beacon) => {
+  //         return beacon.beaconId === beaconId;
+  //       })
+  //     )
+  //   ) {
+  //     ctx.addIssue({
+  //       code: z.ZodIssueCode.custom,
+  //       message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
+  //       path: ['explorer', 'beaconMetadata'],
+  //     });
+  //   }
+  //
+  //   //const activeChains = Object.values(apis).
+  //
+  //   // Check if pricing coverage exists in explorer/pricingCoverage.json
+  //   if (!Object.values(explorer.pricingCoverage).flat().find()) {
+  //     ctx.addIssue({
+  //       code: z.ZodIssueCode.custom,
+  //       message: `Referenced pricing coverage ${beaconMetadata.pricingCoverage} is not defined in /data/explorer/pricingCoverage.json`,
+  //       path: ['explorer', 'beaconMetadata', beaconId],
+  //     });
+  //   }
+  // });
 };
 
 export const validateBeaconSetsReferences: SuperRefinement<{
