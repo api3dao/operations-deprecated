@@ -1,17 +1,27 @@
-import { z } from 'zod';
 import { ois } from '@api3/airnode-validator';
-import { OperationsRepository } from '../types';
+import { SuperRefinement, z } from 'zod';
+import {
+  validateApisBeaconsChainReferences,
+  validateBeaconIdAgainstBeaconMetadataReferences,
+  validateBeaconMetadataReferences,
+  validateBeaconSetIds,
+  validateBeaconSetsReferences,
+  validateDapisChainReferences,
+  validatePoliciesDatafeedReferences,
+  validateTemplatesEndpointIdReferences,
+} from './validation-refinements';
+import { Beacons, OperationsRepository, Templates } from '../types';
 
 const { oisSchema } = ois;
 
 /**
  * Common EVM Data Schema
  */
-export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
-export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
-export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
-export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
-export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z0-9]{107}$/);
+export const evmAddressSchema = z.string().regex(/^0x[a-fA-F\d]{40}$/);
+export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
+export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
+export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
+export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z\d]{107}$/);
 
 /**
  * Wallet types
@@ -43,14 +53,14 @@ export const topUpWalletSchema = z
  *
  * A description of a parent beacon's on-chain presence and associated resources.
  *
- * @active Whether the beacon is currently actively being updated
- * @sponsor The `sponsor` address (https://docs.api3.org/airnode/latest/concepts/sponsor.html#sponsoraddress)
- * @updateConditionPercentage The API provider's Airkeeper update condition percentage
- * @displayDisabled Should the beacon be displayed in UI applications (TODO this should be moved to explorerMetatda)
- * @airseekerConfig API3's Airkseeker update configuration, including:
- * @airseekerConfig.deviationThreshold API3's Airseeker update threshold
- * @airseekerConfig.heartbeatInterval The interval at which a forced update will be made regardless of deviation
- * @airseekerConfig.updateInterval How often API3's Airseeker checks the deviation
+ * @param active Whether the beacon is currently actively being updated
+ * @param sponsor The `sponsor` address (https://docs.api3.org/airnode/latest/concepts/sponsor.html#sponsoraddress)
+ * @param updateConditionPercentage The API provider's Airkeeper update condition percentage
+ * @param displayDisabled Should the beacon be displayed in UI applications (TODO this should be moved to explorerMetadata)
+ * @param airseekerConfig API3's Airkseeker update configuration, including:
+ * @param airseekerConfig.deviationThreshold API3's Airseeker update threshold
+ * @param airseekerConfig.heartbeatInterval The interval at which a forced update will be made regardless of deviation
+ * @param airseekerConfig.updateInterval How often API3's Airseeker checks the deviation
  */
 export const extendedChainDescriptionSchema = z
   .object({
@@ -72,8 +82,8 @@ export const extendedChainDescriptionSchema = z
 /**
  * Beacon Schema
  *
- * @name A name for a beacon, formatted for UI display.
- * @description A description for a beacon, formatted for UI display.
+ * @param name A name for a beacon, formatted for UI display.
+ * @param description A description for a beacon, formatted for UI display.
  */
 export const beaconSchema = z
   .object({
@@ -180,11 +190,11 @@ export const templateDecodedParametersSchema = z.object({
 /**
  * Template Schema
  *
- * @name A UI-suitable formatted name
- * @templateId Referenced by beacons and used to generate configuration files for Airnode, Airkeeper and Airseeker
- * @endpointId References an OIS-based endpoint: https//docs.api3.org/airnode/latest/concepts/endpoint.html#endpointid
- * @parameters Encoded parameters - derived from `decodedParameters` and used in consuming applications
- * @decodedParameters Used as an input into the generation of `parameters`. See https://docs.api3.org/airnode/latest/reference/deployment-files/config-json.html#triggers
+ * @param name A UI-suitable formatted name
+ * @param templateId Referenced by beacons and used to generate configuration files for Airnode, Airkeeper and Airseeker
+ * @param endpointId References an OIS-based endpoint: https//docs.api3.org/airnode/latest/concepts/endpoint.html#endpointid
+ * @param parameters Encoded parameters - derived from `decodedParameters` and used in consuming applications
+ * @param decodedParameters Used as an input into the generation of `parameters`. See https://docs.api3.org/airnode/latest/reference/deployment-files/config-json.html#triggers
  */
 export const templateSchema = z
   .object({
@@ -212,19 +222,19 @@ export const templatesSchema = z.record(templateSchema);
 export const oisesSchema = z.record(oisSchema);
 
 /**
- * API Provider Metatdata Schema
+ * API Provider Metadata Schema
  *
  * The API provider metadata provides information about an API provider.
  *
- * @name A UI-suitably formatted name for the provider
- * @active Whether any of the provider's beacons are active
- * @description A UI-suitably formatted description of the API provider
- * @homepage The API provider's homepage
- * @airnode The API Provider's Airnode address, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-address
- * @xpub The extended public key of the API Provider's Airnode, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-xpub
- * @logoPath The API Provider's web-accessible logo as a URL
- * @orderLogoPath An alternative logo for the API Provider for light backgrounds
- * @maxSubscriptionPeriod The maximum period that a requester contract may be allowed to read from the API provider's beacons in months
+ * @param name A UI-suitably formatted name for the provider
+ * @param active Whether any of the provider's beacons are active
+ * @param description A UI-suitably formatted description of the API provider
+ * @param homepage The API provider's homepage
+ * @param airnode The API Provider's Airnode address, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-address
+ * @param xpub The extended public key of the API Provider's Airnode, see: https://docs.api3.org/airnode/latest/reference/packages/admin-cli.html#derive-airnode-xpub
+ * @param logoPath The API Provider's web-accessible logo as a URL
+ * @param orderLogoPath An alternative logo for the API Provider for light backgrounds
+ * @param maxSubscriptionPeriod The maximum period that a requester contract may be allowed to read from the API provider's beacons in months
  */
 export const apiMetadataSchema = z
   .object({
@@ -245,6 +255,26 @@ export const apiMetadataSchema = z
  *
  * Data describing an API provider's on-chain services.
  */
+const validateBeaconsTemplateIdReferences: SuperRefinement<{
+  beacons: Beacons;
+  templates: Templates;
+}> = ({ beacons, templates }, ctx) => {
+  Object.entries(beacons).forEach(([beaconName, beacon]) => {
+    if (!Object.values(templates).some((template) => template.templateId === beacon.templateId)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced template ${beacon.templateId} is not defined in /templates`,
+        path: ['beacons', beaconName],
+      });
+    }
+  });
+};
+
+/**
+ * API Schema
+ *
+ * Data describing an API provider's on-chain services.
+ */
 export const apiSchema = z
   .object({
     apiMetadata: apiMetadataSchema,
@@ -253,24 +283,39 @@ export const apiSchema = z
     deployments: deploymentsSchema,
     ois: oisesSchema,
   })
-  .strict();
+  .strict()
+  .superRefine(validateBeaconsTemplateIdReferences)
+  .superRefine(validateTemplatesEndpointIdReferences);
+
+export const apisSchema = z.record(apiSchema);
+
+/**
+ * Chains Metadata: Contracts
+ *
+ * Describes contract deployments on a chain
+ */
+export const chainsMetadataContractsSchema = z.object({
+  AirnodeRrp: z.string().optional(),
+  RrpBeaconServer: z.string().optional(),
+  DapiServer: z.string(),
+});
 
 /**
  * Chains Metadata Schema
  *
  * Data describing chains served by operations services
  *
- * @name The name of the chain as used by `ethers`, eg. 'polygon-mumbai'
- * @fullName The UI-suitable name of the chain, eg. "Polygon Mumbai Testnet"
- * @decimalPlaces The number of decimal places to display for the native token (useful for chains with high native token
- *                 values. Defaults to 2 if unspecified.
- * @id The chainId number of the chain
- * @contracts Contract addresses deployed on the target chain, keyed by their name
- * @nativeToken The symbol of the native token of the target chain, eg. "BTC"
- * @logoPath A URL pointing to the logo for the chain
- * @orderLogoPath A URL pointing to an alternative logo for the chain, useful for light backgrounds
- * @testnet Whether the target chain is a testnet
- * @explorerUrl A base URL pointing to an explorer for the target chain
+ * @param name The name of the chain as used by `ethers`, eg. 'polygon-mumbai'
+ * @param fullName The UI-suitable name of the chain, e.g. "Polygon Mumbai Testnet"
+ * @param decimalPlaces The number of decimal places to display for the native token (useful for chains with high native token
+ *                 values. Defaults to 2 if unspecified).
+ * @param id The chainId number of the chain
+ * @param contracts Contract addresses deployed on the target chain, keyed by their name
+ * @param nativeToken The symbol of the native token of the target chain, e.g. "BTC"
+ * @param logoPath A URL pointing to the logo for the chain
+ * @param orderLogoPath A URL pointing to an alternative logo for the chain, useful for light backgrounds
+ * @param testnet Whether the target chain is a testnet
+ * @param explorerUrl A base URL pointing to an explorer for the target chain
  */
 export const chainsMetadataSchema = z
   .object({
@@ -278,7 +323,7 @@ export const chainsMetadataSchema = z
     fullName: z.string(),
     decimalPlaces: z.number(),
     id: z.string(),
-    contracts: z.record(z.string()),
+    contracts: chainsMetadataContractsSchema,
     nativeToken: z.string().optional(),
     blockTime: z.number().optional(),
     logoPath: z.string().optional(),
@@ -287,6 +332,8 @@ export const chainsMetadataSchema = z
     explorerUrl: z.string().optional(),
   })
   .strict();
+
+export const chainsSchema = z.record(chainsMetadataSchema);
 
 const airseekerDeploymentSetSchema = z
   .object({
@@ -297,14 +344,17 @@ const airseekerDeploymentSetSchema = z
 
 const airseekerDeploymentsSchema = z.record(airseekerDeploymentSetSchema);
 
-//TODO: Flesh out the airseeker schema
+//TODO: Decide on the airseeker schema
 export const api3Schema = z
   .object({
     airseeker: airseekerDeploymentsSchema,
   })
   .strict();
 
-export const beaconSetSchema = z.record(z.array(z.string()));
+// Chain name => Dapi Name => Data feed Id (beacon or beaconSet)
+export const dapisSchema = z.record(z.record(z.string()));
+
+export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(validateBeaconSetIds);
 
 /**
  * Common Logos are logos used for beacons which can have logos associated with them.
@@ -317,10 +367,10 @@ export const commonLogosSchema = z.record(z.string());
 /**
  * UI-specific data around display beacons
  *
- * @category The category of the beacon as a neatly formatted string, eg. "Cryptocurrency" or "Commodities"
- * @pricingCoverage A string as a key referencing keys in pricingCoverageSchema
- * @decimalPlaces The number of digits to display after the decimal point for a feed, defaults to 2 if unspecified
- * @logos An array of logos, which should be displayed in order, representing the underlying asset(s) of the data feed
+ * @param category The category of the beacon as a neatly formatted string, eg. "Cryptocurrency" or "Commodities"
+ * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema
+ * @param decimalPlaces The number of digits to display after the decimal point for a feed, defaults to 2 if unspecified
+ * @param logos An array of logos, which should be displayed in order, representing the underlying asset(s) of the data feed
  */
 export const beaconMetadataSchema = z.record(
   z.object({
@@ -335,8 +385,8 @@ export const beaconMetadataSchema = z.record(
  * Pricing and Coverage
  *
  * Values are in USD equivalent.
- * @subscriptionFee API3-specific subscription fee per data feed for UI display
- * @coverage The amount of coverage a data feed consumer will receive
+ * @param subscriptionFee API3-specific subscription fee per data feed for UI display
+ * @param coverage The amount of coverage a data feed consumer will receive
  */
 export const pricingCoverageSchema = z.record(
   z.array(
@@ -356,7 +406,7 @@ export const explorerSchema = z
   .object({
     beaconMetadata: beaconMetadataSchema,
     pricingCoverage: pricingCoverageSchema,
-    beaconSets: beaconSetSchema,
+    beaconSets: beaconSetsSchema,
     commonLogos: commonLogosSchema,
   })
   .strict();
@@ -366,8 +416,8 @@ export const explorerSchema = z
  *
  * Metadata around chains on which API3 services operate.
  *
- * @chainNames A mapping between chain names and chain IDs
- * @contracts A mapping between contracts deployed on chains and the IDs of those chains
+ * @param chainNames A mapping between chain names and chain IDs
+ * @param contracts A mapping between contracts deployed on chains and the IDs of those chains
  */
 export const chainDeploymentReferencesSchema = z
   .object({
@@ -381,20 +431,20 @@ export const chainDeploymentReferencesSchema = z
  *
  * Describes a base poly schema to be extended. Policies describe coverage purchased and committed on-chain.
  *
- * @paymentTxHash The transaction hash of a payment for a policy
- * @claimaintAddress The address related to the claimaint in the event of a claim against a policy
- * @beneficiaryAddress The beneficiary address for disbursement of funds if a claim is paid out
- * @readerAddress The address of a consuming contract
- * @coverageAmount The amount covered, as per pricingCoverage
- * @startDate The start date of the policy in seconds since the Unix epoch
- * @endDate The end date of the policy in seconds since the Unix epoch
- * @ipfsPolicyHash An IPFS hash referencing a document that describes the terms of the coverage policy
- * @ipfsServicePolicyHash An IPFS hash referencing a document that describes the service policy
+ * @param paymentTxHash The transaction hash of a payment for a policy
+ * @param claimantAddress The address related to the claimant in the event of a claim against a policy
+ * @param beneficiaryAddress The beneficiary address for disbursement of funds if a claim is paid out
+ * @param readerAddress The address of a consuming contract
+ * @param coverageAmount The amount covered, as per pricingCoverage
+ * @param startDate The start date of the policy in seconds since the Unix epoch
+ * @param endDate The end date of the policy in seconds since the Unix epoch
+ * @param ipfsPolicyHash An IPFS hash referencing a document that describes the terms of the coverage policy
+ * @param ipfsServicePolicyHash An IPFS hash referencing a document that describes the service policy
  */
 export const basePolicySchema = z
   .object({
     paymentTxHash: z.string(),
-    claimaintAddress: evmAddressSchema,
+    claimantAddress: evmAddressSchema,
     beneficiaryAddress: evmAddressSchema,
     readerAddress: evmAddressSchema,
     coverageAmount: z.string(),
@@ -410,7 +460,7 @@ export const basePolicySchema = z
  *
  * Extends the Base Policy to add a Dapi Name
  *
- * @dapiName The dapiName the policy covers
+ * @param dapiName The dapiName the policy covers
  */
 export const dapiPolicySchema = basePolicySchema
   .extend({
@@ -423,7 +473,7 @@ export const dapiPolicySchema = basePolicySchema
  *
  * Extends the Base Policy to add a Data Feed ID
  *
- * @dataFeedId The dataFeedId covered by the policy
+ * @param dataFeedId The dataFeedId covered by the policy
  */
 export const dataFeedPolicySchema = basePolicySchema
   .extend({
@@ -446,23 +496,29 @@ export const policiesSchema = z
 /**
  * Operations Repository
  *
- * @apis Contains API providers, keyed by their filesystem-safe name
- * @chains Contains chains, keyed by their filesystem-safe name
- * @api3 Contains metadata related to API3
- * @dapis Contains dapi mappings, keyed by chain name
- * @explorer Contains metadata used by the API3 Explorer for rendering feeds in a UI context
- * @policies Contains metadata around policies comitted on-chain
+ * @param apis Contains API providers, keyed by their filesystem-safe name
+ * @param chains Contains chains, keyed by their filesystem-safe name
+ * @param api3 Contains metadata related to API3
+ * @param dapis Contains dapi mappings, keyed by chain name
+ * @param explorer Contains metadata used by the API3 Explorer for rendering feeds in a UI context
+ * @param policies Contains metadata around policies committed on-chain
  */
 export const operationsRepositorySchema = z
   .object({
-    apis: z.record(apiSchema),
-    chains: z.record(chainsMetadataSchema),
+    apis: apisSchema,
+    chains: chainsSchema,
     api3: api3Schema.optional(),
-    dapis: z.record(z.record(z.string())),
+    dapis: dapisSchema,
     explorer: explorerSchema,
     policies: z.record(policiesSchema).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine(validateApisBeaconsChainReferences)
+  .superRefine(validateBeaconIdAgainstBeaconMetadataReferences)
+  .superRefine(validateDapisChainReferences)
+  .superRefine(validateBeaconMetadataReferences)
+  .superRefine(validateBeaconSetsReferences)
+  .superRefine(validatePoliciesDatafeedReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {
@@ -486,8 +542,8 @@ export const replaceInterpolatedVariables = (object: any): any => {
   return object;
 };
 
-export const validate = (payload: OperationsRepository) => {
-  const result = operationsRepositorySchema.safeParse(replaceInterpolatedVariables(payload));
+export const validate = async (payload: OperationsRepository) => {
+  const result = await operationsRepositorySchema.safeParseAsync(replaceInterpolatedVariables(payload));
   if (!result.success) {
     return [false, result];
   }

@@ -7,7 +7,7 @@ import { readOperationsRepository } from './utils/read-operations';
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
-  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
 
   const readerCanReadDataFeedPromises = Object.entries(operationsRepository.policies || {}).flatMap(
     ([chainName, policiesByType]) => {

@@ -23,7 +23,7 @@ const printTransactionEvents = (tx: ethers.ContractReceipt, chainId: number) => 
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
-  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
 
   const enablePoliciesPromises: Promise<ContractTransaction>[] = [];
   for (const [chainName, policiesByType] of Object.entries(operationsRepository.policies || {})) {

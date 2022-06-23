@@ -8,9 +8,9 @@ import { normalize } from '../../src/utils/normalization';
 describe('normalize', () => {
   let unsanitizedMockData: OperationsRepository;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     // Modify the ops data
-    const originalMockData = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+    const originalMockData = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
     unsanitizedMockData = {
       ...originalMockData,
       apis: {
@@ -89,12 +89,12 @@ describe('normalize', () => {
   });
 
   describe('apis', () => {
-    it('dervies the beaconId and sets it', async () => {
+    it('dervies the beaconId and sets it', () => {
       expect(unsanitizedMockData.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'].beaconId).toBe(
         ethers.constants.HashZero
       );
 
-      const normalizedData = await normalize(unsanitizedMockData);
+      const normalizedData = normalize(unsanitizedMockData);
       const derivedBeconId = ethers.utils.keccak256(
         ethers.utils.solidityPack(
           ['address', 'bytes32'],
@@ -110,10 +110,10 @@ describe('normalize', () => {
       );
     });
 
-    it('derives the templateId and encodedParamters', async () => {
+    it('derives the templateId and encodedParamters', () => {
       expect(unsanitizedMockData.apis.api3.templates['coingecko btc_usd'].templateId).toBe(ethers.constants.HashZero);
 
-      const normalizedData = await normalize(unsanitizedMockData);
+      const normalizedData = normalize(unsanitizedMockData);
 
       const derviedEncodedParameters = encode(
         unsanitizedMockData.apis.api3.templates['coingecko btc_usd'].decodedParameters
@@ -126,8 +126,8 @@ describe('normalize', () => {
       expect(normalizedData.apis.api3.templates['test'].templateId).toEqual(templateId);
     });
 
-    it('sanitises the OIS filename', async () => {
-      const normalizedData = await normalize(unsanitizedMockData);
+    it('sanitises the OIS filename', () => {
+      const normalizedData = normalize(unsanitizedMockData);
 
       expect(normalizedData.apis.api3.ois['coingecko basic request-1.0.0']).toBeUndefined();
       expect(normalizedData.apis.api3.ois['test-0.0.1']).toBe(
@@ -144,8 +144,8 @@ describe('normalize', () => {
   });
 
   describe('explorer', () => {
-    it('dervies the beaconSetId', async () => {
-      const normalizedData = await normalize(unsanitizedMockData);
+    it('dervies the beaconSetId', () => {
+      const normalizedData = normalize(unsanitizedMockData);
 
       const derivedBeaconSetId = ethers.utils.keccak256(
         ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [[ethers.constants.HashZero]])

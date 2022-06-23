@@ -7,7 +7,7 @@ import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const allBeacons = Object.values(operationsRepository.apis).flatMap((api) => Object.values(api.beacons));
 
   const subscriptionPromises = Object.entries(allBeacons).flatMap(([beaconName, beacon]) =>
