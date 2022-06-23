@@ -1,5 +1,5 @@
 import { runAndHandleErrors } from './utils/cli';
-import { readOperationsRepository, readRawOperations } from './utils/read-operations';
+import { readRawOperations } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 
 /**

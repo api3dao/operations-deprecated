@@ -89,7 +89,7 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;
   explorer: Explorer;
-}> = ({ apis, explorer }, ctx) => {
+}> = (/*{ apis, explorer }, ctx*/) => {
   // Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
   //   // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
   //   if (
