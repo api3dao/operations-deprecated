@@ -4,10 +4,15 @@ import prompts from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { generateTemplateIds } from '../src/generate-templateIds';
-
-const mockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+import { OperationsRepository } from '../src/types';
 
 describe('generate-templateIds', () => {
+  let mockOpsRepo: OperationsRepository;
+
+  beforeAll(async () => {
+    mockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+  });
+
   it('generates the templateIds and parameters', async () => {
     const unsanitizedMockOpsData = {
       ...mockOpsRepo,
@@ -32,7 +37,7 @@ describe('generate-templateIds', () => {
     prompts.inject(['api3']);
     await generateTemplateIds(join(__dirname, 'fixtures', 'data'));
 
-    const newMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+    const newMockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
     const derviedEncodedParameters = encode(
       unsanitizedMockOpsData.apis.api3.templates['coingecko btc_usd'].decodedParameters

@@ -5,14 +5,14 @@ import { readOperationsRepository } from './utils/read-operations';
 import { writeJsonFile } from './utils/write-operations';
 import { sanitiseFilename } from './utils/filesystem';
 
-const main = () => {
+const main = async () => {
   const commitHash = child_process.execSync('git rev-parse HEAD').toString().trim();
 
   const basePath = join(__dirname, '../json-exports');
   fs.rmdirSync(basePath, { recursive: true });
   fs.mkdirSync(basePath);
 
-  const opsFull = readOperationsRepository();
+  const opsFull = await readOperationsRepository();
 
   writeJsonFile(join(basePath, 'operations.json'), opsFull);
 
