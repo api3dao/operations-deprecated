@@ -5,11 +5,16 @@ import prompts from 'prompts';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { createAirseekerConfig } from '../src/create-airseeker-config';
 import { writeOperationsRepository } from '../src/utils/write-operations';
-
-const tempTestPath = join(__dirname, '../temporary_test_folder');
-const mockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+import { OperationsRepository } from '../src/types';
 
 describe('create-airseeker-config', () => {
+  const tempTestPath = join(__dirname, '../temporary_test_folder');
+  let mockOpsRepo: OperationsRepository;
+
+  beforeAll(async () => {
+    mockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+  });
+
   // Start with a clean directory
   beforeEach(() => {
     rmdirSync(tempTestPath, { recursive: true });
@@ -72,7 +77,7 @@ describe('create-airseeker-config', () => {
     ]);
     await createAirseekerConfig(tempTestPath);
 
-    const newMockOpsRepo = readOperationsRepository(tempTestPath);
+    const newMockOpsRepo = await readOperationsRepository(tempTestPath);
     expect(newMockOpsRepo.api3?.airseeker[date].airseeker).toEqual(mockOpsRepo.api3?.airseeker['2022-03-05'].airseeker);
   });
 });

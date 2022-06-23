@@ -6,7 +6,7 @@ import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
 
   const dapiNamePromises = Object.entries(operationsRepository.dapis).flatMap(([chainName, dAPI]) =>
     Object.entries(dAPI).map(async ([dAPIName, dataFeedId]) => {
