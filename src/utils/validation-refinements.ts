@@ -89,34 +89,35 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;
   explorer: Explorer;
-}> = (/*{ apis, explorer }, ctx*/) => {
-  // Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
-  //   // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
-  //   if (
-  //     !Object.values(apis).some((api) =>
-  //       Object.values(api.beacons).some((beacon) => {
-  //         return beacon.beaconId === beaconId;
-  //       })
-  //     )
-  //   ) {
-  //     ctx.addIssue({
-  //       code: z.ZodIssueCode.custom,
-  //       message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
-  //       path: ['explorer', 'beaconMetadata'],
-  //     });
-  //   }
-  //
-  //   //const activeChains = Object.values(apis).
-  //
-  //   // Check if pricing coverage exists in explorer/pricingCoverage.json
-  //   if (!Object.values(explorer.pricingCoverage).flat().find()) {
-  //     ctx.addIssue({
-  //       code: z.ZodIssueCode.custom,
-  //       message: `Referenced pricing coverage ${beaconMetadata.pricingCoverage} is not defined in /data/explorer/pricingCoverage.json`,
-  //       path: ['explorer', 'beaconMetadata', beaconId],
-  //     });
-  //   }
-  // });
+}> = ({ apis, explorer }, ctx) => {
+  Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
+    // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
+
+    const beacon = Object.values(apis)
+      .flatMap((api) => Object.values(api.beacons))
+      .find((beacon) => beacon.beaconId === beaconId);
+    if (!beacon) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
+        path: ['explorer', 'beaconMetadata'],
+      });
+
+      return;
+    }
+
+    // Find any missing chains - where the chain is specified in pricingCoverage but not in the beacon itself
+    const missingChains = Object.keys(beacon.chains).filter(
+      (chain) => !Object.keys(beaconMetadata.pricingCoverage).includes(chain)
+    );
+    missingChains.forEach((chain) => {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced pricing coverage chain ${chain} is not defined in the target beacon`,
+        path: ['explorer', 'beaconMetadata', beaconId, 'pricingCoverage', chain],
+      });
+    });
+  });
 };
 
 export const validateBeaconSetsReferences: SuperRefinement<{
