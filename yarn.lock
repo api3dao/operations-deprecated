@@ -18,6 +18,14 @@
     ethers "^5.4.5"
     lodash "^4.17.21"
 
+"@api3/airnode-abi@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@api3/airnode-abi/-/airnode-abi-0.7.2.tgz#0779dfb0e45c1d854aaaf6c3252dade7812e5dec"
+  integrity sha512-/J7mf5T9lqf9XIEEYzjwkJ2LPmAQ0ijqwuwVW2uatno1RfBf67SA5EM9lD/wNl9p/Yg4dfJ5y/NlV4Em8lFreg==
+  dependencies:
+    ethers "^5.4.5"
+    lodash "^4.17.21"
+
 "@api3/airnode-adapter@^0.6.5":
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/@api3/airnode-adapter/-/airnode-adapter-0.6.5.tgz#53e2f2ab568306de2e8b478a54166333d462131a"
@@ -29,14 +37,15 @@
     ethers "^5.4.5"
     lodash "^4.17.21"
 
-"@api3/airnode-admin@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@api3/airnode-admin/-/airnode-admin-0.6.5.tgz#7d1d739fa225b800d49da3db05bec00c40d9e701"
-  integrity sha512-ov0N3SHKH72hv1emhaR+9BqWhlwfPITcXT4wZsLUFncQMA72iBupDSMRWsiz79obuMEDMr6dM6hrlbxo0QM9Ag==
+"@api3/airnode-admin@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@api3/airnode-admin/-/airnode-admin-0.7.2.tgz#371587c44de901d2228a6679214ccad7304e6edc"
+  integrity sha512-RdEsdHKMzsdYRxcK8tOp5g7r8+0+oS8PQ39mtYZr2V9anS5ODOhupJ3vzC3v//jLjhjZXu2axO3PpoBWZOtdmQ==
   dependencies:
-    "@api3/airnode-abi" "^0.6.5"
-    "@api3/airnode-protocol" "^0.6.5"
-    "@api3/airnode-utilities" "^0.6.5"
+    "@api3/airnode-abi" "^0.7.2"
+    "@api3/airnode-protocol" "^0.7.2"
+    "@api3/airnode-utilities" "^0.7.2"
+    "@api3/airnode-validator" "^0.7.2"
     ethers "^5.4.5"
     lodash "^4.17.21"
     yargs "^17.0.1"
@@ -75,6 +84,14 @@
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/@api3/airnode-protocol/-/airnode-protocol-0.6.5.tgz#5ac553ac351380c0df09a1f8c4b714df0dd869c7"
   integrity sha512-4X6cAtTZUuPOABTsuY2nqT+puwjMMS+IPIw7UT2LKqXJdJSZcMPrBsTS8zMDGqvQDj3nxszzkdowkqXULiGAcg==
+  dependencies:
+    "@openzeppelin/contracts" "4.4.2"
+    ethers "^5.4.5"
+
+"@api3/airnode-protocol@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@api3/airnode-protocol/-/airnode-protocol-0.7.2.tgz#2f7cf1ffb93033d9cafc4bb9e2e8377e945c3727"
+  integrity sha512-x03QLUHdATbmQ6jiCDaTtCPu5THPEJqDQRIxZ86I4LzZF2232V8gkumt/EnIKX1f9K4LEUEVStMqlnQCNcW7SQ==
   dependencies:
     "@openzeppelin/contracts" "4.4.2"
     ethers "^5.4.5"
@@ -8613,11 +8630,6 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
-
-reflect-metadata@^0.1.13:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
-  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
 
 regenerate@^1.2.1:
   version "1.4.2"
