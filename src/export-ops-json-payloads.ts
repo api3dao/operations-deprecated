@@ -1,5 +1,5 @@
 import { join } from 'path';
-import fs from 'fs';
+import fs, { mkdirSync } from 'fs';
 import * as child_process from 'child_process';
 import { readOperationsRepository } from './utils/read-operations';
 import { writeJsonFile } from './utils/write-operations';
@@ -20,8 +20,26 @@ const main = async () => {
     writeJsonFile(join(basePath, `${key}.json`), value);
   });
 
-  // Grabbed from https://github.com/api3dao/operations/blob/eadde827d78ddbe1858c5fe7f5b00f953d77dc14/src/utils/normalization.ts#L105
-  // with changes
+  // docs.api3.org Dependency: Generate a compound file with all templates in it
+  const allTemplates = Object.fromEntries(
+    Object.values(opsFull.apis)
+      .flatMap((api) => Object.values(api.templates))
+      .map((template) => [template.templateId, template])
+  );
+  writeJsonFile(join(basePath, `templates.json`), allTemplates);
+
+  // docs.api3.org Dependency: generate a directory with all templates in it
+  const templatesBasePath = join(basePath, 'templates');
+  fs.mkdirSync(templatesBasePath);
+
+  Object.values(allTemplates).forEach((template) =>
+    writeJsonFile(join(templatesBasePath, `${template.templateId}.json`), template)
+  );
+
+  const dapisBasePath = join(basePath, 'dapis');
+  mkdirSync(dapisBasePath);
+  Object.entries(opsFull.dapis).forEach(([key, value]) => writeJsonFile(join(dapisBasePath, `${key}.json`), value));
+
   const documentation = {
     beacons: Object.fromEntries(
       Object.entries(opsFull.apis)

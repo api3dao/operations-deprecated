@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { chainOptionsSchema } from '@api3/airnode-validator';
+import { config } from '@api3/airnode-validator';
+
+const { chainOptionsSchema } = config;
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);

@@ -1,10 +1,10 @@
 {
   "oisFormat": "1.0.0",
   "title": "Amberdata-Lite",
-  "version": "2",
+  "version": "0.0.2",
   "apiSpecifications": {
     "components": {
-      "securitySchemes": { "Amberdata-Lite_x-api-key": { "type": "apiKey", "in": "header", "name": "x-api-key" } }
+      "securitySchemes": { "Amberdata-Lite_x-api-key": { "in": "header", "name": "x-api-key", "type": "apiKey" } }
     },
     "paths": {
       "/market/defi/lending/exchanges/information/": {

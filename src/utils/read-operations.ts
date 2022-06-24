@@ -15,7 +15,7 @@ interface FilePayload {
   readonly filename: string;
 }
 
-export const readOperationsRepository = async (target = join(__dirname, '..', '..', 'data')) => {
+export const readRawOperations = (target = join(__dirname, '..', '..', 'data')) => {
   const rawOperations = readFileOrDirectoryRecursively(target) as OperationsRepository;
 
   const apis = Object.fromEntries(
@@ -38,6 +38,12 @@ export const readOperationsRepository = async (target = join(__dirname, '..', '.
     ...rawOperations,
     apis,
   };
+
+  return operations;
+};
+
+export const readOperationsRepository = async (target = join(__dirname, '..', '..', 'data')) => {
+  const operations = readRawOperations(target);
 
   const result = await operationsRepositorySchema.safeParseAsync(operations);
 

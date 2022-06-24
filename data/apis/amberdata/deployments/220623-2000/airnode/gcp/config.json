@@ -23,7 +23,7 @@
     },
     "logFormat": "plain",
     "logLevel": "INFO",
-    "stage": "prod-220616-2000"
+    "stage": "prod-220623-2000"
   },
   "triggers": {
     "rrp": [],
