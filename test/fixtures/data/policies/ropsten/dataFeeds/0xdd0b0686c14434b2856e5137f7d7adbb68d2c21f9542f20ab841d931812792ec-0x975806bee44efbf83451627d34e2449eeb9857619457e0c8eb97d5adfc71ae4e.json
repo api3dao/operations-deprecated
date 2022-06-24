@@ -1,6 +1,6 @@
 {
   "paymentTxHash": "0xdd0b0686c14434b2856e5137f7d7adbb68d2c21f9542f20ab841d931812792ec",
-  "claimaintAddress": "0x1a2633190693307d47145098fFd1d4669D3aE9eE",
+  "claimantAddress": "0x1a2633190693307d47145098fFd1d4669D3aE9eE",
   "beneficiaryAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",
   "readerAddress": "0x25B246C3bA7B7353e286859FaE8913600b96B719",
   "coverageAmount": "10000",

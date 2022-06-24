@@ -1,16 +1,17 @@
 import { ois } from '@api3/airnode-validator';
-import { SuperRefinement, z } from 'zod';
+import { z } from 'zod';
 import {
   validateApisBeaconsChainReferences,
   validateBeaconIdAgainstBeaconMetadataReferences,
   validateBeaconMetadataReferences,
   validateBeaconSetIds,
   validateBeaconSetsReferences,
+  validateBeaconsTemplateIdReferences,
   validateDapisChainReferences,
   validatePoliciesDatafeedReferences,
   validateTemplatesEndpointIdReferences,
 } from './validation-refinements';
-import { Beacons, OperationsRepository, Templates } from '../types';
+import { OperationsRepository } from '../types';
 
 const { oisSchema } = ois;
 
@@ -255,26 +256,6 @@ export const apiMetadataSchema = z
  *
  * Data describing an API provider's on-chain services.
  */
-const validateBeaconsTemplateIdReferences: SuperRefinement<{
-  beacons: Beacons;
-  templates: Templates;
-}> = ({ beacons, templates }, ctx) => {
-  Object.entries(beacons).forEach(([beaconName, beacon]) => {
-    if (!Object.values(templates).some((template) => template.templateId === beacon.templateId)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `Referenced template ${beacon.templateId} is not defined in /templates`,
-        path: ['beacons', beaconName],
-      });
-    }
-  });
-};
-
-/**
- * API Schema
- *
- * Data describing an API provider's on-chain services.
- */
 export const apiSchema = z
   .object({
     apiMetadata: apiMetadataSchema,
@@ -365,10 +346,10 @@ export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(valida
 export const commonLogosSchema = z.record(z.string());
 
 /**
- * UI-specific data around display of beacons
+ * UI-specific data relating to the display of beacons
  *
  * @param category The category of the beacon as a neatly formatted string, eg. "Cryptocurrency" or "Commodities"
- * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema
+ * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema, keyed by chain name
  * @param decimalPlaces The number of digits to display after the decimal point for a feed, defaults to 2 if unspecified
  * @param logos An array of logos, which should be displayed in order, representing the underlying asset(s) of the data feed
  */

@@ -1,7 +1,7 @@
 import { SuperRefinement, z } from 'zod';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { ethers } from 'ethers';
-import { Apis, Chains, Dapis, Explorer, Oises, Policies, Templates } from '../types';
+import { Apis, Beacons, Chains, Dapis, Explorer, Oises, Policies, Templates } from '../types';
 
 export const validateTemplatesEndpointIdReferences: SuperRefinement<{
   templates: Templates;
@@ -189,26 +189,17 @@ export const validatePoliciesDatafeedReferences: SuperRefinement<{
   });
 };
 
-// export const validateTemplatesEndpointIdReferences = (validateTemplatesEndpointIdReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
-//
-// export const validateApisBeaconsChainReferences = (validateApisBeaconsChainReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
-//
-// export const validateDapisChainReferences = (validateDapisChainReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
-//
-// export const validateBeaconMetadataReferences = (validateBeaconMetadataReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
-//
-// export const validateBeaconSetsReferences = (validateBeaconSetsReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
-//
-// export const validatePoliciesDatafeedReferences = (validatePoliciesDatafeedReferences: any) => {
-//   throw new Error('Function not implemented.');
-// }
+export const validateBeaconsTemplateIdReferences: SuperRefinement<{
+  beacons: Beacons;
+  templates: Templates;
+}> = ({ beacons, templates }, ctx) => {
+  Object.entries(beacons).forEach(([beaconName, beacon]) => {
+    if (!Object.values(templates).some((template) => template.templateId === beacon.templateId)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced template ${beacon.templateId} is not defined in /templates`,
+        path: ['beacons', beaconName],
+      });
+    }
+  });
+};

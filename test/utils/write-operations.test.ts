@@ -394,7 +394,7 @@ describe('writeOperationsRepository', () => {
             '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11-0x4554482f55534400000000000000000000000000000000000000000000000000':
               {
                 paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
-                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                claimantAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
@@ -409,7 +409,7 @@ describe('writeOperationsRepository', () => {
             '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4-0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e':
               {
                 paymentTxHash: '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4',
-                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                claimantAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
@@ -476,7 +476,7 @@ describe('writeOperationsRepository', () => {
         ...mockOpsRepo.explorer.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
-          pricingCoverage: 'test-pricing-set',
+          pricingCoverage: { ropsten: 'test-pricing-set' },
         },
       };
 
@@ -525,7 +525,7 @@ describe('writeOperationsRepository', () => {
         ...mockOpsRepo.explorer.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
-          pricingCoverage: 'test-pricing-set',
+          pricingCoverage: { ropsten: 'test-pricing-set' },
         },
       };
       // Lastly add the new beaconSet
@@ -560,6 +560,7 @@ describe('writeOperationsRepository', () => {
         },
       };
 
+      // @ts-ignore
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
