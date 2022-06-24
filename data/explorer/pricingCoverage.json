@@ -1,24 +1,24 @@
 {
   "test-pricing-set-free": [{ "subscriptionFee": 0, "coverage": 0 }],
-  "test-pricing-set-one": [
-    { "subscriptionFee": 50, "coverage": 5000 },
-    { "subscriptionFee": 100, "coverage": 50000 },
+  "polygon": [
     { "subscriptionFee": 200, "coverage": 60000 },
-    { "subscriptionFee": 300, "coverage": 70000 },
-    { "subscriptionFee": 300, "coverage": 70000 }
+    { "subscriptionFee": 450, "coverage": 120000 },
+    { "subscriptionFee": 950, "coverage": 240000 },
+    { "subscriptionFee": 1950, "coverage": 480000 },
+    { "subscriptionFee": 3950, "coverage": 960000 }
   ],
-  "test-pricing-set-two": [
-    { "subscriptionFee": 5000, "coverage": 50000 },
-    { "subscriptionFee": 10000, "coverage": 500000 },
-    { "subscriptionFee": 20000, "coverage": 600000 },
-    { "subscriptionFee": 30000, "coverage": 700000 },
-    { "subscriptionFee": 30000, "coverage": 700000 }
+  "rsk": [
+    { "subscriptionFee": 400, "coverage": 60000 },
+    { "subscriptionFee": 650, "coverage": 120000 },
+    { "subscriptionFee": 1150, "coverage": 240000 },
+    { "subscriptionFee": 2150, "coverage": 480000 },
+    { "subscriptionFee": 4150, "coverage": 960000 }
   ],
-  "test-pricing-set-three": [
-    { "subscriptionFee": 6000, "coverage": 51000 },
-    { "subscriptionFee": 11000, "coverage": 520000 },
-    { "subscriptionFee": 22000, "coverage": 630000 },
-    { "subscriptionFee": 33000, "coverage": 740000 },
-    { "subscriptionFee": 34000, "coverage": 750000 }
+  "bsc-and-avalanche": [
+    { "subscriptionFee": 500, "coverage": 60000 },
+    { "subscriptionFee": 750, "coverage": 120000 },
+    { "subscriptionFee": 1250, "coverage": 240000 },
+    { "subscriptionFee": 2250, "coverage": 480000 },
+    { "subscriptionFee": 4250, "coverage": 960000 }
   ]
 }
