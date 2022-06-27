@@ -47,10 +47,14 @@ const main = async (operationRepositoryTarget?: string) => {
                   walletType: 'Provider-Sponsor',
                   address: providerTopUpWallet,
                 },
-                ...(response.api3TopUpWallet && {
-                  walletType: 'API3',
-                  address: response.api3TopUpWallet,
-                }),
+                ...(response.api3TopUpWallet
+                  ? [
+                      {
+                        walletType: 'API3',
+                        address: response.api3TopUpWallet,
+                      },
+                    ]
+                  : []),
               ],
             },
           ];
