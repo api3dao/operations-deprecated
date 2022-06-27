@@ -9,11 +9,7 @@ import { OperationsRepository } from '../src/types';
 
 describe('create-airseeker-config', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
-  let mockOpsRepo: OperationsRepository;
-
-  beforeAll(async () => {
-    mockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
-  });
+  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
   // Start with a clean directory
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { runAndHandleErrors } from './utils/cli';
-import { readRawOperations } from './utils/read-operations';
+import { readOperationsRepository } from './utils/read-operations';
 import { writeOperationsRepository } from './utils/write-operations';
 
 /**
@@ -8,7 +8,7 @@ import { writeOperationsRepository } from './utils/write-operations';
  * Be sure to fix after running this script.
  */
 const main = async () => {
-  const operations = readRawOperations();
+  const operations = readOperationsRepository();
 
   const missingBeacons = Object.values(operations.apis)
     .flatMap((api) => Object.values(api.beacons))

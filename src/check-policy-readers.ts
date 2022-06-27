@@ -3,11 +3,11 @@ import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
-import { readOperationsRepository } from './utils/read-operations';
+import { readAndValidateOperationsRepository } from './utils/read-operations';
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
-  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readAndValidateOperationsRepository(operationRepositoryTarget);
 
   const readerCanReadDataFeedPromises = Object.entries(operationsRepository.policies || {}).flatMap(
     ([chainName, policiesByType]) => {

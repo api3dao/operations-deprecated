@@ -25,7 +25,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 };
 
 const main = async (operationRepositoryTarget?: string) => {
-  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })) as Choice[];
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];

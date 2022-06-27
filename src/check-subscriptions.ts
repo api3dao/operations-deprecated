@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
-import { readOperationsRepository } from './utils/read-operations';
+import { readAndValidateOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();
-  const operationsRepository = await readOperationsRepository();
+  const operationsRepository = await readAndValidateOperationsRepository();
   const allBeacons = Object.values(operationsRepository.apis).flatMap((api) => Object.values(api.beacons));
 
   const subscriptionPromises = Object.entries(allBeacons).flatMap(([beaconName, beacon]) =>

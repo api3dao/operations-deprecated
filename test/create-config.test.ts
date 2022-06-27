@@ -9,11 +9,7 @@ import { OperationsRepository } from '../src/types';
 
 describe('create-config', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
-  let mockOpsRepo: OperationsRepository;
-
-  beforeAll(async () => {
-    mockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
-  });
+  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
   // Start with a clean directory
   beforeEach(() => {
@@ -35,7 +31,7 @@ describe('create-config', () => {
     prompts.inject(['api3', ['aws', 'gcp'], false]);
     await createConfigModule.createConfig(tempTestPath);
 
-    const newMockOpsRepo = await readOperationsRepository(tempTestPath);
+    const newMockOpsRepo = readOperationsRepository(tempTestPath);
     expect(newMockOpsRepo.apis.api3.deployments[date].airnode.aws).toEqual(
       mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws
     );
