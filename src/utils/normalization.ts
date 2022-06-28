@@ -81,22 +81,24 @@ export const normalize = (payload: OperationsRepository) => {
               })
             );
 
-          const airkeeperAWS = Object.fromEntries(
-            Object.entries(value.airkeeper.aws).map(([key, value]) => {
-              if (key === 'secrets') {
-                const envBuffer = Buffer.from((value as Secrets).content);
-                const content = Object.entries(parse(envBuffer))
-                  .map(([key, _value]) => key)
-                  .concat([''])
-                  .join('=\n')
-                  .trim();
+          const airkeeperAWS = value?.airkeeper?.aws
+            ? Object.fromEntries(
+                Object.entries(value.airkeeper.aws).map(([key, value]) => {
+                  if (key === 'secrets') {
+                    const envBuffer = Buffer.from((value as Secrets).content);
+                    const content = Object.entries(parse(envBuffer))
+                      .map(([key, _value]) => key)
+                      .concat([''])
+                      .join('=\n')
+                      .trim();
 
-                return [key, { ...value, content }];
-              }
+                    return [key, { ...value, content }];
+                  }
 
-              return [key, value];
-            })
-          );
+                  return [key, value];
+                })
+              )
+            : undefined;
           return [
             key,
             {

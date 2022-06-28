@@ -5,11 +5,16 @@ import prompts from 'prompts';
 import * as createConfigModule from '../src/create-config';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { writeOperationsRepository } from '../src/utils/write-operations';
-
-const tempTestPath = join(__dirname, '../temporary_test_folder');
-const mockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+import { OperationsRepository } from '../src/types';
 
 describe('create-config', () => {
+  const tempTestPath = join(__dirname, '../temporary_test_folder');
+  let mockOpsRepo: OperationsRepository;
+
+  beforeAll(async () => {
+    mockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+  });
+
   // Start with a clean directory
   beforeEach(() => {
     rmdirSync(tempTestPath, { recursive: true });
@@ -25,12 +30,12 @@ describe('create-config', () => {
   it('builds the airnode and airkeeper configs for AWS and GCP', async () => {
     const date = new Date().toISOString().split('T')[0];
 
-    jest.spyOn(createConfigModule, 'getStageTimestamp').mockReturnValue('220616-1954');
+    jest.spyOn(createConfigModule, 'getFormattedTimestamp').mockReturnValue('220616-1954');
 
     prompts.inject(['api3', ['aws', 'gcp'], false]);
     await createConfigModule.createConfig(tempTestPath);
 
-    const newMockOpsRepo = readOperationsRepository(tempTestPath);
+    const newMockOpsRepo = await readOperationsRepository(tempTestPath);
     expect(newMockOpsRepo.apis.api3.deployments[date].airnode.aws).toEqual(
       mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws
     );

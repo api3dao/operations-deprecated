@@ -12,5 +12,12 @@
     { "subscriptionFee": 20000, "coverage": 600000 },
     { "subscriptionFee": 30000, "coverage": 700000 },
     { "subscriptionFee": 30000, "coverage": 700000 }
+  ],
+  "ropsten": [
+    { "subscriptionFee": 5000, "coverage": 50000 },
+    { "subscriptionFee": 10000, "coverage": 500000 },
+    { "subscriptionFee": 20000, "coverage": 600000 },
+    { "subscriptionFee": 30000, "coverage": 700000 },
+    { "subscriptionFee": 30000, "coverage": 700000 }
   ]
 }

@@ -1,6 +1,8 @@
 {
   "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e": {
     "category": "Cryptocurrency",
-    "pricingCoverage": "test-pricing-set-one"
+    "pricingCoverage": { "ropsten": "test-pricing-set-one" },
+    "decimalPlaces": 6,
+    "logos": ["AAVE", "BTC"]
   }
 }

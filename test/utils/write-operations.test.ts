@@ -1,15 +1,21 @@
 // Tests should never modify the fixtures - do not assume that `writeOperationsRepository` will work as you expect.
 import { join } from 'path';
 import { existsSync, mkdirSync, rmdirSync } from 'fs';
+import { ethers } from 'ethers';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { readOperationsRepository } from '../../src/utils/read-operations';
+import { OperationsRepository } from '../../src/types';
 
 const tempTestPath = join(__dirname, '../temporary_test_folder');
-const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+let mockOpsRepo: OperationsRepository;
 
-it('checks if read/write cycle reproduces first read', () => {
+beforeAll(async () => {
+  mockOpsRepo = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+});
+
+it('checks if read/write cycle reproduces first read', async () => {
   writeOperationsRepository(mockOpsRepo, tempTestPath);
-  const tempWrittenRepoData = readOperationsRepository(tempTestPath);
+  const tempWrittenRepoData = await readOperationsRepository(tempTestPath);
 
   expect(tempWrittenRepoData).toEqual(mockOpsRepo);
 });
@@ -53,7 +59,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'beacons', 'coingeckoTestBeacon.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -81,7 +87,7 @@ describe('writeOperationsRepository', () => {
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'ois', 'coingeckoTestOis.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -92,14 +98,14 @@ describe('writeOperationsRepository', () => {
         ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate],
         airkeeper: {
           aws: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws,
+            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
             airkeeper: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.airkeeper,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.airkeeper,
               airnodeAddress: '0x0000000000000000000000000000000000000000',
               airnodeXpub: '',
             },
             config: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.config,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.config,
               triggers: {
                 rrp: [],
                 http: [],
@@ -107,7 +113,7 @@ describe('writeOperationsRepository', () => {
               },
             },
             secrets: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper.aws.secrets,
+              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets,
               filename: 'secrets.env',
               content: 'THIS IS EMPTY',
             },
@@ -224,7 +230,7 @@ describe('writeOperationsRepository', () => {
         )
       ).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -252,7 +258,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'templates', 'coingeckoTestTemplate.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -277,7 +283,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'apiMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -302,7 +308,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'chains', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -341,13 +347,19 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'api3', 'airseeker', airseekerDeploymentDate, 'secrets.env'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('dapis', () => {
     it('writes changes to dapis', async () => {
+      const coingeckoTestChain = {
+        ...mockOpsRepo.chains.ropsten,
+        name: 'testChain',
+        id: '9999',
+      };
+
       const coingeckoTestDapi = {
         ...mockOpsRepo.dapis.polygon,
         beaconId: 'test',
@@ -355,6 +367,10 @@ describe('writeOperationsRepository', () => {
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        chains: {
+          ...mockOpsRepo.chains,
+          ['testchain']: coingeckoTestChain,
+        },
         dapis: {
           ...mockOpsRepo.dapis,
           ['testchain']: coingeckoTestDapi,
@@ -365,7 +381,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'dapis', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
@@ -375,11 +391,10 @@ describe('writeOperationsRepository', () => {
       const mockPolicies = {
         ropsten: {
           dapis: {
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11':
+            '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11-0x4554482f55534400000000000000000000000000000000000000000000000000':
               {
                 paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11',
-                dapiName: 'USDC/AAVE',
-                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                claimantAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
@@ -387,21 +402,22 @@ describe('writeOperationsRepository', () => {
                 endDate: 1653038764,
                 ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
                 ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+                dapiName: '0x4554482f55534400000000000000000000000000000000000000000000000000', // 'BTC/USD'
               },
           },
           dataFeeds: {
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12':
+            '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4-0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e':
               {
-                paymentTxHash: '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12',
-                dataFeedId: '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847',
-                claimaintAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
+                paymentTxHash: '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4',
+                claimantAddress: '0x1a2633190693307d47145098fFd1d4669D3aE9eF',
                 beneficiaryAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 readerAddress: '0x25B246C3bA7B7353e286859FaE8913600b96B710',
                 coverageAmount: '10001',
-                startDate: 1653048764,
-                endDate: 1653038764,
+                startDate: 1655234896,
+                endDate: 1718404085,
                 ipfsPolicyHash: 'ZmTtDqWzp179ujTXU7pd2PodLNjpdpQQCXhkiQYi6wZvKd',
                 ipfsServicePolicyHash: 'ZmRBQB6YaDyidP37UdDnjFY6vQuiBrcqdyoW1CuDgwxkD6',
+                dataFeedId: '0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e',
               },
           },
         },
@@ -420,32 +436,69 @@ describe('writeOperationsRepository', () => {
             tempTestPath,
             'policies',
             'ropsten',
-            'dataFeeds',
-            '0x33ced632274973f86303f003416dfcb0d0a59aefe7a0f3fef5c42bb890383847-0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a12.json'
+            'dapis',
+            '0xa55026ee522feb3c80cfccdd880865aeb9475a4a7675c036db89e4f6bc7c5a11-0x4554482f55534400000000000000000000000000000000000000000000000000.json'
           )
         )
       ).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      expect(
+        existsSync(
+          join(
+            tempTestPath,
+            'policies',
+            'ropsten',
+            'dataFeeds',
+            '0xe3e729fdc957329c9d1e19c697db676002439e65d49a0db9119cbbcca809d1f4-0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e.json'
+          )
+        )
+      ).toBe(true);
+
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('explorer', () => {
     it('writes changes to beaconMetadata', async () => {
+      // Add new test beacon first
+      const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+      const coingeckoTestBeacon = {
+        ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
+        beaconId: coingeckoTestBeaconId,
+        name: 'coingecko test beacon',
+        description: 'test beacon',
+      };
+
+      // Then add the beaconId reference to beaconMetadata
+      const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
       const coingeckoTestBeaconMetaData = {
         ...mockOpsRepo.explorer.beaconMetadata,
-        testbeacon: {
+        [coingeckoTestBeaconId]: {
           category: 'test',
-          pricingCoverage: 'test',
+          pricingCoverage: { ropsten: 'test-pricing-set' },
         },
       };
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        apis: {
+          ...mockOpsRepo.apis,
+          ['api3']: {
+            ...mockOpsRepo.apis['api3'],
+            beacons: {
+              ...mockOpsRepo.apis['api3'].beacons,
+              ['coingeckoTestBeacon']: coingeckoTestBeacon,
+            },
+          },
+        },
         explorer: {
           ...mockOpsRepo.explorer,
           beaconMetadata: coingeckoTestBeaconMetaData,
+          pricingCoverage: {
+            ...mockOpsRepo.explorer.pricingCoverage,
+            ...testPricingCoverage,
+          },
         },
       };
 
@@ -453,29 +506,66 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
     it('writes changes to beaconSets', async () => {
+      // Add new test beacon first
+      const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+      const coingeckoTestBeacon = {
+        ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
+        beaconId: coingeckoTestBeaconId,
+        name: 'coingecko test beacon',
+        description: 'test beacon',
+      };
+      // Then add the beaconId reference to beaconMetadata
+      const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
+      const coingeckoTestBeaconMetaData = {
+        ...mockOpsRepo.explorer.beaconMetadata,
+        [coingeckoTestBeaconId]: {
+          category: 'test',
+          pricingCoverage: { ropsten: 'test-pricing-set' },
+        },
+      };
+      // Lastly add the new beaconSet
+      const coingeckoTestBeaconSetId = ethers.utils.keccak256(
+        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [[coingeckoTestBeaconId]])
+      );
       const coingeckoTestBeaconSets = {
         ...mockOpsRepo.explorer.beaconSets,
-        testbeacon: [],
+        [coingeckoTestBeaconSetId]: [coingeckoTestBeaconId],
       };
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
+        apis: {
+          ...mockOpsRepo.apis,
+          ['api3']: {
+            ...mockOpsRepo.apis['api3'],
+            beacons: {
+              ...mockOpsRepo.apis['api3'].beacons,
+              ['coingeckoTestBeacon']: coingeckoTestBeacon,
+            },
+          },
+        },
         explorer: {
           ...mockOpsRepo.explorer,
+          beaconMetadata: coingeckoTestBeaconMetaData,
           beaconSets: coingeckoTestBeaconSets,
+          pricingCoverage: {
+            ...mockOpsRepo.explorer.pricingCoverage,
+            ...testPricingCoverage,
+          },
         },
       };
 
+      // @ts-ignore
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
@@ -497,7 +587,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'pricingCoverage.json'))).toBe(true);
 
-      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });

@@ -38,7 +38,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-export const getStageTimestamp = () => {
+export const getFormattedTimestamp = () => {
   return format(new Date(), 'yyMMdd-HHmm');
 };
 
@@ -79,7 +79,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod-${getStageTimestamp()}`,
+    stage: `prod-${getFormattedTimestamp()}`,
   };
 };
 
@@ -89,13 +89,18 @@ const buildSecretsArray = (
   oisSecrets: string[],
   airnodeHeartbeat: boolean
 ) => {
-  const secretAppend = sanitiseFilename(apiName).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
+  const sanitisedApiName = sanitiseFilename(apiName);
+  const secretAppend = `${sanitisedApiName.toUpperCase()}_${cloudProviderType.toUpperCase()}`;
 
   return [
     `AIRNODE_WALLET_MNEMONIC=`,
     `HTTP_SIGNED_DATA_GATEWAY_KEY_${secretAppend}=`,
     ...(airnodeHeartbeat
-      ? [`HEARTBEAT_KEY_${secretAppend}=`, `HEARTBEAT_ID_${secretAppend}=`, `HEARTBEAT_URL_${secretAppend}=`]
+      ? [
+          `HEARTBEAT_KEY_${secretAppend}=`,
+          `HEARTBEAT_ID_${secretAppend}=${getFormattedTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
+          `HEARTBEAT_URL_${secretAppend}=https://heartbeats.api3data.link/heartbeats`,
+        ]
       : []),
     ...oisSecrets,
     ...(cloudProviderType === 'gcp' ? [`GCP_PROJECT_ID=`] : []),
@@ -103,7 +108,7 @@ const buildSecretsArray = (
 };
 
 const main = async (operationRepositoryTarget?: string) => {
-  const operationsRepository = readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })) as Choice[];
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];

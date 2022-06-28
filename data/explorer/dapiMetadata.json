@@ -1,0 +1,142 @@
+{
+  "ADA/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "AXS/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "DOT/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "EOS/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "FIL/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "LINK/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "LTC/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "MATIC/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "MIOTA/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "NEO/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "SOL/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "UNI/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "VET/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "XLM/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  }
+}

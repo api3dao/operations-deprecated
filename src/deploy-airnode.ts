@@ -40,7 +40,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 
 const main = async () => {
   const nodeVersion = require('@api3/airnode-node/package.json').version;
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
   const baseDeploymentDirectory = join(

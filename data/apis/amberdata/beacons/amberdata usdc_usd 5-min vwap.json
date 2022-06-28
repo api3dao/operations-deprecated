@@ -1,0 +1,27 @@
+{
+  "name": "Amberdata USDC/USD 5-min VWAP",
+  "description": "Amberdata USDC/USD 5-min VWAP",
+  "beaconId": "0x965a0183d076f8088229bca7e90cbfcb7155339b4066de627bb76d8ddc9b03bc",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x4b0556d5f01795c0469b6fb22388d0aa716ff3af996d11e61a1e46d00ac523aa",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
