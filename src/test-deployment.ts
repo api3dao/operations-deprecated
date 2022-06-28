@@ -48,9 +48,19 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
   ];
 };
 
+const urlJoin = (baseUrl: string, endpointId: string) => {
+  if (baseUrl.endsWith('/')) {
+    return `${baseUrl}${endpointId}`;
+  } else {
+    return `${baseUrl}/${endpointId}`;
+  }
+};
+
 const main = async () => {
   const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
+
+  if (response.cloudProviders.length === 0) return cliPrint.error(`🛑 - Please specify a cloud provider`);
 
   const apiData = operationsRepository.apis[response.name];
   const baseDeploymentDirectory = join(
@@ -70,14 +80,18 @@ const main = async () => {
     const deploymentDirectory = join(baseDeploymentDirectory, cloudProvider);
 
     const receiptPath = join(deploymentDirectory, 'receipt.json');
-    if (!existsSync(receiptPath)) return cliPrint.error('🛑 Airnode reciept does not exist for AWS');
+    if (!existsSync(receiptPath)) return cliPrint.error(`🛑 Airnode reciept does not exist for ${cloudProvider}`);
 
     const receipt = require(receiptPath);
 
     for (const template of Object.values(apiData.templates)) {
-      console.log(`⏳ - Testing Airnode... ${receipt.api.httpSignedDataGatewayUrl} with template ${template.name}`);
+      console.log(
+        `⏳ - Testing Airnode... ${urlJoin(receipt.api.httpSignedDataGatewayUrl, template.endpointId)} with template ${
+          template.name
+        }`
+      );
       const request = {
-        url: `${receipt.api.httpSignedDataGatewayUrl}` + `/${template.endpointId}`,
+        url: urlJoin(receipt.api.httpSignedDataGatewayUrl, template.endpointId),
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -86,11 +100,15 @@ const main = async () => {
         data: {
           encodedParameters: template.parameters,
         },
+        timeout: 30000, // Wait for 30s for cases like lambda cold start
       } as AxiosRequestConfig;
       const apiResponse = await axios(request);
-      if (apiResponse.status !== 200) {
-        return cliPrint.error(`🛑 - Airnode failed with status ${apiResponse.status}`);
-      }
+
+      if (apiResponse.status !== 200) return cliPrint.error(`🛑 - Airnode failed with status ${apiResponse.status}`);
+
+      if (apiResponse.data.data.timestamp < Date.now() / 1000 - 300)
+        return cliPrint.error(`🛑 - Airnode response is older than 5 minutes`);
+
       console.log(`✅ - template ${template.name} test passed with data ${JSON.stringify(apiResponse.data)}`);
     }
   }
