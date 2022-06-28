@@ -9,6 +9,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
+    "decimalPlaces": 6,
     "logos": ["AAVE", "BTC"]
   },
   "0xf418b8f3ee3f8b66946bce48d56d69f031a977c0b6a700b07452eb1da9ad5bab": {
