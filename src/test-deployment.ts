@@ -57,7 +57,7 @@ const urlJoin = (baseUrl: string, endpointId: string) => {
 };
 
 const main = async () => {
-  const operationsRepository = readOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
   if (response.cloudProviders.length === 0) return cliPrint.error(`🛑 - Please specify a cloud provider`);
