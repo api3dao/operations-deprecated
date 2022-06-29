@@ -103,8 +103,7 @@ const main = async () => {
   }
 
   console.log(
-    ['✅ - Airnode successfully removed from the following cloud providers:', ...response.cloudProviders],
-    join('\n')
+    ['✅ - Airnode successfully removed from the following cloud providers:', ...response.cloudProviders].join('\n')
   );
 };
 
