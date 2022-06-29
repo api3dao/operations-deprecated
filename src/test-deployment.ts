@@ -106,8 +106,7 @@ const main = async () => {
 
       if (apiResponse.status !== 200) return cliPrint.error(`🛑 - Airnode failed with status ${apiResponse.status}`);
 
-      if (apiResponse.data.data.timestamp < Date.now() / 1000 - 300)
-        return cliPrint.error(`🛑 - Airnode response is older than 5 minutes`);
+      if (apiResponse.data.data === undefined) return cliPrint.error(`🛑 - Airnode response is undefined`);
 
       console.log(`✅ - template ${template.name} test passed with data ${JSON.stringify(apiResponse.data)}`);
     }
