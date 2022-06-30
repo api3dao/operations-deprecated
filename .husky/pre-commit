@@ -1,2 +1,4 @@
-yarn run normalize-and-validate
+yarn run validate
 yarn run lint
+echo '\n! Remember to normalize files before committing and pushing to the repository'
+echo '! You can do that by running `yarn normalize`\n'
