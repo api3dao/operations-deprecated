@@ -73,11 +73,9 @@ jobs:
     needs: [lint-build-test-publish]
     steps:
       - name: Clone
-        uses: actions/checkout@v3
-        with:
-          repository: 'api3dao/api3-explorer'
-          ref: 'remove-relative-homepage'
-          token: ${{secrets.EXPLORER_PAT}}
+        run: |
+          git clone --depth=1 --branch=remove-relative-homepage https://${{secrets.EXPLORER_PAT}}@github.com/api3dao/api3-explorer
+          cd api3-explorer
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
