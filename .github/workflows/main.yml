@@ -10,6 +10,8 @@ on:
 env:
   TARGET_NODE_VERSION: '14.17.1'
   PUBLIC_URL: './'
+  REACT_APP_COMMIT_HASH: ${{ github.sha }}
+  REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
 
 jobs:
   documentation:
@@ -74,7 +76,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'api3dao/api3-explorer'
-          ref: 'main'
+          ref: 'remove-relative-homepage'
           token: ${{secrets.EXPLORER_PAT}}
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -96,6 +98,8 @@ jobs:
           mv package node_modules/@api3/operations
       - name: Translate Operations Data
         run: yarn prepare-data
+
+      # This step uses the REACT_APP ENVs above
       - name: Build the API3 Explorer
         run: yarn build
       - name: Set AWS credentials
@@ -106,21 +110,10 @@ jobs:
           aws-region: us-east-1
       - name: Upload JSON Payloads with commit hash to S3
         run: aws s3 cp build s3://operations-development/${{ github.sha }}/explorer --acl public-read --recursive
-      - name: Upload JSON Payloads as latest to S3
-        run: aws s3 sync s3://operations-development/${{ github.sha }}/explorer s3://operations-development/latest/explorer --acl public-read
-#      - name: Configure S3 Bucket to Serve a Static Site - Commit Hash
-#        run: aws s3 website s3://operations-development/${{ github.sha }}/explorer --index-document index.html
-#      - name: Configure S3 Bucket to Serve a Static Site - latest
-#        run: aws s3 website s3://operations-development --index-document ''
-      - name: Comment on PR with URL
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: 'You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer)'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Keep the PR Comment Updated
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: 'You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer)'
+          message: 'You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html)'
           comment_includes: 'You can view a preview of the API3 Explorer '
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
