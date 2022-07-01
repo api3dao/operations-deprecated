@@ -117,6 +117,7 @@ jobs:
           comment_includes: 'You can view a preview of the API3 Explorer '
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
   chain-verification:
     name: Chain verification
     runs-on: ubuntu-latest
