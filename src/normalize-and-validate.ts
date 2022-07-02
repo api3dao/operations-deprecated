@@ -5,13 +5,13 @@ import { normalize } from './utils/normalization';
 import { validate } from './utils/validation';
 
 const main = async () => {
-  const rawOpsData = await readOperationsRepository();
+  const rawOpsData = readOperationsRepository();
   const conformedOpsData = normalize(rawOpsData);
 
-  const [success, logs] = await validate(conformedOpsData);
+  const [success, result] = await validate(conformedOpsData);
   if (!success) {
-    console.log('Validation failed:');
-    console.log(JSON.stringify(logs, null, 2));
+    console.log(`Validation failed. Issues found: ${result.length}`);
+    console.log(result.join('\n'));
     process.exit(1);
   }
 

@@ -7,15 +7,11 @@ import { readOperationsRepository } from '../../src/utils/read-operations';
 import { OperationsRepository } from '../../src/types';
 
 const tempTestPath = join(__dirname, '../temporary_test_folder');
-let mockOpsRepo: OperationsRepository;
+const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
 
-beforeAll(async () => {
-  mockOpsRepo = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-});
-
-it('checks if read/write cycle reproduces first read', async () => {
+it('checks if read/write cycle reproduces first read', () => {
   writeOperationsRepository(mockOpsRepo, tempTestPath);
-  const tempWrittenRepoData = await readOperationsRepository(tempTestPath);
+  const tempWrittenRepoData = readOperationsRepository(tempTestPath);
 
   expect(tempWrittenRepoData).toEqual(mockOpsRepo);
 });
@@ -34,7 +30,7 @@ describe('writeOperationsRepository', () => {
   });
 
   describe('apis', () => {
-    it('writes changes to beacons', async () => {
+    it('writes changes to beacons', () => {
       const coingeckoTestBeacon = {
         ...mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'],
         name: 'coingecko test beacon',
@@ -59,11 +55,11 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'beacons', 'coingeckoTestBeacon.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to ois', async () => {
+    it('writes changes to ois', () => {
       const coingeckoTestOis = {
         ...mockOpsRepo.apis.api3.ois['coingecko basic request-1.0.0'],
         title: 'coingecko Test Ois',
@@ -87,11 +83,11 @@ describe('writeOperationsRepository', () => {
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'ois', 'coingeckoTestOis.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to deployments', async () => {
+    it('writes changes to deployments', () => {
       const mockDeploymentDate = '2022-04-17';
 
       const coingeckoTestDeployment = {
@@ -230,11 +226,11 @@ describe('writeOperationsRepository', () => {
         )
       ).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to templates', async () => {
+    it('writes changes to templates', () => {
       const coingeckoTestTemplate = {
         ...mockOpsRepo.apis.api3.templates['coingecko btc_usd'],
         name: 'coingeckoTestTemplate',
@@ -258,11 +254,11 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'templates', 'coingeckoTestTemplate.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to metadata', async () => {
+    it('writes changes to metadata', () => {
       const coingeckoTestMetadata = {
         ...mockOpsRepo.apis.api3.apiMetadata,
         name: 'coingeckoTestMetadata',
@@ -283,13 +279,13 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'apis', 'api3', 'apiMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('chains', () => {
-    it('writes changes to chains', async () => {
+    it('writes changes to chains', () => {
       const coingeckoTestChain = {
         ...mockOpsRepo.chains.ropsten,
         name: 'testChain',
@@ -308,13 +304,13 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'chains', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('api3', () => {
-    it('writes changes to airseeker', async () => {
+    it('writes changes to airseeker', () => {
       const airseekerDeploymentDate = '2022-03-05';
 
       const coingeckoTestAirseeker = {
@@ -347,13 +343,13 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'api3', 'airseeker', airseekerDeploymentDate, 'secrets.env'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('dapis', () => {
-    it('writes changes to dapis', async () => {
+    it('writes changes to dapis', () => {
       const coingeckoTestChain = {
         ...mockOpsRepo.chains.ropsten,
         name: 'testChain',
@@ -381,13 +377,13 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'dapis', 'testchain.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('policies', () => {
-    it('writes changes to policies', async () => {
+    it('writes changes to policies', () => {
       const mockPolicies = {
         ropsten: {
           dapis: {
@@ -454,13 +450,13 @@ describe('writeOperationsRepository', () => {
         )
       ).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });
 
   describe('explorer', () => {
-    it('writes changes to beaconMetadata', async () => {
+    it('writes changes to beaconMetadata', () => {
       // Add new test beacon first
       const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
       const coingeckoTestBeacon = {
@@ -506,11 +502,11 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconMetadata.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to beaconSets', async () => {
+    it('writes changes to beaconSets', () => {
       // Add new test beacon first
       const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
       const coingeckoTestBeacon = {
@@ -565,11 +561,11 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to pricingCoverage', async () => {
+    it('writes changes to pricingCoverage', () => {
       const coingeckoTestPricingCoverage = {
         ...mockOpsRepo.explorer.pricingCoverage,
         pricingCoverage: [],
@@ -587,7 +583,7 @@ describe('writeOperationsRepository', () => {
 
       expect(existsSync(join(tempTestPath, 'explorer', 'pricingCoverage.json'))).toBe(true);
 
-      const writtenOpsRepo = await readOperationsRepository(tempTestPath);
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
   });

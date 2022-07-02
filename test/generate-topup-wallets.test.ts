@@ -11,7 +11,7 @@ describe('generate-topup-wallets', () => {
     prompts.inject(['api3']);
     await generateTemplateIds(join(__dirname, 'fixtures', 'data'));
 
-    const newMockOpsRepo = await readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+    const newMockOpsRepo = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
 
     const airnodeHdNode = ethers.utils.HDNode.fromExtendedKey(newMockOpsRepo.apis.api3.apiMetadata.xpub);
     const providerTopUpWallet = airnodeHdNode.derivePath(

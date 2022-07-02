@@ -43,7 +43,7 @@ const questions: PromptObject[] = [
 const main = async () => {
   const { name, contact, description, airnode, xpub } = await promptQuestions(questions);
   // Import the mock operations repository
-  const operationsRepository = await readOperationsRepository(join(__dirname, '..', 'test', 'fixtures', 'data'));
+  const operationsRepository = readOperationsRepository(join(__dirname, '..', 'test', 'fixtures', 'data'));
   const apiDataTemplate = operationsRepository.apis.api3;
 
   // Create the boilerplate apiMetadata
@@ -91,7 +91,7 @@ const main = async () => {
     ois: oisBoilerPlate,
   };
 
-  const opsData = await readOperationsRepository();
+  const opsData = readOperationsRepository();
   const updatedOpsData = { ...opsData, apis: { ...opsData.apis, [sanitiseFilename(name)]: apiDataBoilerplate } };
   writeOperationsRepository(updatedOpsData);
 };

@@ -8,9 +8,9 @@ import { normalize } from '../../src/utils/normalization';
 describe('normalize', () => {
   let unsanitizedMockData: OperationsRepository;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     // Modify the ops data
-    const originalMockData = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+    const originalMockData = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
     unsanitizedMockData = {
       ...originalMockData,
       apis: {

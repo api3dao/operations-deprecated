@@ -11,7 +11,7 @@ import {
   validatePoliciesDatafeedReferences,
   validateTemplatesEndpointIdReferences,
 } from './validation-refinements';
-import { OperationsRepository } from '../types';
+import { OperationsRepository, ValidationResult } from '../types';
 
 const { oisSchema } = ois;
 
@@ -148,6 +148,7 @@ export const airkeeperDeploymentAWSSchema = z.object({
   config: z.any().optional(), // TODO commented until we decide on versioning: airnodeConfigSchema,
   airkeeper: z.any().optional(),
   secrets: secretsSchema.optional(),
+  aws: secretsSchema.optional(),
 });
 
 /**
@@ -535,11 +536,12 @@ export const replaceInterpolatedVariables = (object: any): any => {
   return object;
 };
 
-export const validate = async (payload: OperationsRepository) => {
+export const validate = async (payload: OperationsRepository): Promise<ValidationResult<OperationsRepository>> => {
   const result = await operationsRepositorySchema.safeParseAsync(replaceInterpolatedVariables(payload));
   if (!result.success) {
-    return [false, result];
+    const errors = result.error.issues.map((e) => JSON.stringify(e, null, 2));
+    return [false, errors];
   }
 
-  return [true, undefined];
+  return [true, result.data];
 };

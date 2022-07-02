@@ -52,3 +52,5 @@ export type Policy = BasePolicy & {
   dataFeedId?: string;
   dapiName?: string;
 };
+
+export type ValidationResult<T> = [true, T] | [false, string[]];

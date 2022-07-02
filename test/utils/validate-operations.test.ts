@@ -1,14 +1,13 @@
 import { join } from 'path';
-import { operationsRepositorySchema, replaceInterpolatedVariables } from '../../src/utils/validation';
+import { replaceInterpolatedVariables, validate } from '../../src/utils/validation';
 import { readOperationsRepository } from '../../src/utils/read-operations';
 
 it('validates the mock data repository', async () => {
-  const mockOpsRepo = await readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
-  const result = await operationsRepositorySchema.safeParseAsync(replaceInterpolatedVariables(mockOpsRepo));
+  const mockOpsRepo = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
+  const interpolatedMockOpsRepo = replaceInterpolatedVariables(mockOpsRepo);
 
-  if (!result.success) {
-    console.trace(result);
-  }
+  const [success, result] = await validate(interpolatedMockOpsRepo);
 
-  expect(result.success).toEqual(true);
+  expect(success).toEqual(true);
+  expect(result).toEqual(interpolatedMockOpsRepo);
 });
