@@ -9,10 +9,10 @@ on:
 
 env:
   TARGET_NODE_VERSION: '14.17.1'
-  PUBLIC_URL: './'
   REACT_APP_COMMIT_HASH: ${{ github.sha }}
-  REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html'
+  REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
   REACT_APP_PREVIEW_BUILD: 'TRUE'
+  GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
 
 jobs:
   documentation:
@@ -110,14 +110,25 @@ jobs:
           aws-region: us-east-1
       - name: Upload JSON Payloads with commit hash to S3
         run: aws s3 cp build s3://operations-development/${{ github.sha }}/explorer --acl public-read --recursive
+      - name: Clean up before cloning operations (to get PR number)
+        run: rm -rf *
+      - name: Clone operations
+        uses: actions/checkout@v3
+      - name: Get PR number for operations
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo ${{ steps.pr.outputs.pull_request_number }}
       - name: Add a PR comment with the preview URL of the built Explorer
-        uses: thollander/actions-comment-pull-request@v1
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.pr.outputs.pull_request_number }}
           message: |
-            You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html)'.
+            You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html).
             Be sure to check the preview Explorer as part of your PR review.
-
+            This link will be updated with new pushes.
 
   chain-verification:
     name: Chain verification
