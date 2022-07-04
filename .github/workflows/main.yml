@@ -12,7 +12,6 @@ env:
   REACT_APP_COMMIT_HASH: ${{ github.sha }}
   REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
   REACT_APP_PREVIEW_BUILD: 'TRUE'
-  GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
 
 jobs:
   documentation:
