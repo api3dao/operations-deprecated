@@ -118,6 +118,7 @@ jobs:
             You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html)'.
             Be sure to check the preview Explorer as part of your PR review.
 
+
   chain-verification:
     name: Chain verification
     runs-on: ubuntu-latest
