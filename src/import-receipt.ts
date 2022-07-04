@@ -28,7 +28,7 @@ const main = async () => {
   const importPath = join(__dirname, '..', 'import');
   if (!existsSync(importPath)) mkdirSync(importPath, { recursive: true });
 
-  const operationsRepository = await readOperationsRepository();
+  const operationsRepository = readOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
   if (!response.receipt)
     return console.log('Please place the "receipt.json" in the "/import" folder and re-run the command.');

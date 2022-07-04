@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
-import { readOperationsRepository } from './utils/read-operations';
+import { readAndValidateOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();
-  const operationsRepository = await readOperationsRepository();
+  const operationsRepository = await readAndValidateOperationsRepository();
 
   const dapiNamePromises = Object.entries(operationsRepository.dapis).flatMap(([chainName, dAPI]) =>
     Object.entries(dAPI).map(async ([dAPIName, dataFeedId]) => {

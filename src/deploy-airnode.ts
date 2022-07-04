@@ -4,7 +4,7 @@ import { PromptObject } from 'prompts';
 import { OperationsRepository } from './types';
 import { cliPrint, runAndHandleErrors, runShellCommand } from './utils/cli';
 import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
+import { readAndValidateOperationsRepository } from './utils/read-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
@@ -40,7 +40,7 @@ const questions = (operationsRepository: OperationsRepository): PromptObject[] =
 
 const main = async () => {
   const nodeVersion = require('@api3/airnode-node/package.json').version;
-  const operationsRepository = await readOperationsRepository();
+  const operationsRepository = await readAndValidateOperationsRepository();
   const response = await promptQuestions(questions(operationsRepository));
 
   const baseDeploymentDirectory = join(

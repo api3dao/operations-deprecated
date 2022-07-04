@@ -4,7 +4,7 @@ import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
-import { readOperationsRepository } from './utils/read-operations';
+import { readAndValidateOperationsRepository } from './utils/read-operations';
 
 const printTransactionEvents = (tx: ethers.ContractReceipt, chainId: number) => {
   tx.events
@@ -23,7 +23,7 @@ const printTransactionEvents = (tx: ethers.ContractReceipt, chainId: number) => 
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();
-  const operationsRepository = await readOperationsRepository(operationRepositoryTarget);
+  const operationsRepository = await readAndValidateOperationsRepository(operationRepositoryTarget);
 
   const enablePoliciesPromises: Promise<ContractTransaction>[] = [];
   for (const [chainName, policiesByType] of Object.entries(operationsRepository.policies || {})) {

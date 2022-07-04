@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
-import { operationsRepositorySchema } from './validation';
+import { validate } from './validation';
 import { Api, OperationsRepository } from '../types';
 
 export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
@@ -15,7 +15,7 @@ interface FilePayload {
   readonly filename: string;
 }
 
-export const readRawOperations = (target = join(__dirname, '..', '..', 'data')) => {
+export const readOperationsRepository = (target = join(__dirname, '..', '..', 'data')) => {
   const rawOperations = readFileOrDirectoryRecursively(target) as OperationsRepository;
 
   const apis = Object.fromEntries(
@@ -42,17 +42,16 @@ export const readRawOperations = (target = join(__dirname, '..', '..', 'data')) 
   return operations;
 };
 
-export const readOperationsRepository = async (target = join(__dirname, '..', '..', 'data')) => {
-  const operations = readRawOperations(target);
+export const readAndValidateOperationsRepository = async (target = join(__dirname, '..', '..', 'data')) => {
+  const operations = readOperationsRepository(target);
 
-  const result = await operationsRepositorySchema.safeParseAsync(operations);
+  const [success, result] = await validate(operations);
 
-  if (result.success) {
-    return result.data;
+  if (!success) {
+    throw new Error(result.join('\n'));
   }
 
-  console.error('Validation failed:');
-  throw result.error;
+  return result;
 };
 
 export const readFileOrDirectoryRecursively = (target: string): any => {

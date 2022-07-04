@@ -3,8 +3,8 @@ import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { normalize } from './utils/normalization';
 
-const main = async () => {
-  const rawOpsData = await readOperationsRepository();
+const main = () => {
+  const rawOpsData = readOperationsRepository();
   const conformedOpsData = normalize(rawOpsData);
 
   console.log('Validation was successful, writing changes...');
@@ -12,4 +12,4 @@ const main = async () => {
   console.log('Operations data successfully written.');
 };
 
-runAndHandleErrors(main);
+runAndHandleErrors(() => new Promise(main));
