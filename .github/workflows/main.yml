@@ -10,7 +10,8 @@ on:
 env:
   TARGET_NODE_VERSION: '14.17.1'
   REACT_APP_COMMIT_HASH: ${{ github.sha }}
-  REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
+#  REACT_APP_PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
+  PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
   REACT_APP_PREVIEW_BUILD: 'TRUE'
 
 jobs:
@@ -148,4 +149,3 @@ jobs:
         run: yarn check-dapi-name
       - name: Verify DapiServer allowed readers on chain
         run: yarn check-policy-readers
-
