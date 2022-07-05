@@ -4,6 +4,7 @@ module.exports = {
     // eslint-plugin-functional
     'functional/prefer-tacit': ['error', { assumeTypes: { allowFixer: false } }],
     'functional/immutable-data': ['error', { assumeTypes: true }],
+    '@typescript-eslint/no-empty-interface': 'off'
   },
   overrides: [
     {
@@ -21,7 +22,7 @@ module.exports = {
         '**/*.config.ts',
       ],
       rules: {
-        'functional/immutable-data': 'off',
+        'functional/immutable-data': 'off'
       },
     },
   ],

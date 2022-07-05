@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [ExtendedChainDescription](../interfaces/types.ExtendedChainDescription.md)
+
 ### Type Aliases
 
 - [Api](types.md#api)
@@ -19,7 +23,6 @@
 - [DeploymentSet](types.md#deploymentset)
 - [Deployments](types.md#deployments)
 - [Explorer](types.md#explorer)
-- [ExtendedChainDescription](types.md#extendedchaindescription)
 - [Oises](types.md#oises)
 - [OperationsRepository](types.md#operationsrepository)
 - [Policies](types.md#policies)
@@ -35,23 +38,23 @@
 
 ### Api
 
-Ƭ **Api**: `z.infer`<typeof [`apiSchema`](utils_validation.md#apischema)\>
+Ƭ **Api**: `z.infer`<typeof `apiSchema`\>
 
 #### Defined in
 
-[src/types.ts:35](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L35)
+[src/types.ts:35](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L35)
 
----
+___
 
 ### ApiMetadata
 
-Ƭ **ApiMetadata**: `z.infer`<typeof [`apiMetadataSchema`](utils_validation.md#apimetadataschema)\>
+Ƭ **ApiMetadata**: `z.infer`<typeof `apiMetadataSchema`\>
 
 #### Defined in
 
-[src/types.ts:34](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L34)
+[src/types.ts:34](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L34)
 
----
+___
 
 ### Apis
 
@@ -59,9 +62,9 @@
 
 #### Defined in
 
-[src/types.ts:36](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L36)
+[src/types.ts:36](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L36)
 
----
+___
 
 ### BasePolicy
 
@@ -69,9 +72,9 @@
 
 #### Defined in
 
-[src/types.ts:47](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L47)
+[src/types.ts:47](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L47)
 
----
+___
 
 ### Beacon
 
@@ -79,9 +82,9 @@
 
 #### Defined in
 
-[src/types.ts:27](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L27)
+[src/types.ts:27](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L27)
 
----
+___
 
 ### Beacons
 
@@ -89,20 +92,19 @@
 
 #### Defined in
 
-[src/types.ts:28](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L28)
+[src/types.ts:28](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L28)
 
----
+___
 
 ### ChainDeploymentReferences
 
-Ƭ **ChainDeploymentReferences**: `z.infer`<typeof
-[`chainDeploymentReferencesSchema`](utils_validation.md#chaindeploymentreferencesschema)\>
+Ƭ **ChainDeploymentReferences**: `z.infer`<typeof [`chainDeploymentReferencesSchema`](utils_validation.md#chaindeploymentreferencesschema)\>
 
 #### Defined in
 
-[src/types.ts:37](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L37)
+[src/types.ts:37](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L37)
 
----
+___
 
 ### Chains
 
@@ -110,9 +112,9 @@
 
 #### Defined in
 
-[src/types.ts:39](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L39)
+[src/types.ts:39](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L39)
 
----
+___
 
 ### ChainsMetadata
 
@@ -120,9 +122,9 @@
 
 #### Defined in
 
-[src/types.ts:38](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L38)
+[src/types.ts:38](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L38)
 
----
+___
 
 ### Dapis
 
@@ -130,19 +132,19 @@
 
 #### Defined in
 
-[src/types.ts:40](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L40)
+[src/types.ts:40](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L40)
 
----
+___
 
 ### DeploymentSet
 
-Ƭ **DeploymentSet**: `z.infer`<typeof [`deploymentSetSchema`](utils_validation.md#deploymentsetschema)\>
+Ƭ **DeploymentSet**: `z.infer`<typeof `deploymentSetSchema`\>
 
 #### Defined in
 
-[src/types.ts:29](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L29)
+[src/types.ts:29](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L29)
 
----
+___
 
 ### Deployments
 
@@ -150,9 +152,9 @@
 
 #### Defined in
 
-[src/types.ts:30](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L30)
+[src/types.ts:30](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L30)
 
----
+___
 
 ### Explorer
 
@@ -160,20 +162,9 @@
 
 #### Defined in
 
-[src/types.ts:45](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L45)
+[src/types.ts:45](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L45)
 
----
-
-### ExtendedChainDescription
-
-Ƭ **ExtendedChainDescription**: `z.infer`<typeof
-[`extendedChainDescriptionSchema`](utils_validation.md#extendedchaindescriptionschema)\>
-
-#### Defined in
-
-[src/types.ts:44](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L44)
-
----
+___
 
 ### Oises
 
@@ -181,20 +172,19 @@
 
 #### Defined in
 
-[src/types.ts:33](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L33)
+[src/types.ts:33](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L33)
 
----
+___
 
 ### OperationsRepository
 
-Ƭ **OperationsRepository**: `z.infer`<typeof
-[`operationsRepositorySchema`](utils_validation.md#operationsrepositoryschema)\>
+Ƭ **OperationsRepository**: `z.infer`<typeof [`operationsRepositorySchema`](utils_validation.md#operationsrepositoryschema)\>
 
 #### Defined in
 
-[src/types.ts:49](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L49)
+[src/types.ts:49](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L49)
 
----
+___
 
 ### Policies
 
@@ -202,39 +192,39 @@
 
 #### Defined in
 
-[src/types.ts:46](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L46)
+[src/types.ts:46](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L46)
 
----
+___
 
 ### Policy
 
-Ƭ **Policy**: [`BasePolicy`](types.md#basepolicy) & { `dapiName?`: `string` ; `dataFeedId?`: `string` }
+Ƭ **Policy**: [`BasePolicy`](types.md#basepolicy) & { `dapiName?`: `string` ; `dataFeedId?`: `string`  }
 
 #### Defined in
 
-[src/types.ts:51](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L51)
+[src/types.ts:51](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L51)
 
----
+___
 
 ### Secrets
 
-Ƭ **Secrets**: `z.infer`<typeof [`secretsSchema`](utils_validation.md#secretsschema)\>
+Ƭ **Secrets**: `z.infer`<typeof `secretsSchema`\>
 
 #### Defined in
 
-[src/types.ts:41](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L41)
+[src/types.ts:41](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L41)
 
----
+___
 
 ### Template
 
-Ƭ **Template**: `z.infer`<typeof [`templateSchema`](utils_validation.md#templateschema)\>
+Ƭ **Template**: `z.infer`<typeof `templateSchema`\>
 
 #### Defined in
 
-[src/types.ts:31](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L31)
+[src/types.ts:31](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L31)
 
----
+___
 
 ### Templates
 
@@ -242,42 +232,42 @@
 
 #### Defined in
 
-[src/types.ts:32](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L32)
+[src/types.ts:32](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L32)
 
----
+___
 
 ### TopUpWalletSchema
 
-Ƭ **TopUpWalletSchema**: `z.infer`<typeof [`topUpWalletSchema`](utils_validation.md#topupwalletschema)\>
+Ƭ **TopUpWalletSchema**: `z.infer`<typeof `topUpWalletSchema`\>
 
 #### Defined in
 
-[src/types.ts:42](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L42)
+[src/types.ts:42](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L42)
 
----
+___
 
 ### ValidationResult
 
-Ƭ **ValidationResult**<`T`\>: [``true``, `T`] \| [`false`, `string`[]]
+Ƭ **ValidationResult**<`T`\>: [``true``, `T`] \| [``false``, `string`[]]
 
 The output of Zod validation
 
 #### Type parameters
 
 | Name |
-| :--- |
-| `T`  |
+| :------ |
+| `T` |
 
 #### Defined in
 
-[src/types.ts:59](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L59)
+[src/types.ts:59](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L59)
 
----
+___
 
 ### WalletType
 
-Ƭ **WalletType**: `z.infer`<typeof [`walletTypeSchema`](utils_validation.md#wallettypeschema)\>
+Ƭ **WalletType**: `z.infer`<typeof `walletTypeSchema`\>
 
 #### Defined in
 
-[src/types.ts:43](https://github.com/api3dao/operations/blob/0d61e4d/src/types.ts#L43)
+[src/types.ts:43](https://github.com/api3dao/operations/blob/d14867d/src/types.ts#L43)

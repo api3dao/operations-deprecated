@@ -18,7 +18,8 @@
     "entryPoints": ["src/utils/validation.ts", "src/types.ts"],
     "out": "docs",
     "entryPointStrategy": "Expand",
-    "plugin": ["typedoc-plugin-markdown"]
+    "plugin": ["typedoc-plugin-markdown"],
+    "pretty": true
   },
   "include": ["./src/**/*"],
   "exclude": ["dist/**/*", "node_modules/**/*"]
