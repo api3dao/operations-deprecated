@@ -11,6 +11,9 @@ export const readJsonDirectoryAsArray = (directoryPath: string): Partial<FilePay
     filename,
   }));
 
+/**
+ * FilePayload represents a file name
+ */
 interface FilePayload {
   readonly filename: string;
 }

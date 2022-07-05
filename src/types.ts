@@ -53,4 +53,7 @@ export type Policy = BasePolicy & {
   dapiName?: string;
 };
 
+/**
+ * The output of Zod validation
+ */
 export type ValidationResult<T> = [true, T] | [false, string[]];

@@ -69,6 +69,7 @@
     "@types/prompts": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "axios": "^0.27.2",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
     "eslint": "^8.5.0",
@@ -86,12 +87,14 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.2",
     "ts-node": "^10.4.0",
-    "typescript": "^4.6.4",
-    "axios": "^0.27.2"
+    "typedoc": "^0.23.5",
+    "typedoc-plugin-markdown": "^3.13.2",
+    "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@api3/airnode-validator": "^0.7.2",
     "@api3/airnode-admin": "^0.7.2",
+    "@api3/airnode-validator": "^0.7.2",
+    "typedoc-theme-hierarchy": "^2.0.0",
     "zod": "^3.14.2"
   }
 }
