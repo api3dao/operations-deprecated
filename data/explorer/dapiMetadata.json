@@ -138,5 +138,65 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     }
+  },
+  "USDC/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "AVAX/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "BTC/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "JOE/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "BNB/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
+  },
+  "RBTC/USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
   }
 }
