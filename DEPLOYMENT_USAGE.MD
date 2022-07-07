@@ -69,12 +69,12 @@ within the `/data/apis/<PROVIDER_NAME>/templates` folder you will need to create
 For populating `decodedParamters`, you can refer to [this](https://docs.api3.org/airnode/v0.6/grp-developers/call-an-airnode.html#request-parameters).
 For deriving the `endpointId`, you can refer to [this](https://docs.api3.org/airnode/v0.6/reference/packages/admin-cli.html#derive-endpoint-id)
 
-> Note that the above files can have any name initially as the validator will name them according to their `templateName`.
+> Note that the above files can have any name initially as the normalization script will name them according to their `templateName`.
 
 Once populated run the following command to generate the templateIds and parameters:
 
 ```
-yarn generate-templateIds
+yarn normalize
 ```
 
 ### 5. Populate the beacons
@@ -113,7 +113,7 @@ within the `/data/apis/<PROVIDER_NAME>/beacons` folder you will need to create a
 
 `airseekerConfig` is the configuration of airseeker (ran by API3). Absence of this field means that the beacon is not included in the `airseeker.json` configuration for the specified chain.
 
-> Note that the above files can have any name initially as the validator will name them according to their `beaconName`.
+> Note that the above files can have any name initially as the normalization script will name them according to their `beaconName`.
 
 Once populated run the following command to generate the `Provider-Sponsor` TopUp Wallet used by airkeeper
 
@@ -123,7 +123,7 @@ yarn generate-topup-wallets
 
 > There is also a prompt to specify the `API3` TopUp Wallet which is used by airseeker:
 
-When complete run the following command to normalize the repository (this will also generate the beaconIds).
+When complete run the following command to normalize the repository (this will also generate the beaconIds like in the previous step).
 
 ```
 yarn normalize
