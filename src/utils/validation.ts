@@ -361,7 +361,7 @@ export const beaconMetadataSchema = z.record(
     decimalPlaces: z.number().optional(),
     logos: z.array(z.string()).optional(),
     prefix: z.string().optional(),
-    postfix: z.string().optional()
+    postfix: z.string().optional(),
   })
 );
 
