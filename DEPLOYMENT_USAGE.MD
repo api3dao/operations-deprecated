@@ -42,7 +42,7 @@ This command prompts for various API metadata and creates a set of folders with 
 
 ### 3. Populate the OIS
 
-Populate the `/data/apis/<PROVIDER_NAME>/OIS/*.json` according to the [OIS specification](https://docs.api3.org/ois/v1.0.0/ois.html).
+Populate the `/data/apis/<PROVIDER_NAME>/OIS/*.json` according to the [OIS specification](https://docs.api3.org/ois/latest/ois.html).
 
 > Note that the above files can have any name initially as the validator will name them according to their `oisTitle-oisVersion`
 
