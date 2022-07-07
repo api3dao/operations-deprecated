@@ -96,9 +96,13 @@ const templateFull = Object.values(operations.apis)
 console.log(templateFull);
 ```
 
+<!-- markdown-link-check-disable -->
+
 EVM chains do not have floating point variable types and therefore all decimal values are stored as whole numbers.
 Airnode multiplies a decimal value from an API endpoint with a `_times` factor. `_times` is an Airnode Reserved
 Parameter. For more information, refer to the [API3 Docs](https://docs.api3.org/ois/latest/reserved-parameters.html)
+
+<!-- markdown-link-check-enable -->
 
 To get the multiplication factor in the associated template:
 
