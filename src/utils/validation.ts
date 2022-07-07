@@ -360,6 +360,8 @@ export const beaconMetadataSchema = z.record(
     pricingCoverage: z.record(z.string()), //TODO must be present in pricingCoverage
     decimalPlaces: z.number().optional(),
     logos: z.array(z.string()).optional(),
+    prefix: z.string().optional(),
+    postfix: z.string().optional()
   })
 );
 
