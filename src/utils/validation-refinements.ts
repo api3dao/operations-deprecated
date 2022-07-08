@@ -146,9 +146,9 @@ export const validateDapiMetadataReferences: SuperRefinement<{
 
   console.log(
     [
-      `Some beacons are missing from /explorer/beaconMetadata.`,
-      `You can find a helpful boilerplate for the missing dapis here.`,
-      `Add the following to /dapis and customise:`,
+      `Some beacons are missing from /explorer/dapiMetadata.`,
+      `You can find a boilerplate for the missing dapis below.`,
+      `Add the following to /explorer/dapiMetadata and customise:`,
     ].join('\n')
   );
   console.log(JSON.stringify(missingDapis, null, 2));
@@ -187,6 +187,59 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
       });
     });
   });
+
+  // Check if the beaconId has an associated reference in beaconMetadata
+
+  const beaconMetadataEntries = Object.entries(explorer.beaconMetadata);
+  const flatBeacons = Object.values(apis)
+    .flatMap((api) => Object.values(api.beacons))
+    .map((beacon) => [beacon.beaconId, beacon]);
+  const flatBeaconsObject = Object.fromEntries(flatBeacons);
+
+  const missingBeaconEntries = Object.fromEntries(
+    flatBeacons.filter((beacon) => !beaconMetadataEntries.find((beaconMetdata) => beaconMetdata[0] === beacon[0]))
+  );
+
+  const missingBeaconHelperDefaults = Object.fromEntries(
+    Object.entries(missingBeaconEntries).map((beacon) => [
+      beacon[0],
+      {
+        pricingCoverage: {
+          polygon: 'polygon',
+          'polygon-testnet': 'test-pricing-set-free',
+          rsk: 'rsk',
+          avalanche: 'avalanche',
+          'avalanche-testnet': 'test-pricing-set-free',
+          bsc: 'bsc',
+        },
+        decimalPlaces: 4,
+        prefix: '$',
+      },
+    ])
+  );
+
+  Object.entries(missingBeaconEntries).forEach((missingDapi) => {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `Beacon ${missingDapi[0]} ("${
+        flatBeaconsObject[missingDapi[0]]
+      }") from /apis/*/beacons has no metadata in beaconMetadata`,
+      path: ['dapis'],
+    });
+  });
+
+  if (Object.entries(missingBeaconHelperDefaults).length === 0) {
+    return;
+  }
+
+  console.log(
+    [
+      `Some beacons are missing from /explorer/beaconMetadata.`,
+      `You can find a boilerplate for the missing metadata below.`,
+      `Add the following to /explorer/beaconMetadata and customise:`,
+    ].join('\n')
+  );
+  console.log(JSON.stringify(missingBeaconHelperDefaults, null, 2));
 };
 
 export const validateBeaconSetsReferences: SuperRefinement<{
