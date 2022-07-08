@@ -3,18 +3,22 @@
     "30": "rsk",
     "56": "bsc",
     "137": "polygon",
+    "2001": "milkomeda",
     "43113": "avalanche-testnet",
     "43114": "avalanche",
-    "80001": "polygon-testnet"
+    "80001": "polygon-testnet",
+    "200101": "milkomeda-testnet"
   },
   "contracts": {
     "DapiServer": {
       "30": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
       "56": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c",
       "137": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5",
+      "2001": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987",
       "43113": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a",
       "43114": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4",
-      "80001": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14"
+      "80001": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14",
+      "200101": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251"
     }
   }
 }

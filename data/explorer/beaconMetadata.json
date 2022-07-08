@@ -29,6 +29,7 @@
   "0x8dd297503e6e8b95c979677e9e6aecfee08ee5426bea72adff2d7a797f7bd69d": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
+      "milkomeda-testnet": "test-pricing-set-free",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
       "rsk": "rsk",
