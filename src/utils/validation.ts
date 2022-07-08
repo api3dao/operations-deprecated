@@ -7,6 +7,7 @@ import {
   validateBeaconSetIds,
   validateBeaconSetsReferences,
   validateBeaconsTemplateIdReferences,
+  validateDapiMetadataReferences,
   validateDapisChainReferences,
   validatePoliciesDatafeedReferences,
   validateTemplatesEndpointIdReferences,
@@ -360,6 +361,8 @@ export const beaconMetadataSchema = z.record(
     pricingCoverage: z.record(z.string()), //TODO must be present in pricingCoverage
     decimalPlaces: z.number().optional(),
     logos: z.array(z.string()).optional(),
+    prefix: z.string().optional(),
+    postfix: z.string().optional(),
   })
 );
 
@@ -512,7 +515,8 @@ export const operationsRepositorySchema = z
   .superRefine(validateDapisChainReferences)
   .superRefine(validateBeaconMetadataReferences)
   .superRefine(validateBeaconSetsReferences)
-  .superRefine(validatePoliciesDatafeedReferences);
+  .superRefine(validatePoliciesDatafeedReferences)
+  .superRefine(validateDapiMetadataReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {

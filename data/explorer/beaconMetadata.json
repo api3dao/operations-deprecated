@@ -10,7 +10,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 8,
-    "logos": ["AAVE", "BTC"]
+    "logos": ["AAVE", "BTC"],
+    "prefix": "₿"
   },
   "0xf418b8f3ee3f8b66946bce48d56d69f031a977c0b6a700b07452eb1da9ad5bab": {
     "category": "Cryptocurrency",
@@ -22,7 +23,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["AAVE", "USD"]
+    "logos": ["AAVE", "USD"],
+    "prefix": "$"
   },
   "0x8dd297503e6e8b95c979677e9e6aecfee08ee5426bea72adff2d7a797f7bd69d": {
     "category": "Cryptocurrency",
@@ -35,7 +37,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["ADA", "USD"]
+    "logos": ["ADA", "USD"],
+    "prefix": "$"
   },
   "0xdc82ce0ab839eb9b3f65309c0c81019dc90c2260f34e6de4d157d5975049bfd0": {
     "category": "Cryptocurrency",
@@ -48,7 +51,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["ALPACA", "USD"]
+    "logos": ["ALPACA", "USD"],
+    "prefix": "$"
   },
   "0x098cf42f8ea393f32ec9b788d48eb58d044a51a8793f1d98ceb27d25fccbeb2b": {
     "category": "Cryptocurrency",
@@ -60,7 +64,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["AVAX", "USD"]
+    "logos": ["AVAX", "USD"],
+    "prefix": "$"
   },
   "0x2b6c4fdf87eb7e4321115c5e04dc6dd2ae3a4e83f443c1c9f493eaa98b192a59": {
     "category": "Cryptocurrency",
@@ -72,7 +77,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["AXS", "USD"]
+    "logos": ["AXS", "USD"],
+    "prefix": "$"
   },
   "0x9a8f1b8d4cb1dc23d1d8a5991770b6fc220b524c4a3f11a9ea5579a3e0cef367": {
     "category": "Cryptocurrency",
@@ -84,7 +90,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["BNB", "USD"]
+    "logos": ["BNB", "USD"],
+    "prefix": "$"
   },
   "0x0a6d78c904e255189a08bfd0773f6fc9da2c5a02a65aa16c8ec83dd346825fe4": {
     "category": "Cryptocurrency",
@@ -96,7 +103,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["BTC", "USD"]
+    "logos": ["BTC", "USD"],
+    "prefix": "$"
   },
   "0x7f6a0ef132e1283d5905030ddf555ff2d96c0ab5f7de64653241d5fd93a7b96e": {
     "category": "Cryptocurrency",
@@ -109,7 +117,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 6,
-    "logos": ["BUSD", "USD"]
+    "logos": ["BUSD", "USD"],
+    "prefix": "$"
   },
   "0x6bd5cb95e7e3784f5467b48c7711ee7adbc859a94cef67fcc23084ce50120b82": {
     "category": "Cryptocurrency",
@@ -122,7 +131,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["CAKE", "USD"]
+    "logos": ["CAKE", "USD"],
+    "prefix": "$"
   },
   "0x985cedbc20e6f3a3eeebcd2af8a0266a8b5da285e3ef87964aa4d96f4c4729ab": {
     "category": "Cryptocurrency",
@@ -135,7 +145,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["CRV", "USD"]
+    "logos": ["CRV", "USD"],
+    "prefix": "$"
   },
   "0xc8d57dc4972714cc8754fda28fdd824faf63607b26fa7bc895006400c7298093": {
     "category": "Cryptocurrency",
@@ -148,7 +159,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["DOT", "USD"]
+    "logos": ["DOT", "USD"],
+    "prefix": "$"
   },
   "0xddd22962d8a815f315667f4bd8dfceb04a4383cd3a95397806345840d2705197": {
     "category": "Cryptocurrency",
@@ -161,7 +173,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["EOS", "USD"]
+    "logos": ["EOS", "USD"],
+    "prefix": "$"
   },
   "0x71f4095b47160ae099768e2920d0377ca0fb01d6adf6a5ee269c90020202c511": {
     "category": "Cryptocurrency",
@@ -174,7 +187,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["FIL", "USD"]
+    "logos": ["FIL", "USD"],
+    "prefix": "$"
   },
   "0x2811b7988f3c239d7f7f988523e795f7cc0f34e45ae0bca304e4782d49448833": {
     "category": "Cryptocurrency",
@@ -187,7 +201,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["JOE", "USD"]
+    "logos": ["JOE", "USD"],
+    "prefix": "$"
   },
   "0x29e1bb7ebdc04ae43bf4a598aaaaf6f2de29ef49ed71865a38166f5d6bbea76e": {
     "category": "Cryptocurrency",
@@ -200,7 +215,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["LINK", "USD"]
+    "logos": ["LINK", "USD"],
+    "prefix": "$"
   },
   "0x79e3268fa44de913c648260d7d483875ab0095ea18d63be088ef6894bd8bcacd": {
     "category": "Cryptocurrency",
@@ -212,7 +228,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["LTC", "USD"]
+    "logos": ["LTC", "USD"],
+    "prefix": "$"
   },
   "0x5f9d68d2108556123524a6d64531bb136676e2ca6effda812cca70e5ef655528": {
     "category": "Cryptocurrency",
@@ -225,7 +242,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["MATIC", "USD"]
+    "logos": ["MATIC", "USD"],
+    "prefix": "$"
   },
   "0xf94ee8a799f14c1c4900335d4eb73395e224a6cf8ec3fde7734227235a5bd1c8": {
     "category": "Cryptocurrency",
@@ -238,7 +256,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["MIOTA", "USD"]
+    "logos": ["MIOTA", "USD"],
+    "prefix": "$"
   },
   "0xb43559f0ce38988d695fa1a07becebc6add4295ff086fd326d831be92067c240": {
     "category": "Cryptocurrency",
@@ -251,7 +270,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["NEO", "USD"]
+    "logos": ["NEO", "USD"],
+    "prefix": "$"
   },
   "0xc22d30e582730222b2f3227f357452c2275520339e76d831784ed484493b3b1b": {
     "category": "Cryptocurrency",
@@ -264,7 +284,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 8,
-    "logos": ["OOKI", "ETH"]
+    "logos": ["OOKI", "ETH"],
+    "prefix": "Ξ"
   },
   "0x31c537609bfa0a2aa1431a607982414963b867f18eabdbaa953174e0c0ce243f": {
     "category": "Cryptocurrency",
@@ -276,7 +297,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["QUICK", "USD"]
+    "logos": ["QUICK", "USD"],
+    "prefix": "$"
   },
   "0x89277198683adedbe9d0cef363aa6eb53b2fb2dcd7caf06eddfc260ddefe8fec": {
     "category": "Cryptocurrency",
@@ -289,7 +311,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 8,
-    "logos": ["RBTC", "BTC"]
+    "logos": ["RBTC", "BTC"],
+    "prefix": "₿"
   },
   "0xf04547df734060189a890100e802b6c24c2c2ef184875529e7beed034de39122": {
     "category": "Cryptocurrency",
@@ -301,7 +324,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["RBTC", "USD"]
+    "logos": ["RBTC", "USD"],
+    "prefix": "$"
   },
   "0x9d6263fcc0742b5da22e1a8c3677843e4b9cf8b75d0939844c29bdc130c67d9d": {
     "category": "Cryptocurrency",
@@ -313,7 +337,8 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["SOL", "USD"]
+    "logos": ["SOL", "USD"],
+    "prefix": "$"
   },
   "0xed3c55fd0d666ca78192ae861f32bc59d0abcb32de417f84a4de8d1a08928120": {
     "category": "Cryptocurrency",
@@ -326,7 +351,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["UNI", "USD"]
+    "logos": ["UNI", "USD"],
+    "prefix": "$"
   },
   "0x965a0183d076f8088229bca7e90cbfcb7155339b4066de627bb76d8ddc9b03bc": {
     "category": "Cryptocurrency",
@@ -339,7 +365,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 6,
-    "logos": ["USDC", "USD"]
+    "logos": ["USDC", "USD"],
+    "prefix": "$"
   },
   "0x43e4b505b0bc564a19de751a136cdeb34b90261c2d14700d6ee6c8fdfeea56f4": {
     "category": "Cryptocurrency",
@@ -352,7 +379,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 6,
-    "logos": ["VET", "USD"]
+    "logos": ["VET", "USD"],
+    "prefix": "$"
   },
   "0x0b819cb4816b1b0ca50cab57f65532ff8abf12920a19f5d16fefe1e48f472741": {
     "category": "Cryptocurrency",
@@ -365,7 +393,8 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["XLM", "USD"]
+    "logos": ["XLM", "USD"],
+    "prefix": "$"
   },
   "0xa32c9aba0d4fe040776361503784e1c485615ecd93421712a051fe0f512555c1": {
     "category": "Cryptocurrency",
@@ -378,6 +407,7 @@
       "bsc": "bsc"
     },
     "decimalPlaces": 4,
-    "logos": ["XVS", "USD"]
+    "logos": ["XVS", "USD"],
+    "prefix": "$"
   }
 }
