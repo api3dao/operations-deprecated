@@ -87,11 +87,7 @@ export const validateDapisChainReferences: SuperRefinement<{
 
 // TODO
 // Validate that referenced pricingCoverage is found
-// export const validatePricingCoverageReferences: SuperRefinement<{
-//   dapis: Dapis;
-//   chains: Chains;
-// }> = ({ dapis, chains }, ctx) => {
-// };
+// Validate that referenced logos are found in commonLogos and retrievable
 
 /**
  * Checks /explorer/dapiMetadata against /dapis to ensure that we have a reference
