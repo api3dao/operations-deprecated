@@ -85,6 +85,75 @@ export const validateDapisChainReferences: SuperRefinement<{
   });
 };
 
+// TODO
+// Validate that referenced pricingCoverage is found
+// export const validatePricingCoverageReferences: SuperRefinement<{
+//   dapis: Dapis;
+//   chains: Chains;
+// }> = ({ dapis, chains }, ctx) => {
+// };
+
+/**
+ * Checks /explorer/dapiMetadata against /dapis to ensure that we have a reference
+ *
+ * @param explorer
+ * @param dapis
+ * @param ctx
+ */
+export const validateDapiMetadataReferences: SuperRefinement<{
+  chains: Chains;
+  explorer: Explorer;
+  dapis: Dapis;
+}> = ({ explorer, dapis }, ctx) => {
+  const flatDapis = Object.entries(
+    Object.fromEntries(
+      Object.values(dapis)
+        .map((dapis) => Object.entries(dapis))
+        .flat()
+    )
+  ).flat(0);
+
+  const missingDapis = Object.fromEntries(
+    flatDapis
+      .filter((fd) => !explorer.dapiMetadata[fd[0]])
+      .map((dapi) => [
+        dapi[0],
+        {
+          pricingCoverage: {
+            polygon: 'polygon',
+            'polygon-testnet': 'test-pricing-set-free',
+            rsk: 'rsk',
+            avalanche: 'avalanche',
+            'avalanche-testnet': 'test-pricing-set-free',
+            bsc: 'bsc',
+          },
+        },
+      ])
+  );
+
+  const missingDapisArray = Object.entries(missingDapis);
+  missingDapisArray.forEach((missingDapi) => {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `dAPI ${missingDapi[0]} from /dapis has no metadata in dapiMetadata`,
+      path: ['dapis'],
+    });
+  });
+
+  if (missingDapisArray.length === 0) {
+    return;
+  }
+
+  console.log(
+    [
+      `Some beacons are missing from /explorer/beaconMetadata.`,
+      `You can find a helpful boilerplate for the missing dapis here.`,
+      `Add the following to /dapis and customise:`,
+    ].join('\n')
+  );
+  console.log(JSON.stringify(missingDapis, null, 2));
+};
+
 export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;
