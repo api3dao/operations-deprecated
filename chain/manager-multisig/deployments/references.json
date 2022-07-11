@@ -15,6 +15,14 @@
     "multisig": "0x33E6C2f5Fa6aA18254927F55b0C5b5B975Ec1358",
     "manager": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987"
   },
+  "milkomeda": {
+    "multisig": "0x6adD2B0D2bA7A4075d75c3E1801214c53e407418",
+    "manager": "0x7fc103Cc17EB1764c14F8A1ac4745445cea62A46"
+  },
+  "milkomeda-testnet": {
+    "multisig": "0xd8eC2c4158a0Cb65Dd42E2d1C1da8EA11975Ba22",
+    "manager": "0x8984152339F9D35742BB878D0eaD9EF9fd6469d3"
+  },
   "polygon": {
     "multisig": "0x4923968942E8aae4656ae4913874EB7312e0F7c7",
     "manager": "0x7f5AF7a37a33898544717AAa6c35c111dCe95b28"

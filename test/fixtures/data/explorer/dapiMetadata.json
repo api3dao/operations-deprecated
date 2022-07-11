@@ -1,1 +1,5 @@
-{ "ADA/USD": { "pricingCoverage": { "ropsten": "ropsten" } } }
+{
+  "ADA/USD": { "pricingCoverage": { "ropsten": "ropsten" } },
+  "BTC/USD": { "pricingCoverage": { "ropsten": "ropsten" } },
+  "ETH/USD": { "pricingCoverage": { "ropsten": "ropsten" } }
+}
