@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
@@ -38,19 +38,8 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-const convertToUtc = (date: Date): Date => {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds()
-  );
-};
-
 export const getFormattedUtcTimestamp = (): string => {
-  return format(convertToUtc(new Date()), 'yyMMdd-HHmm');
+  return formatInTimeZone(Date.now(), 'UTC', 'yyMMdd-HHmm');
 };
 
 const buildNodeSettings = (
