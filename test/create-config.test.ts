@@ -26,7 +26,7 @@ describe('create-config', () => {
   it('builds the airnode and airkeeper configs for AWS and GCP', async () => {
     const date = new Date().toISOString().split('T')[0];
 
-    jest.spyOn(createConfigModule, 'getFormattedTimestamp').mockReturnValue('220616-1954');
+    jest.spyOn(createConfigModule, 'getFormattedUtcTimestamp').mockReturnValue('220616-1954');
 
     prompts.inject(['api3', ['aws', 'gcp'], false]);
     await createConfigModule.createConfig(tempTestPath);
