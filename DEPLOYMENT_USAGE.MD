@@ -123,7 +123,7 @@ yarn generate-topup-wallets
 
 > There is also a prompt to specify the `API3` TopUp Wallet which is used by airseeker:
 
-When complete run the following command to normalize the repository (this will also generate the beaconIds like in the previous step).
+When complete, run the following command to normalize the repository (this will also generate the `beaconId`s like in the previous step).
 
 ```
 yarn normalize
