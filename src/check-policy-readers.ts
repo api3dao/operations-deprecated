@@ -24,7 +24,7 @@ const main = async (operationRepositoryTarget?: string) => {
 
       return Object.values(policiesByType || {}).flatMap((policies: Record<string, Policy>) =>
         Object.values(policies)
-          .filter((policy) => Date.now() / 1000 < policy.endDate)
+          .filter((policy) => Math.floor(Date.now() / 1000) < policy.endDate)
           .map(async ({ dapiName, dataFeedId, readerAddress }) => ({
             chainName,
             dataFeed: dapiName ?? dataFeedId,
