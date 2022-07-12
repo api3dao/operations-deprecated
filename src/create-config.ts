@@ -38,8 +38,19 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-export const getFormattedTimestamp = () => {
-  return format(new Date(), 'yyMMdd-HHmm');
+const convertToUtc = (date: Date): Date => {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+};
+
+export const getFormattedUtcTimestamp = (): string => {
+  return format(convertToUtc(new Date()), 'yyMMdd-HHmm');
 };
 
 const buildNodeSettings = (
@@ -79,7 +90,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod-${getFormattedTimestamp()}`,
+    stage: `prod-${getFormattedUtcTimestamp()}`,
   };
 };
 
@@ -98,7 +109,7 @@ const buildSecretsArray = (
     ...(airnodeHeartbeat
       ? [
           `HEARTBEAT_KEY_${secretAppend}=`,
-          `HEARTBEAT_ID_${secretAppend}=${getFormattedTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
+          `HEARTBEAT_ID_${secretAppend}=${getFormattedUtcTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
           `HEARTBEAT_URL_${secretAppend}=https://heartbeats.api3data.link/heartbeats`,
         ]
       : []),
