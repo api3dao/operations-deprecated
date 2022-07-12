@@ -6,7 +6,7 @@
   "contracts": { "DapiServer": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14" },
   "nativeToken": "MATIC",
   "blockTime": 2.3,
-  "logoPath": "https://operations-logos.s3.amazonaws.com/general/Polygon-4_icon.svg",
+  "logoPath": "https://market.api3.org/images/chains/Polygon-4_icon.svg",
   "testnet": true,
   "explorerUrl": "https://mumbai.polygonscan.com"
 }
