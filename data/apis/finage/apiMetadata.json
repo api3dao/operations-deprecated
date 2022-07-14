@@ -5,6 +5,6 @@
   "homepage": "https://finage.co.uk/",
   "airnode": "0x0000000000000000000000000000000000000000",
   "xpub": "xpub00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "logoPath": "",
+  "logoPath": "https://api3-market.pages.dev/images/sources/Finage.webp",
   "maxSubscriptionPeriod": 3
 }
