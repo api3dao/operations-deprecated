@@ -13,7 +13,7 @@ export default async () => {
     chainNames: networks.reduce((acc: any, network: any) => {
       return { ...acc, [hre.config.networks[network].chainId]: network };
     }, {}),
-    contacts: {
+    contracts: {
       ...contractNames.reduce((acc, contractName) => {
         return {
           ...acc,
