@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
@@ -38,9 +38,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-export const getFormattedTimestamp = () => {
-  return format(new Date(), 'yyMMdd-HHmm');
-};
+export const getFormattedUtcTimestamp = () => formatInTimeZone(Date.now(), 'UTC', 'yyMMdd-HHmm');
 
 const buildNodeSettings = (
   apiName: string,
@@ -79,7 +77,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod-${getFormattedTimestamp()}`,
+    stage: `prod-${getFormattedUtcTimestamp()}`,
   };
 };
 
@@ -98,7 +96,7 @@ const buildSecretsArray = (
     ...(airnodeHeartbeat
       ? [
           `HEARTBEAT_KEY_${secretAppend}=`,
-          `HEARTBEAT_ID_${secretAppend}=${getFormattedTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
+          `HEARTBEAT_ID_${secretAppend}=${getFormattedUtcTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
           `HEARTBEAT_URL_${secretAppend}=https://heartbeats.api3data.link/heartbeats`,
         ]
       : []),
