@@ -6,6 +6,6 @@
   "contracts": { "DapiServer": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c" },
   "nativeToken": "BNB",
   "blockTime": 3.01,
-  "logoPath": "https://operations-logos.s3.amazonaws.com/general/BNB-4_icon.svg",
+  "logoPath": "https://market.api3.org/images/chains/BNB-4_icon.svg",
   "explorerUrl": "https://bscscan.com"
 }
