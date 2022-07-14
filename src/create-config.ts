@@ -38,9 +38,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-export const getFormattedUtcTimestamp = (): string => {
-  return formatInTimeZone(Date.now(), 'UTC', 'yyMMdd-HHmm');
-};
+export const getFormattedUtcTimestamp = () => formatInTimeZone(Date.now(), 'UTC', 'yyMMdd-HHmm');
 
 const buildNodeSettings = (
   apiName: string,
