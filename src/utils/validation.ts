@@ -444,7 +444,7 @@ export const basePolicySchema = z
     claimantAddress: evmAddressSchema.optional(),
     beneficiaryAddress: evmAddressSchema.optional(),
     readerAddress: evmAddressSchema,
-    coverageAmount: z.string(),
+    coverageAmount: z.string().optional(),
     startDate: z.number(),
     endDate: z.number(),
     ipfsPolicyHash: z.string().optional(),
