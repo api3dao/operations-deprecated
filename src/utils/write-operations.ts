@@ -3,7 +3,6 @@ import { join } from 'path';
 import { format } from 'prettier';
 import { OperationsRepository } from '../types';
 import { PRETTIER_CONFIG } from '../constants';
-import { sanitiseFilename } from './filesystem';
 
 const writeBaseDirectory = (basePath: string, payload?: any, name?: string) => {
   if (payload === undefined || name === undefined || payload[name] === undefined) {
