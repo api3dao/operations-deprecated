@@ -51,7 +51,7 @@ const main = async (operationRepositoryTarget?: string) => {
         const { dapiName, dataFeedId, readerAddress, endDate } = policy as Policy;
         if (
           Math.floor(Date.now() / 1000) < endDate &&
-          !(await dapiServer.readerCanReadDataFeed(dapiName ?? dataFeedId, readerAddress))
+          !(await dapiServer.readerCanReadDataFeed(dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId, readerAddress))
         ) {
           policiesToProcess.push(policy);
         }
@@ -60,7 +60,7 @@ const main = async (operationRepositoryTarget?: string) => {
 
     const calldatas = policiesToProcess.map(({ readerAddress, endDate, dataFeedId, dapiName }) =>
       dapiServer.interface.encodeFunctionData('extendWhitelistExpiration', [
-        dataFeedId ?? dapiName,
+        dataFeedId ? dataFeedId : ethers.utils.formatBytes32String(dapiName),
         readerAddress,
         endDate,
       ])
