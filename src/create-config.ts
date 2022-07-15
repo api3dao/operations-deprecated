@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import { formatInTimeZone } from 'date-fns-tz';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
@@ -11,6 +10,7 @@ import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerInterface } from './utils/evm';
 import { sanitiseFilename } from './utils/filesystem';
+import { getFormattedUtcTimestamp } from './utils/date';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -38,13 +38,12 @@ const questions = (choices: Choice[]): PromptObject[] => {
   ];
 };
 
-export const getFormattedUtcTimestamp = () => formatInTimeZone(Date.now(), 'UTC', 'yyMMdd-HHmm');
-
 const buildNodeSettings = (
   apiName: string,
   cloudProviderType: string,
   cloudProviderRegion: string,
-  airnodeHeartbeat: boolean
+  airnodeHeartbeat: boolean,
+  timestamp: string
 ) => {
   const secretAppend = sanitiseFilename(apiName).toUpperCase() + `_${cloudProviderType.toUpperCase()}`;
 
@@ -77,7 +76,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod-${getFormattedUtcTimestamp()}`,
+    stage: `prod-${timestamp}`,
   };
 };
 
@@ -85,7 +84,8 @@ const buildSecretsArray = (
   apiName: string,
   cloudProviderType: string,
   oisSecrets: string[],
-  airnodeHeartbeat: boolean
+  airnodeHeartbeat: boolean,
+  timestamp: string
 ) => {
   const sanitisedApiName = sanitiseFilename(apiName);
   const secretAppend = `${sanitisedApiName.toUpperCase()}_${cloudProviderType.toUpperCase()}`;
@@ -96,7 +96,7 @@ const buildSecretsArray = (
     ...(airnodeHeartbeat
       ? [
           `HEARTBEAT_KEY_${secretAppend}=`,
-          `HEARTBEAT_ID_${secretAppend}=${getFormattedUtcTimestamp()}-${cloudProviderType}-${sanitisedApiName}`,
+          `HEARTBEAT_ID_${secretAppend}=${timestamp}-${cloudProviderType}-${sanitisedApiName}`,
           `HEARTBEAT_URL_${secretAppend}=https://heartbeats.api3data.link/heartbeats`,
         ]
       : []),
@@ -112,6 +112,8 @@ const main = async (operationRepositoryTarget?: string) => {
   const apiData = operationsRepository.apis[response.apiName];
 
   //// Build config.json  ////
+
+  const timestamp = getFormattedUtcTimestamp();
 
   const cloudProviderTypeAWS = 'aws' as const;
   const cloudProviderRegionAWS = 'us-east-1';
@@ -159,14 +161,16 @@ const main = async (operationRepositoryTarget?: string) => {
     apiData.apiMetadata.name,
     cloudProviderTypeAWS,
     cloudProviderRegionAWS,
-    response.airnodeHeartbeat
+    response.airnodeHeartbeat,
+    timestamp
   );
 
   const nodeSettingsGCP = buildNodeSettings(
     apiData.apiMetadata.name,
     cloudProviderTypeGCP,
     cloudProviderRegionGCP,
-    response.airnodeHeartbeat
+    response.airnodeHeartbeat,
+    timestamp
   );
 
   //generate the triggers from the OISes
@@ -222,14 +226,16 @@ const main = async (operationRepositoryTarget?: string) => {
     apiData.apiMetadata.name,
     cloudProviderTypeAWS,
     oisSecrets,
-    response.airnodeHeartbeat
+    response.airnodeHeartbeat,
+    timestamp
   );
 
   const airnodeSecretsGCPArray = buildSecretsArray(
     apiData.apiMetadata.name,
     cloudProviderTypeGCP,
     oisSecrets,
-    response.airnodeHeartbeat
+    response.airnodeHeartbeat,
+    timestamp
   );
 
   const airnodeSecretsAWS = {
@@ -381,9 +387,6 @@ const main = async (operationRepositoryTarget?: string) => {
     endpoints: AirkeeperEndpoints,
   };
 
-  // Get the current date
-  const date = new Date().toISOString().split('T')[0];
-
   //// Create the deployment directory ////
   const updatedOpsData: OperationsRepository = {
     ...operationsRepository,
@@ -393,7 +396,7 @@ const main = async (operationRepositoryTarget?: string) => {
         ...operationsRepository.apis[response.apiName],
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
-          [date]: {
+          [timestamp]: {
             airnode: {
               ...(response.cloudProviders.includes('aws') && {
                 aws: {

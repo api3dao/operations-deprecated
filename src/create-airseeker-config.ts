@@ -7,6 +7,7 @@ import { writeOperationsRepository } from './utils/write-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { Beacons, Gateways, Templates, Triggers } from './utils/airseeker-validation';
 import { sanitiseFilename } from './utils/filesystem';
+import { getFormattedUtcTimestamp } from './utils/date';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -14,7 +15,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
       type: 'text',
       name: 'name',
       message: 'What is the Airseeker configuration name?',
-      initial: new Date().toISOString().split('T')[0],
+      initial: getFormattedUtcTimestamp(),
     },
     {
       type: 'autocompleteMultiselect',
