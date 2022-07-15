@@ -50,7 +50,7 @@ const main = async (operationRepositoryTarget?: string) => {
       for (const policy of Object.values(policyGroup)) {
         const { dapiName, dataFeedId, readerAddress, endDate } = policy as Policy;
         if (
-          Date.now() / 1000 < endDate &&
+          Math.floor(Date.now() / 1000) < endDate &&
           !(await dapiServer.readerCanReadDataFeed(dapiName ?? dataFeedId, readerAddress))
         ) {
           policiesToProcess.push(policy);

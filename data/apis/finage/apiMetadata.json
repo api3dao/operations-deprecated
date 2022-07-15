@@ -1,0 +1,10 @@
+{
+  "name": "Finage",
+  "active": false,
+  "description": "Finage is a financial data vendor company. We are building our services with the latest technologies and serving uninterrupted and the fastest data possible. Trusted by 18,000+ developers, quants, businesses, universities, forex firms, cryptocurrency trade apps, and individuals.",
+  "homepage": "https://finage.co.uk/",
+  "airnode": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "xpub": "xpub6DUobp7i53E83eKURrYyrRFBn2KJojU5B9P23gm2bUZAPm192CMA8Vj7R7XZJQn62xnbD54W5LgUDocdkwDJoaqV763bREirzvRR8meUZiQ",
+  "logoPath": "https://api3-market.pages.dev/images/sources/Finage.webp",
+  "maxSubscriptionPeriod": 3
+}

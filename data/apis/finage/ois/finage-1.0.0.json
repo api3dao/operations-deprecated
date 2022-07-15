@@ -1,0 +1,1336 @@
+{
+  "oisFormat": "1.0.0",
+  "title": "Finage",
+  "version": "1.0.0",
+  "apiSpecifications": {
+    "components": { "securitySchemes": { "Finage_x-api-key": { "in": "header", "name": "apikey", "type": "apiKey" } } },
+    "paths": {
+      "/last/stock/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "ts" }
+          ]
+        }
+      },
+      "/last/stocks": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "symbols" },
+            { "in": "query", "name": "ts" }
+          ]
+        }
+      },
+      "/last/trade/stock/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "dp_filter" },
+            { "in": "query", "name": "ts" }
+          ]
+        }
+      },
+      "/ticks/trade/stock/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "date" },
+            { "in": "query", "name": "t" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/last/trade/stocks": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "symbols" },
+            { "in": "query", "name": "ts" }
+          ]
+        }
+      },
+      "/history/stock/open-close": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "stock" },
+            { "in": "query", "name": "date" }
+          ]
+        }
+      },
+      "/ticks/quote/stock/nbbo/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "date" },
+            { "in": "query", "name": "t" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/agg/stock/{symbol}/{multiply}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "multiply" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "unadjusted" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/agg/stock/prev-close/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "unadjusted" }
+          ]
+        }
+      },
+      "/last/stock/changes/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/snapshot/stock": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "quotes" },
+            { "in": "query", "name": "trades" },
+            { "in": "query", "name": "symbols" }
+          ]
+        }
+      },
+      "/last/forex/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/last/trade/forex/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/history/ticks/forex/{symbol}/{date}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "date" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "tso" }
+          ]
+        }
+      },
+      "/agg/forex/{symbol}/{multiply}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "multiply" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/agg/forex/prev-close/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "unadjusted" }
+          ]
+        }
+      },
+      "/convert/forex/{from}/{to}/{amount}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "path", "name": "amount" }
+          ]
+        }
+      },
+      "/last/crypto/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/last/quote/crypto/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/crypto/{symbol}/{multiply}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "multiply" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/agg/crypto/prev-close/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/depth/crypto/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/history/crypto/depth/{symbol}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/last/crypto/changes/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/convert/crypto/{from}/{to}/{amount}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "path", "name": "amount" }
+          ]
+        }
+      },
+      "/snapshot/crypto": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "quotes" },
+            { "in": "query", "name": "trades" },
+            { "in": "query", "name": "symbols" }
+          ]
+        }
+      },
+      "/history/market-cap/crypto/{name}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "name" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "ess" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/last/index/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/index/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/agg/index/prev-close/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/last/etf/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/etf/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/agg/etf/prev-close/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/last/stock/uk/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/stock/global/uk/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/last/stock/in/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/stock/global/in/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/last/stock/canada/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/stock/ca/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/last/stock/moex/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/agg/stock/moex/{symbol}/{time}/{from}/{to}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "from" },
+            { "in": "path", "name": "to" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "sort" },
+            { "in": "query", "name": "date_format" },
+            { "in": "query", "name": "dbt_filter" },
+            { "in": "query", "name": "st" },
+            { "in": "query", "name": "et" }
+          ]
+        }
+      },
+      "/bonds/us/rate/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/symbol-list/{type}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "type" },
+            { "in": "query", "name": "page" },
+            { "in": "query", "name": "search" }
+          ]
+        }
+      },
+      "/news/market/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/news/forex/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/news/cryptocurrency/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "range" },
+            { "in": "query", "name": "from" },
+            { "in": "query", "name": "to" },
+            { "in": "query", "name": "type" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/marketstatus": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "country" },
+            { "in": "query", "name": "currencies" },
+            { "in": "query", "name": "holidays" },
+            { "in": "query", "name": "trading_hours" },
+            { "in": "query", "name": "extended_hours" }
+          ]
+        }
+      },
+      "/economic-calendar": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "from" },
+            { "in": "query", "name": "to" }
+          ]
+        }
+      },
+      "/earning-calendar": { "get": { "parameters": [] } },
+      "/ipo-calendar": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "from" },
+            { "in": "query", "name": "to" }
+          ]
+        }
+      },
+      "/stock-split-calendar": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "from" },
+            { "in": "query", "name": "to" }
+          ]
+        }
+      },
+      "/historical-stock-splits/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/dividend-calendar": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "from" },
+            { "in": "query", "name": "to" }
+          ]
+        }
+      },
+      "/historical-dividends/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/index-constituents": { "get": { "parameters": [{ "in": "query", "name": "index" }] } },
+      "/delisted-companies": { "get": { "parameters": [{ "in": "query", "name": "limit" }] } },
+      "/cash-flow-statement/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "period" }
+          ]
+        }
+      },
+      "/balance-sheet-statements/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "period" }
+          ]
+        }
+      },
+      "/income-statement/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "period" }
+          ]
+        }
+      },
+      "/income-statement/{symbol}.{exchange_code}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "symbol" },
+            { "in": "path", "name": "exchange_code" },
+            { "in": "query", "name": "period" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/detail/stock/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/funds/institutional-holder/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/funds/mutual-fund-holder/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/funds/etf-holder/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/funds/etf-sector-weightings/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/funds/rss-feed": { "get": { "parameters": [] } },
+      "/technical-indicator/{type}/{time}/{symbol}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "type" },
+            { "in": "path", "name": "time" },
+            { "in": "path", "name": "symbol" },
+            { "in": "query", "name": "period" }
+          ]
+        }
+      },
+      "/market-information/us/most-actives": { "get": { "parameters": [] } },
+      "/market-information/us/most-gainers": { "get": { "parameters": [] } },
+      "/market-information/us/most-losers": { "get": { "parameters": [] } },
+      "/market-information/us/sector-performance": { "get": { "parameters": [] } },
+      "/market-information/us/historical-sector-performance": {
+        "get": { "parameters": [{ "in": "query", "name": "limit" }] }
+      },
+      "/shares-float/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/search/market/{market}/{key}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "market" },
+            { "in": "path", "name": "key" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/search/country/{key}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "key" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/detail/country/{country_code}": { "get": { "parameters": [{ "in": "path", "name": "country_code" }] } },
+      "/search/currency/{key}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "key" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/detail/currency/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/search/cryptocurrency/{key}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "key" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      },
+      "/detail/cryptocurrency/{key}": { "get": { "parameters": [{ "in": "path", "name": "key" }] } },
+      "/list/cryptocurrency": {
+        "get": {
+          "parameters": [
+            { "in": "query", "name": "limit" },
+            { "in": "query", "name": "page" },
+            { "in": "query", "name": "sort" }
+          ]
+        }
+      },
+      "/last/crypto/detailed/{symbol}": { "get": { "parameters": [{ "in": "path", "name": "symbol" }] } },
+      "/search/index/{key}": {
+        "get": {
+          "parameters": [
+            { "in": "path", "name": "key" },
+            { "in": "query", "name": "limit" }
+          ]
+        }
+      }
+    },
+    "servers": [{ "url": "https://api.finage.co.uk" }],
+    "security": { "Finage_x-api-key": [] }
+  },
+  "endpoints": [
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "ts", "operationParameter": { "in": "query", "name": "ts" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stocks",
+      "operation": { "method": "get", "path": "/last/stocks" },
+      "parameters": [
+        { "name": "symbols", "operationParameter": { "in": "query", "name": "symbols" } },
+        { "name": "ts", "operationParameter": { "in": "query", "name": "ts" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/trade/stock/{symbol}",
+      "operation": { "method": "get", "path": "/last/trade/stock/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "dp_filter", "operationParameter": { "in": "query", "name": "dp_filter" } },
+        { "name": "ts", "operationParameter": { "in": "query", "name": "ts" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /ticks/trade/stock/{symbol}",
+      "operation": { "method": "get", "path": "/ticks/trade/stock/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "date", "operationParameter": { "in": "query", "name": "date" } },
+        { "name": "t", "operationParameter": { "in": "query", "name": "t" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/trade/stocks",
+      "operation": { "method": "get", "path": "/last/trade/stocks" },
+      "parameters": [
+        { "name": "symbols", "operationParameter": { "in": "query", "name": "symbols" } },
+        { "name": "ts", "operationParameter": { "in": "query", "name": "ts" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /history/stock/open-close",
+      "operation": { "method": "get", "path": "/history/stock/open-close" },
+      "parameters": [
+        { "name": "stock", "operationParameter": { "in": "query", "name": "stock" } },
+        { "name": "date", "operationParameter": { "in": "query", "name": "date" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /ticks/quote/stock/nbbo/{symbol}",
+      "operation": { "method": "get", "path": "/ticks/quote/stock/nbbo/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "date", "operationParameter": { "in": "query", "name": "date" } },
+        { "name": "t", "operationParameter": { "in": "query", "name": "t" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/{symbol}/{multiply}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/stock/{symbol}/{multiply}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "multiply", "operationParameter": { "in": "path", "name": "multiply" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "unadjusted", "operationParameter": { "in": "query", "name": "unadjusted" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/prev-close/{symbol}",
+      "operation": { "method": "get", "path": "/agg/stock/prev-close/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "unadjusted", "operationParameter": { "in": "query", "name": "unadjusted" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/changes/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/changes/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /snapshot/stock",
+      "operation": { "method": "get", "path": "/snapshot/stock" },
+      "parameters": [
+        { "name": "quotes", "operationParameter": { "in": "query", "name": "quotes" } },
+        { "name": "trades", "operationParameter": { "in": "query", "name": "trades" } },
+        { "name": "symbols", "operationParameter": { "in": "query", "name": "symbols" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/forex/{symbol}",
+      "operation": { "method": "get", "path": "/last/forex/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/trade/forex/{symbol}",
+      "operation": { "method": "get", "path": "/last/trade/forex/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /history/ticks/forex/{symbol}/{date}",
+      "operation": { "method": "get", "path": "/history/ticks/forex/{symbol}/{date}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "date", "operationParameter": { "in": "path", "name": "date" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "tso", "operationParameter": { "in": "query", "name": "tso" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/forex/{symbol}/{multiply}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/forex/{symbol}/{multiply}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "multiply", "operationParameter": { "in": "path", "name": "multiply" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/forex/prev-close/{symbol}",
+      "operation": { "method": "get", "path": "/agg/forex/prev-close/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "unadjusted", "operationParameter": { "in": "query", "name": "unadjusted" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /convert/forex/{from}/{to}/{amount}",
+      "operation": { "method": "get", "path": "/convert/forex/{from}/{to}/{amount}" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "amount", "operationParameter": { "in": "path", "name": "amount" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/crypto/{symbol}",
+      "operation": { "method": "get", "path": "/last/crypto/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/quote/crypto/{symbol}",
+      "operation": { "method": "get", "path": "/last/quote/crypto/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/crypto/{symbol}/{multiply}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/crypto/{symbol}/{multiply}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "multiply", "operationParameter": { "in": "path", "name": "multiply" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/crypto/prev-close/{symbol}",
+      "operation": { "method": "get", "path": "/agg/crypto/prev-close/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /depth/crypto/{symbol}",
+      "operation": { "method": "get", "path": "/depth/crypto/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /history/crypto/depth/{symbol}/{from}/{to}",
+      "operation": { "method": "get", "path": "/history/crypto/depth/{symbol}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/crypto/changes/{symbol}",
+      "operation": { "method": "get", "path": "/last/crypto/changes/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /convert/crypto/{from}/{to}/{amount}",
+      "operation": { "method": "get", "path": "/convert/crypto/{from}/{to}/{amount}" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "amount", "operationParameter": { "in": "path", "name": "amount" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /snapshot/crypto",
+      "operation": { "method": "get", "path": "/snapshot/crypto" },
+      "parameters": [
+        { "name": "quotes", "operationParameter": { "in": "query", "name": "quotes" } },
+        { "name": "trades", "operationParameter": { "in": "query", "name": "trades" } },
+        { "name": "symbols", "operationParameter": { "in": "query", "name": "symbols" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /history/market-cap/crypto/{name}/{from}/{to}",
+      "operation": { "method": "get", "path": "/history/market-cap/crypto/{name}/{from}/{to}" },
+      "parameters": [
+        { "name": "name", "operationParameter": { "in": "path", "name": "name" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "ess", "operationParameter": { "in": "query", "name": "ess" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/index/{symbol}",
+      "operation": { "method": "get", "path": "/last/index/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/index/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/index/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/index/prev-close/{symbol}",
+      "operation": { "method": "get", "path": "/agg/index/prev-close/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/etf/{symbol}",
+      "operation": { "method": "get", "path": "/last/etf/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/etf/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/etf/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/etf/prev-close/{symbol}",
+      "operation": { "method": "get", "path": "/agg/etf/prev-close/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/uk/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/uk/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/global/uk/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/stock/global/uk/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/in/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/in/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/global/in/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/stock/global/in/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/canada/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/canada/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/ca/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/stock/ca/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/stock/moex/{symbol}",
+      "operation": { "method": "get", "path": "/last/stock/moex/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /agg/stock/moex/{symbol}/{time}/{from}/{to}",
+      "operation": { "method": "get", "path": "/agg/stock/moex/{symbol}/{time}/{from}/{to}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "from", "operationParameter": { "in": "path", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "path", "name": "to" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } },
+        { "name": "date_format", "operationParameter": { "in": "query", "name": "date_format" } },
+        { "name": "dbt_filter", "operationParameter": { "in": "query", "name": "dbt_filter" } },
+        { "name": "st", "operationParameter": { "in": "query", "name": "st" } },
+        { "name": "et", "operationParameter": { "in": "query", "name": "et" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /bonds/us/rate/{symbol}",
+      "operation": { "method": "get", "path": "/bonds/us/rate/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /symbol-list/{type}",
+      "operation": { "method": "get", "path": "/symbol-list/{type}" },
+      "parameters": [
+        { "name": "type", "operationParameter": { "in": "path", "name": "type" } },
+        { "name": "page", "operationParameter": { "in": "query", "name": "page" } },
+        { "name": "search", "operationParameter": { "in": "query", "name": "search" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /news/market/{symbol}",
+      "operation": { "method": "get", "path": "/news/market/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /news/forex/{symbol}",
+      "operation": { "method": "get", "path": "/news/forex/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /news/cryptocurrency/{symbol}",
+      "operation": { "method": "get", "path": "/news/cryptocurrency/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "range", "operationParameter": { "in": "query", "name": "range" } },
+        { "name": "from", "operationParameter": { "in": "query", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "query", "name": "to" } },
+        { "name": "type", "operationParameter": { "in": "query", "name": "type" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /marketstatus",
+      "operation": { "method": "get", "path": "/marketstatus" },
+      "parameters": [
+        { "name": "country", "operationParameter": { "in": "query", "name": "country" } },
+        { "name": "currencies", "operationParameter": { "in": "query", "name": "currencies" } },
+        { "name": "holidays", "operationParameter": { "in": "query", "name": "holidays" } },
+        { "name": "trading_hours", "operationParameter": { "in": "query", "name": "trading_hours" } },
+        { "name": "extended_hours", "operationParameter": { "in": "query", "name": "extended_hours" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /economic-calendar",
+      "operation": { "method": "get", "path": "/economic-calendar" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "query", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "query", "name": "to" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /earning-calendar",
+      "operation": { "method": "get", "path": "/earning-calendar" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /ipo-calendar",
+      "operation": { "method": "get", "path": "/ipo-calendar" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "query", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "query", "name": "to" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /stock-split-calendar",
+      "operation": { "method": "get", "path": "/stock-split-calendar" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "query", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "query", "name": "to" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /historical-stock-splits/{symbol}",
+      "operation": { "method": "get", "path": "/historical-stock-splits/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /dividend-calendar",
+      "operation": { "method": "get", "path": "/dividend-calendar" },
+      "parameters": [
+        { "name": "from", "operationParameter": { "in": "query", "name": "from" } },
+        { "name": "to", "operationParameter": { "in": "query", "name": "to" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /historical-dividends/{symbol}",
+      "operation": { "method": "get", "path": "/historical-dividends/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /index-constituents",
+      "operation": { "method": "get", "path": "/index-constituents" },
+      "parameters": [{ "name": "index", "operationParameter": { "in": "query", "name": "index" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /delisted-companies",
+      "operation": { "method": "get", "path": "/delisted-companies" },
+      "parameters": [{ "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /cash-flow-statement/{symbol}",
+      "operation": { "method": "get", "path": "/cash-flow-statement/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "period", "operationParameter": { "in": "query", "name": "period" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /balance-sheet-statements/{symbol}",
+      "operation": { "method": "get", "path": "/balance-sheet-statements/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "period", "operationParameter": { "in": "query", "name": "period" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /income-statement/{symbol}",
+      "operation": { "method": "get", "path": "/income-statement/{symbol}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "period", "operationParameter": { "in": "query", "name": "period" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /income-statement/{symbol}.{exchange_code}",
+      "operation": { "method": "get", "path": "/income-statement/{symbol}.{exchange_code}" },
+      "parameters": [
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "exchange_code", "operationParameter": { "in": "path", "name": "exchange_code" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "period", "operationParameter": { "in": "query", "name": "period" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /detail/stock/{symbol}",
+      "operation": { "method": "get", "path": "/detail/stock/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /funds/institutional-holder/{symbol}",
+      "operation": { "method": "get", "path": "/funds/institutional-holder/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /funds/mutual-fund-holder/{symbol}",
+      "operation": { "method": "get", "path": "/funds/mutual-fund-holder/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /funds/etf-holder/{symbol}",
+      "operation": { "method": "get", "path": "/funds/etf-holder/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /funds/etf-sector-weightings/{symbol}",
+      "operation": { "method": "get", "path": "/funds/etf-sector-weightings/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /funds/rss-feed",
+      "operation": { "method": "get", "path": "/funds/rss-feed" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /technical-indicator/{type}/{time}/{symbol}",
+      "operation": { "method": "get", "path": "/technical-indicator/{type}/{time}/{symbol}" },
+      "parameters": [
+        { "name": "type", "operationParameter": { "in": "path", "name": "type" } },
+        { "name": "time", "operationParameter": { "in": "path", "name": "time" } },
+        { "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } },
+        { "name": "period", "operationParameter": { "in": "query", "name": "period" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /market-information/us/most-actives",
+      "operation": { "method": "get", "path": "/market-information/us/most-actives" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /market-information/us/most-gainers",
+      "operation": { "method": "get", "path": "/market-information/us/most-gainers" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /market-information/us/most-losers",
+      "operation": { "method": "get", "path": "/market-information/us/most-losers" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /market-information/us/sector-performance",
+      "operation": { "method": "get", "path": "/market-information/us/sector-performance" },
+      "parameters": [],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /market-information/us/historical-sector-performance",
+      "operation": { "method": "get", "path": "/market-information/us/historical-sector-performance" },
+      "parameters": [{ "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /shares-float/{symbol}",
+      "operation": { "method": "get", "path": "/shares-float/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /search/market/{market}/{key}",
+      "operation": { "method": "get", "path": "/search/market/{market}/{key}" },
+      "parameters": [
+        { "name": "market", "operationParameter": { "in": "path", "name": "market" } },
+        { "name": "key", "operationParameter": { "in": "path", "name": "key" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /search/country/{key}",
+      "operation": { "method": "get", "path": "/search/country/{key}" },
+      "parameters": [
+        { "name": "key", "operationParameter": { "in": "path", "name": "key" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /detail/country/{country_code}",
+      "operation": { "method": "get", "path": "/detail/country/{country_code}" },
+      "parameters": [{ "name": "country_code", "operationParameter": { "in": "path", "name": "country_code" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /search/currency/{key}",
+      "operation": { "method": "get", "path": "/search/currency/{key}" },
+      "parameters": [
+        { "name": "key", "operationParameter": { "in": "path", "name": "key" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /detail/currency/{symbol}",
+      "operation": { "method": "get", "path": "/detail/currency/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /search/cryptocurrency/{key}",
+      "operation": { "method": "get", "path": "/search/cryptocurrency/{key}" },
+      "parameters": [
+        { "name": "key", "operationParameter": { "in": "path", "name": "key" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /detail/cryptocurrency/{key}",
+      "operation": { "method": "get", "path": "/detail/cryptocurrency/{key}" },
+      "parameters": [{ "name": "key", "operationParameter": { "in": "path", "name": "key" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /list/cryptocurrency",
+      "operation": { "method": "get", "path": "/list/cryptocurrency" },
+      "parameters": [
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } },
+        { "name": "page", "operationParameter": { "in": "query", "name": "page" } },
+        { "name": "sort", "operationParameter": { "in": "query", "name": "sort" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /last/crypto/detailed/{symbol}",
+      "operation": { "method": "get", "path": "/last/crypto/detailed/{symbol}" },
+      "parameters": [{ "name": "symbol", "operationParameter": { "in": "path", "name": "symbol" } }],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    },
+    {
+      "fixedOperationParameters": [],
+      "name": "GET /search/index/{key}",
+      "operation": { "method": "get", "path": "/search/index/{key}" },
+      "parameters": [
+        { "name": "key", "operationParameter": { "in": "path", "name": "key" } },
+        { "name": "limit", "operationParameter": { "in": "query", "name": "limit" } }
+      ],
+      "reservedParameters": [{ "name": "_type" }, { "name": "_path" }, { "name": "_times" }]
+    }
+  ]
+}
