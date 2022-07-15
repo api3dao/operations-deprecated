@@ -12,8 +12,7 @@ export const sanitiseFilename = (filename: string) => {
     .replace(illegalRe, '_')
     .replace(controlRe, '_')
     .replace(reservedRe, '_')
-    .replace(windowsReservedRe, '_')
-    .toLocaleLowerCase();
+    .replace(windowsReservedRe, '_');
 };
 
 export const loadCredentials = () => {

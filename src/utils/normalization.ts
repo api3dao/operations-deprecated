@@ -166,7 +166,7 @@ export const normalize = (payload: OperationsRepository) => {
               dapis: policies.dapis
                 ? Object.fromEntries(
                     Object.values(policies.dapis).map((policy) => [
-                      `${policy.paymentTxHash}-${policy.dapiName}`,
+                      `${policy.readerAddress}-${policy.dapiName}`,
                       policy,
                     ])
                   )
