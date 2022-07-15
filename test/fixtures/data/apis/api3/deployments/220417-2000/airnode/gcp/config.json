@@ -3,7 +3,7 @@
   "nodeSettings": {
     "cloudProvider": {
       "type": "gcp",
-      "region": "us-east1",
+      "region": "europe-west1",
       "disableConcurrencyReservations": false,
       "projectId": "${GCP_PROJECT_ID}"
     },
