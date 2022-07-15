@@ -166,7 +166,7 @@ export const normalize = (payload: OperationsRepository) => {
               dapis: policies.dapis
                 ? Object.fromEntries(
                     Object.values(policies.dapis).map((policy) => [
-                      `${policy.readerAddress}-${policy.dapiName}`,
+                      sanitiseFilename(`${policy.readerAddress}-${policy.dapiName}`),
                       policy,
                     ])
                   )
@@ -174,7 +174,7 @@ export const normalize = (payload: OperationsRepository) => {
               dataFeeds: policies.dataFeeds
                 ? Object.fromEntries(
                     Object.values(policies.dataFeeds).map((policy) => [
-                      `${policy.paymentTxHash}-${policy.dataFeedId}`,
+                      sanitiseFilename(`${policy.readerAddress}-${policy.dataFeedId}`),
                       policy,
                     ])
                   )

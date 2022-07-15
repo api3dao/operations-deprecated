@@ -13,7 +13,7 @@ const writeBaseDirectory = (basePath: string, payload?: any, name?: string) => {
   const thisBasePath = join(basePath, name);
 
   mkdirSync(thisBasePath, { recursive: true });
-  Object.entries(payload[name]).forEach(([name, value]) => writeJsonFile(join(thisBasePath, sanitiseFilename(name)), value));
+  Object.entries(payload[name]).forEach(([name, value]) => writeJsonFile(join(thisBasePath, name), value));
 };
 
 export const writeOperationsRepository = (
