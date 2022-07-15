@@ -6,6 +6,7 @@ import { readOperationsRepository } from '../src/utils/read-operations';
 import { createAirseekerConfig } from '../src/create-airseeker-config';
 import { writeOperationsRepository } from '../src/utils/write-operations';
 import { OperationsRepository } from '../src/types';
+import { getFormattedUtcTimestamp } from '../src/utils/date';
 
 describe('create-airseeker-config', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
@@ -24,10 +25,10 @@ describe('create-airseeker-config', () => {
   });
 
   it('builds the airseeker config for AWS', async () => {
-    const date = new Date().toISOString().split('T')[0];
+    const timestamp = getFormattedUtcTimestamp();
 
     prompts.inject([
-      date,
+      timestamp,
       [
         {
           api: {
@@ -73,7 +74,9 @@ describe('create-airseeker-config', () => {
     ]);
     await createAirseekerConfig(tempTestPath);
 
-    const newMockOpsRepo = await readOperationsRepository(tempTestPath);
-    expect(newMockOpsRepo.api3?.airseeker[date].airseeker).toEqual(mockOpsRepo.api3?.airseeker['2022-03-05'].airseeker);
+    const newMockOpsRepo = readOperationsRepository(tempTestPath);
+    expect(newMockOpsRepo.api3?.airseeker[timestamp].airseeker).toEqual(
+      mockOpsRepo.api3?.airseeker['220305-2000'].airseeker
+    );
   });
 });
