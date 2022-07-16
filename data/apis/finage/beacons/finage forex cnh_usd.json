@@ -1,0 +1,15 @@
+{
+  "name": "Finage Forex CNH/USD",
+  "description": "Finage Forex Chinese yuan - United States dollar",
+  "beaconId": "0x9dea4c0b481c2f44e714aa2f884a45a4c1d6163a100772fb795bfb8e7022ac21",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0x90e6f637bf2c907459cf1a1dbd15b577d178fda81de5f13c17ac5cb29a767388",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
