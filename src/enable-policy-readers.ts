@@ -51,7 +51,10 @@ const main = async (operationRepositoryTarget?: string) => {
         const { dapiName, dataFeedId, readerAddress, endDate } = policy as Policy;
         if (
           Math.floor(Date.now() / 1000) < endDate &&
-          !(await dapiServer.readerCanReadDataFeed(dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId, readerAddress))
+          !(await dapiServer.readerCanReadDataFeed(
+            dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
+            readerAddress
+          ))
         ) {
           policiesToProcess.push(policy);
         }
@@ -65,7 +68,7 @@ const main = async (operationRepositoryTarget?: string) => {
         endDate,
       ])
     );
-    enablePoliciesPromises.push(dapiServer.multicall(calldatas));
+    enablePoliciesPromises.push(dapiServer.multicall(calldatas, { gasPrice: await provider.getGasPrice() }));
   }
 
   const allowedReaderResults = await Promise.allSettled(enablePoliciesPromises);
