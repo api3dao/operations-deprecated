@@ -68,7 +68,15 @@ const main = async (operationRepositoryTarget?: string) => {
         endDate,
       ])
     );
-    enablePoliciesPromises.push(dapiServer.multicall(calldatas, { gasPrice: await provider.getGasPrice() }));
+    // TODO define gas strategy in the credentials file
+    // Unfortunately we need this script in place immediately, so this is a hack for now.
+    // Polygon is seemingly the only network that requires this.
+    enablePoliciesPromises.push(
+      dapiServer.multicall(
+        calldatas,
+        chainName.includes('polygon') ? { gasPrice: await provider.getGasPrice() } : undefined
+      )
+    );
   }
 
   const allowedReaderResults = await Promise.allSettled(enablePoliciesPromises);
