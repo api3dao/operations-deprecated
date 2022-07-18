@@ -88,20 +88,20 @@ describe('writeOperationsRepository', () => {
     });
 
     it('writes changes to deployments', () => {
-      const mockDeploymentDate = '2022-04-17';
+      const mockDeploymentDate = '220417-2000';
 
       const coingeckoTestDeployment = {
         ...mockOpsRepo.apis.api3.deployments[mockDeploymentDate],
         airkeeper: {
           aws: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
+            ...mockOpsRepo.apis.api3.deployments['220417-2000'].airkeeper?.aws,
             airkeeper: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.airkeeper,
+              ...mockOpsRepo.apis.api3.deployments['220417-2000'].airkeeper?.aws?.airkeeper,
               airnodeAddress: '0x0000000000000000000000000000000000000000',
               airnodeXpub: '',
             },
             config: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.config,
+              ...mockOpsRepo.apis.api3.deployments['220417-2000'].airkeeper?.aws?.config,
               triggers: {
                 rrp: [],
                 http: [],
@@ -109,7 +109,7 @@ describe('writeOperationsRepository', () => {
               },
             },
             secrets: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets,
+              ...mockOpsRepo.apis.api3.deployments['220417-2000'].airkeeper?.aws?.secrets,
               filename: 'secrets.env',
               content: 'THIS IS EMPTY',
             },
@@ -117,9 +117,9 @@ describe('writeOperationsRepository', () => {
         },
         airnode: {
           aws: {
-            ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!,
+            ...mockOpsRepo.apis.api3.deployments['220417-2000'].airnode.aws!,
             config: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!.config,
+              ...mockOpsRepo.apis.api3.deployments['220417-2000'].airnode.aws!.config,
               triggers: {
                 rrp: [],
                 http: [],
@@ -127,7 +127,7 @@ describe('writeOperationsRepository', () => {
               },
             },
             secrets: {
-              ...mockOpsRepo.apis.api3.deployments['2022-04-17'].airnode.aws!.secrets,
+              ...mockOpsRepo.apis.api3.deployments['220417-2000'].airnode.aws!.secrets,
               filename: 'secrets.env',
               content: 'THIS IS EMPTY',
             },
@@ -311,7 +311,7 @@ describe('writeOperationsRepository', () => {
 
   describe('api3', () => {
     it('writes changes to airseeker', () => {
-      const airseekerDeploymentDate = '2022-03-05';
+      const airseekerDeploymentDate = '220305-2000';
 
       const coingeckoTestAirseeker = {
         ...mockOpsRepo.api3?.airseeker[airseekerDeploymentDate].airseeker,
