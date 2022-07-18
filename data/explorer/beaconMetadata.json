@@ -508,5 +508,18 @@
     "logos": ["USDT", "USD"],
     "decimalPlaces": 4,
     "prefix": "$"
+  },
+  "0x9ae34315c195796f27fc64469d4781cc7b375910c676ce7385d6c035876e6380": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    },
+    "logos": ["RIF", "USD"],
+    "decimalPlaces": 4,
+    "prefix": "$"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Amberdata RIF/USD 15-min VWAP",
   "description": "Amberdata RIF/USD 15-min VWAP",
-  "beaconId": "0x0b96753679b221ab237ad7858b069277234f29d9f02f91ac991c9e03d0c065a0",
+  "beaconId": "0x9ae34315c195796f27fc64469d4781cc7b375910c676ce7385d6c035876e6380",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x1c0ffe1a8c5dbe9a42dd09363d7ce6896fcabe57a68c02bcea11d3cba31eb011",
   "chains": {
