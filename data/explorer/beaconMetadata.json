@@ -510,6 +510,7 @@
     "prefix": "$"
   },
   "0x9ae34315c195796f27fc64469d4781cc7b375910c676ce7385d6c035876e6380": {
+    "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
