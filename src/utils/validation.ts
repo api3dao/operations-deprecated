@@ -440,15 +440,15 @@ export const chainDeploymentReferencesSchema = z
  */
 export const basePolicySchema = z
   .object({
-    paymentTxHash: z.string(),
-    claimantAddress: evmAddressSchema,
-    beneficiaryAddress: evmAddressSchema,
+    paymentTxHash: z.string().optional(), // zero if free/no payment
+    claimantAddress: evmAddressSchema.optional(),
+    beneficiaryAddress: evmAddressSchema.optional(),
     readerAddress: evmAddressSchema,
-    coverageAmount: z.string(),
+    coverageAmount: z.string().optional(),
     startDate: z.number(),
     endDate: z.number(),
-    ipfsPolicyHash: z.string(),
-    ipfsServicePolicyHash: z.string(),
+    ipfsPolicyHash: z.string().optional(),
+    ipfsServicePolicyHash: z.string().optional(),
   })
   .strict();
 
