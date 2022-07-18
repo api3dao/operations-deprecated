@@ -295,15 +295,10 @@ export const validatePoliciesDatafeedReferences: SuperRefinement<{
         switch (policyType.toLowerCase()) {
           case 'dapis'.toLowerCase():
             // Check if /data/dapis/{chainName} contains the dapiName
-            if (
-              !Object.keys(dapis).includes(chainName) ||
-              !Object.keys(dapis[chainName]).includes(ethers.utils.parseBytes32String(policy.dapiName))
-            ) {
+            if (!Object.keys(dapis).includes(chainName) || !Object.keys(dapis[chainName]).includes(policy.dapiName)) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: `Referenced dAPI ${policy.dapiName} (${ethers.utils.parseBytes32String(
-                  policy.dapiName
-                )}) is not defined in /data/dapis`,
+                message: `Referenced dAPI ${policy.dapiName} (${policy.dapiName}) is not defined in /data/dapis`,
                 path: ['policies', chainName, 'dapis', policyId],
               });
             }
