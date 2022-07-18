@@ -27,9 +27,12 @@ const main = async (operationRepositoryTarget?: string) => {
           .filter((policy) => Math.floor(Date.now() / 1000) < policy.endDate)
           .map(async ({ dapiName, dataFeedId, readerAddress }) => ({
             chainName,
-            dataFeed: dapiName ?? dataFeedId,
+            dataFeedId: dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
             readerAddress,
-            readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(dapiName ?? dataFeedId, readerAddress),
+            readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(
+              dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
+              readerAddress
+            ),
           }))
       );
     }
@@ -42,9 +45,7 @@ const main = async (operationRepositoryTarget?: string) => {
       console.error(`🛑 ${result.reason}`);
     } else if (!result.value.readerCanReadDataFeed) {
       console.error(
-        `🛑 Address ${result.value.readerAddress} cannot read data feed ${
-          (result.value as any).dapiName ?? (result.value as any).dataFeedId
-        } on chain ${result.value.chainName}`
+        `🛑 Address ${result.value.readerAddress} cannot read data feed ${result.value.dataFeedId} on chain ${result.value.chainName}`
       );
     }
   });
