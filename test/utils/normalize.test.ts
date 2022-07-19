@@ -43,34 +43,34 @@ describe('normalize', () => {
           },
           deployments: {
             ...originalMockData.apis.api3.deployments,
-            ['2022-04-17']: {
-              ...originalMockData.apis.api3.deployments['2022-04-17'],
+            ['220417-2000']: {
+              ...originalMockData.apis.api3.deployments['220417-2000'],
               airnode: {
-                ...originalMockData.apis.api3.deployments['2022-04-17'].airnode,
+                ...originalMockData.apis.api3.deployments['220417-2000'].airnode,
                 aws: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!,
+                  ...originalMockData.apis.api3.deployments['220417-2000'].airnode.aws!,
                   secrets: {
                     filename: '',
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.aws!.secrets,
+                    ...originalMockData.apis.api3.deployments['220417-2000'].airnode.aws!.secrets,
                     content: 'TEST=',
                   },
                 },
                 gcp: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!,
+                  ...originalMockData.apis.api3.deployments['220417-2000'].airnode.gcp!,
                   gcp: {
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airnode.gcp!.gcp,
+                    ...originalMockData.apis.api3.deployments['220417-2000'].airnode.gcp!.gcp,
                     projectId: 'TEST',
                   },
                 },
               },
 
               airkeeper: {
-                ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper,
+                ...originalMockData.apis.api3.deployments['220417-2000'].airkeeper,
                 aws: {
-                  ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws,
+                  ...originalMockData.apis.api3.deployments['220417-2000'].airkeeper?.aws,
                   secrets: {
                     filename: '',
-                    ...originalMockData.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets,
+                    ...originalMockData.apis.api3.deployments['220417-2000'].airkeeper?.aws?.secrets,
                     content: 'TEST=',
                   },
                 },
@@ -137,9 +137,9 @@ describe('normalize', () => {
 
     it('sanitises the deployment secrets', async () => {
       const normalizedData = await normalize(unsanitizedMockData);
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.aws?.secrets?.content).toEqual('TEST=');
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airnode.gcp?.gcp).toEqual({ projectId: '' });
-      expect(normalizedData.apis.api3.deployments['2022-04-17'].airkeeper?.aws?.secrets?.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['220417-2000'].airnode.aws?.secrets?.content).toEqual('TEST=');
+      expect(normalizedData.apis.api3.deployments['220417-2000'].airnode.gcp?.gcp).toEqual({ projectId: '' });
+      expect(normalizedData.apis.api3.deployments['220417-2000'].airkeeper?.aws?.secrets?.content).toEqual('TEST=');
     });
   });
 
