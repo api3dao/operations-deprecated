@@ -1,9 +1,9 @@
 {
-  "name": "Amberdata CRV/USD 5-min VWAP",
-  "description": "Amberdata CRV/USD 5-min VWAP",
-  "beaconId": "0x985cedbc20e6f3a3eeebcd2af8a0266a8b5da285e3ef87964aa4d96f4c4729ab",
+  "name": "Amberdata ETH/USD 5-min VWAP",
+  "description": "Amberdata ETH/USD 5-min VWAP",
+  "beaconId": "0x918fde503d126625449cdb1a5b162909e38c102afd89e97f72bc18a9967cba6c",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x457f6898258b321f8aa8308caddfe8d9d675f6744bc16f841e43c0724955165a",
+  "templateId": "0x32ee5c344877c40260b6010bb91f85f39b5a9a0f6690d4c6888af90f5613d854",
   "chains": {
     "avalanche": {
       "active": true,

@@ -7,6 +7,7 @@ import {
   validateBeaconSetIds,
   validateBeaconSetsReferences,
   validateBeaconsTemplateIdReferences,
+  validateCommonLogosReferences,
   validateDapiMetadataReferences,
   validateDapisChainReferences,
   validatePoliciesDatafeedReferences,
@@ -516,7 +517,8 @@ export const operationsRepositorySchema = z
   .superRefine(validateBeaconMetadataReferences)
   .superRefine(validateBeaconSetsReferences)
   .superRefine(validatePoliciesDatafeedReferences)
-  .superRefine(validateDapiMetadataReferences);
+  .superRefine(validateDapiMetadataReferences)
+  .superRefine(validateCommonLogosReferences);
 
 export const replaceInterpolatedVariables = (object: any): any => {
   if (object instanceof Array) {

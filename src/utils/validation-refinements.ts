@@ -150,6 +150,28 @@ export const validateDapiMetadataReferences: SuperRefinement<{
   console.log(JSON.stringify(missingDapis, null, 2));
 };
 
+/**
+ * Check for the presence of referenced common logos
+ * @param explorer
+ * @param ctx
+ */
+export const validateCommonLogosReferences: SuperRefinement<{
+  explorer: Explorer;
+}> = ({ explorer }, ctx) => {
+  const { commonLogos, beaconMetadata } = explorer;
+  Object.entries(beaconMetadata).forEach(([key, value]) => {
+    value.logos?.forEach((logo) => {
+      if (!commonLogos[logo]) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Referenced logo ${logo} in ${key} from beaconMetadata is not defined in commonLogos`,
+          path: ['explorer', 'beaconMetadata'],
+        });
+      }
+    });
+  });
+};
+
 export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;

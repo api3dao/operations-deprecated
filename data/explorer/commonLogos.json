@@ -50,5 +50,9 @@
   "WBTC": "https://api3-market.pages.dev/images/asset-logos/WBTC.webp",
   "XLM": "https://api3-market.pages.dev/images/asset-logos/XLM.webp",
   "XVS": "https://api3-market.pages.dev/images/asset-logos/XVS.webp",
-  "YFI": "https://api3-market.pages.dev/images/asset-logos/YFI.webp"
+  "YFI": "https://api3-market.pages.dev/images/asset-logos/YFI.webp",
+  "QI": "https://api3-market.pages.dev/images/asset-logos/QIDAO.webp",
+  "MIM": "https://api3-market.pages.dev/images/asset-logos/MIM.webp",
+  "RIF": "https://api3-market.pages.dev/images/asset-logos/RIF.webp",
+  "STG": "https://api3-market.pages.dev/images/asset-logos/STG.webp"
 }
