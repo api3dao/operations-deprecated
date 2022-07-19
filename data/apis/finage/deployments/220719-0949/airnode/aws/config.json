@@ -2,28 +2,23 @@
   "chains": [],
   "nodeSettings": {
     "nodeVersion": "0.6.5",
-    "cloudProvider": {
-      "type": "gcp",
-      "region": "us-east1",
-      "disableConcurrencyReservations": false,
-      "projectId": "${GCP_PROJECT_ID}"
-    },
+    "cloudProvider": { "type": "aws", "region": "us-east-1", "disableConcurrencyReservations": false },
     "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
     "heartbeat": {
       "enabled": true,
-      "apiKey": "${HEARTBEAT_KEY_FINAGE_GCP}",
-      "id": "${HEARTBEAT_ID_FINAGE_GCP}",
-      "url": "${HEARTBEAT_URL_FINAGE_GCP}"
+      "apiKey": "${HEARTBEAT_KEY_FINAGE_AWS}",
+      "id": "${HEARTBEAT_ID_FINAGE_AWS}",
+      "url": "${HEARTBEAT_URL_FINAGE_AWS}"
     },
     "httpGateway": { "enabled": false },
     "httpSignedDataGateway": {
       "enabled": true,
-      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_FINAGE_GCP}",
+      "apiKey": "${HTTP_SIGNED_DATA_GATEWAY_KEY_FINAGE_AWS}",
       "maxConcurrency": 200
     },
     "logFormat": "plain",
     "logLevel": "INFO",
-    "stage": "prod-220719-0748"
+    "stage": "prod-220719-0949"
   },
   "triggers": {
     "rrp": [],
