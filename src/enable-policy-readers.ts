@@ -2,7 +2,7 @@ import { NonceManager } from '@ethersproject/experimental';
 import { ContractTransaction, ethers } from 'ethers';
 import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract } from './utils/evm';
+import { getDapiNameHash, getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 import { readAndValidateOperationsRepository } from './utils/read-operations';
 
@@ -51,10 +51,7 @@ const main = async (operationRepositoryTarget?: string) => {
         const { dapiName, dataFeedId, readerAddress, endDate } = policy as Policy;
         if (
           Math.floor(Date.now() / 1000) < endDate &&
-          !(await dapiServer.readerCanReadDataFeed(
-            dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
-            readerAddress
-          ))
+          !(await dapiServer.readerCanReadDataFeed(dapiName ? getDapiNameHash(dapiName) : dataFeedId, readerAddress))
         ) {
           policiesToProcess.push(policy);
         }
@@ -63,7 +60,7 @@ const main = async (operationRepositoryTarget?: string) => {
 
     const calldatas = policiesToProcess.map(({ readerAddress, endDate, dataFeedId, dapiName }) =>
       dapiServer.interface.encodeFunctionData('extendWhitelistExpiration', [
-        dataFeedId ? dataFeedId : ethers.utils.formatBytes32String(dapiName),
+        dapiName ? getDapiNameHash(dapiName) : dataFeedId,
         readerAddress,
         endDate,
       ])
