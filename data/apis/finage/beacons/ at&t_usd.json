@@ -1,0 +1,15 @@
+{
+  "name": " AT&T/USD",
+  "description": "Finage Stock AT&T - United States dollar",
+  "beaconId": "0x517c67ecbc4b953df03809084b78c531e7ca648b4e83552d13a831c403402804",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0x6523109cf72f9dd00391eb6d20fc8c7d642193c969d3a627945f2b4d30bfc93f",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

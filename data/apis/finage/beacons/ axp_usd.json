@@ -1,0 +1,15 @@
+{
+  "name": " AXP/USD",
+  "description": "Finage Stock American Express Company - United States dollar",
+  "beaconId": "0xa821148813128d24a52d162f723d9a14bdd0f5cefef8af8933559c497a4bcf99",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xab925307c645ce41cafe2cbb4333d91d7e8f1d787f23a1084be499494724e239",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

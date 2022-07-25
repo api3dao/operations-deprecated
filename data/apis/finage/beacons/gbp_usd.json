@@ -1,0 +1,15 @@
+{
+  "name": "GBP/USD",
+  "description": "Finage Forex Pound sterling - United States dollar",
+  "beaconId": "0xbd91fcd6ff5579366562d31ca66b7c403590a54878c3a5082757b6f65b15da10",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0x19087d887378e42647ba3f931696c4dd9afb977ce967bc690ca7a2e2c526cc12",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
