@@ -450,7 +450,7 @@
       "bsc": "bsc"
     },
     "logos": ["ETH", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 2,
     "prefix": "$"
   },
   "0x97871a5b61afc725959187034b1b09b9287cbcb1488866bf2d58084d63b8eb31": {
@@ -478,7 +478,7 @@
       "bsc": "bsc"
     },
     "logos": ["QI", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0xc61e465ed123cdf92fd70528e2e989659b226f102c08e10c344fb133060a1f38": {
@@ -520,7 +520,7 @@
       "bsc": "bsc"
     },
     "logos": ["RIF", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x4e9a4a9099d658c3c755841cdfe29b8d0cd97ecb45d6344ecbfb4f21ed565589": {
