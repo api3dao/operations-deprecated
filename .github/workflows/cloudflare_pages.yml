@@ -1,0 +1,14 @@
+name: API3 Market Rebuild
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cloudflare_rebuild_webhook:
+    name: Call Cloudflare Rebuild Webhook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Cloudflare Rebuild Webhook
+        run: curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.CLOUDFLARE_WEBHOOK_UUID }}"
