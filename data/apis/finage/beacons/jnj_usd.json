@@ -1,9 +1,9 @@
 {
-  "name": " CSCO/USD",
-  "description": "Finage Stock Cisco Systems Inc - United States dollar",
-  "beaconId": "0x68222861b2de03db29bf5039d69a075acc31b04e37211493b594e387c7c63555",
+  "name": "JNJ/USD",
+  "description": "Finage Stock Johnson & Johnson - United States dollar",
+  "beaconId": "0x0bb52b8b7c3fa586eeb8a81f7d6382c1d475aa766daff46c0e96f81313f336fd",
   "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
-  "templateId": "0x9aa2332bffe889c2de36886a90355fbb544152e2d90963f42795c2970311c27d",
+  "templateId": "0xb5b0067b33b3e5623da2207c27f67f0a4993447d499c551355d05ad6ef776737",
   "chains": {
     "polygon-testnet": {
       "active": true,

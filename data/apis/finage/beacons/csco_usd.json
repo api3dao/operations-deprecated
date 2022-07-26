@@ -1,9 +1,9 @@
 {
-  "name": " AXP/USD",
-  "description": "Finage Stock American Express Company - United States dollar",
-  "beaconId": "0xa821148813128d24a52d162f723d9a14bdd0f5cefef8af8933559c497a4bcf99",
+  "name": "CSCO/USD",
+  "description": "Finage Stock Cisco Systems Inc - United States dollar",
+  "beaconId": "0x68222861b2de03db29bf5039d69a075acc31b04e37211493b594e387c7c63555",
   "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
-  "templateId": "0xab925307c645ce41cafe2cbb4333d91d7e8f1d787f23a1084be499494724e239",
+  "templateId": "0x9aa2332bffe889c2de36886a90355fbb544152e2d90963f42795c2970311c27d",
   "chains": {
     "polygon-testnet": {
       "active": true,
