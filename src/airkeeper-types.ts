@@ -1,5 +1,3 @@
-// NOTE Copied from Airkeeper
-// Airkeeper imports through a custom build process from Airnode and this causes trouble everywhere
 import * as node from '@api3/airnode-node';
 import * as utils from '@api3/airnode-utilities';
 import { ethers } from 'ethers';
@@ -16,8 +14,7 @@ import {
 } from './utils/airkeeper-validation';
 
 export interface ChainConfig extends node.ChainConfig {
-  readonly contracts: node.ChainContracts & AirkeeperChainContracts;
-  readonly options: node.ChainOptions;
+  readonly contracts: node.ChainConfig['contracts'] & AirkeeperChainContracts;
 }
 
 export interface Config extends node.Config {
@@ -26,7 +23,7 @@ export interface Config extends node.Config {
   readonly chains: (ChainConfig & AirkeeperChainConfig)[];
   readonly triggers: node.Triggers & Triggers;
   readonly subscriptions: Subscriptions;
-  readonly templates: Templates;
+  readonly templatesV1: Templates;
   readonly endpoints: Endpoints;
 }
 
@@ -44,22 +41,25 @@ export interface BaseState {
 export interface State extends BaseState {
   groupedSubscriptions: GroupedSubscriptions[];
   apiValuesBySubscriptionId: { [subscriptionId: string]: ethers.BigNumber };
-  providerStates: ProviderState<EVMProviderState>[];
+  providerStates: ProviderState<EVMBaseState>[];
 }
 
-export type ProviderState<T extends {}> = T &
-  BaseState & {
-    airnodeWallet: ethers.Wallet;
-    chainId: string;
-    providerName: string;
-  };
+export type ProviderState<T extends {}> = T & {
+  chainId: string;
+  providerName: string;
+  providerUrl: string;
+  chainConfig: ChainConfig & AirkeeperChainConfig;
+};
 
-export interface EVMProviderState {
+export interface EVMBaseState {
+  currentBlock: number;
+  gasTarget: utils.GasTarget;
+}
+
+export interface EVMProviderState extends EVMBaseState {
   provider: ethers.providers.Provider;
   contracts: { [name: string]: ethers.Contract };
   voidSigner: ethers.VoidSigner;
-  currentBlock: number;
-  gasTarget: node.GasTarget;
 }
 
 export type Id<T> = T & {
@@ -81,8 +81,26 @@ export interface SponsorWalletTransactionCount {
   transactionCount: number;
 }
 
-export interface ProviderSponsorSubscriptions {
+export interface SponsorSubscriptions {
   sponsorAddress: string;
-  providerState: ProviderState<EVMProviderState>;
   subscriptions: Id<CheckedSubscription>[];
 }
+
+export interface ProviderSponsorSubscriptionsState extends SponsorSubscriptions {
+  providerState: ProviderState<EVMBaseState>;
+}
+
+export interface ProviderSponsorProcessSubscriptionsState extends SponsorSubscriptions {
+  providerState: ProviderState<EVMProviderState & { airnodeWallet: ethers.Wallet }>;
+}
+
+export interface WorkerParameters {
+  providerSponsorSubscriptions: ProviderSponsorSubscriptionsState;
+  baseLogOptions: utils.LogOptions;
+  stage: string;
+}
+export type CallApiResult = node.LogsData<{
+  templateId: string;
+  apiValue: ethers.BigNumber | null;
+  subscriptions: Id<Subscription>[];
+}>;

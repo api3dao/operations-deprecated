@@ -1,5 +1,3 @@
-// NOTE Copied from Airkeeper
-// Airkeeper imports through a custom build process from Airnode and this causes trouble everywhere
 import { z, ZodFirstPartySchemaTypes } from 'zod';
 
 export const templateParametersSchema = z.object({ type: z.string(), name: z.string(), value: z.string() });
@@ -35,7 +33,7 @@ export const subscriptionsSchema = z.record(subscriptionSchema);
 
 export const templateSchema = z.object({
   endpointId: z.string(),
-  templateParameters: z.string(),
+  encodedParameters: z.string(),
 });
 
 export const templatesSchema = z.record(templateSchema);
@@ -65,7 +63,7 @@ export const configSchema = z.object({
   chains: chainsSchema,
   triggers: triggersSchema,
   subscriptions: subscriptionsSchema,
-  templates: templatesSchema,
+  templatesV1: templatesSchema,
   endpoints: endpointsSchema,
 });
 
