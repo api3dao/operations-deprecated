@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { Policy } from './types';
 import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract } from './utils/evm';
+import { getDapiNameHash, getDapiServerContract } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
 import { readAndValidateOperationsRepository } from './utils/read-operations';
 
@@ -27,10 +27,10 @@ const main = async (operationRepositoryTarget?: string) => {
           .filter((policy) => Math.floor(Date.now() / 1000) < policy.endDate)
           .map(async ({ dapiName, dataFeedId, readerAddress }) => ({
             chainName,
-            dataFeedId: dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
+            dataFeedId,
             readerAddress,
             readerCanReadDataFeed: await dapiServer.readerCanReadDataFeed(
-              dapiName ? ethers.utils.formatBytes32String(dapiName) : dataFeedId,
+              dapiName ? getDapiNameHash(dapiName) : dataFeedId,
               readerAddress
             ),
           }))
