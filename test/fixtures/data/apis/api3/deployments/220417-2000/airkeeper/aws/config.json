@@ -47,7 +47,7 @@
     "logFormat": "plain",
     "logLevel": "INFO",
     "nodeVersion": "0.7.2",
-    "stage": "prod220616-1954"
+    "stage": "prod-220616-1954"
   },
   "triggers": {
     "rrp": [],
