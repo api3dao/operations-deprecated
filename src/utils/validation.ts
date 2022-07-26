@@ -438,6 +438,7 @@ export const chainDeploymentReferencesSchema = z
  * @param endDate The end date of the policy in seconds since the Unix epoch
  * @param ipfsPolicyHash An IPFS hash referencing a document that describes the terms of the coverage policy
  * @param ipfsServicePolicyHash An IPFS hash referencing a document that describes the service policy
+ * @param metadata a metadata string stored on chain as part of the ClaimsManager: https://github.com/api3dao/claims-manager/blob/main/contracts/ClaimsManager.sol#L206
  */
 export const basePolicySchema = z
   .object({
@@ -450,6 +451,7 @@ export const basePolicySchema = z
     endDate: z.number(),
     ipfsPolicyHash: z.string().optional(),
     ipfsServicePolicyHash: z.string().optional(),
+    metadata: z.string().optional(),
   })
   .strict();
 
