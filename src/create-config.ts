@@ -76,7 +76,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod${timestamp}`,
+    stage: `prod-${timestamp}`,
   };
 };
 
