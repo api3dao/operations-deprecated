@@ -76,7 +76,7 @@ const buildNodeSettings = (
     },
     logFormat: 'plain' as const,
     logLevel: 'INFO' as const,
-    stage: `prod-${timestamp}`,
+    stage: `prod${timestamp}`,
   };
 };
 
@@ -204,6 +204,7 @@ const main = async (operationRepositoryTarget?: string) => {
     triggers,
     ois: Object.values(apiData.ois),
     apiCredentials,
+    templates: [],
   };
 
   const configGCP = {
@@ -212,6 +213,7 @@ const main = async (operationRepositoryTarget?: string) => {
     triggers,
     ois: Object.values(apiData.ois),
     apiCredentials,
+    templates: [],
   };
 
   //// Build secrets.env for airnode and airkeeper ////
@@ -358,7 +360,7 @@ const main = async (operationRepositoryTarget?: string) => {
       ...templateObj,
       [template.templateId]: {
         endpointId: template.endpointId,
-        templateParameters: template.parameters,
+        encodedParameters: template.parameters,
       },
     }),
     {}
@@ -383,7 +385,7 @@ const main = async (operationRepositoryTarget?: string) => {
     chains: airkeeperChains,
     triggers: airkeeperTriggers,
     subscriptions: airkeeperSubscriptions,
-    templates: airkeeperTemplates,
+    templatesV1: airkeeperTemplates,
     endpoints: AirkeeperEndpoints,
   };
 
