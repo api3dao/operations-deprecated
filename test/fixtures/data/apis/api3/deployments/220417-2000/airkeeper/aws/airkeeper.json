@@ -2,11 +2,19 @@
   "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "airnodeXpub": "xpub661MyMwAqRbcFeZ1CUvUpMs5bBSVLPHiuTqj7dZPertAGtd3xyTW1vrPspz7B34A7sdPahw7psrJjCXmn8KpF92jQssoqmsTk8fZ9PZN8xK",
   "chains": [
-    { "id": "3", "contracts": { "RrpBeaconServer": "", "DapiServer": "0x2760876c617cC03B4EEb3c9065E4332089968EB4" } }
+    {
+      "id": "3",
+      "contracts": {
+        "RrpBeaconServer": "",
+        "DapiServer": "0x2760876c617cC03B4EEb3c9065E4332089968EB4"
+      }
+    }
   ],
   "triggers": {
     "rrpBeaconServerKeeperJobs": [],
-    "protoPsp": ["0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24"]
+    "protoPsp": [
+      "0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24"
+    ]
   },
   "subscriptions": {
     "0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24": {
@@ -21,10 +29,10 @@
       "fulfillFunctionId": "0x206b48f4"
     }
   },
-  "templates": {
+  "templatesV1": {
     "0x40e1b4429f78b22a82e161c3137d151859a4801ceac0fd6015e3318e26f30f98": {
       "endpointId": "0xfb87102cdabadf905321521ba0b3cbf74ad09c5d400ac2eccdbef8d6143e78c4",
-      "templateParameters": "0x3173000000000000000000000000000000000000000000000000000000000000636f696e49640000000000000000000000000000000000000000000000000000626974636f696e00000000000000000000000000000000000000000000000000"
+      "encodedParameters": "0x3173000000000000000000000000000000000000000000000000000000000000636f696e49640000000000000000000000000000000000000000000000000000626974636f696e00000000000000000000000000000000000000000000000000"
     }
   },
   "endpoints": {
