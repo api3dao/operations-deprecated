@@ -1,0 +1,15 @@
+{
+  "name": "EUR/USD",
+  "description": "Finage Forex Euro - United States dollar",
+  "beaconId": "0x1d22bc6b6a94e180a6146f8e2b5afa489b6a84cc09f5a8eae5f9d304da28c6ac",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xc5c93474b14a653b4bc045191c3e4858771f3c8c8c6c8d18f1e98656ce7fc60a",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

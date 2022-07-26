@@ -1,0 +1,15 @@
+{
+  "name": " AMZN/USD",
+  "description": "Finage Stock Amazon - United States dollar",
+  "beaconId": "0xe84c9625fc3fb1d579c40c2af33b90fe97f247654fb2209b01f535f735cdfcf3",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xc9b8e9c93f98b7d39cfa3c0e94b900bc30e9685e31ac23c6371f05c9f804d155",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

@@ -7,6 +7,21 @@ import { sanitiseFilename } from './filesystem';
 import { readJsonFile } from './read-operations';
 import { OperationsRepository, Secrets, ChainDeploymentReferences } from '../types';
 
+export const secretsSanitiser = ([key, value]: [string, any]) => {
+  if (key === 'secrets') {
+    const envBuffer = Buffer.from((value as Secrets).content);
+    const content = Object.entries(parse(envBuffer))
+      .map(([key, value]) => (key.includes('HEARTBEAT') ? `${key}=${value}\n` : `${key}=\n`))
+      .concat([''])
+      .join('')
+      .trim();
+
+    return [key, { ...value, content }];
+  }
+
+  return [key, value];
+};
+
 export const normalize = (payload: OperationsRepository) => {
   const apis = Object.fromEntries(
     Object.entries(payload.apis).map(([_key, api]) => {
@@ -51,23 +66,7 @@ export const normalize = (payload: OperationsRepository) => {
       const deployments = Object.fromEntries(
         Object.entries(api.deployments).map(([key, value]) => {
           const airnodeAWS =
-            value.airnode.aws &&
-            Object.fromEntries(
-              Object.entries(value.airnode.aws).map(([key, value]) => {
-                if (key === 'secrets') {
-                  const envBuffer = Buffer.from((value as Secrets).content);
-                  const content = Object.entries(parse(envBuffer))
-                    .map(([key, _value]) => key)
-                    .concat([''])
-                    .join('=\n')
-                    .trim();
-
-                  return [key, { ...value, content }];
-                }
-
-                return [key, value];
-              })
-            );
+            value.airnode.aws && Object.fromEntries(Object.entries(value.airnode.aws).map(secretsSanitiser));
 
           const airnodeGCP =
             value.airnode.gcp &&
@@ -82,22 +81,7 @@ export const normalize = (payload: OperationsRepository) => {
             );
 
           const airkeeperAWS = value?.airkeeper?.aws
-            ? Object.fromEntries(
-                Object.entries(value.airkeeper.aws).map(([key, value]) => {
-                  if (key === 'secrets') {
-                    const envBuffer = Buffer.from((value as Secrets).content);
-                    const content = Object.entries(parse(envBuffer))
-                      .map(([key, _value]) => key)
-                      .concat([''])
-                      .join('=\n')
-                      .trim();
-
-                    return [key, { ...value, content }];
-                  }
-
-                  return [key, value];
-                })
-              )
+            ? Object.fromEntries(Object.entries(value.airkeeper.aws).map(secretsSanitiser))
             : undefined;
           return [
             key,

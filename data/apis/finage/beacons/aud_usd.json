@@ -1,0 +1,15 @@
+{
+  "name": "AUD/USD",
+  "description": "Finage Forex Australian dollar - United States dollar",
+  "beaconId": "0x4e9a4a9099d658c3c755841cdfe29b8d0cd97ecb45d6344ecbfb4f21ed565589",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xa572c5acf9ea4ff302de1e3ce4d1cd5e71722a81f896ab2910477427e5d6844d",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
