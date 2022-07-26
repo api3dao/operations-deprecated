@@ -12,9 +12,7 @@
   ],
   "triggers": {
     "rrpBeaconServerKeeperJobs": [],
-    "protoPsp": [
-      "0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24"
-    ]
+    "protoPsp": ["0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24"]
   },
   "subscriptions": {
     "0x9f978db96a2a6cfbb05cd5eab9670857c935ad785d03551a8b724ea42e712b24": {
