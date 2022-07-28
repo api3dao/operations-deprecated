@@ -288,7 +288,7 @@ export const validatePoliciesDatafeedReferences: SuperRefinement<{
   apis: Apis;
   dapis: Dapis;
   policies?: Record<string, Policies>;
-}> = ({ apis, dapis, policies: policiesByChain }, ctx) => {
+}> = ({ apis, dapis, policies: policiesByChain }) => {
   Object.entries(policiesByChain || {}).forEach(([chainName, policiesByType]) => {
     Object.entries(policiesByType || {}).forEach(([policyType, policies]) => {
       Object.entries(policies).forEach(([policyId, policy]) => {
@@ -296,8 +296,7 @@ export const validatePoliciesDatafeedReferences: SuperRefinement<{
           case 'dapis'.toLowerCase():
             // Check if /data/dapis/{chainName} contains the dapiName
             if (!Object.keys(dapis).includes(chainName) || !Object.keys(dapis[chainName]).includes(policy.dapiName)) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
+              console.warn({
                 message: `Referenced dAPI ${policy.dapiName} (${policy.dapiName}) is not defined in /data/dapis`,
                 path: ['policies', chainName, 'dapis', policyId],
               });
@@ -307,13 +306,12 @@ export const validatePoliciesDatafeedReferences: SuperRefinement<{
             // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
             if (
               !Object.values(apis).some((api) =>
-                Object.values(api.beacons).some((beacon) => {
-                  return beacon.beaconId === policy.dataFeedId && Object.keys(beacon.chains).includes(chainName);
-                })
+                Object.values(api.beacons).some(
+                  (beacon) => beacon.beaconId === policy.dataFeedId && Object.keys(beacon.chains).includes(chainName)
+                )
               )
             ) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
+              console.warn({
                 message: `Referenced beacon ${policy.dataFeedId} is not defined in /data/apis/<apiName>/beacons`,
                 path: ['policies', chainName, 'dataFeeds', policyId],
               });
