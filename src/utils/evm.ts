@@ -10,3 +10,7 @@ export const getDapiServerInterface = () => {
 export const getDapiServerContract = (dapiServerAddress: string, provider: ethers.providers.JsonRpcProvider) => {
   return new ethers.Contract(dapiServerAddress, protocol.DapiServer__factory.abi, provider);
 };
+
+export const getDapiNameHash = (dapiName: any): any => {
+  return ethers.utils.solidityKeccak256(['bytes32'], [ethers.utils.formatBytes32String(dapiName)]);
+};
