@@ -631,7 +631,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -645,7 +645,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -659,7 +659,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -673,7 +673,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -687,7 +687,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -701,7 +701,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -715,7 +715,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -729,7 +729,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -743,7 +743,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -757,7 +757,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -771,6 +771,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   },
@@ -784,7 +785,7 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     },
-    "logos": ["STOCK-GENERIC"],
+    "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
     "prefix": "$"
   }
