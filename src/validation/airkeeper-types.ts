@@ -11,7 +11,7 @@ import {
   Endpoints,
   AirkeeperChainContracts,
   AirkeeperChainConfig,
-} from './utils/airkeeper-validation';
+} from './airkeeper-validation';
 
 export interface ChainConfig extends node.ChainConfig {
   readonly contracts: node.ChainConfig['contracts'] & AirkeeperChainContracts;

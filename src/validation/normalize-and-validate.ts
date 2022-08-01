@@ -1,8 +1,8 @@
-import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { normalize } from './utils/normalization';
-import { validate } from './utils/validation';
+import { readOperationsRepository } from '../utils/read-operations';
+import { writeOperationsRepository } from '../utils/write-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { normalize } from './normalization';
+import { validate } from './validation';
 
 const main = async () => {
   const rawOpsData = readOperationsRepository();

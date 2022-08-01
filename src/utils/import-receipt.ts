@@ -1,11 +1,11 @@
 import { existsSync, mkdirSync, rmSync } from 'fs';
 import { join } from 'path';
 import { PromptObject } from 'prompts';
-import { OperationsRepository } from './types';
-import { runAndHandleErrors } from './utils/cli';
-import { promptQuestions } from './utils/prompts';
-import { readJsonFile, readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
+import { OperationsRepository } from '../validation/types';
+import { runAndHandleErrors } from './cli';
+import { promptQuestions } from './prompts';
+import { readJsonFile, readOperationsRepository } from './read-operations';
+import { writeOperationsRepository } from './write-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [

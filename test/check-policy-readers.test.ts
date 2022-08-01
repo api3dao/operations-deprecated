@@ -1,6 +1,6 @@
 import { join } from 'path';
 import * as evm from '../src/utils/evm';
-import { checkPolicyReaders } from '../src/check-policy-readers';
+import { checkPolicyReaders } from '../src/inspect/check-policy-readers';
 
 describe('check-allowed-readers', () => {
   it('succeeds if all reader addresses are allowed to read from DapiServer', async () => {

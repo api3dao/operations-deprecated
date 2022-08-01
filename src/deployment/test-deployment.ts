@@ -2,10 +2,10 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import axios, { AxiosRequestConfig } from 'axios';
 import { PromptObject } from 'prompts';
-import { OperationsRepository } from './types';
-import { cliPrint, runAndHandleErrors } from './utils/cli';
-import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
+import { OperationsRepository } from '../validation/types';
+import { cliPrint, runAndHandleErrors } from '../utils/cli';
+import { promptQuestions } from '../utils/prompts';
+import { readOperationsRepository } from '../utils/read-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [

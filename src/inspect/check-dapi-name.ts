@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract } from './utils/evm';
-import { loadCredentials } from './utils/filesystem';
+import { readAndValidateOperationsRepository } from '../utils/read-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiServerContract } from '../utils/evm';
+import { loadCredentials } from '../utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();

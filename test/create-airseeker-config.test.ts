@@ -3,9 +3,9 @@ import { join } from 'path';
 import { mkdirSync, rmdirSync } from 'fs';
 import * as prompts from 'prompts';
 import { readOperationsRepository } from '../src/utils/read-operations';
-import { createAirseekerConfig } from '../src/create-airseeker-config';
+import { createAirseekerConfig } from '../src/deployment/create-airseeker-config';
 import { writeOperationsRepository } from '../src/utils/write-operations';
-import { OperationsRepository } from '../src/types';
+import { OperationsRepository } from '../src/validation/types';
 import { getFormattedUtcTimestamp } from '../src/utils/date';
 
 describe('create-airseeker-config', () => {

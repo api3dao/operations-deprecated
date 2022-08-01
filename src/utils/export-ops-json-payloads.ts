@@ -1,9 +1,9 @@
 import { join } from 'path';
 import fs, { mkdirSync } from 'fs';
 import * as child_process from 'child_process';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
-import { writeJsonFile } from './utils/write-operations';
-import { sanitiseFilename } from './utils/filesystem';
+import { readAndValidateOperationsRepository } from './read-operations';
+import { writeJsonFile } from './write-operations';
+import { sanitiseFilename } from './filesystem';
 
 const main = async () => {
   const commitHash = child_process.execSync('git rev-parse HEAD').toString().trim();

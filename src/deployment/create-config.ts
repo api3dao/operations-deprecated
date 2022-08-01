@@ -3,14 +3,14 @@ import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
-import { OperationsRepository } from './types';
-import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerInterface } from './utils/evm';
-import { sanitiseFilename } from './utils/filesystem';
-import { getFormattedUtcTimestamp } from './utils/date';
+import { OperationsRepository } from '../validation/types';
+import { promptQuestions } from '../utils/prompts';
+import { readOperationsRepository } from '../utils/read-operations';
+import { writeOperationsRepository } from '../utils/write-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiServerInterface } from '../utils/evm';
+import { sanitiseFilename } from '../utils/filesystem';
+import { getFormattedUtcTimestamp } from '../utils/date';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -22,6 +22,15 @@ const questions = (choices: Choice[]): PromptObject[] => {
     },
     {
       type: 'multiselect',
+      name: 'configuration',
+      message: 'What configuration do you want to create?',
+      choices: [
+        { title: 'Airnode', value: 'airnode', selected: true },
+        { title: 'Airkeeper', value: 'airkeeper' },
+      ],
+    },
+    {
+      type: (prev, values) => (values.configuration.includes('airnode') ? 'multiselect' : null),
       name: 'cloudProviders',
       message: 'Which cloud providers do you want to deploy Airnode to?',
       choices: [
@@ -30,7 +39,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
       ],
     },
     {
-      type: 'confirm',
+      type: (prev, values) => (values.configuration.includes('airnode') ? 'confirm' : null),
       name: 'airnodeHeartbeat',
       message: 'Do you want to enable the Airnode Heartbeat?',
       initial: false,
@@ -399,36 +408,40 @@ const main = async (operationRepositoryTarget?: string) => {
         deployments: {
           ...operationsRepository.apis[response.apiName].deployments,
           [timestamp]: {
-            airnode: {
-              ...(response.cloudProviders.includes('aws') && {
-                aws: {
-                  config: {
-                    ...configAWS,
-                    chains: [],
+            ...(response.configuration.includes('airnode') && {
+              airnode: {
+                ...(response.cloudProviders.includes('aws') && {
+                  aws: {
+                    config: {
+                      ...configAWS,
+                      chains: [],
+                    },
+                    secrets: airnodeSecretsAWS,
+                    aws,
                   },
-                  secrets: airnodeSecretsAWS,
+                }),
+                ...(response.cloudProviders.includes('gcp') && {
+                  gcp: {
+                    config: {
+                      ...configGCP,
+                      chains: [],
+                    },
+                    secrets: airnodeSecretsGCP,
+                    gcp: {},
+                  },
+                }),
+              },
+            }),
+            ...(response.configuration.includes('airkeeper') && {
+              airkeeper: {
+                aws: {
+                  airkeeper,
+                  config: configAWS,
+                  secrets: airkeeperSecrets,
                   aws,
                 },
-              }),
-              ...(response.cloudProviders.includes('gcp') && {
-                gcp: {
-                  config: {
-                    ...configGCP,
-                    chains: [],
-                  },
-                  secrets: airnodeSecretsGCP,
-                  gcp: {},
-                },
-              }),
-            },
-            airkeeper: {
-              aws: {
-                airkeeper,
-                config: configAWS,
-                secrets: airkeeperSecrets,
-                aws,
               },
-            },
+            }),
           },
         },
       },

@@ -1,23 +1,23 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { PromptObject } from 'prompts';
-import { OperationsRepository } from './types';
-import { cliPrint, runAndHandleErrors, runShellCommand } from './utils/cli';
-import { promptQuestions } from './utils/prompts';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
+import { OperationsRepository } from '../validation/types';
+import { cliPrint, runAndHandleErrors, runShellCommand } from '../utils/cli';
+import { promptQuestions } from '../utils/prompts';
+import { readAndValidateOperationsRepository } from '../utils/read-operations';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
     {
       type: 'autocomplete',
       name: 'name',
-      message: 'Which API Integration do you want to deploy?',
+      message: 'Which API Integration do you want to remove?',
       choices: Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api })),
     },
     {
       type: 'autocomplete',
       name: 'deployment',
-      message: (prev) => `Which deployment of ${prev} do you want to deploy?`,
+      message: (prev) => `Which deployment of ${prev} do you want to remove?`,
       choices: (prev) =>
         Object.keys(operationsRepository.apis[prev].deployments).map((deployment) => ({
           title: deployment,

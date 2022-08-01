@@ -2,11 +2,11 @@ import { ethers } from 'ethers';
 import { NonceManager } from '@ethersproject/experimental';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
-import { promptQuestions } from './utils/prompts';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
-import { loadCredentials } from './utils/filesystem';
+import { promptQuestions } from '../utils/prompts';
+import { readAndValidateOperationsRepository } from '../utils/read-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiServerContract, getDapiServerInterface } from '../utils/evm';
+import { loadCredentials } from '../utils/filesystem';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [

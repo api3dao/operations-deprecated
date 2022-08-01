@@ -2,11 +2,11 @@
 import { join } from 'path';
 import { mkdirSync, rmdirSync } from 'fs';
 import prompts from 'prompts';
-import * as createConfigModule from '../src/create-config';
+import * as createConfigModule from '../src/deployment/create-config';
 import * as dateModule from '../src/utils/date';
 import { readOperationsRepository } from '../src/utils/read-operations';
 import { writeOperationsRepository } from '../src/utils/write-operations';
-import { OperationsRepository } from '../src/types';
+import { OperationsRepository } from '../src/validation/types';
 import { getFormattedUtcTimestamp } from '../src/utils/date';
 
 describe('create-config', () => {

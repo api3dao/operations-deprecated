@@ -1,6 +1,6 @@
-import { runAndHandleErrors } from './utils/cli';
-import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { readOperationsRepository } from '../utils/read-operations';
+import { writeOperationsRepository } from '../utils/write-operations';
 
 /**
  * Adds beacons that are present in data/apis/** to data/explorer/beaconMetadata.

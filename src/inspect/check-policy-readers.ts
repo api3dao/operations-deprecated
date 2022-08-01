@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
-import { Policy } from './types';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiNameHash, getDapiServerContract } from './utils/evm';
-import { loadCredentials } from './utils/filesystem';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
+import { Policy } from '../validation/types';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiNameHash, getDapiServerContract } from '../utils/evm';
+import { loadCredentials } from '../utils/filesystem';
+import { readAndValidateOperationsRepository } from '../utils/read-operations';
 
 const main = async (operationRepositoryTarget?: string) => {
   const credentials = loadCredentials();

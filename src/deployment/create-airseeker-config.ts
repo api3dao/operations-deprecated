@@ -1,13 +1,13 @@
 import { Choice, PromptObject } from 'prompts';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
-import { Api, Beacon, OperationsRepository } from './types';
-import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { Beacons, Gateways, Templates, Triggers } from './utils/airseeker-validation';
-import { sanitiseFilename } from './utils/filesystem';
-import { getFormattedUtcTimestamp } from './utils/date';
+import { Api, Beacon, OperationsRepository } from '../validation/types';
+import { promptQuestions } from '../utils/prompts';
+import { readOperationsRepository } from '../utils/read-operations';
+import { writeOperationsRepository } from '../utils/write-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { Beacons, Gateways, Templates, Triggers } from '../validation/airseeker-validation';
+import { sanitiseFilename } from '../utils/filesystem';
+import { getFormattedUtcTimestamp } from '../utils/date';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [

@@ -1,7 +1,7 @@
-import { readOperationsRepository } from './utils/read-operations';
-import { writeOperationsRepository } from './utils/write-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { normalize } from './utils/normalization';
+import { readOperationsRepository } from '../utils/read-operations';
+import { writeOperationsRepository } from '../utils/write-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { normalize } from './normalization';
 
 const main = () => {
   const rawOpsData = readOperationsRepository();

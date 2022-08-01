@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
-import { loadCredentials } from './utils/filesystem';
+import { readAndValidateOperationsRepository } from '../utils/read-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiServerContract, getDapiServerInterface } from '../utils/evm';
+import { loadCredentials } from '../utils/filesystem';
 
 const main = async () => {
   const credentials = loadCredentials();
