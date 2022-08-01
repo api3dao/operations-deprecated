@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
 import { deriveWalletPathFromSponsorAddress } from '@api3/airnode-node/dist/src/evm';
 import { Choice, PromptObject } from 'prompts';
-import { OperationsRepository } from '../validation/types';
 import { promptQuestions } from './prompts';
 import { readOperationsRepository } from './read-operations';
 import { writeOperationsRepository } from './write-operations';
 import { runAndHandleErrors } from './cli';
 import { PROTOCOL_ID_PSP } from './evm';
+import { OperationsRepository } from '../validation/types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
