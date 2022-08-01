@@ -8,7 +8,7 @@ import { sanitiseFilename } from './filesystem';
 const main = async () => {
   const commitHash = child_process.execSync('git rev-parse HEAD').toString().trim();
 
-  const basePath = join(__dirname, '../json-exports');
+  const basePath = join(__dirname, '../../json-exports');
   fs.rmdirSync(basePath, { recursive: true });
   fs.mkdirSync(basePath);
 
