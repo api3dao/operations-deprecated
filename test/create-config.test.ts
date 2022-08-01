@@ -30,7 +30,7 @@ describe('create-config', () => {
 
     const timestamp = getFormattedUtcTimestamp();
 
-    prompts.inject(['api3', ['aws', 'gcp'], false]);
+    prompts.inject(['api3', ['airnode', 'airkeeper'], ['aws', 'gcp'], false]);
     await createConfigModule.createConfig(tempTestPath);
 
     const newMockOpsRepo = readOperationsRepository(tempTestPath);
