@@ -4,7 +4,7 @@
     "nodeVersion": "0.6.5",
     "cloudProvider": {
       "type": "gcp",
-      "region": "europe-west1",
+      "region": "us-east1",
       "disableConcurrencyReservations": false,
       "projectId": "${GCP_PROJECT_ID}"
     },
@@ -25,7 +25,7 @@
     },
     "logFormat": "plain",
     "logLevel": "INFO",
-    "stage": "prod-220804-1926"
+    "stage": "prod-220804-1955"
   },
   "triggers": {
     "rrp": [],
