@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata MIM/USD 5-min VWAP",
+  "description": "Amberdata MIM/USD 5-min VWAP",
+  "beaconId": "0x5eef68d928a5a51e6817a44c8d0be7fca04711fde2302b0a527de18e299af0a5",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x9d71b503ae99683bcf1eb829f2a412e61024f49bd497d3ecd948fd4c19ba0f3f",
+  "chains": {
+    "avalanche": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

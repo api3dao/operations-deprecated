@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata BRZ/USD 5-min VWAP",
+  "description": "Amberdata BRZ/USD 5-min VWAP",
+  "beaconId": "0x614b1646674e0c71a0912217f01d7ada10c4d78081bcdf670a908e5a09bf617c",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x7b22fcdc9efa565de5a953035bac13abff5e270222f1a9e214cd00b8176525f0",
+  "chains": {
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

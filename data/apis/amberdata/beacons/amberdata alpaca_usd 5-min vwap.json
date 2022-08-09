@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata ALPACA/USD 5-min VWAP",
+  "description": "Amberdata ALPACA/USD 5-min VWAP",
+  "beaconId": "0x72251f3dd030e32dd31f641df923ce6853e3a1aba77d3701a8044057222578da",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x4aaf0d6a58d0d9c39ced26335decc13fafc90aeef1aed8ea2057c5484b486d3d",
+  "chains": {
+    "bsc": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
