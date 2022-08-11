@@ -551,20 +551,6 @@
     "logos": ["ADA", "USD"],
     "prefix": "$"
   },
-  "0x72251f3dd030e32dd31f641df923ce6853e3a1aba77d3701a8044057222578da": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
-    },
-    "decimalPlaces": 4,
-    "logos": ["ALPACA", "USD"],
-    "prefix": "$"
-  },
   "0xc197aeec5e904b487c37360d0044097a925037f038c6d2b7d92ad20bc689539e": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
@@ -629,20 +615,6 @@
     },
     "decimalPlaces": 6,
     "logos": ["BUSD", "USD"],
-    "prefix": "$"
-  },
-  "0x4b2e38813b8e3381df2ebe06a852d59705bcbd2b210f921d7d5da751e61acd0c": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
-    },
-    "decimalPlaces": 4,
-    "logos": ["CAKE", "USD"],
     "prefix": "$"
   },
   "0x2d7d6ad333ae8f39f8eabe31fd74523178ad8858da126cc9178a1e9138e950a3": {
@@ -784,7 +756,6 @@
     "logos": ["NEO", "USD"],
     "prefix": "$"
   },
-
   "0xb79424c4ae003c018e069d09803515ec2be6fb5977dd47f57020b4241c91e34d": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
@@ -798,7 +769,6 @@
     "logos": ["QUICK", "USD"],
     "prefix": "$"
   },
-
   "0x2653a54a9b8f69053af5387cd7e97aceead3615625ebcea7427f2885077807fb": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
@@ -879,20 +849,6 @@
     },
     "decimalPlaces": 4,
     "logos": ["XLM", "USD"],
-    "prefix": "$"
-  },
-  "0x3efdde3a35a1a255ae6f1fc3edeab07debc2bfa0e126ec2d78c887c74f093d20": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
-    },
-    "decimalPlaces": 4,
-    "logos": ["XVS", "USD"],
     "prefix": "$"
   },
   "0x614b1646674e0c71a0912217f01d7ada10c4d78081bcdf670a908e5a09bf617c": {
@@ -1006,5 +962,33 @@
     "logos": ["RIF", "USD"],
     "decimalPlaces": 6,
     "prefix": "$"
+  },
+  "0x4284bc86deabbdf748734f50cae486578bf66b945d6c332197185353005562be": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    },
+    "decimalPlaces": 8,
+    "logos": ["OOKI", "ETH"],
+    "prefix": "Ξ"
+  },
+  "0x20a1447a7f5d8c039e49ac9007329a68b6e4df8597c1feac6d59586850526749": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    },
+    "decimalPlaces": 8,
+    "logos": ["RBTC", "BTC"],
+    "prefix": "₿"
   }
 }
