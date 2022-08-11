@@ -20,7 +20,11 @@
         "priorityFee": { "unit": "gwei", "value": 3.12 },
         "txType": "eip1559"
       },
-      "providers": { "provider_ropsten": { "url": "${ROPSTEN_PROVIDER_URL}" } }
+      "providers": {
+        "provider_ropsten_1": { "url": "${RPC_PROVIDER_ROPSTEN_1}" },
+        "provider_ropsten_2": { "url": "${RPC_PROVIDER_ROPSTEN_2}" },
+        "provider_ropsten_3": { "url": "${RPC_PROVIDER_ROPSTEN_3}" }
+      }
     }
   },
   "gateways": {
