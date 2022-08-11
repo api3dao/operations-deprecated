@@ -1,9 +1,9 @@
 {
   "name": "Amberdata AXS/USD 5-min VWAP",
   "description": "Amberdata AXS/USD 5-min VWAP",
-  "beaconId": "0x2b6c4fdf87eb7e4321115c5e04dc6dd2ae3a4e83f443c1c9f493eaa98b192a59",
+  "beaconId": "0x8b704cd69414bd302b59a6775595d210555ec490ff2e50ee319f37f7fe04b081",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x06379802b1a6da8eaf85d5ea20c86bb96c71559aa1d942ec729f5fc9d7565832",
+  "templateId": "0x71eaa37af11046a5d27046b100e4fdeee4748deed0d0db524f9729ab625499dc",
   "chains": {
     "polygon": {
       "active": true,

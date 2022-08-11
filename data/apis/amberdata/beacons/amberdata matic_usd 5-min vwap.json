@@ -1,9 +1,9 @@
 {
   "name": "Amberdata MATIC/USD 5-min VWAP",
   "description": "Amberdata MATIC/USD 5-min VWAP",
-  "beaconId": "0x5f9d68d2108556123524a6d64531bb136676e2ca6effda812cca70e5ef655528",
+  "beaconId": "0xe295b7b5ad29e1fdbd256c35af0e003e30c1f500720a4e3bd2c689022a8ba4b3",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x2c8177af2c3a479e1535aab46fc632fbeb5d2bd180c95fa92fb05b98beb0e167",
+  "templateId": "0xa03de4f39e33e88021d2e34d23977c20596ab3afff553343024e3f5d4888500d",
   "chains": {
     "polygon": {
       "active": true,

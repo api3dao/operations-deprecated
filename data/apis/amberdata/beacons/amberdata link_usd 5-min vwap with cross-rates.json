@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata LINK/USD 5-min VWAP with Cross-Rates",
+  "description": "Amberdata LINK/USD 5-min VWAP with Cross-Rates",
+  "beaconId": "0x29e1bb7ebdc04ae43bf4a598aaaaf6f2de29ef49ed71865a38166f5d6bbea76e",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x6f3af9192b16c3fc7dc1e7073863d7cd32cfbe0e03f31d5b3ce37cbc6c4ac8c7",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

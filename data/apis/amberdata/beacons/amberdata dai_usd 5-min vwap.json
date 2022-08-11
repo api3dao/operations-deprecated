@@ -1,9 +1,9 @@
 {
   "name": "Amberdata DAI/USD 5-min VWAP",
   "description": "Amberdata DAI/USD 5-min VWAP",
-  "beaconId": "0x84d56827b1ea38c361406a060a4b8e1d5d84cd09cda1505196938635f1850a4f",
+  "beaconId": "0x733c4c37c939fa1f62a271200a73c682986e0491340638394a251c2da3bf4037",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x07eda28b158559dbf13bf18bc5fb020be33548724a6bb54b978335ae1054280d",
+  "templateId": "0x4f3166619684dbd08876783c829bf3d99f028df92c8e7adfa8ad28b9f0b875f7",
   "chains": {
     "polygon": {
       "active": true,
