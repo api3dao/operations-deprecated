@@ -949,20 +949,6 @@
     "decimalPlaces": 4,
     "prefix": "$"
   },
-  "0xea9aa84e38aea9011e003670afa4c9d8204efe12bd7f36d27453d849bff9e201": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
-    },
-    "logos": ["RIF", "USD"],
-    "decimalPlaces": 6,
-    "prefix": "$"
-  },
   "0x4284bc86deabbdf748734f50cae486578bf66b945d6c332197185353005562be": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
