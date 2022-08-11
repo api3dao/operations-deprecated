@@ -23,6 +23,12 @@ const questions = (choices: Choice[]): PromptObject[] => {
       message: 'What are the beacons you want to include in the configuration?',
       choices: choices,
     },
+    {
+      type: 'number',
+      name: 'numberOfProviders',
+      message: 'How many RPC provider (per chain) you want to use in the configuration?',
+      validate: (value) => (value < 0 ? 'Non-negative values are not allowed!' : true),
+    },
     //TODO: Add BeaconSet question
   ];
 };
@@ -84,11 +90,11 @@ const main = async (operationRepositoryTarget?: string) => {
             AirnodeRrp: AirnodeRrpAddresses[chainId] || '',
             DapiServer: operationsRepository.chains[chainName].contracts.DapiServer || '',
           },
-          providers: {
-            [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}`]: {
-              url: `\${${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL}`.toUpperCase(),
+          providers: Array.from({ length: response.numberOfProviders }, (_, index) => ({
+            [`provider_${sanitiseFilename(chainName).replace(/\-/g, '_')}_${index + 1}`]: {
+              url: `\${RPC_PROVIDER_${sanitiseFilename(chainName).replace(/\-/g, '_')}_${index + 1}}`.toUpperCase(),
             },
-          },
+          })).reduce((r, c) => Object.assign(r, c), {}),
           options: {
             txType: 'eip1559' as const,
             priorityFee: {
@@ -190,9 +196,15 @@ const main = async (operationRepositoryTarget?: string) => {
   ]);
 
   const secretsArray = [
-    `AIRSEEKER_WALLET_MNEMONIC=`,
     ...gatewaySecrets,
-    ...apiChains.map((chainName) => `${sanitiseFilename(chainName).replace(/\-/g, '_')}_PROVIDER_URL=`.toUpperCase()),
+    `AIRSEEKER_WALLET_MNEMONIC=`,
+    ...apiChains
+      .map((chainName) =>
+        Array.from({ length: response.numberOfProviders }, (_, index) =>
+          `RPC_PROVIDER_${sanitiseFilename(chainName).replace(/\-/g, '_')}_${index + 1}=`.toUpperCase()
+        )
+      )
+      .flat(),
   ];
 
   const secrets = {
