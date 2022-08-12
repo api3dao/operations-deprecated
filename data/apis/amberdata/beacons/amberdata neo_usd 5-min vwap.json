@@ -1,9 +1,9 @@
 {
   "name": "Amberdata NEO/USD 5-min VWAP",
   "description": "Amberdata NEO/USD 5-min VWAP",
-  "beaconId": "0xb43559f0ce38988d695fa1a07becebc6add4295ff086fd326d831be92067c240",
+  "beaconId": "0xffa121bc7111056fbe457c2c4200b9c6fd9f50edeb503c28f460ce0345080bc6",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x7435270cc0f4e75faac616603cce7cf88677f1fb351d8e16bd5e91ba29bf9138",
+  "templateId": "0x6b3274feb4afaee31e59f33f254f4171fd5d87d2eb297c658a7de0bddba35025",
   "chains": {
     "polygon": {
       "active": true,
