@@ -178,7 +178,11 @@ export const deploymentSetSchema = z.object({
  *
  * Deployment sets are keyed by the date in the format 'YYYY-MM-DD'
  */
-export const deploymentsSchema = z.record(deploymentSetSchema);
+export const deploymentsSchema = z.object({
+  current: z.record(deploymentSetSchema),
+  history: z.record(deploymentSetSchema),
+  staging: z.record(deploymentSetSchema),
+});
 
 /**
  * An Airnode Template
