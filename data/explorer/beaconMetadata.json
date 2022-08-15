@@ -13,19 +13,6 @@
     "logos": ["AAVE", "BTC"],
     "prefix": "₿"
   },
-  "0x55a375e3478936a656c022a9554c45509331bd4d4b647ec3c78c07c5c17237fb": {
-    "category": "Cryptocurrency",
-    "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
-    },
-    "logos": ["AAVE", "USD"],
-    "prefix": "$"
-  },
   "0x712e1ba1be510e1b7d596a12492de4df51e636e835727f782ef00ffa783a7be9": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
