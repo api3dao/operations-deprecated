@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata ETH/USD 5-min VWAP",
-  "description": "Amberdata ETH/USD 5-min VWAP",
+  "name": "Amberdata ETH/USD 5-min Spot VWAP",
+  "description": "ETH/USD 5-min Spot VWAP",
   "beaconId": "0xbe0db2ce3f37dea4481e10b11ec822aa6d4968acce878ae67b649e052aa33deb",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x33e8377b3a9fa04b32e9eea3314a462957bf80f1d4f5f3054b5b2c1811691c50",

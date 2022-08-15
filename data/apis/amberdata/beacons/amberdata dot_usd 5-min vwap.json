@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata DOT/USD 5-min VWAP",
-  "description": "Amberdata DOT/USD 5-min VWAP",
+  "name": "Amberdata DOT/USD 5-min Spot VWAP",
+  "description": "DOT/USD 5-min Spot VWAP",
   "beaconId": "0x118e19f765c78f880a575b7e193f5d3e9c73d71b944caf83124e670480460712",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x341ae7ce7af5d77d406a6dd684c5d3545876b017377a8e2947da8bb4b80897c4",

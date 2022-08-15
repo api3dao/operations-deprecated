@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata OOKI/ETH 5-min VWAP",
-  "description": "Amberdata OOKI/ETH 5-min VWAP",
+  "name": "Amberdata OOKI/ETH 5-min Spot VWAP",
+  "description": "OOKI/ETH 5-min Spot VWAP",
   "beaconId": "0x4284bc86deabbdf748734f50cae486578bf66b945d6c332197185353005562be",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xa9c6ab8f29b6c4360f593b5c4df28b2a71bf1c9b945ac53c37d93c0a19bd7ebc",

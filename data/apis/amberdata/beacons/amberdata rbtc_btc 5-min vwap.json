@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata RBTC/BTC 5-min VWAP",
-  "description": "Amberdata RBTC/BTC 5-min VWAP",
+  "name": "Amberdata RBTC/BTC 5-min Spot VWAP",
+  "description": "RBTC/BTC 5-min Spot VWAP",
   "beaconId": "0x20a1447a7f5d8c039e49ac9007329a68b6e4df8597c1feac6d59586850526749",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x8c58b1683e5ff80813228419151fd12019ef8ab7bb952ea103c7ec654ee41bd0",

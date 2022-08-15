@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata EOS/USD 5-min VWAP",
-  "description": "Amberdata EOS/USD 5-min VWAP",
+  "name": "Amberdata EOS/USD 5-min Spot VWAP",
+  "description": "EOS/USD 5-min Spot VWAP",
   "beaconId": "0xcdd894ea6d7deb8828df537219e76dc037cfb98f35de34d0759248b6c0734cb4",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xc2b386ac9246dbecac099d4777c40779b4dea437fe28988280b3ad9e5fd81c39",

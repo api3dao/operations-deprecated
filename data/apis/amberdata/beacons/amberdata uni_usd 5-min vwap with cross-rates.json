@@ -1,18 +1,18 @@
 {
-  "name": "Amberdata UNI/USD 5-min VWAP with Cross-Rates",
-  "description": "Amberdata UNI/USD 5-min VWAP with Cross-Rates",
+  "name": "Amberdata UNI/USD 5-min Spot VWAP with Cross-Rates",
+  "description": "UNI/USD 5-min Spot VWAP with Cross-Rates",
   "beaconId": "0xed3c55fd0d666ca78192ae861f32bc59d0abcb32de417f84a4de8d1a08928120",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x86fbbc0a40090cbadc315726b3ee047db76c43349fb79687bca2de9940054bb6",
   "chains": {
     "polygon": {
-      "active": true,
+      "active": false,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
       "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
     },
     "polygon-testnet": {
-      "active": true,
+      "active": false,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
       "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }

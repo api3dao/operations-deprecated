@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata MIOTA/USD 5-min VWAP",
-  "description": "Amberdata MIOTA/USD 5-min VWAP",
+  "name": "Amberdata MIOTA/USD 5-min Spot VWAP",
+  "description": "MIOTA/USD 5-min Spot VWAP",
   "beaconId": "0xdb997781aa3f48c577fbee55c2a746f86fa63068ca0b7a4c444fa6114a5f2465",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x40cd1a9a6c53542ebbd3ab332462cfc35cefbbe4278b3352680fcb71b385a68e",

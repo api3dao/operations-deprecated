@@ -1,18 +1,18 @@
 {
-  "name": "Amberdata RBTC/USD 15-min VWAP with Cross-Rates",
-  "description": "Amberdata RBTC/USD 15-min VWAP with Cross-Rates",
+  "name": "Amberdata RBTC/USD 15-min Spot VWAP with Cross-Rates",
+  "description": "RBTC/USD 15-min Spot VWAP with Cross-Rates",
   "beaconId": "0xf04547df734060189a890100e802b6c24c2c2ef184875529e7beed034de39122",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xbd7237d92456f64b402c1727c35515aeebf8213836a989b135113d23c20260aa",
   "chains": {
     "rsk": {
-      "active": true,
+      "active": false,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
       "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
     },
     "polygon-testnet": {
-      "active": true,
+      "active": false,
       "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
       "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
       "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
