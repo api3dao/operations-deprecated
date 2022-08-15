@@ -1,9 +1,9 @@
 {
-  "name": "Amberdata BNB/USD 5-min VWAP",
-  "description": "Amberdata BNB/USD 5-min VWAP",
-  "beaconId": "0x9a8f1b8d4cb1dc23d1d8a5991770b6fc220b524c4a3f11a9ea5579a3e0cef367",
+  "name": "Amberdata BNB/USD 5-min Spot VWAP",
+  "description": "BNB/USD 5-min Spot VWAP",
+  "beaconId": "0x0343be29ba1b446ac36f813b2827e207666029f47c168a42ef163bd2bb815451",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0xb20183e3c115a4239ba5e51f1827e05297eb54a2fa6df8c2bf33f71622e13e0a",
+  "templateId": "0x7e353ad870bca67bd64ac162ea0a939254ce6154da2d8523fafbd7219c10831b",
   "chains": {
     "bsc": {
       "active": true,

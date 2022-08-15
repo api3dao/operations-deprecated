@@ -1,9 +1,9 @@
 {
-  "name": "Amberdata VET/USD 5-min VWAP",
-  "description": "Amberdata VET/USD 5-min VWAP",
-  "beaconId": "0x43e4b505b0bc564a19de751a136cdeb34b90261c2d14700d6ee6c8fdfeea56f4",
+  "name": "Amberdata VET/USD 5-min Spot VWAP",
+  "description": "VET/USD 5-min Spot VWAP",
+  "beaconId": "0xf2f05dc7deefcc0d3fed542829a9de8f73023a710348e70ec8bf3b88c98105e4",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x34ca8a2cc58f0f5120b4d6216ef0b33a0418a4e34f9bc71f1943ae597b0fc7d6",
+  "templateId": "0x8e8f0c42cee1dd11f83910b56ff8e148c761916e77d0a909010dc92211ea91de",
   "chains": {
     "polygon": {
       "active": true,

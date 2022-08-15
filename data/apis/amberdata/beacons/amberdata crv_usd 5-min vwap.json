@@ -1,9 +1,9 @@
 {
-  "name": "Amberdata CRV/USD 5-min VWAP",
-  "description": "Amberdata CRV/USD 5-min VWAP",
-  "beaconId": "0x985cedbc20e6f3a3eeebcd2af8a0266a8b5da285e3ef87964aa4d96f4c4729ab",
+  "name": "Amberdata CRV/USD 5-min Spot VWAP",
+  "description": "CRV/USD 5-min Spot VWAP",
+  "beaconId": "0x2d7d6ad333ae8f39f8eabe31fd74523178ad8858da126cc9178a1e9138e950a3",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0x457f6898258b321f8aa8308caddfe8d9d675f6744bc16f841e43c0724955165a",
+  "templateId": "0xf7de0cd89252f97bdf0645eb4109600e53e422f633bc2c416c27e51b1d22c67c",
   "chains": {
     "avalanche": {
       "active": true,

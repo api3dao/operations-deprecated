@@ -1,9 +1,9 @@
 {
-  "name": "Amberdata AVAX/USD 5-min VWAP",
-  "description": "Amberdata AVAX/USD 5-min VWAP",
-  "beaconId": "0x098cf42f8ea393f32ec9b788d48eb58d044a51a8793f1d98ceb27d25fccbeb2b",
+  "name": "Amberdata AVAX/USD 5-min Spot VWAP",
+  "description": "AVAX/USD 5-min Spot VWAP",
+  "beaconId": "0xc197aeec5e904b487c37360d0044097a925037f038c6d2b7d92ad20bc689539e",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
-  "templateId": "0xfbcb906f4db5a2637cda723cddea3a2394ff3bfeb9aafb2db1ee2340b2ab5193",
+  "templateId": "0x0b5f3c508734dd879ffaf6846d2167d34aafc78f7105b94a360897b64596057f",
   "chains": {
     "avalanche": {
       "active": true,
