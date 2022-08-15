@@ -1,0 +1,15 @@
+{
+  "name": "Finage Stock SNAP/USD",
+  "description": "Snap Inc",
+  "beaconId": "0x0457494ad4d266a6fbdb7906793e311a0d0f0c991a30389ca35ccb0d2b062988",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xc4a57822d631143e4ea1ff98e0f1640a6cb7b72c1d0c82e78e0d43a39d09da69",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
