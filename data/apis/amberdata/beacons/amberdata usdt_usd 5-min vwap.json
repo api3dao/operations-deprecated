@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata USDT/USD 5-min VWAP",
-  "description": "Amberdata USDT/USD 5-min VWAP",
+  "name": "Amberdata USDT/USD 5-min Spot VWAP",
+  "description": "USDT/USD 5-min Spot VWAP",
   "beaconId": "0xe3057388cbd2df9ace15fce8c8fc6cf013fcff85eb849c5991a3beb7cf4c8fc7",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x222739f88d5dfa83501f78f78b19244aaaa56ddc77ad3497f7549b7fdc3355d1",

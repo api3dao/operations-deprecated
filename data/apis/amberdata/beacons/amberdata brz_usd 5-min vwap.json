@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata BRZ/USD 5-min VWAP",
-  "description": "Amberdata BRZ/USD 5-min VWAP",
+  "name": "Amberdata BRZ/USD 5-min Spot VWAP",
+  "description": "BRZ/USD 5-min Spot VWAP",
   "beaconId": "0x614b1646674e0c71a0912217f01d7ada10c4d78081bcdf670a908e5a09bf617c",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x7b22fcdc9efa565de5a953035bac13abff5e270222f1a9e214cd00b8176525f0",
