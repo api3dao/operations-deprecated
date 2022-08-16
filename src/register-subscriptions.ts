@@ -1,12 +1,14 @@
 import { ethers } from 'ethers';
 import { NonceManager } from '@ethersproject/experimental';
+import _ from 'lodash';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { promptQuestions } from './utils/prompts';
-import { readAndValidateOperationsRepository } from './utils/read-operations';
+import { readOperationsRepository } from './utils/read-operations';
 import { runAndHandleErrors } from './utils/cli';
 import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
 import { loadCredentials } from './utils/filesystem';
+import { Beacon } from './types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
@@ -21,7 +23,7 @@ const questions = (choices: Choice[]): PromptObject[] => {
 
 const main = async () => {
   const credentials = loadCredentials();
-  const operationsRepository = await readAndValidateOperationsRepository();
+  const operationsRepository = await readOperationsRepository();
   const apiChoices = Object.keys(operationsRepository.apis).map((api) => ({ title: api, value: api }));
   const response = await promptQuestions(questions(apiChoices));
   const apiData = operationsRepository.apis[response.apiName];
@@ -42,10 +44,22 @@ const main = async () => {
     {} as { [chainName: string]: NonceManager }
   );
 
-  const subscriptionPromises = Object.entries(apiData.beacons).flatMap(([beaconName, beacon]) =>
-    Object.entries(beacon.chains)
-      .filter(([, chain]) => 'updateConditionPercentage' in chain)
-      .map(async ([chainName, chain]) => {
+  const chainToBeacon = Object.values(apiData.beacons).reduce((acc, beacon) => {
+    Object.keys(beacon.chains).forEach((chainName) => {
+      acc[chainName] = [
+        ...(acc[chainName] || []),
+        ...('updateConditionPercentage' in beacon.chains[chainName] ? [beacon] : []),
+      ];
+    });
+    return {
+      ...acc,
+    };
+  }, {} as { [chainName: string]: Beacon[] });
+
+  const subscriptionPromises = Object.fromEntries(
+    Object.entries(chainToBeacon).map(([chainName, beaconArray]) => [
+      chainName,
+      beaconArray.map(async (beacon) => {
         const dapiServerInteface = getDapiServerInterface();
         const parameters = '0x';
         const airnodeAddress = beacon.airnodeAddress;
@@ -74,12 +88,11 @@ const main = async () => {
 
         if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
         const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
-        const gasPrice = await provider.getGasPrice();
         const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
         if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
         const dapiServer = getDapiServerContract(dapiServerAddress, provider);
 
-        const sponsor = chain.sponsor;
+        const sponsor = beacon.chains[chainName].sponsor;
 
         const expectedSubscriptionId = ethers.utils.keccak256(
           ethers.utils.defaultAbiCoder.encode(
@@ -104,51 +117,55 @@ const main = async () => {
             .connect(nonceManagers[chainName])
             .subscriptionIdToBeaconId(expectedSubscriptionId);
 
-          if (beaconId !== ethers.constants.HashZero)
-            return `✅ subscriptionId ${expectedSubscriptionId} already exists for chain ${chainName}`;
+          if (beaconId === beacon.beaconId) return false;
 
-          console.log(`🔗 Registering subscriptionId for beacon ${beaconName} on chain ${chainName}`);
+          console.log(`🔗 Creating Multicall data for beacon ${beacon.name} on chain ${chainName}`);
 
-          const registerBeaconUpdateSubscription = await dapiServer
-            .connect(nonceManagers[chainName])
-            .registerBeaconUpdateSubscription(
-              airnodeAddress,
-              templateId,
-              encodedBeaconUpdateSubscriptionConditions,
-              airnodeAddress,
-              sponsor,
-              { gasPrice }
-            );
+          const calldata = dapiServerInteface.encodeFunctionData('registerBeaconUpdateSubscription', [
+            airnodeAddress,
+            templateId,
+            encodedBeaconUpdateSubscriptionConditions,
+            airnodeAddress,
+            sponsor,
+          ]);
 
-          // Check that the transaction is complete
-          const tx = await registerBeaconUpdateSubscription.wait();
-
-          const subscriptionId = tx.events.find(
-            (event: { event: string }) => event.event === 'RegisteredBeaconUpdateSubscription'
-          ).args.subscriptionId;
-
-          if (subscriptionId !== expectedSubscriptionId) {
-            throw new Error(
-              `🛑 The subscription ID ${subscriptionId} does not match the expected ID ${expectedSubscriptionId}`
-            );
-          }
-
-          return `✅ Subscription registered with ID ${subscriptionId} for beacon ${beaconName} on chain ${chainName}`;
+          return calldata;
         } catch (error) {
           console.error(error);
-          throw new Error(`🛑 Error registering subscription for beacon ${beaconName} on chain ${chainName}`);
+          throw new Error(`🛑 Error registering subscription for beacon ${beacon.name} on chain ${chainName}`);
         }
-      })
+      }),
+    ])
   );
 
-  const results = await Promise.allSettled(subscriptionPromises);
-  results.forEach((result) => {
-    if (result.status === 'fulfilled') {
-      console.log(result.value);
-    } else {
-      console.log(result.reason);
+  for (const chainName of Object.keys(subscriptionPromises)) {
+    const chainCallDataPromise = await Promise.allSettled(subscriptionPromises[chainName]);
+    const chainCallData = chainCallDataPromise
+      .filter((callData) => callData.status === 'fulfilled' && callData.value !== false)
+      .flatMap((callData) => {
+        if (callData.status === 'fulfilled') {
+          // Typescript has issues with Promise.allSettled
+          return callData.value;
+        } // it doesnt seem to recognize the filter above
+      });
+
+    if (!credentials.networks[chainName].url) throw new Error(`🛑 No public RPC URL for chain ${chainName}`);
+    const provider = new ethers.providers.JsonRpcProvider(credentials.networks[chainName].url);
+    const dapiServerAddress = operationsRepository.chains[chainName].contracts.DapiServer;
+    if (!dapiServerAddress) throw new Error(`🛑 No DapiServer contract address for chain ${chainName}`);
+    const dapiServer = getDapiServerContract(dapiServerAddress, provider);
+
+    const chainCallDataChunk = _.chunk(chainCallData, 50);
+
+    if (chainCallDataChunk.length > 0) {
+      console.log(`🔗 Registering ${chainCallData.length} beacon subscriptions on chain ${chainName}`);
+      for (const chunk of chainCallDataChunk) {
+        const tx = await dapiServer.connect(nonceManagers[chainName]).multicall(chunk);
+        await tx.wait();
+      }
+      console.log(`✅ Registered ${chainCallData} beacon subscriptions on chain ${chainName}`);
     }
-  });
+  }
 };
 
 runAndHandleErrors(main);
