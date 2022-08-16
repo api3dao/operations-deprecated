@@ -1,0 +1,15 @@
+{
+  "name": "Finage Forex MXN/USD",
+  "description": "MXN/USD",
+  "beaconId": "0x2177eb49746e9435733c6c63e2e9fd5dc56e2b31a9ac615cd9ba2a8f324bf9b4",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0x734a07c261cf1b6dd2785166bc75114d439708d4ba647c10572997354a72ecb1",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 0.1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}
