@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata XLM/USD 5-min Spot VWAP",
-  "description": "XLM/USD 5-min Spot VWAP",
+  "name": "Amberdata XLM/USD 5-min spot VWAP",
+  "description": "XLM/USD 5-min spot VWAP",
   "beaconId": "0x89fdbaa2f825578b6be3f6a052c291828508c770a885ffe6ae241e79188339b2",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x59eb619b6f80440c629718d7272deecf495ec043c6961a83485241edf33ffc92",

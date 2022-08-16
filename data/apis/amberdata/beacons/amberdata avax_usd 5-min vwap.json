@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata AVAX/USD 5-min Spot VWAP",
-  "description": "AVAX/USD 5-min Spot VWAP",
+  "name": "Amberdata AVAX/USD 5-min spot VWAP",
+  "description": "AVAX/USD 5-min spot VWAP",
   "beaconId": "0xc197aeec5e904b487c37360d0044097a925037f038c6d2b7d92ad20bc689539e",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x0b5f3c508734dd879ffaf6846d2167d34aafc78f7105b94a360897b64596057f",

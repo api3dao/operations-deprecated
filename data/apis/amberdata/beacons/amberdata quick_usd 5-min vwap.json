@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata QUICK/USD 5-min Spot VWAP",
-  "description": "QUICK/USD 5-min Spot VWAP",
+  "name": "Amberdata QUICK/USD 5-min spot VWAP",
+  "description": "QUICK/USD 5-min spot VWAP",
   "beaconId": "0xb79424c4ae003c018e069d09803515ec2be6fb5977dd47f57020b4241c91e34d",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xfdb6b8453e2079ba4922b869902d53aebbfa7d154c2ae04a649cff8b5eab9604",

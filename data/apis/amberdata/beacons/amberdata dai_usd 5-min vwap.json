@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata DAI/USD 5-min Spot VWAP",
-  "description": "DAI/USD 5-min Spot VWAP",
+  "name": "Amberdata DAI/USD 5-min spot VWAP",
+  "description": "DAI/USD 5-min spot VWAP",
   "beaconId": "0x733c4c37c939fa1f62a271200a73c682986e0491340638394a251c2da3bf4037",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x4f3166619684dbd08876783c829bf3d99f028df92c8e7adfa8ad28b9f0b875f7",

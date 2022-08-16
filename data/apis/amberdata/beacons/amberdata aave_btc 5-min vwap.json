@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata AAVE/BTC 5-min Spot VWAP",
-  "description": "AAVE/BTC 5-min Spot VWAP",
+  "name": "Amberdata AAVE/BTC 5-min spot VWAP",
+  "description": "AAVE/BTC 5-min spot VWAP",
   "beaconId": "0x09a5873667837598bd0990ba2f53d750d545ce435ecdcd44e0b4c64ab7d7d20d",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0xfce8a7c37dd14e010cd5ef02d5b0a87deedba396fcb4b75deb9ab4aed34017b5",

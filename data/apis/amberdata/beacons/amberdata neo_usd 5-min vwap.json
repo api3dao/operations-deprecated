@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata NEO/USD 5-min Spot VWAP",
-  "description": "NEO/USD 5-min Spot VWAP",
+  "name": "Amberdata NEO/USD 5-min spot VWAP",
+  "description": "NEO/USD 5-min spot VWAP",
   "beaconId": "0xffa121bc7111056fbe457c2c4200b9c6fd9f50edeb503c28f460ce0345080bc6",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x6b3274feb4afaee31e59f33f254f4171fd5d87d2eb297c658a7de0bddba35025",

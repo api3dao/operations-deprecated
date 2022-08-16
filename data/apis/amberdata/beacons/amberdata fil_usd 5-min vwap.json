@@ -1,6 +1,6 @@
 {
-  "name": "Amberdata FIL/USD 5-min Spot VWAP",
-  "description": "FIL/USD 5-min Spot VWAP",
+  "name": "Amberdata FIL/USD 5-min spot VWAP",
+  "description": "FIL/USD 5-min spot VWAP",
   "beaconId": "0xa8d8864ab62909f3590ddf79ee79d5d7386f61b664291388d9bfe715783ea084",
   "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "templateId": "0x86fa5f84ccec84afe8b3421534eac4bc8f1ba3bdbab110dc7b7c087e49a6b47d",
