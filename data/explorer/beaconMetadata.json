@@ -552,6 +552,20 @@
     "decimalPlaces": 4,
     "prefix": "$"
   },
+  "0xe826b2e1c0b52ab1073907e4e11b910f25725325d84512f953394dfa8277bca7": {
+    "category": "Stock",
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    },
+    "logos": ["STOCK-GENERIC", "USD"],
+    "decimalPlaces": 2,
+    "prefix": "$"
+  },
   "0x81ea2448be1a1db64a0de6349f886d49013ced2bc93edb44de45790000f3b6a2": {
     "category": "Stock",
     "pricingCoverage": {
