@@ -465,7 +465,7 @@
       "bsc": "bsc"
     },
     "logos": ["AUD", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x9dea4c0b481c2f44e714aa2f884a45a4c1d6163a100772fb795bfb8e7022ac21": {
@@ -479,7 +479,7 @@
       "bsc": "bsc"
     },
     "logos": ["CNH", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x1d22bc6b6a94e180a6146f8e2b5afa489b6a84cc09f5a8eae5f9d304da28c6ac": {
@@ -493,7 +493,7 @@
       "bsc": "bsc"
     },
     "logos": ["EUR", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0xbd91fcd6ff5579366562d31ca66b7c403590a54878c3a5082757b6f65b15da10": {
@@ -507,7 +507,7 @@
       "bsc": "bsc"
     },
     "logos": ["GBP", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x1b03c60f60bb515bd185c0b5b20e876e1f9885694b0dc91491b5601e7f8a0b76": {
@@ -521,7 +521,7 @@
       "bsc": "bsc"
     },
     "logos": ["JPY", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x2177eb49746e9435733c6c63e2e9fd5dc56e2b31a9ac615cd9ba2a8f324bf9b4": {
@@ -535,7 +535,7 @@
       "bsc": "bsc"
     },
     "logos": ["MXN", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0x4a550ff5d473729f3c22bcd337fe0d3ffbed1aee0a8d2fe4f93b970e568fc9ab": {
@@ -549,7 +549,7 @@
       "bsc": "bsc"
     },
     "logos": ["NZD", "USD"],
-    "decimalPlaces": 4,
+    "decimalPlaces": 6,
     "prefix": "$"
   },
   "0xe826b2e1c0b52ab1073907e4e11b910f25725325d84512f953394dfa8277bca7": {
