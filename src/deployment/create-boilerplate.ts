@@ -96,4 +96,6 @@ const main = async () => {
   writeOperationsRepository(updatedOpsData);
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as createBoilerplate };

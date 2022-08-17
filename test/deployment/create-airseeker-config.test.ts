@@ -2,15 +2,15 @@
 import { join } from 'path';
 import { mkdirSync, rmdirSync } from 'fs';
 import * as prompts from 'prompts';
-import { readOperationsRepository } from '../src/utils/read-operations';
-import { createAirseekerConfig } from '../src/deployment/create-airseeker-config';
-import { writeOperationsRepository } from '../src/utils/write-operations';
-import { OperationsRepository } from '../src/validation/types';
-import { getFormattedUtcTimestamp } from '../src/utils/date';
+import { readOperationsRepository } from '../../src/utils/read-operations';
+import { createAirseekerConfig } from '../../src/deployment/create-airseeker-config';
+import { writeOperationsRepository } from '../../src/utils/write-operations';
+import { OperationsRepository } from '../../src/validation/types';
+import { getFormattedUtcTimestamp } from '../../src/utils/date';
 
 describe('create-airseeker-config', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
-  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
 
   // Start with a clean directory
   beforeEach(() => {

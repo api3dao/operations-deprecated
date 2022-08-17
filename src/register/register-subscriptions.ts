@@ -151,4 +151,6 @@ const main = async () => {
   });
 };
 
-runAndHandleErrors(main);
+if (require.main === module) runAndHandleErrors(main);
+
+export { main as registerSubscriptions };

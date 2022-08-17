@@ -2,16 +2,16 @@
 import { join } from 'path';
 import { mkdirSync, rmdirSync } from 'fs';
 import prompts from 'prompts';
-import * as createConfigModule from '../src/deployment/create-config';
-import * as dateModule from '../src/utils/date';
-import { readOperationsRepository } from '../src/utils/read-operations';
-import { writeOperationsRepository } from '../src/utils/write-operations';
-import { OperationsRepository } from '../src/validation/types';
-import { getFormattedUtcTimestamp } from '../src/utils/date';
+import * as createConfigModule from '../../src/deployment/create-config';
+import * as dateModule from '../../src/utils/date';
+import { readOperationsRepository } from '../../src/utils/read-operations';
+import { writeOperationsRepository } from '../../src/utils/write-operations';
+import { OperationsRepository } from '../../src/validation/types';
+import { getFormattedUtcTimestamp } from '../../src/utils/date';
 
 describe('create-config', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
-  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, 'fixtures', 'data'));
+  const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
 
   // Start with a clean directory
   beforeEach(() => {
