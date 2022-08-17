@@ -1,7 +1,7 @@
 import { mkdirSync, renameSync, rmdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { format } from 'prettier';
-import { OperationsRepository } from '../types';
+import { OperationsRepository } from '../validation/types';
 import { PRETTIER_CONFIG } from '../constants';
 
 const writeBaseDirectory = (basePath: string, payload?: any, name?: string) => {

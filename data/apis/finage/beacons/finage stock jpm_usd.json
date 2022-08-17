@@ -1,0 +1,15 @@
+{
+  "name": "Finage Stock JPM/USD",
+  "description": "JPMorgan Chase & Co",
+  "beaconId": "0xb7f55820f1f6df3a493ca31bb81fc880c2cac172da21866cedb60962c84b79ef",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0x412124acf34ed2f3976a114188f923f1913e4eb70ae8ffcb02378695480b1ecf",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

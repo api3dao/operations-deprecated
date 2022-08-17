@@ -1,0 +1,15 @@
+{
+  "name": "Finage Stock AAPL/USD",
+  "description": "Apple Inc",
+  "beaconId": "0xe826b2e1c0b52ab1073907e4e11b910f25725325d84512f953394dfa8277bca7",
+  "airnodeAddress": "0x26F6bEca2329A47BD585878130D87Fec5E96EC3C",
+  "templateId": "0xfb0813cee02add6dfdac42cf6f0ac8015e9f812441f769879fe3c46fff5bbb5d",
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

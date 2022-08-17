@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata RBTC/USD 5-min spot VWAP",
+  "description": "RBTC/USD 5-min spot VWAP",
+  "beaconId": "0x2653a54a9b8f69053af5387cd7e97aceead3615625ebcea7427f2885077807fb",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x83a56fe296cfbbff0d97dfefce3f849a6fd3fd65cf040e33973ad87f16190df9",
+  "chains": {
+    "rsk": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

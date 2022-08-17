@@ -41,9 +41,13 @@ yarn create-boilerplate
 This command prompts for various API metadata and creates a set of folders with examples that need to be populated.
 
 ### 3. Populate the OIS
+
 <!-- markdown-link-check-disable -->
+
 Populate the `/data/apis/<PROVIDER_NAME>/OIS/*.json` according to the [OIS specification](https://docs.api3.org/ois/latest/ois.html).
+
 <!-- markdown-link-check-enable -->
+
 > Note that the above files can have any name initially as the validator will name them according to their `oisTitle-oisVersion`
 
 ### 4. Populate the templates
@@ -171,7 +175,7 @@ Once you have populated the config files, avoiding populating them with any secr
 
 Checkout using `git checkout -b ...`. Use a new descriptively-named branch, eg. "nasa-deployment" and push the branch to the operations repository.
 
-### 9. Register the subscriptionsIds
+### 9. Register the subscriptionsIds (If using Airkeeper)
 
 You will need to register the subscriptionIds for each beacon on chain. To do this fill in the credentials with your mnemonic in `/chain/credentials.example.json` (fill in the mnemonic for all the chains the beacons will be deployed on). Then run the following command:
 
