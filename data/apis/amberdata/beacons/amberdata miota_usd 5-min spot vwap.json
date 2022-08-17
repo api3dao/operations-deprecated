@@ -1,0 +1,21 @@
+{
+  "name": "Amberdata MIOTA/USD 5-min spot VWAP",
+  "description": "MIOTA/USD 5-min spot VWAP",
+  "beaconId": "0xdb997781aa3f48c577fbee55c2a746f86fa63068ca0b7a4c444fa6114a5f2465",
+  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
+  "templateId": "0x40cd1a9a6c53542ebbd3ab332462cfc35cefbbe4278b3352680fcb71b385a68e",
+  "chains": {
+    "polygon": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    },
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "airseekerConfig": { "deviationThreshold": 1, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

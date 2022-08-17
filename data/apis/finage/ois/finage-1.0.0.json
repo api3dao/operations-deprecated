@@ -3,7 +3,7 @@
   "title": "Finage",
   "version": "1.0.0",
   "apiSpecifications": {
-    "components": { "securitySchemes": { "Finage_x-api-key": { "in": "header", "name": "apikey", "type": "apiKey" } } },
+    "components": { "securitySchemes": { "Finage_x-api-key": { "in": "query", "name": "apikey", "type": "apiKey" } } },
     "paths": {
       "/last/stock/{symbol}": {
         "get": {

@@ -71,6 +71,7 @@ describe('create-airseeker-config', () => {
           },
         },
       ],
+      3,
     ]);
     await createAirseekerConfig(tempTestPath);
 
