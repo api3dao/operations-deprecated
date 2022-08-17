@@ -46,6 +46,7 @@ const main = async () => {
 
   const chainToBeacon = Object.values(apiData.beacons).reduce((acc, beacon) => {
     Object.keys(beacon.chains).forEach((chainName) => {
+      // eslint-disable-next-line functional/immutable-data
       acc[chainName] = [
         ...(acc[chainName] || []),
         ...('updateConditionPercentage' in beacon.chains[chainName] ? [beacon] : []),
