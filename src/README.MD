@@ -9,7 +9,13 @@ For development usage refer to the [development usage guide](../DEVELOPMENT_USAG
 `/src` houses scripts in the following directory structure:
 
 - deployment
-  - scripts that deal with creating the configs and deployment for airnode, airkeeper, airseeker
+  - create-airseeker-config:
+  - create-boilerplate:
+  - create-config:
+  - deploy-airkeeper:
+  - deploy-airnode:
+  - remove-airnode:
+  - test-deployment:
 - explorer
   - scripts that perform operations on the api3 explorer content
 - inspect
