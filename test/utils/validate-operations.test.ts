@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { replaceInterpolatedVariables, validate } from '../../src/utils/validation';
+import { replaceInterpolatedVariables, validate } from '../../src/validation/validation';
 import { readOperationsRepository } from '../../src/utils/read-operations';
 
 it('validates the mock data repository', async () => {
