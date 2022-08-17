@@ -3,12 +3,12 @@ import { NonceManager } from '@ethersproject/experimental';
 import _ from 'lodash';
 import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
-import { promptQuestions } from './utils/prompts';
-import { readOperationsRepository } from './utils/read-operations';
-import { runAndHandleErrors } from './utils/cli';
-import { getDapiServerContract, getDapiServerInterface } from './utils/evm';
-import { loadCredentials } from './utils/filesystem';
-import { Beacon } from './types';
+import { promptQuestions } from '../utils/prompts';
+import { readOperationsRepository } from '../utils/read-operations';
+import { runAndHandleErrors } from '../utils/cli';
+import { getDapiServerContract, getDapiServerInterface } from '../utils/evm';
+import { loadCredentials } from '../utils/filesystem';
+import { Beacon } from '../validation/types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [
