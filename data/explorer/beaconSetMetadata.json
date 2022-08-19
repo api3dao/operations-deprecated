@@ -10,7 +10,7 @@
       "rsk": "rsk"
     },
     "logos": ["BTC", "USD"],
-    "prefix": "$"
+    "prefix": "₿"
   },
   "0xd9e17881d421fc9cece32ed84ceac36b1407bccbbd113282f819b068d5de2fc6": {
     "category": "Cryptocurrency",

@@ -284,6 +284,31 @@ describe('writeOperationsRepository', () => {
     });
   });
 
+  describe('beaconSets', () => {
+    it('writes changes to beaconSets', () => {
+      const coingeckoTestBeaconSet = {
+        ...mockOpsRepo.beaconSets['btc_usd'],
+        name: 'coingecko test beacon set',
+        description: 'test beacon set',
+      };
+
+      const updatedOpsRepo = {
+        ...mockOpsRepo,
+        beaconSets: {
+          ...mockOpsRepo.beaconSets,
+          ['coingeckoTestBeaconSet']: coingeckoTestBeaconSet,
+        },
+      };
+
+      writeOperationsRepository(updatedOpsRepo, tempTestPath);
+
+      expect(existsSync(join(tempTestPath, 'beaconSets', 'coingeckoTestBeaconSet.json'))).toBe(true);
+
+      const writtenOpsRepo = readOperationsRepository(tempTestPath);
+      expect(writtenOpsRepo).toEqual(updatedOpsRepo);
+    });
+  });
+
   describe('chains', () => {
     it('writes changes to chains', () => {
       const coingeckoTestChain = {
@@ -506,7 +531,7 @@ describe('writeOperationsRepository', () => {
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
     });
 
-    it('writes changes to beaconSets', () => {
+    it('writes changes to beaconSetMetadata', () => {
       // Add new test beacon first
       const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
       const coingeckoTestBeacon = {
@@ -517,20 +542,31 @@ describe('writeOperationsRepository', () => {
       };
       // Then add the beaconId reference to beaconMetadata
       const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
-      const coingeckoTestBeaconMetaData = {
+      const coingeckoTestBeaconMetadata = {
         ...mockOpsRepo.explorer.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
           pricingCoverage: { ropsten: 'test-pricing-set' },
         },
       };
-      // Lastly add the new beaconSet
+      // Lastly add the new beaconSetId to beaconSetMetadata
       const coingeckoTestBeaconSetId = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [[coingeckoTestBeaconId]])
+        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [Array(3).fill(coingeckoTestBeaconId)])
       );
-      const coingeckoTestBeaconSets = {
-        ...mockOpsRepo.explorer.beaconSets,
-        [coingeckoTestBeaconSetId]: [coingeckoTestBeaconId],
+      const coingeckoTestBeaconSet = {
+        ...mockOpsRepo.beaconSets['btc_usd'],
+        beaconSetId: coingeckoTestBeaconSetId,
+        name: 'coingecko test beacon',
+        description: 'test beacon',
+        beaconIds: Array(3).fill(coingeckoTestBeaconId),
+      };
+
+      const coingeckoTestBeaconSetMetadata = {
+        ...mockOpsRepo.explorer.beaconSetMetadata,
+        [coingeckoTestBeaconSetId]: {
+          category: 'test',
+          pricingCoverage: { ropsten: 'test-pricing-set' },
+        },
       };
 
       const updatedOpsRepo = {
@@ -545,10 +581,14 @@ describe('writeOperationsRepository', () => {
             },
           },
         },
+        beaconSets: {
+          ...mockOpsRepo.beaconSets,
+          ['coingeckoTestBeaconSet']: coingeckoTestBeaconSet,
+        },
         explorer: {
           ...mockOpsRepo.explorer,
-          beaconMetadata: coingeckoTestBeaconMetaData,
-          beaconSets: coingeckoTestBeaconSets,
+          beaconMetadata: coingeckoTestBeaconMetadata,
+          beaconSetMetadata: coingeckoTestBeaconSetMetadata,
           pricingCoverage: {
             ...mockOpsRepo.explorer.pricingCoverage,
             ...testPricingCoverage,
@@ -559,7 +599,7 @@ describe('writeOperationsRepository', () => {
       // @ts-ignore
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(tempTestPath, 'explorer', 'beaconSets.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'explorer', 'beaconSetMetadata.json'))).toBe(true);
 
       const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
