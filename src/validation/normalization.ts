@@ -3,7 +3,7 @@ import { join } from 'path';
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
-import { OperationsRepository, Secrets, ChainDeploymentReferences } from './types';
+import { OperationsRepository, Secrets, ChainDeploymentReferences, Beacons } from './types';
 import { sanitiseFilename } from '../utils/filesystem';
 import { readJsonFile } from '../utils/read-operations';
 
@@ -27,7 +27,7 @@ export const normalize = (payload: OperationsRepository) => {
     Object.entries(payload.apis).map(([_key, api]) => {
       const apiKey = sanitiseFilename(api.apiMetadata.name);
 
-      const beacons = Object.fromEntries(
+      const beacons: Beacons = Object.fromEntries(
         Object.entries(api.beacons).map(([_key, beacon]) => {
           const beaconId = ethers.utils.keccak256(
             ethers.utils.solidityPack(['address', 'bytes32'], [beacon.airnodeAddress, beacon.templateId])
@@ -107,6 +107,22 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
+  const beaconSets = Object.fromEntries(
+    Object.entries(payload.beaconSets).map(([_key, beaconSet]) => {
+      const beaconSetId = ethers.utils.keccak256(
+        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [beaconSet.beaconIds])
+      );
+
+      return [
+        sanitiseFilename(beaconSet.name),
+        {
+          ...beaconSet,
+          beaconSetId,
+        },
+      ];
+    })
+  );
+
   const chainDeploymentReferences = readJsonFile(
     join(__dirname, '..', '..', 'chain', 'deployments', 'references.json')
   ) as ChainDeploymentReferences;
@@ -133,12 +149,6 @@ export const normalize = (payload: OperationsRepository) => {
 
   const explorer = {
     ...payload.explorer,
-    beaconSets: Object.fromEntries(
-      Object.values(payload.explorer.beaconSets).map((set) => {
-        const beaconSetId = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [set]));
-        return [beaconSetId, set];
-      })
-    ),
   };
 
   const policies = payload.policies
@@ -169,7 +179,7 @@ export const normalize = (payload: OperationsRepository) => {
       )
     : {};
 
-  return { ...payload, apis, chains, explorer, policies } as OperationsRepository;
+  return { ...payload, apis, beaconSets, chains, explorer, policies } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
