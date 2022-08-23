@@ -298,7 +298,7 @@ export const validateBeaconSetMetadataReferences: SuperRefinement<{
 
   const missingBeaconSetEntries = Object.fromEntries(
     flatBeaconSets.filter(
-      (beaconSet) => !beaconSetMetadataEntries.find((beaconSetMetdata) => beaconSetMetdata[0] === beaconSet[0])
+      (beaconSet) => !beaconSetMetadataEntries.find((beaconSetMetadata) => beaconSetMetadata[0] === beaconSet[0])
     )
   );
 
