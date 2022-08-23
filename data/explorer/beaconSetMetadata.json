@@ -29,7 +29,6 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
@@ -43,7 +42,6 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",

@@ -2,12 +2,8 @@
   "0x09a5873667837598bd0990ba2f53d750d545ce435ecdcd44e0b4c64ab7d7d20d": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
       "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 8,
     "logos": ["AAVE", "BTC"],
@@ -18,11 +14,7 @@
     "pricingCoverage": {
       "milkomeda-testnet": "test-pricing-set-free",
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["ADA", "USD"],
@@ -31,12 +23,9 @@
   "0xc197aeec5e904b487c37360d0044097a925037f038c6d2b7d92ad20bc689539e": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
       "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["AVAX", "USD"],
     "prefix": "$"
@@ -45,11 +34,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["AXS", "USD"],
     "prefix": "$"
@@ -57,12 +42,8 @@
   "0x0343be29ba1b446ac36f813b2827e207666029f47c168a42ef163bd2bb815451": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "bsc": "bsc",
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["BNB", "USD"],
     "prefix": "$"
@@ -70,12 +51,12 @@
   "0x0dc124b07cc935112d87b49c806c5c880659dd7a2ef75b4ea04460cf224ea2c0": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
       "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "bsc": "bsc",
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk"
     },
     "logos": ["BTC", "USD"],
     "prefix": "$"
@@ -83,12 +64,8 @@
   "0xe6bc56045455ca1aebc85ddd7a251ecf55b11c0797c53f2833d7caa6b1a91fa0": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "bsc": "bsc",
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 6,
     "logos": ["BUSD", "USD"],
@@ -97,12 +74,9 @@
   "0x2d7d6ad333ae8f39f8eabe31fd74523178ad8858da126cc9178a1e9138e950a3": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["CRV", "USD"],
@@ -112,11 +86,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["DOT", "USD"],
@@ -126,11 +96,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["EOS", "USD"],
@@ -140,11 +106,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["FIL", "USD"],
@@ -153,12 +115,8 @@
   "0x1cf59225fd37904d8f843f51b577b4e7223a8e0c684c583d5ba03e0d9c78044e": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["JOE", "USD"],
@@ -168,11 +126,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["LINK", "USD"],
@@ -182,11 +136,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["LTC", "USD"],
     "prefix": "$"
@@ -195,11 +145,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["MATIC", "USD"],
@@ -209,11 +155,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["MIOTA", "USD"],
@@ -223,11 +165,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["NEO", "USD"],
@@ -237,11 +175,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["QUICK", "USD"],
     "prefix": "$"
@@ -249,12 +183,8 @@
   "0x2653a54a9b8f69053af5387cd7e97aceead3615625ebcea7427f2885077807fb": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
       "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["RBTC", "USD"],
     "prefix": "$"
@@ -262,12 +192,10 @@
   "0xaabf6d9cbaad9f4c60527162747a5108af824964f4fd477734de7aae260c2bde": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
+      "polygon": "polygon",
       "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["SOL", "USD"],
     "prefix": "$"
@@ -276,11 +204,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["UNI", "USD"],
@@ -289,12 +213,11 @@
   "0xb1b031f4b9616ad61070e27e192f1d57da9dc26dc67712049c80bd0075f913d6": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "rsk": "rsk"
     },
     "decimalPlaces": 6,
     "logos": ["USDC", "USD"],
@@ -304,11 +227,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 6,
     "logos": ["VET", "USD"],
@@ -318,11 +237,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 4,
     "logos": ["XLM", "USD"],
@@ -331,12 +246,8 @@
   "0x614b1646674e0c71a0912217f01d7ada10c4d78081bcdf670a908e5a09bf617c": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
       "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["BRZ", "USD"],
     "decimalPlaces": 4,
@@ -346,11 +257,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["DAI", "USD"],
     "decimalPlaces": 4,
@@ -359,12 +266,11 @@
   "0xbe0db2ce3f37dea4481e10b11ec822aa6d4968acce878ae67b649e052aa33deb": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "rsk": "rsk"
     },
     "logos": ["ETH", "USD"],
     "decimalPlaces": 2,
@@ -373,12 +279,8 @@
   "0x5eef68d928a5a51e6817a44c8d0be7fca04711fde2302b0a527de18e299af0a5": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
       "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["MIM", "USD"],
     "decimalPlaces": 4,
@@ -388,11 +290,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["QI", "USD"],
     "decimalPlaces": 6,
@@ -402,11 +300,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STG", "USD"],
     "decimalPlaces": 4,
@@ -415,12 +309,11 @@
   "0xe3057388cbd2df9ace15fce8c8fc6cf013fcff85eb849c5991a3beb7cf4c8fc7": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "rsk": "rsk"
     },
     "logos": ["USDT", "USD"],
     "decimalPlaces": 4,
@@ -430,11 +323,7 @@
     "category": "Cryptocurrency",
     "pricingCoverage": {
       "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 8,
     "logos": ["OOKI", "ETH"],
@@ -443,12 +332,8 @@
   "0x20a1447a7f5d8c039e49ac9007329a68b6e4df8597c1feac6d59586850526749": {
     "category": "Cryptocurrency",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
       "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "decimalPlaces": 8,
     "logos": ["RBTC", "BTC"],
@@ -457,12 +342,7 @@
   "0x4e9a4a9099d658c3c755841cdfe29b8d0cd97ecb45d6344ecbfb4f21ed565589": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["AUD", "USD"],
     "decimalPlaces": 4,
@@ -471,12 +351,7 @@
   "0x9dea4c0b481c2f44e714aa2f884a45a4c1d6163a100772fb795bfb8e7022ac21": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["CNH", "USD"],
     "decimalPlaces": 4,
@@ -485,12 +360,7 @@
   "0x1d22bc6b6a94e180a6146f8e2b5afa489b6a84cc09f5a8eae5f9d304da28c6ac": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["EUR", "USD"],
     "decimalPlaces": 4,
@@ -499,12 +369,7 @@
   "0xbd91fcd6ff5579366562d31ca66b7c403590a54878c3a5082757b6f65b15da10": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["GBP", "USD"],
     "decimalPlaces": 4,
@@ -513,12 +378,7 @@
   "0x1b03c60f60bb515bd185c0b5b20e876e1f9885694b0dc91491b5601e7f8a0b76": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["JPY", "USD"],
     "decimalPlaces": 4,
@@ -527,12 +387,7 @@
   "0x2177eb49746e9435733c6c63e2e9fd5dc56e2b31a9ac615cd9ba2a8f324bf9b4": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["MXN", "USD"],
     "decimalPlaces": 4,
@@ -541,12 +396,7 @@
   "0x4a550ff5d473729f3c22bcd337fe0d3ffbed1aee0a8d2fe4f93b970e568fc9ab": {
     "category": "Forex",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["NZD", "USD"],
     "decimalPlaces": 4,
@@ -555,12 +405,7 @@
   "0xe826b2e1c0b52ab1073907e4e11b910f25725325d84512f953394dfa8277bca7": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -569,12 +414,7 @@
   "0x81ea2448be1a1db64a0de6349f886d49013ced2bc93edb44de45790000f3b6a2": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -583,12 +423,7 @@
   "0xe84c9625fc3fb1d579c40c2af33b90fe97f247654fb2209b01f535f735cdfcf3": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -597,12 +432,7 @@
   "0x517c67ecbc4b953df03809084b78c531e7ca648b4e83552d13a831c403402804": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -611,12 +441,7 @@
   "0xa821148813128d24a52d162f723d9a14bdd0f5cefef8af8933559c497a4bcf99": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -625,12 +450,7 @@
   "0x68222861b2de03db29bf5039d69a075acc31b04e37211493b594e387c7c63555": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -639,12 +459,7 @@
   "0x9e920dea4ba5f21b6b15c22fd1de098691cc3ae1f854e32c73c5357e6fd6de06": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -653,12 +468,7 @@
   "0x0bb52b8b7c3fa586eeb8a81f7d6382c1d475aa766daff46c0e96f81313f336fd": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -667,12 +477,7 @@
   "0xb7f55820f1f6df3a493ca31bb81fc880c2cac172da21866cedb60962c84b79ef": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -681,12 +486,7 @@
   "0x7f906e2874fe2e99012e87c2d1a718099e67f791a1128d99d8b17aa38b0c332a": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -695,12 +495,7 @@
   "0x20a6b393f17fe85a98b2f7d3867a2291e32b09e30e6bcfed685a6c006f4ab0ec": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -709,12 +504,7 @@
   "0x0457494ad4d266a6fbdb7906793e311a0d0f0c991a30389ca35ccb0d2b062988": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,
@@ -723,12 +513,7 @@
   "0xc9b61ce8be6e88d2ce2469f484e6646f2fdd3dbedff1d58c3e27cea9d962c02a": {
     "category": "Stock",
     "pricingCoverage": {
-      "polygon": "polygon",
-      "polygon-testnet": "test-pricing-set-free",
-      "rsk": "rsk",
-      "avalanche": "avalanche",
-      "avalanche-testnet": "test-pricing-set-free",
-      "bsc": "bsc"
+      "polygon-testnet": "test-pricing-set-free"
     },
     "logos": ["STOCK-GENERIC", "USD"],
     "decimalPlaces": 2,

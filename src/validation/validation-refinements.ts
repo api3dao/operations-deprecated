@@ -197,8 +197,8 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
     }
 
     // Find any missing chains - where the chain is specified in pricingCoverage but not in the beacon itself
-    const missingChains = Object.keys(beacon.chains).filter(
-      (chain) => !Object.keys(beaconMetadata.pricingCoverage).includes(chain)
+    const missingChains = Object.keys(beaconMetadata.pricingCoverage).filter(
+      (chain) => !Object.keys(beacon.chains).includes(chain)
     );
     missingChains.forEach((chain) => {
       ctx.addIssue({
@@ -279,8 +279,8 @@ export const validateBeaconSetMetadataReferences: SuperRefinement<{
     }
 
     // Find any missing chains - where the chain is specified in pricingCoverage but not in the beaconSet itself
-    const missingChains = Object.keys(beaconSet.chains).filter(
-      (chain) => !Object.keys(beaconSetMetadata.pricingCoverage).includes(chain)
+    const missingChains = Object.keys(beaconSetMetadata.pricingCoverage).filter(
+      (chain) => !Object.keys(beaconSet.chains).includes(chain)
     );
     missingChains.forEach((chain) => {
       ctx.addIssue({
