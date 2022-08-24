@@ -2,7 +2,6 @@
   "name": "USDT/USD",
   "description": "USDT/USD",
   "beaconSetId": "0xcb3f1d6d1059a5a29e65147764526db46d29bd1fbde52c421f61f1984de3fd00",
-  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "beaconIds": [
     "0xe3057388cbd2df9ace15fce8c8fc6cf013fcff85eb849c5991a3beb7cf4c8fc7",
     "0xe3057388cbd2df9ace15fce8c8fc6cf013fcff85eb849c5991a3beb7cf4c8fc7"

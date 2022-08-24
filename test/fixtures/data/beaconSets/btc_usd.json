@@ -2,7 +2,6 @@
   "name": "BTC/USD",
   "description": "BTC/USD",
   "beaconSetId": "0x3d8eb96b1319b92000e0fbd92f888745cd454d58391d824f6b520320015194fe",
-  "airnodeAddress": "0xA3121b14485DAa8c797178Cb21445b0f30e75178",
   "beaconIds": [
     "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e",
     "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e"

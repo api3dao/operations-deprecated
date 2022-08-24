@@ -2,7 +2,6 @@
   "name": "USDC/USD",
   "description": "USDC/USD",
   "beaconSetId": "0x3e45cf8ed36a35f41fc3b5b0c53f511e9795009cc3b37766969e0df98a8348d9",
-  "airnodeAddress": "0xF0f875aa568521FBd5246fAE7260E04d9ED6511b",
   "beaconIds": [
     "0xb1b031f4b9616ad61070e27e192f1d57da9dc26dc67712049c80bd0075f913d6",
     "0xb1b031f4b9616ad61070e27e192f1d57da9dc26dc67712049c80bd0075f913d6"

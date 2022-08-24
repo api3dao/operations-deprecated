@@ -114,7 +114,6 @@ export const beaconSetSchema = z
     name: z.string(),
     description: z.string(),
     beaconSetId: evmBeaconSetIdSchema,
-    airnodeAddress: evmAddressSchema,
     beaconIds: z.array(evmBeaconIdSchema),
     chains: z.record(extendedChainDescriptionSchema),
   })
