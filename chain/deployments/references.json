@@ -1,5 +1,6 @@
 {
   "chainNames": {
+    "1": "mainnet",
     "5": "goerli",
     "10": "optimism",
     "30": "rsk",
@@ -27,6 +28,7 @@
   },
   "contracts": {
     "DapiServer": {
+      "1": "0xFb10b1b0f68b3EaAcA1eCD12a47Cf7F55BeabB98",
       "5": "0x368A8C0a75fD707e4f7bF15DD1aA25ED554fE22c",
       "10": "0xB33B89de8b18350A2AD05DadF1959fC1C9321008",
       "30": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
