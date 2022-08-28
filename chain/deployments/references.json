@@ -1,24 +1,56 @@
 {
   "chainNames": {
+    "5": "goerli",
+    "10": "optimism",
     "30": "rsk",
+    "31": "rsk-testnet",
     "56": "bsc",
+    "69": "optimism-testnet",
+    "77": "gnosis-testnet",
+    "97": "bsc-testnet",
+    "100": "gnosis",
     "137": "polygon",
+    "250": "fantom",
+    "588": "metis-testnet",
+    "1088": "metis",
+    "1284": "moonbeam",
+    "1285": "moonriver",
+    "1287": "moonbeam-testnet",
     "2001": "milkomeda",
+    "4002": "fantom-testnet",
+    "42161": "arbitrum",
     "43113": "avalanche-testnet",
     "43114": "avalanche",
     "80001": "polygon-testnet",
-    "200101": "milkomeda-testnet"
+    "200101": "milkomeda-testnet",
+    "421611": "arbitrum-testnet"
   },
   "contracts": {
     "DapiServer": {
+      "5": "0x368A8C0a75fD707e4f7bF15DD1aA25ED554fE22c",
+      "10": "0xB33B89de8b18350A2AD05DadF1959fC1C9321008",
       "30": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "31": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
       "56": "0x8B0A67D060C86919Ae76Ca3FA69c68Ff98E85c3c",
+      "69": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "77": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987",
+      "97": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "100": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
       "137": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5",
+      "250": "0x7E1B9dC5f85c6EB7bBdF053352E784F3da7a6507",
+      "588": "0x50f8f227DEbA0028607a37B615A4EbBbF0E5b42E",
+      "1088": "0x50f8f227DEbA0028607a37B615A4EbBbF0E5b42E",
+      "1284": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "1285": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a",
+      "1287": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
       "2001": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987",
+      "4002": "0xCCc843194F02Ef93b8ee9A9F7b5F9273604Acd12",
+      "42161": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987",
       "43113": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a",
       "43114": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4",
       "80001": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14",
-      "200101": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251"
+      "200101": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "421611": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5"
     }
   }
 }
