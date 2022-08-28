@@ -68,10 +68,10 @@
   dependencies:
     "@api3/airnode-validator" "^0.7.2"
 
-"@api3/airnode-protocol-v1@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@api3/airnode-protocol-v1/-/airnode-protocol-v1-0.6.0.tgz#dd3212783f5628b5d53cf1a8a6e3a6c7add7b70c"
-  integrity sha512-1D1KG1E7yq2k3uFPOLC9ur1mW0Eg42Yh/Sk/FEIiM7ASvkJDuxWzhjjVnhs2r9jsaOr5hU3EF6VPwuAF7vYvQQ==
+"@api3/airnode-protocol-v1@0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@api3/airnode-protocol-v1/-/airnode-protocol-v1-0.7.0.tgz#da94129db775382d29e38fe16fda5437e9cc4cfd"
+  integrity sha512-A1K+4R7xKQXpVjkGv2ip7ULtgGd3bwcuiJTjl4G7RHSRuRjmqPS12tGeYwWnB+V5ZhsD3RRWrbb0F6x45QNqgg==
   dependencies:
     "@openzeppelin/contracts" "^4.4.2"
 
