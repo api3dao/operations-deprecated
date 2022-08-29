@@ -1,0 +1,54 @@
+{
+  "0xe9534bbc6c6084429b26b78b158f8ee65fe0a8103003066320a89ffab8156bc7": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc",
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk"
+    },
+    "logos": ["BTC", "USD"],
+    "prefix": "₿"
+  },
+  "0xd9e17881d421fc9cece32ed84ceac36b1407bccbbd113282f819b068d5de2fc6": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk"
+    },
+    "logos": ["ETH", "USD"],
+    "decimalPlaces": 2,
+    "prefix": "$"
+  },
+  "0x3e45cf8ed36a35f41fc3b5b0c53f511e9795009cc3b37766969e0df98a8348d9": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk"
+    },
+    "decimalPlaces": 6,
+    "logos": ["USDC", "USD"],
+    "prefix": "$"
+  },
+  "0xcb3f1d6d1059a5a29e65147764526db46d29bd1fbde52c421f61f1984de3fd00": {
+    "category": "Cryptocurrency",
+    "pricingCoverage": {
+      "avalanche": "avalanche",
+      "bsc": "bsc",
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk"
+    },
+    "logos": ["USDT", "USD"],
+    "decimalPlaces": 4,
+    "prefix": "$"
+  }
+}

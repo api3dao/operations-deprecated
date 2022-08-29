@@ -79,11 +79,15 @@ describe('normalize', () => {
           },
         },
       },
+      beaconSets: {
+        ...originalMockData.beaconSets,
+        ['btc_usd']: {
+          ...originalMockData.beaconSets['btc_usd'],
+          beaconSetId: ethers.constants.HashZero,
+        },
+      },
       explorer: {
         ...originalMockData.explorer,
-        beaconSets: {
-          [ethers.constants.HashZero]: [ethers.constants.HashZero],
-        },
       },
     };
   });
@@ -143,19 +147,19 @@ describe('normalize', () => {
     });
   });
 
-  describe('explorer', () => {
-    it('dervies the beaconSetId', () => {
-      const normalizedData = normalize(unsanitizedMockData);
+  describe('beaconSets', () => {
+    it('derives the beaconSetId and sets it', () => {
+      expect(unsanitizedMockData.beaconSets['btc_usd'].beaconSetId).toBe(ethers.constants.HashZero);
 
+      const normalizedData = normalize(unsanitizedMockData);
       const derivedBeaconSetId = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [[ethers.constants.HashZero]])
+        ethers.utils.defaultAbiCoder.encode(
+          ['bytes32[]'],
+          [Array(2).fill(normalizedData.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'].beaconId)]
+        )
       );
 
-      expect(normalizedData.explorer.beaconSets[ethers.constants.HashZero]).toBeUndefined();
-
-      expect(normalizedData.explorer.beaconSets[derivedBeaconSetId]).toEqual([
-        unsanitizedMockData.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'].beaconId,
-      ]);
+      expect(normalizedData.beaconSets['btc_usd'].beaconSetId).toEqual(derivedBeaconSetId);
     });
   });
 });

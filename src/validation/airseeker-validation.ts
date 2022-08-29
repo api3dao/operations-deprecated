@@ -5,6 +5,7 @@ const { chainOptionsSchema } = config;
 
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
+export const evmBeaconSetIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/);
 export const emptyObjectSchema = z.object({}).strict();
@@ -19,8 +20,7 @@ export const beaconSchema = z
 
 export const beaconsSchema = z.record(evmBeaconIdSchema, beaconSchema);
 
-// TODO: Will be refined once we start supporting beacon sets
-export const beaconSetsSchema = emptyObjectSchema;
+export const beaconSetsSchema = z.record(evmBeaconSetIdSchema, z.array(evmBeaconIdSchema));
 
 export const chainSchema = z
   .object({

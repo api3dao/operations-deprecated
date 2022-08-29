@@ -1,0 +1,18 @@
+{
+  "name": "BTC/USD",
+  "description": "BTC/USD",
+  "beaconSetId": "0x3d8eb96b1319b92000e0fbd92f888745cd454d58391d824f6b520320015194fe",
+  "beaconIds": [
+    "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e",
+    "0x975806bee44efbf83451627d34e2449eeb9857619457e0c8eb97d5adfc71ae4e"
+  ],
+  "chains": {
+    "ropsten": {
+      "active": true,
+      "sponsor": "0x9fEe9F24ab79adacbB51af82fb82CFb9D818c6d9",
+      "topUpWallets": [{ "walletType": "Provider", "address": "0xC26f10e1b37A1E7A7De266FeF0c19533489C3e75" }],
+      "updateConditionPercentage": 0.1,
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

@@ -5,7 +5,8 @@ import {
   validateBeaconIdAgainstBeaconMetadataReferences,
   validateBeaconMetadataReferences,
   validateBeaconSetIds,
-  validateBeaconSetsReferences,
+  validateBeaconSetMetadataReferences,
+  validateBeaconSetsBeaconIdReferences,
   validateBeaconsTemplateIdReferences,
   validateCommonLogosReferences,
   validateDapiMetadataReferences,
@@ -22,6 +23,7 @@ const { oisSchema } = ois;
  */
 export const evmAddressSchema = z.string().regex(/^0x[a-fA-F\d]{40}$/);
 export const evmBeaconIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
+export const evmBeaconSetIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
 export const evmTemplateIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
 export const evmEndpointIdSchema = z.string().regex(/^0x[a-fA-F\d]{64}$/);
 export const evmXpubSchema = z.string().regex(/^xpub[a-zA-Z\d]{107}$/);
@@ -100,6 +102,24 @@ export const beaconSchema = z
   .strict();
 
 export const beaconsSchema = z.record(beaconSchema);
+
+/**
+ * Beacon Set Schema
+ *
+ * @param name A name for a beacon set, formatted for UI display.
+ * @param description A description for a beacon set, formatted for UI display.
+ */
+export const beaconSetSchema = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    beaconSetId: evmBeaconSetIdSchema,
+    beaconIds: z.array(evmBeaconIdSchema),
+    chains: z.record(extendedChainDescriptionSchema),
+  })
+  .strict();
+
+export const beaconSetsSchema = z.record(beaconSetSchema).superRefine(validateBeaconSetIds);
 
 /**
  * Secrets Schema
@@ -338,7 +358,24 @@ export const api3Schema = z
 // Chain name => Dapi Name => Data feed Id (beacon or beaconSet)
 export const dapisSchema = z.record(z.record(z.string()));
 
-export const beaconSetsSchema = z.record(z.array(z.string())).superRefine(validateBeaconSetIds);
+/**
+ * UI-specific data relating to the display of beacon sets
+ *
+ * @param category The category of the beacon set as a neatly formatted string, eg. "Cryptocurrency" or "Commodities"
+ * @param pricingCoverage A string as a key referencing keys in pricingCoverageSchema, keyed by chain name
+ * @param decimalPlaces The number of digits to display after the decimal point for a feed, defaults to 2 if unspecified
+ * @param logos An array of logos, which should be displayed in order, representing the underlying asset(s) of the data feed
+ */
+export const beaconSetMetadataSchema = z.record(
+  z.object({
+    category: z.string(),
+    pricingCoverage: z.record(z.string()), //TODO must be present in pricingCoverage
+    decimalPlaces: z.number().optional(),
+    logos: z.array(z.string()).optional(),
+    prefix: z.string().optional(),
+    postfix: z.string().optional(),
+  })
+);
 
 /**
  * Common Logos are logos used for beacons which can have logos associated with them.
@@ -404,7 +441,7 @@ export const explorerSchema = z
     beaconMetadata: beaconMetadataSchema,
     dapiMetadata: dapiMetadataSchema,
     pricingCoverage: pricingCoverageSchema,
-    beaconSets: beaconSetsSchema,
+    beaconSetMetadata: beaconSetMetadataSchema,
     commonLogos: commonLogosSchema,
   })
   .strict();
@@ -505,19 +542,21 @@ export const policiesSchema = z
  */
 export const operationsRepositorySchema = z
   .object({
-    apis: apisSchema,
-    chains: chainsSchema,
     api3: api3Schema.optional(),
+    apis: apisSchema,
+    beaconSets: beaconSetsSchema,
+    chains: chainsSchema,
     dapis: dapisSchema,
     explorer: explorerSchema,
     policies: z.record(policiesSchema).optional(),
   })
   .strict()
   .superRefine(validateApisBeaconsChainReferences)
+  .superRefine(validateBeaconSetsBeaconIdReferences)
   .superRefine(validateBeaconIdAgainstBeaconMetadataReferences)
   .superRefine(validateDapisChainReferences)
   .superRefine(validateBeaconMetadataReferences)
-  .superRefine(validateBeaconSetsReferences)
+  .superRefine(validateBeaconSetMetadataReferences)
   .superRefine(validatePoliciesDatafeedReferences)
   .superRefine(validateDapiMetadataReferences)
   .superRefine(validateCommonLogosReferences);

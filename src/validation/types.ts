@@ -5,6 +5,8 @@ import {
   apisSchema,
   basePolicySchema,
   beaconSchema,
+  beaconSetSchema,
+  beaconSetsSchema,
   beaconsSchema,
   chainDeploymentReferencesSchema,
   chainsMetadataSchema,
@@ -26,6 +28,8 @@ import {
 
 export type Beacon = z.infer<typeof beaconSchema>;
 export type Beacons = z.infer<typeof beaconsSchema>;
+export type BeaconSet = z.infer<typeof beaconSetSchema>;
+export type BeaconSets = z.infer<typeof beaconSetsSchema>;
 export type DeploymentSet = z.infer<typeof deploymentSetSchema>;
 export type Deployments = z.infer<typeof deploymentsSchema>;
 export type Template = z.infer<typeof templateSchema>;

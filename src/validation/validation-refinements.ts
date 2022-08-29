@@ -1,7 +1,7 @@
 import { SuperRefinement, z } from 'zod';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { ethers } from 'ethers';
-import { Apis, Beacons, Chains, Dapis, Explorer, Oises, Policies, Templates } from './types';
+import { Apis, Beacons, BeaconSets, Chains, Dapis, Explorer, Oises, Policies, Templates } from './types';
 
 export const validateTemplatesEndpointIdReferences: SuperRefinement<{
   templates: Templates;
@@ -22,13 +22,16 @@ export const validateTemplatesEndpointIdReferences: SuperRefinement<{
   });
 };
 
-export const validateBeaconSetIds = (beaconSets: Record<string, string[]>, ctx: z.RefinementCtx): void => {
-  Object.entries(beaconSets).forEach(([beaconSetId, beaconIds]) => {
-    const derivedBeaconSetId = ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [beaconIds]));
-    if (beaconSetId !== derivedBeaconSetId) {
+export const validateBeaconSetIds = (beaconSets: BeaconSets, ctx: z.RefinementCtx): void => {
+  Object.entries(beaconSets).forEach(([beaconSetName, beaconSet]) => {
+    const derivedBeaconSetId = ethers.utils.keccak256(
+      ethers.utils.defaultAbiCoder.encode(['bytes32[]'], [beaconSet.beaconIds])
+    );
+    if (beaconSet.beaconSetId !== derivedBeaconSetId) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: `Invalid beaconSetId: ${beaconSetId}`,
+        message: `Invalid beaconSetId: ${beaconSet.beaconSetId}`,
+        path: [beaconSetName],
       });
     }
   });
@@ -194,8 +197,8 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
     }
 
     // Find any missing chains - where the chain is specified in pricingCoverage but not in the beacon itself
-    const missingChains = Object.keys(beacon.chains).filter(
-      (chain) => !Object.keys(beaconMetadata.pricingCoverage).includes(chain)
+    const missingChains = Object.keys(beaconMetadata.pricingCoverage).filter(
+      (chain) => !Object.keys(beacon.chains).includes(chain)
     );
     missingChains.forEach((chain) => {
       ctx.addIssue({
@@ -212,7 +215,6 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
   const flatBeacons = Object.values(apis)
     .flatMap((api) => Object.values(api.beacons))
     .map((beacon) => [beacon.beaconId, beacon]);
-  const flatBeaconsObject = Object.fromEntries(flatBeacons);
 
   const missingBeaconEntries = Object.fromEntries(
     flatBeacons.filter((beacon) => !beaconMetadataEntries.find((beaconMetdata) => beaconMetdata[0] === beacon[0]))
@@ -236,13 +238,11 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
     ])
   );
 
-  Object.entries(missingBeaconEntries).forEach((missingDapi) => {
+  Object.entries(missingBeaconEntries).forEach((missingBeacon) => {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: `Beacon ${missingDapi[0]} ("${
-        flatBeaconsObject[missingDapi[0]]
-      }") from /apis/*/beacons has no metadata in beaconMetadata`,
-      path: ['dapis'],
+      message: `Beacon ${missingBeacon[0]} from /apis/*/beacons has no metadata in beaconMetadata`,
+      path: ['apis'],
     });
   });
 
@@ -260,28 +260,88 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
   console.log(JSON.stringify(missingBeaconHelperDefaults, null, 2));
 };
 
-export const validateBeaconSetsReferences: SuperRefinement<{
-  apis: Apis;
+export const validateBeaconSetMetadataReferences: SuperRefinement<{
+  beaconSets: BeaconSets;
   explorer: Explorer;
-}> = ({ apis, explorer }, ctx) => {
-  Object.entries(explorer.beaconSets).forEach(([beaconSetId, beaconIds]) => {
-    beaconIds.forEach((beaconId) => {
-      // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
-      if (
-        !Object.values(apis).some((api) =>
-          Object.values(api.beacons).some((beacon) => {
-            return beacon.beaconId === beaconId;
-          })
-        )
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
-          path: ['explorer', 'beaconSets', beaconSetId],
-        });
-      }
+}> = ({ beaconSets, explorer }, ctx) => {
+  Object.entries(explorer.beaconSetMetadata).forEach(([beaconSetId, beaconSetMetadata]) => {
+    // Check if /data/beaconSets contains a file with the beaconSetId
+
+    const beaconSet = Object.values(beaconSets).find((beaconSet) => beaconSet.beaconSetId === beaconSetId);
+    if (!beaconSet) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced beaconSet ${beaconSetId} is not defined in /data/beaconSets`,
+        path: ['explorer', 'beaconSetMetadata'],
+      });
+
+      return;
+    }
+
+    // Find any missing chains - where the chain is specified in pricingCoverage but not in the beaconSet itself
+    const missingChains = Object.keys(beaconSetMetadata.pricingCoverage).filter(
+      (chain) => !Object.keys(beaconSet.chains).includes(chain)
+    );
+    missingChains.forEach((chain) => {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Referenced pricing coverage chain ${chain} is not defined in the target beaconSet`,
+        path: ['explorer', 'beaconSetMetadata', beaconSetId, 'pricingCoverage', chain],
+      });
     });
   });
+
+  // Check if the beaconSetId has an associated reference in beaconSetMetadata
+
+  const beaconSetMetadataEntries = Object.entries(explorer.beaconSetMetadata);
+  const flatBeaconSets = Object.values(beaconSets).map((beaconSet) => [beaconSet.beaconSetId, beaconSet]);
+
+  const missingBeaconSetEntries = Object.fromEntries(
+    flatBeaconSets.filter(
+      (beaconSet) => !beaconSetMetadataEntries.find((beaconSetMetadata) => beaconSetMetadata[0] === beaconSet[0])
+    )
+  );
+
+  const missingBeaconSetHelperDefaults = Object.fromEntries(
+    Object.entries(missingBeaconSetEntries).map((beaconSet) => [
+      beaconSet[0],
+      {
+        category: 'Cryptocurrency',
+        pricingCoverage: {
+          avalanche: 'avalanche',
+          'avalanche-testnet': 'test-pricing-set-free',
+          bsc: 'bsc',
+          polygon: 'polygon',
+          'polygon-testnet': 'test-pricing-set-free',
+          rsk: 'rsk',
+        },
+        logos: ['ETH', 'USD'],
+        decimalPlaces: 2,
+        prefix: '$',
+      },
+    ])
+  );
+
+  Object.entries(missingBeaconSetEntries).forEach((missingBeaconSet) => {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `BeaconSet ${missingBeaconSet[0]} from /beaconSets has no metadata in beaconSetMetadata`,
+      path: ['beaconSets'],
+    });
+  });
+
+  if (Object.entries(missingBeaconSetHelperDefaults).length === 0) {
+    return;
+  }
+
+  console.log(
+    [
+      `Some beaconSets are missing from /explorer/beaconSetMetadata.`,
+      `You can find a boilerplate for the missing metadata below.`,
+      `Add the following to /explorer/beaconSetMetadata and customise:`,
+    ].join('\n')
+  );
+  console.log(JSON.stringify(missingBeaconSetHelperDefaults, null, 2));
 };
 
 export const validatePoliciesDatafeedReferences: SuperRefinement<{
@@ -337,5 +397,29 @@ export const validateBeaconsTemplateIdReferences: SuperRefinement<{
         path: ['beacons', beaconName],
       });
     }
+  });
+};
+
+export const validateBeaconSetsBeaconIdReferences: SuperRefinement<{
+  beaconSets: BeaconSets;
+  apis: Apis;
+}> = ({ beaconSets, apis }, ctx) => {
+  Object.entries(beaconSets).forEach(([beaconSetName, beaconSet]) => {
+    beaconSet.beaconIds.forEach((beaconId) => {
+      // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
+      if (
+        !Object.values(apis).some((api) =>
+          Object.values(api.beacons).some((beacon) => {
+            return beacon.beaconId === beaconId;
+          })
+        )
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
+          path: ['beaconSets', beaconSetName],
+        });
+      }
+    });
   });
 };
