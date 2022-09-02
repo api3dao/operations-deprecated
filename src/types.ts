@@ -24,7 +24,7 @@ import {
   templatesSchema,
   topUpWalletSchema,
   walletTypeSchema,
-} from './validation';
+} from './validation/validation';
 
 export type Beacon = z.infer<typeof beaconSchema>;
 export type Beacons = z.infer<typeof beaconsSchema>;

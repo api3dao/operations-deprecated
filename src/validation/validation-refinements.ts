@@ -1,7 +1,7 @@
 import { SuperRefinement, z } from 'zod';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { ethers } from 'ethers';
-import { Apis, Beacons, BeaconSets, Chains, Dapis, Explorer, Oises, Policies, Templates } from './types';
+import { Apis, Beacons, BeaconSets, Chains, Dapis, Explorer, Oises, Policies, Templates } from '../types';
 
 export const validateTemplatesEndpointIdReferences: SuperRefinement<{
   templates: Templates;

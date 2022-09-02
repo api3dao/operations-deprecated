@@ -3,7 +3,7 @@ import { Choice, PromptObject } from 'prompts';
 import { encode } from '@api3/airnode-abi';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
 import { deriveEndpointId } from '@api3/airnode-admin';
-import { OperationsRepository } from '../validation/types';
+import { OperationsRepository } from '../types';
 import { promptQuestions } from '../utils/prompts';
 import { readOperationsRepository } from '../utils/read-operations';
 import { writeOperationsRepository } from '../utils/write-operations';

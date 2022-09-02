@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { Policy } from '../validation/types';
+import { Policy } from '../types';
 import { runAndHandleErrors } from '../utils/cli';
 import { getDapiNameHash, getDapiServerContract } from '../utils/evm';
 import { loadCredentials } from '../utils/filesystem';

@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
-import { OperationsRepository } from '../../src/validation/types';
+import { OperationsRepository } from '../../src/types';
 import { readOperationsRepository } from '../../src/utils/read-operations';
 import { normalize } from '../../src/validation/normalization';
 

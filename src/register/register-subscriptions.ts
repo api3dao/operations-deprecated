@@ -8,7 +8,7 @@ import { readOperationsRepository } from '../utils/read-operations';
 import { runAndHandleErrors } from '../utils/cli';
 import { getDapiServerContract, getDapiServerInterface } from '../utils/evm';
 import { loadCredentials } from '../utils/filesystem';
-import { Beacon, ExtendedChainDescription } from '../validation/types';
+import { Beacon, ExtendedChainDescription } from '../types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [

@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, rmdirSync } from 'fs';
 import { ethers } from 'ethers';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { readOperationsRepository } from '../../src/utils/read-operations';
-import { OperationsRepository } from '../../src/validation/types';
+import { OperationsRepository } from '../../src/types';
 
 const tempTestPath = join(__dirname, '../temporary_test_folder');
 const mockOpsRepo: OperationsRepository = readOperationsRepository(join(__dirname, '..', 'fixtures', 'data'));
