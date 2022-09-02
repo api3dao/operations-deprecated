@@ -83,6 +83,14 @@
     "@openzeppelin/contracts" "4.4.2"
     ethers "^5.4.5"
 
+"@api3/airnode-protocol@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@api3/airnode-protocol/-/airnode-protocol-0.7.5.tgz#819186e6098d413dd5ee91da3d03c56103711ce2"
+  integrity sha512-Z5QEFlHPI1CfNewWmJt+6RW/tppbpXS9fSF+tIGchfiJQnZ50ojHDICZj40X38rdAu9QCnVjUAEPoNOb6pv0SQ==
+  dependencies:
+    "@openzeppelin/contracts" "4.4.2"
+    ethers "^5.4.5"
+
 "@api3/airnode-utilities@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@api3/airnode-utilities/-/airnode-utilities-0.7.2.tgz#e29bb14b1670b24a5103a6b6738e9d7f1fa44bd2"
