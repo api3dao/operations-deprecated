@@ -5,7 +5,7 @@
   "version": "0.0.1-d",
   "description": "A package to parse API3 operations metadata",
   "main": "./dist/index.js",
-  "types": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "data",
