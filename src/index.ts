@@ -5,3 +5,4 @@ export * as explorer from './explorer';
 export * as inspect from './inspect';
 export * as validation from './validation';
 export * from './constants';
+export * from './types';

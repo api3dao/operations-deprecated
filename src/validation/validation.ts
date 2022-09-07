@@ -14,7 +14,7 @@ import {
   validatePoliciesDatafeedReferences,
   validateTemplatesEndpointIdReferences,
 } from './validation-refinements';
-import { OperationsRepository, ValidationResult } from './types';
+import { OperationsRepository, ValidationResult } from '../types';
 
 const { oisSchema } = ois;
 

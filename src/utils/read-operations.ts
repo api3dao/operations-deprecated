@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
 import { validate } from '../validation/validation';
-import { Api, OperationsRepository } from '../validation/types';
+import { Api, OperationsRepository } from '../types';
 
 export const readJsonFile = (filePath: string) => JSON.parse(readFileSync(filePath).toString('utf8'));
 

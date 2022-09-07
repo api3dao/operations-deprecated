@@ -7,7 +7,7 @@ import { readOperationsRepository } from '../../src/utils/read-operations';
 import { PROTOCOL_ID_PSP } from '../../src/utils/evm';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { generateTopupWallets } from '../../src/utils/generate-topup-wallets';
-import { OperationsRepository } from '../../src/validation/types';
+import { OperationsRepository } from '../../src/types';
 
 describe('generate-topup-wallets', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');

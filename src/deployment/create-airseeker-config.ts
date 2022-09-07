@@ -1,6 +1,6 @@
 import { Choice, PromptObject } from 'prompts';
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
-import { Api, Beacon, OperationsRepository } from '../validation/types';
+import { Api, Beacon, OperationsRepository } from '../types';
 import { promptQuestions } from '../utils/prompts';
 import { readOperationsRepository } from '../utils/read-operations';
 import { writeOperationsRepository } from '../utils/write-operations';
