@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { PromptObject } from 'prompts';
-import { OperationsRepository } from '../validation/types';
+import { OperationsRepository } from '../types';
 import { cliPrint, runAndHandleErrors, runShellCommand } from '../utils/cli';
 import { promptQuestions } from '../utils/prompts';
 import { readAndValidateOperationsRepository } from '../utils/read-operations';

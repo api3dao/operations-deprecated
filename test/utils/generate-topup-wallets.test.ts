@@ -3,11 +3,11 @@ import { mkdirSync, rmdirSync } from 'fs';
 import { ethers } from 'ethers';
 import prompts from 'prompts';
 import { deriveWalletPathFromSponsorAddress } from '@api3/airnode-node/dist/src/evm';
+import { PROTOCOL_IDS } from '@api3/airnode-protocol';
 import { readOperationsRepository } from '../../src/utils/read-operations';
-import { PROTOCOL_ID_PSP } from '../../src/utils/evm';
 import { writeOperationsRepository } from '../../src/utils/write-operations';
 import { generateTopupWallets } from '../../src/utils/generate-topup-wallets';
-import { OperationsRepository } from '../../src/validation/types';
+import { OperationsRepository } from '../../src/types';
 
 describe('generate-topup-wallets', () => {
   const tempTestPath = join(__dirname, '../temporary_test_folder');
@@ -68,7 +68,7 @@ describe('generate-topup-wallets', () => {
     const providerTopUpWallet = airnodeHdNode.derivePath(
       deriveWalletPathFromSponsorAddress(
         mockOpsRepo.apis.api3.beacons['coingecko btc_usd 0.1 percent deviation'].chains.ropsten.sponsor,
-        PROTOCOL_ID_PSP
+        PROTOCOL_IDS.PSP
       )
     ).address;
     const topUpWallets =

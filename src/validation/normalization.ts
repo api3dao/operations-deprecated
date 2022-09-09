@@ -3,7 +3,7 @@ import { join } from 'path';
 import { ethers } from 'ethers';
 import { encode } from '@api3/airnode-abi';
 import { parse } from 'dotenv';
-import { OperationsRepository, Secrets, ChainDeploymentReferences, Beacons } from './types';
+import { OperationsRepository, Secrets, ChainDeploymentReferences, Beacons } from '../types';
 import { sanitiseFilename } from '../utils/filesystem';
 import { readJsonFile } from '../utils/read-operations';
 

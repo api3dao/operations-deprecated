@@ -6,7 +6,7 @@ import { promptQuestions } from './prompts';
 import { readOperationsRepository } from './read-operations';
 import { writeOperationsRepository } from './write-operations';
 import { runAndHandleErrors } from './cli';
-import { OperationsRepository } from '../validation/types';
+import { OperationsRepository } from '../types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
   return [

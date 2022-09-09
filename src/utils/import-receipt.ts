@@ -5,7 +5,7 @@ import { runAndHandleErrors } from './cli';
 import { promptQuestions } from './prompts';
 import { readJsonFile, readOperationsRepository } from './read-operations';
 import { writeOperationsRepository } from './write-operations';
-import { OperationsRepository } from '../validation/types';
+import { OperationsRepository } from '../types';
 
 const questions = (operationsRepository: OperationsRepository): PromptObject[] => {
   return [
