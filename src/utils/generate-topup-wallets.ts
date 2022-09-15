@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
 import { deriveWalletPathFromSponsorAddress } from '@api3/airnode-node/dist/src/evm';
 import { Choice, PromptObject } from 'prompts';
+import { PROTOCOL_IDS } from '@api3/airnode-protocol';
 import { promptQuestions } from './prompts';
 import { readOperationsRepository } from './read-operations';
 import { writeOperationsRepository } from './write-operations';
 import { runAndHandleErrors } from './cli';
-import { PROTOCOL_ID_PSP } from './evm';
 import { OperationsRepository } from '../types';
 
 const questions = (choices: Choice[]): PromptObject[] => {
@@ -36,7 +36,7 @@ const main = async (operationRepositoryTarget?: string) => {
         Object.entries(beacon.chains).map(([chainName, chain]) => {
           const airnodeHdNode = ethers.utils.HDNode.fromExtendedKey(apiData.apiMetadata.xpub);
           const providerTopUpWallet = airnodeHdNode.derivePath(
-            deriveWalletPathFromSponsorAddress(chain.sponsor, PROTOCOL_ID_PSP)
+            deriveWalletPathFromSponsorAddress(chain.sponsor, PROTOCOL_IDS.PSP)
           ).address;
           return [
             chainName,
