@@ -78,7 +78,7 @@ scripts used to perform on-chain transactions
 
 ## utils
 
-contians read, write, import, export, cli and evm scripts
+contains read, write, import, export, cli and evm scripts
 
 ## validation
 
