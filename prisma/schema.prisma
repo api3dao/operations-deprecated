@@ -89,9 +89,8 @@ model OIS {
 }
 
 model Deployment {
-    id String @id @default(uuid()) @db.Uuid
-    chainApiReference String
-    airnodeVersion String
-    config Json
-
+  id                String @id @default(uuid()) @db.Uuid
+  chainApiReference String
+  airnodeVersion    String
+  config            Json
 }
