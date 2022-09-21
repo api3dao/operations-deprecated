@@ -40,6 +40,7 @@ model Beacon {
   beaconId     String         @id @db.Text
   name         String         @unique @db.Text
   description  String
+  template     Template       @relation(fields: [templateId], references: [templateId])
   templateId   String
   BeaconChains BeaconChains[]
 }
@@ -57,21 +58,22 @@ enum WalletType {
 }
 
 model TopUpWallet {
-  id           String         @id @default(uuid()) @db.Uuid
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   address      String
   walletType   WalletType
   BeaconChains BeaconChains[]
 }
 
 model Template {
-  templateId String @id
-  name       String @unique
+  templateId String   @id
+  name       String   @unique
   endpointId String
   parameters String
+  Beacon     Beacon[]
 }
 
 model BeaconChains {
-  id              String      @id @default(uuid()) @db.Uuid
+  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   beacon          Beacon      @relation(fields: [beaconId], references: [beaconId])
   beaconId        String
   chain           Chain       @relation(fields: [chainName], references: [name])
@@ -84,13 +86,16 @@ model BeaconChains {
 }
 
 model OIS {
-  id  String @id @default(uuid()) @db.Uuid
-  ois Json
+  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ois        Json
+  Deployment Deployment[]
 }
 
 model Deployment {
-  id                String @id @default(uuid()) @db.Uuid
+  id                String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   chainApiReference String
   airnodeVersion    String
   config            Json
+  ois               OIS    @relation(fields: [oisId], references: [id])
+  oisId             String @db.Uuid
 }
