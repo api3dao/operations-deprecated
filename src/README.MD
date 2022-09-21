@@ -20,26 +20,6 @@ scripts that deal with creating the configs and deployment for airnode, airkeepe
 
 - Creates the boilerplate directory for the API provider
 
-### create-config:
-
-- Creates the configuration files for the airnode and airkeeper deployments in `operations/src/deployment`
-
-### deploy-airkeeper:
-
-- Deploys an airkeeper deployment specified by `operations/src/deployment/airkeeper/<DEPLOYMENT_DATE>`
-
-### deploy-airnode:
-
-- Deploys an airnode deployment specified by the `operations/src/deployment/airnode/<DEPLOYMENT_DATE>`
-
-### remove-airnode:
-
-- Removes an airnode deployment specified by the `operations/src/deployment/airnode/<DEPLOYMENT_DATE>`
-
-### test-deployment:
-
-- Tests the deployment specified by the `operations/src/deployment/airnode/<DEPLOYMENT_DATE>`
-
 ## explorer
 
 scripts that perform operations on the api3 explorer content
