@@ -6,6 +6,9 @@
   "description": "A package to parse API3 operations metadata",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": "^16.17.0"
+  },
   "files": [
     "dist",
     "data",
@@ -28,7 +31,7 @@
     "generate-topup-wallets": "ts-node src/utils/generate-topup-wallets.ts",
     "register-subscriptions": "ts-node src/register/register-subscriptions.ts",
     "add-missing-beacon-metadata": "ts-node src/explorer/add-missing-beacon-metadata.ts",
-    "build": "yarn run clean && yarn run compile",
+    "build": "yarn clean && yarn compile",
     "check-subscriptions": "ts-node src/inspect/check-subscriptions.ts",
     "check-dapi-name": "ts-node src/inspect/check-dapi-name.ts",
     "check-policy-readers": "ts-node src/inspect/check-policy-readers.ts",
@@ -38,8 +41,13 @@
     "normalize-and-validate": "ts-node src/validation/normalize-and-validate.ts",
     "validate": "ts-node src/validation/validate.ts",
     "normalize": "ts-node src/validation/normalize.ts",
-    "lint": "yarn run prettier:check && yarn run lint:eslint",
+    "lint": "yarn prettier:check && yarn lint:eslint && yarn lint:prisma-format",
+    "lint:prisma-format": "yarn prisma format",
     "lint:eslint": "eslint . --ext .js,.ts",
+    "prisma:studio": "yarn prisma studio",
+    "prisma:generate": "yarn prisma generate",
+    "database:dev:start": "docker run --name pg-ops-dev -d --rm -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=password postgres:14",
+    "database:dev:stop": "docker kill pg-ops-dev",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "test": "jest --verbose --runInBand --bail --detectOpenHandles",
@@ -58,6 +66,7 @@
     "@api3/airnode-protocol": "^0.8.0",
     "@api3/airnode-protocol-v1": "0.7.0",
     "@ethersproject/experimental": "5.6.0",
+    "@mermaid-js/mermaid-cli": "^9.1.6",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
@@ -83,6 +92,8 @@
     "jest": "^28.1.0",
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
+    "prisma": "^4.3.1",
+    "prisma-erd-generator": "^1.2.0",
     "prompts": "^2.4.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.2",
@@ -92,6 +103,7 @@
   "dependencies": {
     "@api3/airnode-admin": "^0.7.2",
     "@api3/airnode-validator": "^0.7.2",
+    "@prisma/client": "^4.3.1",
     "zod": "^3.14.2"
   }
 }

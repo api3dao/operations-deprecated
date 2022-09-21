@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // eg = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+}
+
+// Notes
+// Postgres DOMAIN not supported :( https://github.com/prisma/prisma/issues/1796
+// https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#postgresql
+// have to create checks as a migration
+
+model Provider {
+  name                  String  @id @db.Text
+  active                Boolean @db.Boolean
+  description           String  @db.Text
+  homepage              String  @db.Text
+  airnodeAddress        String  @db.Text // evm address constraint
+  xpub                  String  @db.Text
+  logoPath              String  @db.Text
+  maxSubscriptionPeriod Int
+}
+
+model Beacon {
+  beaconId     String         @id @db.Text
+  name         String         @unique @db.Text
+  description  String
+  templateId   String
+  BeaconChains BeaconChains[]
+}
+
+model Chain {
+  name         String         @id
+  BeaconChains BeaconChains[]
+}
+
+enum WalletType {
+  Provider
+  ProviderSponsor
+  API3
+  API3Sponsor
+}
+
+model TopUpWallet {
+  id           String         @id @default(uuid()) @db.Uuid
+  address      String
+  walletType   WalletType
+  BeaconChains BeaconChains[]
+}
+
+model Template {
+  templateId String @id
+  name       String @unique
+  endpointId String
+  parameters String
+}
+
+model BeaconChains {
+  id              String      @id @default(uuid()) @db.Uuid
+  beacon          Beacon      @relation(fields: [beaconId], references: [beaconId])
+  beaconId        String
+  chain           Chain       @relation(fields: [chainName], references: [name])
+  chainName       String
+  active          Boolean
+  sponsor         String
+  topUpWallet     TopUpWallet @relation(fields: [topUpWalletId], references: [id])
+  topUpWalletId   String      @db.Uuid
+  airSeekerConfig Json
+}
+
+model OIS {
+  id  String @id @default(uuid()) @db.Uuid
+  ois Json
+}
