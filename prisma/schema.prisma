@@ -26,23 +26,26 @@ datasource db {
 // have to create checks as a migration
 
 model Provider {
-  name                  String  @id @db.Text
-  active                Boolean @db.Boolean
-  description           String  @db.Text
-  homepage              String  @db.Text
-  airnodeAddress        String  @db.Text // evm address constraint
-  xpub                  String  @db.Text
-  logoPath              String  @db.Text
+  name                  String   @id @db.Text
+  active                Boolean  @db.Boolean
+  description           String   @db.Text
+  homepage              String   @db.Text
+  airnodeAddress        String   @db.Text // evm address constraint
+  xpub                  String   @db.Text
+  logoPath              String   @db.Text
   maxSubscriptionPeriod Int
+  Beacon                Beacon[]
 }
 
 model Beacon {
   beaconId     String         @id @db.Text
   name         String         @unique @db.Text
   description  String
+  provider     Provider       @relation(fields: [providerName], references: [name])
   template     Template       @relation(fields: [templateId], references: [templateId])
   templateId   String
   BeaconChains BeaconChains[]
+  providerName String         @db.Text
 }
 
 model Chain {
