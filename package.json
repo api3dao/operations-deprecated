@@ -94,6 +94,7 @@
     "prettier": "^2.5.1",
     "prisma": "^4.3.1",
     "prisma-erd-generator": "^1.2.0",
+    "prisma-typegraphql-types-generator": "^1.5.14",
     "prompts": "^2.4.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.2",
@@ -104,6 +105,7 @@
     "@api3/airnode-admin": "^0.7.2",
     "@api3/airnode-validator": "^0.7.2",
     "@prisma/client": "^4.3.1",
+    "graphql-scalars": "^1.18.0",
     "zod": "^3.14.2"
   }
 }
