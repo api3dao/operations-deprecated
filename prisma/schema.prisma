@@ -3,7 +3,9 @@ generator client {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
+  provider                  = "prisma-erd-generator"
+  theme                     = "forest"
+  includeRelationFromFields = true
 }
 
 generator PrismaTypeGraphQLTypesGenerator {
@@ -26,31 +28,30 @@ datasource db {
 // have to create checks as a migration
 
 model Provider {
-  name                  String   @id @db.Text
-  active                Boolean  @db.Boolean
-  description           String   @db.Text
-  homepage              String   @db.Text
-  airnodeAddress        String   @db.Text // evm address constraint
-  xpub                  String   @db.Text
-  logoPath              String   @db.Text
+  name                  String       @id @db.Text
+  active                Boolean      @db.Boolean
+  description           String       @db.Text
+  homepage              String       @db.Text
+  airnodeAddress        String // evm address constraint
+  xpub                  String       @db.Text
+  logoPath              String       @db.Text
+  orderLogoPath         String?      @db.Text
   maxSubscriptionPeriod Int
   Beacon                Beacon[]
+  Deployment            Deployment[]
+  updatedAt             DateTime     @updatedAt
 }
 
 model Beacon {
-  beaconId     String         @id @db.Text
-  name         String         @unique @db.Text
+  beaconId     String               @id @db.Text
+  name         String               @unique @db.Text
   description  String
-  provider     Provider       @relation(fields: [providerName], references: [name])
-  template     Template       @relation(fields: [templateId], references: [templateId])
+  provider     Provider             @relation(fields: [providerName], references: [name])
+  template     Template             @relation(fields: [templateId], references: [templateId])
   templateId   String
-  BeaconChains BeaconChains[]
-  providerName String         @db.Text
-}
-
-model Chain {
-  name         String         @id
-  BeaconChains BeaconChains[]
+  BeaconChains ChainConfiguration[]
+  providerName String               @db.Text
+  updatedAt    DateTime             @updatedAt
 }
 
 enum WalletType {
@@ -61,10 +62,11 @@ enum WalletType {
 }
 
 model TopUpWallet {
-  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   address      String
   walletType   WalletType
-  BeaconChains BeaconChains[]
+  ActiveChains ChainConfiguration[]
+  updatedAt    DateTime             @updatedAt
 }
 
 model Template {
@@ -73,32 +75,254 @@ model Template {
   endpointId String
   parameters String
   Beacon     Beacon[]
+  updatedAt  DateTime @updatedAt
 }
 
-model BeaconChains {
-  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  beacon          Beacon      @relation(fields: [beaconId], references: [beaconId])
-  beaconId        String
-  chain           Chain       @relation(fields: [chainName], references: [name])
-  chainName       String
-  active          Boolean
-  sponsor         String
-  topUpWallet     TopUpWallet @relation(fields: [topUpWalletId], references: [id])
-  topUpWalletId   String      @db.Uuid
-  airSeekerConfig Json
+model ChainConfiguration {
+  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  beacon                  Beacon              @relation(fields: [beaconId], references: [beaconId])
+  beaconId                String
+  chain                   ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  active                  Boolean
+  sponsor                 String
+  topUpWallet             TopUpWallet         @relation(fields: [topUpWalletId], references: [id])
+  topUpWalletId           String              @db.Uuid
+  airSeekerConfig         Json
+  BeaconSet               BeaconSet?          @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
+  beaconSetDataFeedId     String?
+  chainInfrastructureName String
+  updatedAt               DateTime            @updatedAt
 }
 
 model OIS {
   id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   ois        Json
   Deployment Deployment[]
+  updatedAt  DateTime     @updatedAt
 }
 
 model Deployment {
-  id                String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   chainApiReference String
   airnodeVersion    String
   config            Json
-  ois               OIS    @relation(fields: [oisId], references: [id])
-  oisId             String @db.Uuid
+  ois               OIS       @relation(fields: [oisId], references: [id])
+  oisId             String    @db.Uuid
+  Provider          Provider? @relation(fields: [providerName], references: [name])
+  providerName      String?   @db.Text
+  updatedAt         DateTime  @updatedAt
+}
+
+model BeaconSet {
+  dataFeedId   String               @id
+  name         String
+  description  String
+  beaconIds    String[]
+  activeChains ChainConfiguration[]
+  updatedAt    DateTime             @updatedAt
+  DApi         DApi[]
+}
+
+model DeployedContract {
+  id                      String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                    String
+  address                 String
+  ChainInfrastructure     ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String?
+  updatedAt               DateTime             @updatedAt
+}
+
+model ChainInfrastructure {
+  name               String               @id
+  fullName           String               @unique
+  decimalPlaces      Int
+  id                 Int                  @unique
+  contracts          DeployedContract[]
+  nativeToken        String               @unique
+  blockTime          Float?
+  logoPath           String
+  explorerUrl        String
+  testnet            Boolean
+  coverage           Coverage[]
+  dApiMetadata       DApiMetadata[]
+  chainConfiguration ChainConfiguration[]
+  orderLogoPath      String?
+  updatedAt          DateTime             @updatedAt
+}
+
+model DApi {
+  name                String           @id
+  dataFeedId          BeaconSet        @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
+  updatedAt           DateTime         @updatedAt
+  beaconSetDataFeedId String
+  CoveragePolicy      CoveragePolicy[]
+}
+
+model Category {
+  name           String           @id
+  BeaconMetadata BeaconMetadata[]
+  updatedAt      DateTime         @updatedAt
+}
+
+model Coverage {
+  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  chainName               ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String
+  BeaconMetadata          BeaconMetadata?     @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
+  beaconMetadataBeaconId  String?
+  DApiMetadata            DApiMetadata?       @relation(fields: [dApiMetadataName], references: [name])
+  dApiMetadataName        String?
+  updatedAt               DateTime            @updatedAt
+  CoverageOptions         Json
+}
+
+model Logo {
+  name                   String          @id
+  url                    String
+  BeaconMetadata         BeaconMetadata? @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
+  beaconMetadataBeaconId String?
+  DApiMetadata           DApiMetadata?   @relation(fields: [dApiMetadataName], references: [name])
+  dApiMetadataName       String?
+  updatedAt              DateTime        @updatedAt
+}
+
+model BeaconMetadata {
+  beaconId      String     @id
+  category      Category   @relation(fields: [categoryName], references: [name])
+  coverage      Coverage[]
+  decimalPlaces Int
+  logos         Logo[]
+  prefix        String
+  postfix       String
+  categoryName  String
+  updatedAt     DateTime   @updatedAt
+}
+
+model DApiMetadata {
+  name                    String              @id
+  chain                   ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  coverage                Coverage[]
+  decimalPlaces           Int
+  logos                   Logo[]
+  prefix                  String
+  postfix                 String
+  chainInfrastructureName String
+  updatedAt               DateTime            @updatedAt
+}
+
+enum ClientTransactionType {
+  CoveragePurchase
+  Deposit
+  Withdrawal
+}
+
+// Represents a transaction on a client's account
+model ClientTransaction {
+  id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when                  DateTime              @default(dbgenerated("now()"))
+  clientTransactionType ClientTransactionType
+  paymentType           PaymentType
+  Reference             String?
+  transactionHash       String?
+  detail                String
+  notes                 String
+  clientAccount         ClientAccount         @relation(fields: [clientAccountId], references: [id])
+  clientAccountId       String                @db.Uuid
+  coveragePolicy        CoveragePolicy[]
+  coverageQuote         CoverageQuote?        @relation(fields: [coverageQuoteId], references: [id])
+  coverageQuoteId       String?               @db.Uuid
+}
+
+enum PaymentType {
+  USDC
+  Ethereum
+  USDWire
+}
+
+model BankingDetails {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type            PaymentType
+  detail          String
+  verified        DateTime?
+  ClientAccount   ClientAccount? @relation(fields: [clientAccountId], references: [id])
+  clientAccountId String?        @db.Uuid
+}
+
+model ClientAccount {
+  id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clientTransactionId String              @db.Uuid
+  clientTransactions  ClientTransaction[]
+  coverageClient      CoverageClient[]
+  balance             Decimal
+  bankingDetails      BankingDetails[]
+}
+
+model CoverageClient {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName       String
+  lastName        String
+  ClientAccount   ClientAccount    @relation(fields: [clientAccountId], references: [id])
+  clientAccountId String           @db.Uuid
+  CoveragePolicy  CoveragePolicy[]
+}
+
+model CoverageQuote {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amount            Decimal
+  expiry            DateTime
+  createdAt         DateTime            @default(dbgenerated("now()"))
+  coveragePolicy    CoveragePolicy[]
+  sentToClient      Json
+  ClientTransaction ClientTransaction[]
+}
+
+model CoveragePolicy {
+  id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  CoverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
+  dApi                  DApi              @relation(fields: [dApiName], references: [name])
+  clientTransaction     ClientTransaction @relation(fields: [clientTransactionId], references: [id])
+  claimantAddress       String?
+  beneficiaryAddress    String?
+  readerAddress         String
+  coverageAmount        Decimal
+  startDate             DateTime
+  endDate               DateTime
+  ipfsPolicyHash        String?
+  ipfsServicePolicyHash String
+  metadata              Json?
+  updatedAt             DateTime          @updatedAt
+  coverageClientId      String            @db.Uuid
+  dApiName              String
+  clientTransactionId   String            @db.Uuid
+  coverageQuote         CoverageQuote     @relation(fields: [coverageQuoteId], references: [id])
+  active                Boolean
+  coverageQuoteId       String            @db.Uuid
+}
+
+model BlockCheck {
+  id          Int @id
+  chainId     Int
+  blockNumber Int
+
+  @@unique([chainId, blockNumber])
+  @@index([blockNumber])
+  @@index([chainId])
+}
+
+model ChainEvent {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when            DateTime
+  blockNumber     Int
+  sourceContract  String
+  transactionHash String
+  eventIndex      Int
+  eventType       String
+  eventData       Json
+
+  @@unique([blockNumber, sourceContract, transactionHash, eventIndex])
+  @@index([blockNumber])
+  @@index([when])
+  @@index([sourceContract])
+  @@index([transactionHash])
+  @@index([eventType])
 }

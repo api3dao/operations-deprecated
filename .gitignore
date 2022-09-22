@@ -20,3 +20,6 @@ cache
 artifacts
 credentials.json
 **.flat.sol
+
+# MacOS
+.DS_Store

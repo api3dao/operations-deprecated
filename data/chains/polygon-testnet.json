@@ -4,7 +4,7 @@
   "decimalPlaces": 2,
   "id": "80001",
   "contracts": { "DapiServer": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14" },
-  "nativeToken": "MATIC",
+  "nativeToken": "tMATIC",
   "blockTime": 2.3,
   "logoPath": "https://market.api3.org/images/chains/Polygon-4_icon.svg",
   "testnet": true,

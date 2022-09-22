@@ -26,3 +26,9 @@ yarn prisma studio
 # Load operations into the database TODO
 yarn database:translate-operations
 ```
+
+TODO Reset DB, migrate, probably redundant
+
+```shell
+yarn prisma migrate reset --force && yarn prisma format && yarn prisma generate && yarn prisma db push
+```
