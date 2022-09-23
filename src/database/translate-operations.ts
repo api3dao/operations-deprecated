@@ -8,7 +8,7 @@ export const getId = async (key: string) => {
     where: { name: key },
     select: { id: true },
   })) ?? { id: 0 };
-  console.log('Query for ', key, result);
+  console.log('Query for', key, result);
   return result;
 };
 
@@ -103,50 +103,48 @@ const main = async () => {
         Object.entries(beacons).map(async ([_key, value]) => {
           const { name, templateId, description, chains, beaconId } = value;
 
-          const createdChainConfig = (
-            await Promise.all(
-              Object.entries(chains).map(async ([key, chain]) => {
-                const { active, sponsor, topUpWallets, airseekerConfig } = chain;
+          const createdChainConfig = await Promise.all(
+            Object.entries(chains).map(async ([key, chain]) => {
+              const { active, sponsor, topUpWallets, airseekerConfig } = chain;
 
-                const topUpWalletResults = (
-                  await Promise.all(
-                    topUpWallets
-                      .filter((wallet) => wallet.address)
-                      .map(async (wallet) => {
-                        const { address, walletType } = wallet;
+              const topUpWalletResults = await Promise.all(
+                topUpWallets
+                  .filter((wallet) => wallet.address)
+                  .map(async (wallet) => {
+                    const { address, walletType } = wallet;
 
-                        const dbWalletType = (() => {
-                          switch (walletType) {
-                            case 'Provider-Sponsor':
-                              return 'ProviderSponsor';
-                            case 'API3-Sponsor':
-                              return 'API3Sponsor';
-                            default:
-                              return walletType;
-                          }
-                        })();
+                    const dbWalletType = (() => {
+                      switch (walletType) {
+                        case 'Provider-Sponsor':
+                          return 'ProviderSponsor';
+                        case 'API3-Sponsor':
+                          return 'API3Sponsor';
+                        default:
+                          return walletType;
+                      }
+                    })();
 
-                        return prisma.topUpWallet.create({
-                          data: { address: address!, walletType: dbWalletType },
-                        });
-                      })
-                  )
-                ).map(({ id }) => ({ id }));
+                    return prisma.topUpWallet.create({
+                      data: { address: address!, walletType: dbWalletType },
+                      select: { id: true },
+                    });
+                  })
+              );
 
-                return prisma.chainConfiguration.create({
-                  data: {
-                    chain: {
-                      connect: await getId(key),
-                    },
-                    active,
-                    sponsor,
-                    topUpWallet: { connect: topUpWalletResults },
-                    airSeekerConfig: JSON.stringify(airseekerConfig),
+              return prisma.chainConfiguration.create({
+                data: {
+                  chain: {
+                    connect: await getId(key),
                   },
-                });
-              })
-            )
-          ).map(({ id }) => ({ id }));
+                  active,
+                  sponsor,
+                  topUpWallet: { connect: topUpWalletResults },
+                  airSeekerConfig: JSON.stringify(airseekerConfig),
+                },
+                select: { id: true },
+              });
+            })
+          );
 
           await prisma.beacon.create({
             data: {
