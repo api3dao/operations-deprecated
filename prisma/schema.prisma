@@ -37,8 +37,8 @@ model Provider {
   logoPath              String       @db.Text
   orderLogoPath         String?      @db.Text
   maxSubscriptionPeriod Int
-  Beacon                Beacon[]
-  Deployment            Deployment[]
+  beacon                Beacon[]
+  deployment            Deployment[]
   updatedAt             DateTime     @updatedAt
 }
 
@@ -49,7 +49,7 @@ model Beacon {
   provider     Provider             @relation(fields: [providerName], references: [name])
   template     Template             @relation(fields: [templateId], references: [templateId])
   templateId   String
-  BeaconChains ChainConfiguration[]
+  chains       ChainConfiguration[]
   providerName String               @db.Text
   updatedAt    DateTime             @updatedAt
 }
@@ -62,55 +62,55 @@ enum WalletType {
 }
 
 model TopUpWallet {
-  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  address      String
-  walletType   WalletType
-  ActiveChains ChainConfiguration[]
-  updatedAt    DateTime             @updatedAt
+  id                   String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  address              String
+  walletType           WalletType
+  updatedAt            DateTime            @updatedAt
+  ChainConfiguration   ChainConfiguration? @relation(fields: [chainConfigurationId], references: [id])
+  chainConfigurationId String?             @db.Uuid
 }
 
 model Template {
   templateId String   @id
-  name       String   @unique
+  name       String
   endpointId String
   parameters String
-  Beacon     Beacon[]
+  beacon     Beacon[]
   updatedAt  DateTime @updatedAt
 }
 
 model ChainConfiguration {
   id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  beacon                  Beacon              @relation(fields: [beaconId], references: [beaconId])
-  beaconId                String
+  beacon                  Beacon?             @relation(fields: [beaconBeaconId], references: [beaconId])
   chain                   ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
   active                  Boolean
   sponsor                 String
-  topUpWallet             TopUpWallet         @relation(fields: [topUpWalletId], references: [id])
-  topUpWalletId           String              @db.Uuid
+  topUpWallet             TopUpWallet[]
   airSeekerConfig         Json
-  BeaconSet               BeaconSet?          @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
+  beaconSet               BeaconSet?          @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
   beaconSetDataFeedId     String?
-  chainInfrastructureName String
   updatedAt               DateTime            @updatedAt
+  beaconBeaconId          String?             @db.Text
+  chainInfrastructureName String
 }
 
 model OIS {
   id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   ois        Json
-  Deployment Deployment[]
+  deployment Deployment[]
   updatedAt  DateTime     @updatedAt
 }
 
 model Deployment {
-  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   chainApiReference String
   airnodeVersion    String
   config            Json
-  ois               OIS       @relation(fields: [oisId], references: [id])
-  oisId             String    @db.Uuid
-  Provider          Provider? @relation(fields: [providerName], references: [name])
-  providerName      String?   @db.Text
-  updatedAt         DateTime  @updatedAt
+  ois               OIS      @relation(fields: [oisId], references: [id])
+  oisId             String   @db.Uuid
+  provider          Provider @relation(fields: [providerName], references: [name])
+  providerName      String   @db.Text
+  updatedAt         DateTime @updatedAt
 }
 
 model BeaconSet {
@@ -120,16 +120,16 @@ model BeaconSet {
   beaconIds    String[]
   activeChains ChainConfiguration[]
   updatedAt    DateTime             @updatedAt
-  DApi         DApi[]
+  aApi         DApi[]
 }
 
 model DeployedContract {
-  id                      String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                    String
   address                 String
-  ChainInfrastructure     ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
-  chainInfrastructureName String?
-  updatedAt               DateTime             @updatedAt
+  chainInfrastructure     ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String
+  updatedAt               DateTime            @updatedAt
 }
 
 model ChainInfrastructure {
@@ -155,12 +155,12 @@ model DApi {
   dataFeedId          BeaconSet        @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
   updatedAt           DateTime         @updatedAt
   beaconSetDataFeedId String
-  CoveragePolicy      CoveragePolicy[]
+  coveragePolicy      CoveragePolicy[]
 }
 
 model Category {
   name           String           @id
-  BeaconMetadata BeaconMetadata[]
+  beaconMetadata BeaconMetadata[]
   updatedAt      DateTime         @updatedAt
 }
 
@@ -168,20 +168,20 @@ model Coverage {
   id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   chainName               ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
   chainInfrastructureName String
-  BeaconMetadata          BeaconMetadata?     @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
+  beaconMetadata          BeaconMetadata?     @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
   beaconMetadataBeaconId  String?
-  DApiMetadata            DApiMetadata?       @relation(fields: [dApiMetadataName], references: [name])
+  dApiMetadata            DApiMetadata?       @relation(fields: [dApiMetadataName], references: [name])
   dApiMetadataName        String?
   updatedAt               DateTime            @updatedAt
-  CoverageOptions         Json
+  coverageOptions         Json
 }
 
 model Logo {
   name                   String          @id
   url                    String
-  BeaconMetadata         BeaconMetadata? @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
+  beaconMetadata         BeaconMetadata? @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
   beaconMetadataBeaconId String?
-  DApiMetadata           DApiMetadata?   @relation(fields: [dApiMetadataName], references: [name])
+  aApiMetadata           DApiMetadata?   @relation(fields: [dApiMetadataName], references: [name])
   dApiMetadataName       String?
   updatedAt              DateTime        @updatedAt
 }
@@ -244,7 +244,7 @@ model BankingDetails {
   type            PaymentType
   detail          String
   verified        DateTime?
-  ClientAccount   ClientAccount? @relation(fields: [clientAccountId], references: [id])
+  clientAccount   ClientAccount? @relation(fields: [clientAccountId], references: [id])
   clientAccountId String?        @db.Uuid
 }
 
@@ -261,9 +261,9 @@ model CoverageClient {
   id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstName       String
   lastName        String
-  ClientAccount   ClientAccount    @relation(fields: [clientAccountId], references: [id])
+  clientAccount   ClientAccount    @relation(fields: [clientAccountId], references: [id])
   clientAccountId String           @db.Uuid
-  CoveragePolicy  CoveragePolicy[]
+  coveragePolicy  CoveragePolicy[]
 }
 
 model CoverageQuote {
@@ -273,12 +273,12 @@ model CoverageQuote {
   createdAt         DateTime            @default(dbgenerated("now()"))
   coveragePolicy    CoveragePolicy[]
   sentToClient      Json
-  ClientTransaction ClientTransaction[]
+  clientTransaction ClientTransaction[]
 }
 
 model CoveragePolicy {
   id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  CoverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
+  coverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
   dApi                  DApi              @relation(fields: [dApiName], references: [name])
   clientTransaction     ClientTransaction @relation(fields: [clientTransactionId], references: [id])
   claimantAddress       String?
