@@ -24,10 +24,10 @@ export const getId = async (key: string) => {
  *  [x] chains
  *  [x] dapis
  *  explorer
- *    - beaconMetadata
- *    - beaconsetmetadata
+ *    - [x] beaconMetadata
+ *    - [x] beaconsetmetadata
  *    - [x] commonlogos
- *    - dapiMetadata
+ *    - [!] dapiMetadata - requires reworking
  *    - [x] pricingCoverage
  *   ~policies~ deferring for now as probably not required
  *
@@ -324,6 +324,32 @@ const main = async () => {
           },
           category: {
             connectOrCreate: { where: { name: beaconSetMeta.category }, create: { name: beaconSetMeta.category } },
+          },
+        },
+      });
+    })
+  );
+
+  await Promise.all(
+    Object.entries(operations.explorer.beaconMetadata).map(async ([beaconId, beaconMetadata]) => {
+      await prisma.beaconMetadata.create({
+        data: {
+          beaconId,
+          decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
+          prefix: beaconMetadata.prefix,
+          postfix: beaconMetadata.postfix,
+          logos: {
+            connect: beaconMetadata.logos!.map((logo) => ({ name: logo })),
+          },
+          coverage: {
+            connect: await Promise.all(
+              Object.values(beaconMetadata.pricingCoverage).map(async (pc) => {
+                return (await prisma.coverage.findUnique({ where: { chainName: pc }, select: { chainName: true } }))!;
+              })
+            ),
+          },
+          category: {
+            connectOrCreate: { where: { name: beaconMetadata.category }, create: { name: beaconMetadata.category } },
           },
         },
       });

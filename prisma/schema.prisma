@@ -188,6 +188,7 @@ model Category {
   name           String           @id
   beaconMetadata BeaconMetadata[]
   updatedAt      DateTime         @updatedAt
+  DApiMetadata   DApiMetadata[]
 }
 
 model Coverage {
@@ -233,7 +234,9 @@ model DApiMetadata {
   prefix                  String
   postfix                 String
   chainInfrastructureName String
+  category                Category            @relation(fields: [categoryName], references: [name])
   updatedAt               DateTime            @updatedAt
+  categoryName            String
 }
 
 enum ClientTransactionType {
