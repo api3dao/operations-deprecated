@@ -28,7 +28,7 @@ export const getId = async (key: string) => {
  *    - beaconsetmetadata
  *    - [x] commonlogos
  *    - dapiMetadata
- *    - pricingCoverage
+ *    - [x] pricingCoverage
  *   ~policies~ deferring for now as probably not required
  *
  */
@@ -111,20 +111,15 @@ const main = async () => {
         select: { name: true },
       });
 
-      await Promise.all(
-        Object.values(operations.apis).map(async (provider) => {
-          const templates = Object.values(provider.templates);
-
-          await prisma.template.createMany({
-            data: templates.map(({ name, templateId, endpointId, parameters }) => ({
-              name,
-              templateId,
-              endpointId,
-              parameters,
-            })),
-          });
-        })
-      );
+      const templates = Object.values(provider.templates);
+      await prisma.template.createMany({
+        data: templates.map(({ name, templateId, endpointId, parameters }) => ({
+          name,
+          templateId,
+          endpointId,
+          parameters,
+        })),
+      });
 
       const beacons = Object.values(provider.beacons);
 
@@ -275,11 +270,17 @@ const main = async () => {
   );
 
   await Promise.all(
-    Object.values(operations.dapis).map(async (dapi) => {
+    Object.entries(operations.dapis).map(async ([chainName, dapi]) => {
       await prisma.dApi.create({
         data: {
           dataFeedId: { connect: { dataFeedId: dapi.dataFeedId } },
           name: dapi.name,
+          chain: {
+            connect: (await prisma.chainInfrastructure.findFirst({
+              where: { name: chainName },
+              select: { id: true },
+            }))!,
+          },
         },
       });
     })
@@ -291,6 +292,43 @@ const main = async () => {
       url,
     })),
   });
+
+  await Promise.all(
+    Object.entries(operations.explorer.pricingCoverage).map(async ([chainName, coverage]) => {
+      await prisma.coverage.create({
+        data: {
+          chainName,
+          coverageOptions: JSON.stringify(coverage),
+        },
+      });
+    })
+  );
+
+  await Promise.all(
+    Object.entries(operations.explorer.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) => {
+      await prisma.beaconMetadata.create({
+        data: {
+          beaconId: dataFeedId,
+          decimalPlaces: beaconSetMeta.decimalPlaces ?? 2,
+          prefix: beaconSetMeta.prefix,
+          postfix: beaconSetMeta.postfix,
+          logos: {
+            connect: beaconSetMeta.logos!.map((logo) => ({ name: logo })),
+          },
+          coverage: {
+            connect: await Promise.all(
+              Object.values(beaconSetMeta.pricingCoverage).map(async (pc) => {
+                return (await prisma.coverage.findUnique({ where: { chainName: pc }, select: { chainName: true } }))!;
+              })
+            ),
+          },
+          category: {
+            connectOrCreate: { where: { name: beaconSetMeta.category }, create: { name: beaconSetMeta.category } },
+          },
+        },
+      });
+    })
+  );
 };
 
 main().catch(console.trace);

@@ -168,18 +168,20 @@ model ChainInfrastructure {
   chainConfiguration ChainConfiguration[]
   orderLogoPath      String?
   updatedAt          DateTime             @updatedAt
+  DApi               DApi[]
 }
 
 model DApi {
-  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                String
-  dataFeedId          BeaconSet        @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
-  updatedAt           DateTime         @updatedAt
+  dataFeedId          BeaconSet           @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
+  updatedAt           DateTime            @updatedAt
   beaconSetDataFeedId String
-  chain               ChainInfrastructure
+  chain               ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
   coveragePolicy      CoveragePolicy[]
 
   // todo unique constraint across chain and name
+  chainInfrastructureName String
 }
 
 model Category {
@@ -189,15 +191,15 @@ model Category {
 }
 
 model Coverage {
-  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  chainName               ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
-  chainInfrastructureName String
-  beaconMetadata          BeaconMetadata?     @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
-  beaconMetadataBeaconId  String?
-  dApiMetadata            DApiMetadata?       @relation(fields: [dApiMetadataName], references: [name])
-  dApiMetadataName        String?
-  updatedAt               DateTime            @updatedAt
-  coverageOptions         Json
+  id                     String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  chain                  ChainInfrastructure @relation(fields: [chainName], references: [name])
+  chainName              String              @unique
+  beaconMetadata         BeaconMetadata?     @relation(fields: [beaconMetadataBeaconId], references: [beaconId])
+  beaconMetadataBeaconId String?
+  dApiMetadata           DApiMetadata?       @relation(fields: [dApiMetadataName], references: [name])
+  dApiMetadataName       String?
+  updatedAt              DateTime            @updatedAt
+  coverageOptions        Json
 }
 
 model Logo {
@@ -213,12 +215,12 @@ model Logo {
 model BeaconMetadata {
   beaconId      String     @id
   category      Category   @relation(fields: [categoryName], references: [name])
+  categoryName  String
   coverage      Coverage[]
   decimalPlaces Int
   logos         Logo[]
-  prefix        String
-  postfix       String
-  categoryName  String
+  prefix        String?
+  postfix       String?
   updatedAt     DateTime   @updatedAt
 }
 
