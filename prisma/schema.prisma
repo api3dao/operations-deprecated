@@ -40,6 +40,7 @@ model Provider {
   beacon                Beacon[]
   deployment            Deployment[]
   updatedAt             DateTime     @updatedAt
+  OIS                   OIS[]
 }
 
 model Beacon {
@@ -95,22 +96,39 @@ model ChainConfiguration {
 }
 
 model OIS {
-  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  ois        Json
-  deployment Deployment[]
-  updatedAt  DateTime     @updatedAt
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ois          Json
+  deployment   Deployment[]
+  provider     Provider     @relation(fields: [providerName], references: [name])
+  name         String
+  version      String
+  updatedAt    DateTime     @updatedAt
+  providerName String       @db.Text
+}
+
+enum CloudType {
+  GCP
+  AWS
+}
+
+enum ApplicationType {
+  Airnode
+  Airseeker
 }
 
 model Deployment {
-  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  chainApiReference String
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  chainApiReference String?
   airnodeVersion    String
   config            Json
-  ois               OIS      @relation(fields: [oisId], references: [id])
-  oisId             String   @db.Uuid
-  provider          Provider @relation(fields: [providerName], references: [name])
-  providerName      String   @db.Text
-  updatedAt         DateTime @updatedAt
+  ois               OIS             @relation(fields: [oisId], references: [id])
+  oisId             String          @db.Uuid
+  provider          Provider        @relation(fields: [providerName], references: [name])
+  providerName      String          @db.Text
+  updatedAt         DateTime        @updatedAt
+  deployedAt        DateTime
+  cloudType         CloudType
+  applicationType   ApplicationType
 }
 
 model BeaconSet {

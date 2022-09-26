@@ -48,6 +48,7 @@
     "prisma:generate": "yarn prisma generate",
     "database:dev:start": "docker run --name pg-ops-dev -d --rm -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=password postgres:14",
     "database:dev:stop": "docker kill pg-ops-dev",
+    "database:translate-operations": "yarn ts-node src/database/translate-operations.ts",
     "prettier:check": "prettier --check \"./**/*.{js,ts,md,json}\"",
     "prettier:write": "prettier --write \"./**/*.{js,ts,md,json}\"",
     "test": "jest --verbose --runInBand --bail --detectOpenHandles",
