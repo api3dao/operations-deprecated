@@ -1,5 +1,6 @@
-import { PrismaClient, CloudType, ApplicationType } from '@prisma/client';
+import { PrismaClient, CloudType, ApplicationType, WalletType } from '@prisma/client';
 import { readOperationsRepository } from '../utils/read-operations';
+import * as operationsImport from '../types';
 
 const prisma = new PrismaClient();
 
@@ -14,26 +15,38 @@ export const getId = async (key: string) => {
 
 /*
  * TODO vs Done
- *  apis
+ *  [x] apis
  *   - [x] beacons
  *   - [x] deployments
  *   - [x] ois
  *   - [x] templates
- *  beaconsets
+ *  [x] beaconsets
  *  [x] chains
- *  dapis
+ *  [x] dapis
  *  explorer
  *    - beaconMetadata
  *    - beaconsetmetadata
- *    - commonlogos
+ *    - [x] commonlogos
  *    - dapiMetadata
  *    - pricingCoverage
- *   policies
- *
+ *   ~policies~ deferring for now as probably not required
  *
  */
 
 const main = async () => {
+  const getDbWalletType = (walletType: operationsImport.WalletType) => {
+    switch (walletType) {
+      case 'Provider-Sponsor':
+        return WalletType.ProviderSponsor;
+      case 'API3-Sponsor':
+        return WalletType.API3Sponsor;
+      case 'API3':
+        return WalletType.API3;
+      case 'Provider':
+        return WalletType.Provider;
+    }
+  };
+
   // eslint-disable-next-line functional/immutable-data
   process.env.DATABASE_URL = `postgresql://postgres:password@localhost:5432/postgres?schema=public`;
   const operations = readOperationsRepository();
@@ -76,10 +89,6 @@ const main = async () => {
       });
     })
   );
-  //WIP
-  // await Promise.all(Object.values(operations.beaconSets).map(async (beaconset) => {
-  //   await prisma.beaconSet.create({});
-  // }));
 
   // Prisma doesn't support createMany with nested createMany, so...
   await Promise.all(
@@ -133,19 +142,8 @@ const main = async () => {
                   .map(async (wallet) => {
                     const { address, walletType } = wallet;
 
-                    const dbWalletType = (() => {
-                      switch (walletType) {
-                        case 'Provider-Sponsor':
-                          return 'ProviderSponsor';
-                        case 'API3-Sponsor':
-                          return 'API3Sponsor';
-                        default:
-                          return walletType;
-                      }
-                    })();
-
                     return prisma.topUpWallet.create({
-                      data: { address: address!, walletType: dbWalletType },
+                      data: { address: address!, walletType: getDbWalletType(walletType) },
                       select: { id: true },
                     });
                   })
@@ -236,6 +234,63 @@ const main = async () => {
       );
     })
   );
+
+  await Promise.all(
+    Object.values(operations.beaconSets).map(async (beaconset) => {
+      const chainConfigs = await Promise.all(
+        Object.entries(beaconset.chains).map(async ([chainName, chain]) => {
+          return prisma.chainConfiguration.create({
+            data: {
+              chain: {
+                connect: (await prisma.chainInfrastructure.findFirst({
+                  where: { name: chainName },
+                  select: { name: true },
+                }))!,
+              },
+              active: chain.active,
+              sponsor: chain.sponsor,
+              topUpWallet: {
+                create: chain.topUpWallets.map((wallet) => ({
+                  address: wallet.address!,
+                  walletType: getDbWalletType(wallet.walletType),
+                })),
+              },
+              airSeekerConfig: JSON.stringify(chain.airseekerConfig),
+            },
+            select: { id: true },
+          });
+        })
+      );
+
+      await prisma.beaconSet.create({
+        data: {
+          dataFeedId: beaconset.beaconSetId,
+          name: beaconset.name,
+          description: beaconset.description,
+          beaconIds: { connect: beaconset.beaconIds.map((beaconsetId) => ({ beaconId: beaconsetId })) },
+          activeChains: { connect: chainConfigs },
+        },
+      });
+    })
+  );
+
+  await Promise.all(
+    Object.values(operations.dapis).map(async (dapi) => {
+      await prisma.dApi.create({
+        data: {
+          dataFeedId: { connect: { dataFeedId: dapi.dataFeedId } },
+          name: dapi.name,
+        },
+      });
+    })
+  );
+
+  await prisma.logo.createMany({
+    data: Object.entries(operations.explorer.commonLogos).map(([name, url]) => ({
+      name,
+      url,
+    })),
+  });
 };
 
 main().catch(console.trace);

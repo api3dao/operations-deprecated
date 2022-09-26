@@ -44,15 +44,17 @@ model Provider {
 }
 
 model Beacon {
-  beaconId     String               @id @db.Text
-  name         String               @unique @db.Text
-  description  String
-  provider     Provider             @relation(fields: [providerName], references: [name])
-  template     Template             @relation(fields: [templateId], references: [templateId])
-  templateId   String
-  chains       ChainConfiguration[]
-  providerName String               @db.Text
-  updatedAt    DateTime             @updatedAt
+  beaconId            String               @id @db.Text
+  name                String               @unique @db.Text
+  description         String
+  provider            Provider             @relation(fields: [providerName], references: [name])
+  template            Template             @relation(fields: [templateId], references: [templateId])
+  templateId          String
+  chains              ChainConfiguration[]
+  providerName        String               @db.Text
+  updatedAt           DateTime             @updatedAt
+  BeaconSet           BeaconSet?           @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
+  beaconSetDataFeedId String?
 }
 
 enum WalletType {
@@ -135,10 +137,10 @@ model BeaconSet {
   dataFeedId   String               @id
   name         String
   description  String
-  beaconIds    String[]
+  beaconIds    Beacon[]
   activeChains ChainConfiguration[]
   updatedAt    DateTime             @updatedAt
-  aApi         DApi[]
+  dApi         DApi[]
 }
 
 model DeployedContract {
@@ -169,11 +171,15 @@ model ChainInfrastructure {
 }
 
 model DApi {
-  name                String           @id
+  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String
   dataFeedId          BeaconSet        @relation(fields: [beaconSetDataFeedId], references: [dataFeedId])
   updatedAt           DateTime         @updatedAt
   beaconSetDataFeedId String
+  chain               ChainInfrastructure
   coveragePolicy      CoveragePolicy[]
+
+  // todo unique constraint across chain and name
 }
 
 model Category {
@@ -297,7 +303,7 @@ model CoverageQuote {
 model CoveragePolicy {
   id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   coverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
-  dApi                  DApi              @relation(fields: [dApiName], references: [name])
+  dApi                  DApi              @relation(fields: [dApiId], references: [id])
   clientTransaction     ClientTransaction @relation(fields: [clientTransactionId], references: [id])
   claimantAddress       String?
   beneficiaryAddress    String?
@@ -310,7 +316,7 @@ model CoveragePolicy {
   metadata              Json?
   updatedAt             DateTime          @updatedAt
   coverageClientId      String            @db.Uuid
-  dApiName              String
+  dApiId                String            @db.Uuid
   clientTransactionId   String            @db.Uuid
   coverageQuote         CoverageQuote     @relation(fields: [coverageQuoteId], references: [id])
   active                Boolean
