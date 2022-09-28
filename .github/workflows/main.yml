@@ -146,5 +146,3 @@ jobs:
         run: yarn check-subscriptions
       - name: Verify DAPI Name on chain
         run: yarn check-dapi-name
-      - name: Verify DapiServer allowed readers on chain
-        run: yarn check-policy-readers
