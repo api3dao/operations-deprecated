@@ -24,7 +24,7 @@
     "deploy-airkeeper": "yarn ts-node src/deployment/deploy-airkeeper",
     "generate-topup-wallets": "ts-node src/utils/generate-topup-wallets.ts",
     "register-subscriptions": "ts-node src/register/register-subscriptions.ts",
-    "add-missing-beacon-metadata": "ts-node src/explorer/add-missing-beacon-metadata.ts",
+    "add-missing-beacon-metadata": "ts-node src/market/add-missing-beacon-metadata.ts",
     "build": "yarn run clean && yarn run compile",
     "check-subscriptions": "ts-node src/inspect/check-subscriptions.ts",
     "check-dapi-name": "ts-node src/inspect/check-dapi-name.ts",

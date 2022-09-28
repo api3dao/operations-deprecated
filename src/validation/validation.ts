@@ -61,7 +61,7 @@ export const topUpWalletSchema = z
  * @param active Whether the beacon is currently actively being updated
  * @param sponsor The `sponsor` address (https://docs.api3.org/airnode/latest/concepts/sponsor.html#sponsoraddress)
  * @param updateConditionPercentage The API provider's Airkeeper update condition percentage
- * @param displayDisabled Should the beacon be displayed in UI applications (TODO this should be moved to explorerMetadata)
+ * @param displayDisabled Should the beacon be displayed in UI applications (TODO this should be moved to marketMetadata)
  * @param airseekerConfig API3's Airkseeker update configuration, including:
  * @param airseekerConfig.deviationThreshold API3's Airseeker update threshold
  * @param airseekerConfig.heartbeatInterval The interval at which a forced update will be made regardless of deviation
@@ -432,11 +432,11 @@ export const pricingCoverageSchema = z.record(
 );
 
 /**
- * Explorer Schema
+ * Market Schema
  *
- * The explorerSchema contains data needed to render beacons and services to a UI.
+ * The marketSchema contains data needed to render beacons and services to a UI.
  */
-export const explorerSchema = z
+export const marketSchema = z
   .object({
     beaconMetadata: beaconMetadataSchema,
     dapiMetadata: dapiMetadataSchema,
@@ -537,7 +537,7 @@ export const policiesSchema = z
  * @param chains Contains chains, keyed by their filesystem-safe name
  * @param api3 Contains metadata related to API3
  * @param dapis Contains dapi mappings, keyed by chain name
- * @param explorer Contains metadata used by the API3 Explorer for rendering feeds in a UI context
+ * @param market Contains metadata used by the API3 Market for rendering feeds in a UI context
  * @param policies Contains metadata around policies committed on-chain
  */
 export const operationsRepositorySchema = z
@@ -547,7 +547,7 @@ export const operationsRepositorySchema = z
     beaconSets: beaconSetsSchema,
     chains: chainsSchema,
     dapis: dapisSchema,
-    explorer: explorerSchema,
+    market: marketSchema,
     policies: z.record(policiesSchema).optional(),
   })
   .strict()

@@ -147,8 +147,8 @@ export const normalize = (payload: OperationsRepository) => {
     })
   );
 
-  const explorer = {
-    ...payload.explorer,
+  const market = {
+    ...payload.market,
   };
 
   const policies = payload.policies
@@ -179,7 +179,7 @@ export const normalize = (payload: OperationsRepository) => {
       )
     : {};
 
-  return { ...payload, apis, beaconSets, chains, explorer, policies } as OperationsRepository;
+  return { ...payload, apis, beaconSets, chains, market, policies } as OperationsRepository;
 };
 
 export const emptyObject = (object: any, preserveValueKeys: string[], ignoreNestedKeys: string[]): any => {
