@@ -39,12 +39,10 @@ jobs:
           node-version: ${{ env.TARGET_NODE_VERSION }}
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Lint
         run: yarn lint
       - name: Build
         run: yarn build
       - name: Validate
         run: yarn validate
-      - name: Test
-        run: yarn test
