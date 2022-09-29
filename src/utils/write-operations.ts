@@ -95,7 +95,7 @@ export const writeOperationsRepository = (
     writeBaseDirectory(tmpBasePath, payload, 'beaconSets');
     writeBaseDirectory(tmpBasePath, payload, 'chains');
     writeBaseDirectory(tmpBasePath, payload, 'dapis');
-    writeBaseDirectory(tmpBasePath, payload, 'explorer');
+    writeBaseDirectory(tmpBasePath, payload, 'market');
 
     if (payload.policies)
       Object.keys(payload.policies).map((key) => {

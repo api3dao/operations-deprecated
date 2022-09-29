@@ -1,7 +1,7 @@
 import { SuperRefinement, z } from 'zod';
 import { deriveEndpointId } from '@api3/airnode-admin';
 import { ethers } from 'ethers';
-import { Apis, Beacons, BeaconSets, Chains, Dapis, Explorer, Oises, Policies, Templates } from '../types';
+import { Apis, Beacons, BeaconSets, Chains, Dapis, Market, Oises, Policies, Templates } from '../types';
 
 export const validateTemplatesEndpointIdReferences: SuperRefinement<{
   templates: Templates;
@@ -58,15 +58,15 @@ export const validateApisBeaconsChainReferences: SuperRefinement<{
 
 export const validateBeaconIdAgainstBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
-  explorer: Explorer;
-}> = ({ apis, explorer }, ctx) => {
+  market: Market;
+}> = ({ apis, market }, ctx) => {
   Object.values(apis).forEach((api) => {
     Object.values(api.beacons).forEach(({ beaconId, name }) => {
-      if (!Object.keys(explorer.beaconMetadata).includes(beaconId)) {
+      if (!Object.keys(market.beaconMetadata).includes(beaconId)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: `beaconId ${beaconId} with name '${name}' is not present in explorer/beaconMetadata`,
-          path: ['explorer', 'beaconMetadata', beaconId],
+          message: `beaconId ${beaconId} with name '${name}' is not present in market/beaconMetadata`,
+          path: ['market', 'beaconMetadata', beaconId],
         });
       }
     });
@@ -93,17 +93,17 @@ export const validateDapisChainReferences: SuperRefinement<{
 // Validate that referenced logos are found in commonLogos and retrievable
 
 /**
- * Checks /explorer/dapiMetadata against /dapis to ensure that we have a reference
+ * Checks /market/dapiMetadata against /dapis to ensure that we have a reference
  *
- * @param explorer
+ * @param market
  * @param dapis
  * @param ctx
  */
 export const validateDapiMetadataReferences: SuperRefinement<{
   chains: Chains;
-  explorer: Explorer;
+  market: Market;
   dapis: Dapis;
-}> = ({ explorer, dapis }, ctx) => {
+}> = ({ market, dapis }, ctx) => {
   const flatDapis = Object.entries(
     Object.fromEntries(
       Object.values(dapis)
@@ -114,7 +114,7 @@ export const validateDapiMetadataReferences: SuperRefinement<{
 
   const missingDapis = Object.fromEntries(
     flatDapis
-      .filter((fd) => !explorer.dapiMetadata[fd[0]])
+      .filter((fd) => !market.dapiMetadata[fd[0]])
       .map((dapi) => [
         dapi[0],
         {
@@ -145,9 +145,9 @@ export const validateDapiMetadataReferences: SuperRefinement<{
 
   console.log(
     [
-      `Some beacons are missing from /explorer/dapiMetadata.`,
+      `Some beacons are missing from /market/dapiMetadata.`,
       `You can find a boilerplate for the missing dapis below.`,
-      `Add the following to /explorer/dapiMetadata and customise:`,
+      `Add the following to /market/dapiMetadata and customise:`,
     ].join('\n')
   );
   console.log(JSON.stringify(missingDapis, null, 2));
@@ -155,20 +155,20 @@ export const validateDapiMetadataReferences: SuperRefinement<{
 
 /**
  * Check for the presence of referenced common logos
- * @param explorer
+ * @param market
  * @param ctx
  */
 export const validateCommonLogosReferences: SuperRefinement<{
-  explorer: Explorer;
-}> = ({ explorer }, ctx) => {
-  const { commonLogos, beaconMetadata } = explorer;
+  market: Market;
+}> = ({ market }, ctx) => {
+  const { commonLogos, beaconMetadata } = market;
   Object.entries(beaconMetadata).forEach(([key, value]) => {
     value.logos?.forEach((logo) => {
       if (!commonLogos[logo]) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: `Referenced logo ${logo} in ${key} from beaconMetadata is not defined in commonLogos`,
-          path: ['explorer', 'beaconMetadata'],
+          path: ['market', 'beaconMetadata'],
         });
       }
     });
@@ -178,9 +178,9 @@ export const validateCommonLogosReferences: SuperRefinement<{
 export const validateBeaconMetadataReferences: SuperRefinement<{
   apis: Apis;
   chains: Chains;
-  explorer: Explorer;
-}> = ({ apis, explorer }, ctx) => {
-  Object.entries(explorer.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
+  market: Market;
+}> = ({ apis, market }, ctx) => {
+  Object.entries(market.beaconMetadata).forEach(([beaconId, beaconMetadata]) => {
     // Check if /data/apis/<apiName>/beacons contains a file with the beaconId
 
     const beacon = Object.values(apis)
@@ -190,7 +190,7 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced beacon ${beaconId} is not defined in /data/apis/<apiName>/beacons`,
-        path: ['explorer', 'beaconMetadata'],
+        path: ['market', 'beaconMetadata'],
       });
 
       return;
@@ -204,14 +204,14 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced pricing coverage chain ${chain} is not defined in the target beacon`,
-        path: ['explorer', 'beaconMetadata', beaconId, 'pricingCoverage', chain],
+        path: ['market', 'beaconMetadata', beaconId, 'pricingCoverage', chain],
       });
     });
   });
 
   // Check if the beaconId has an associated reference in beaconMetadata
 
-  const beaconMetadataEntries = Object.entries(explorer.beaconMetadata);
+  const beaconMetadataEntries = Object.entries(market.beaconMetadata);
   const flatBeacons = Object.values(apis)
     .flatMap((api) => Object.values(api.beacons))
     .map((beacon) => [beacon.beaconId, beacon]);
@@ -252,9 +252,9 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
 
   console.log(
     [
-      `Some beacons are missing from /explorer/beaconMetadata.`,
+      `Some beacons are missing from /market/beaconMetadata.`,
       `You can find a boilerplate for the missing metadata below.`,
-      `Add the following to /explorer/beaconMetadata and customise:`,
+      `Add the following to /market/beaconMetadata and customise:`,
     ].join('\n')
   );
   console.log(JSON.stringify(missingBeaconHelperDefaults, null, 2));
@@ -262,9 +262,9 @@ export const validateBeaconMetadataReferences: SuperRefinement<{
 
 export const validateBeaconSetMetadataReferences: SuperRefinement<{
   beaconSets: BeaconSets;
-  explorer: Explorer;
-}> = ({ beaconSets, explorer }, ctx) => {
-  Object.entries(explorer.beaconSetMetadata).forEach(([beaconSetId, beaconSetMetadata]) => {
+  market: Market;
+}> = ({ beaconSets, market }, ctx) => {
+  Object.entries(market.beaconSetMetadata).forEach(([beaconSetId, beaconSetMetadata]) => {
     // Check if /data/beaconSets contains a file with the beaconSetId
 
     const beaconSet = Object.values(beaconSets).find((beaconSet) => beaconSet.beaconSetId === beaconSetId);
@@ -272,7 +272,7 @@ export const validateBeaconSetMetadataReferences: SuperRefinement<{
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced beaconSet ${beaconSetId} is not defined in /data/beaconSets`,
-        path: ['explorer', 'beaconSetMetadata'],
+        path: ['market', 'beaconSetMetadata'],
       });
 
       return;
@@ -286,14 +286,14 @@ export const validateBeaconSetMetadataReferences: SuperRefinement<{
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Referenced pricing coverage chain ${chain} is not defined in the target beaconSet`,
-        path: ['explorer', 'beaconSetMetadata', beaconSetId, 'pricingCoverage', chain],
+        path: ['market', 'beaconSetMetadata', beaconSetId, 'pricingCoverage', chain],
       });
     });
   });
 
   // Check if the beaconSetId has an associated reference in beaconSetMetadata
 
-  const beaconSetMetadataEntries = Object.entries(explorer.beaconSetMetadata);
+  const beaconSetMetadataEntries = Object.entries(market.beaconSetMetadata);
   const flatBeaconSets = Object.values(beaconSets).map((beaconSet) => [beaconSet.beaconSetId, beaconSet]);
 
   const missingBeaconSetEntries = Object.fromEntries(
@@ -336,9 +336,9 @@ export const validateBeaconSetMetadataReferences: SuperRefinement<{
 
   console.log(
     [
-      `Some beaconSets are missing from /explorer/beaconSetMetadata.`,
+      `Some beaconSets are missing from /market/beaconSetMetadata.`,
       `You can find a boilerplate for the missing metadata below.`,
-      `Add the following to /explorer/beaconSetMetadata and customise:`,
+      `Add the following to /market/beaconSetMetadata and customise:`,
     ].join('\n')
   );
   console.log(JSON.stringify(missingBeaconSetHelperDefaults, null, 2));
