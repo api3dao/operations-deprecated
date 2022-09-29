@@ -1,5 +1,8 @@
 {
   "test-pricing-set-free": [{ "subscriptionFee": 0, "coverage": 0 }],
+  "polygon-testnet": [{ "subscriptionFee": 0, "coverage": 0 }],
+  "avalanche-testnet": [{ "subscriptionFee": 0, "coverage": 0 }],
+  "milkomeda-testnet": [{ "subscriptionFee": 0, "coverage": 0 }],
   "polygon": [
     { "subscriptionFee": 200, "coverage": 60000 },
     { "subscriptionFee": 450, "coverage": 120000 },

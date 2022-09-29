@@ -1,16 +1,17 @@
 import { PrismaClient, CloudType, ApplicationType, WalletType } from '@prisma/client';
+import { Config } from '@api3/airnode-validator/dist/cjs/src/config';
 import { readOperationsRepository } from '../utils/read-operations';
 import * as operationsImport from '../types';
 
 const prisma = new PrismaClient();
 
 export const getId = async (key: string) => {
-  const result = (await prisma.chainInfrastructure.findFirst({
-    where: { name: key },
-    select: { id: true },
-  })) ?? { id: 0 };
-  console.log('Query for', key, result);
-  return result;
+  return (
+    (await prisma.chainInfrastructure.findFirst({
+      where: { name: key },
+      select: { id: true },
+    })) ?? { id: 0 }
+  );
 };
 
 /*
@@ -30,7 +31,6 @@ export const getId = async (key: string) => {
  *    - [!] dapiMetadata - requires reworking
  *    - [x] pricingCoverage
  *   ~policies~ deferring for now as probably not required
- *
  */
 
 const main = async () => {
@@ -51,7 +51,6 @@ const main = async () => {
   process.env.DATABASE_URL = `postgresql://postgres:password@localhost:5432/postgres?schema=public`;
   const operations = readOperationsRepository();
 
-  console.log(`Importing ChainInfrastructure...`);
   await Promise.all(
     Object.values(operations.chains).map(async (chain) => {
       const {
@@ -75,9 +74,7 @@ const main = async () => {
           decimalPlaces,
           id: parseInt(id),
           contracts: {
-            create: Object.entries(contracts).map(([key, value]) => {
-              return { name: key, address: value };
-            }),
+            create: Object.entries(contracts).map(([name, address]) => ({ name, address })),
           },
           nativeToken: nativeToken!,
           blockTime: blockTime!,
@@ -164,21 +161,10 @@ const main = async () => {
               name,
               templateId,
               description,
-              beaconId,
+              id: beaconId,
               providerName: provider.apiMetadata.name,
               chains: { connect: createdChainConfig },
             },
-          });
-
-          await prisma.oIS.createMany({
-            data: Object.entries(provider.ois).map(([name, ois]) => {
-              return {
-                name,
-                ois: JSON.stringify(ois),
-                version: ois.version,
-                providerName: createdProvider.name,
-              };
-            }),
           });
 
           (
@@ -187,30 +173,49 @@ const main = async () => {
                 return await Promise.all(
                   Object.entries(value.airnode).flatMap(async ([appType, next]) => {
                     return await Promise.all(
-                      Object.entries(next).flatMap(async ([cloudType, airnodeNested]) => {
-                        const deployedAt = new Date(
-                          parseInt(`20${key.substring(0, 2)}`),
-                          parseInt(key.substring(2, 4)) - 1,
-                          parseInt(key.substring(4, 6)),
-                          parseInt(key.substring(7, 9)),
-                          parseInt(key.substring(9, 11))
-                        );
+                      Object.entries(next)
+                        .filter(([_cloudType, airnodeNested]) => airnodeNested?.ois)
+                        .flatMap(async ([cloudType, airnodeNestedSource]) => {
+                          const airnodeNested = airnodeNestedSource as Config;
 
-                        return {
-                          applicationType: appType === 'airnode' ? ApplicationType.Airnode : ApplicationType.Airseeker,
-                          airnodeVersion: airnodeNested.airnodeVersion,
-                          deployedAt,
-                          cloudType: cloudType.toLowerCase() === 'GCP' ? CloudType.GCP : CloudType.AWS,
-                          providerName: createdProvider.name,
-                          config: JSON.stringify(airnodeNested.config),
-                          oisId: (
-                            await prisma.oIS.create({
-                              data: airnodeNested.config.ois,
-                              select: { id: true },
+                          const oisIds = await Promise.all(
+                            airnodeNested.ois.map(async (ois) => {
+                              const result = await prisma.oIS.create({
+                                data: {
+                                  provider: { connect: { name: createdProvider.name } },
+                                  title: ois.title,
+                                  version: ois.version,
+                                  ois: JSON.stringify(airnodeNested.ois),
+                                },
+                                select: { id: true },
+                              });
+                              return { id: result.id };
                             })
-                          ).id,
-                        };
-                      })
+                          );
+
+                          const deployedAt = new Date(
+                            parseInt(`20${key.substring(0, 2)}`),
+                            parseInt(key.substring(2, 4)) - 1,
+                            parseInt(key.substring(4, 6)),
+                            parseInt(key.substring(7, 9)),
+                            parseInt(key.substring(9, 11))
+                          );
+
+                          return {
+                            applicationType:
+                              appType === 'airnode' ? ApplicationType.Airnode : ApplicationType.Airseeker,
+                            appVersion: airnodeNested.nodeSettings.nodeVersion,
+                            deployedAt,
+                            cloudType: cloudType.toLowerCase() === 'GCP' ? CloudType.GCP : CloudType.AWS,
+                            providerName: createdProvider.name,
+                            config: JSON.stringify(airnodeNested),
+                            deploymentSet: {
+                              create: oisIds.map((oisId) => {
+                                return { oISId: oisId.id };
+                              }),
+                            },
+                          };
+                        })
                     );
                   })
                 );
@@ -221,7 +226,7 @@ const main = async () => {
             .map(async (airnode) => {
               const insertable = { ...airnode, chainApiReference: undefined };
 
-              await prisma.deployment.create({
+              return await prisma.deployment.create({
                 data: insertable,
               });
             });
@@ -259,10 +264,10 @@ const main = async () => {
 
       await prisma.beaconSet.create({
         data: {
-          dataFeedId: beaconset.beaconSetId,
+          id: beaconset.beaconSetId,
           name: beaconset.name,
           description: beaconset.description,
-          beaconIds: { connect: beaconset.beaconIds.map((beaconsetId) => ({ beaconId: beaconsetId })) },
+          beaconIds: { connect: beaconset.beaconIds.map((id) => ({ id })) },
           activeChains: { connect: chainConfigs },
         },
       });
@@ -271,18 +276,29 @@ const main = async () => {
 
   await Promise.all(
     Object.entries(operations.dapis).map(async ([chainName, dapi]) => {
-      await prisma.dApi.create({
-        data: {
-          dataFeedId: { connect: { dataFeedId: dapi.dataFeedId } },
-          name: dapi.name,
-          chain: {
-            connect: (await prisma.chainInfrastructure.findFirst({
-              where: { name: chainName },
-              select: { id: true },
-            }))!,
-          },
-        },
-      });
+      await Promise.all(
+        Object.entries(dapi).map(async ([name, dataFeedId]) => {
+          const beaconExists = await prisma.beacon.findFirst({
+            where: { id: dataFeedId },
+            select: { id: true },
+          });
+          const beaconSetExists = await prisma.beaconSet.findFirst({
+            where: { id: dataFeedId },
+            select: { id: true },
+          });
+
+          return await prisma.dApi.create({
+            data: {
+              beacon: beaconExists ? { connect: { id: dataFeedId } } : undefined,
+              beaconSet: beaconSetExists ? { connect: { id: dataFeedId } } : undefined,
+              name: name,
+              chain: {
+                connect: { name: chainName },
+              },
+            },
+          });
+        })
+      );
     })
   );
 
@@ -297,7 +313,7 @@ const main = async () => {
     Object.entries(operations.explorer.pricingCoverage).map(async ([chainName, coverage]) => {
       await prisma.coverage.create({
         data: {
-          chainName,
+          id: chainName,
           coverageOptions: JSON.stringify(coverage),
         },
       });
@@ -306,55 +322,48 @@ const main = async () => {
 
   await Promise.all(
     Object.entries(operations.explorer.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) => {
-      await prisma.beaconMetadata.create({
+      await prisma.dataFeedMetadata.create({
         data: {
-          beaconId: dataFeedId,
+          id: dataFeedId,
           decimalPlaces: beaconSetMeta.decimalPlaces ?? 2,
           prefix: beaconSetMeta.prefix,
           postfix: beaconSetMeta.postfix,
-          logos: {
-            connect: beaconSetMeta.logos!.map((logo) => ({ name: logo })),
+          logoSet: {
+            create: { logos: { connect: beaconSetMeta.logos!.map((logo) => ({ name: logo })) } },
           },
           coverage: {
-            connect: await Promise.all(
-              Object.values(beaconSetMeta.pricingCoverage).map(async (pc) => {
-                return (await prisma.coverage.findUnique({ where: { chainName: pc }, select: { chainName: true } }))!;
-              })
-            ),
+            connect: Object.keys(beaconSetMeta.pricingCoverage).map((coverage) => ({ id: coverage })),
           },
-          category: {
-            connectOrCreate: { where: { name: beaconSetMeta.category }, create: { name: beaconSetMeta.category } },
-          },
+          category: beaconSetMeta.category,
         },
       });
     })
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.beaconMetadata).map(async ([beaconId, beaconMetadata]) => {
-      await prisma.beaconMetadata.create({
-        data: {
-          beaconId,
-          decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
-          prefix: beaconMetadata.prefix,
-          postfix: beaconMetadata.postfix,
-          logos: {
-            connect: beaconMetadata.logos!.map((logo) => ({ name: logo })),
+    Object.entries(operations.explorer.beaconMetadata).map(async ([id, beaconMetadata]) => {
+      try {
+        await prisma.dataFeedMetadata.create({
+          data: {
+            id,
+            decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
+            prefix: beaconMetadata.prefix,
+            postfix: beaconMetadata.postfix,
+            logoSet: {
+              create: { logos: { connect: beaconMetadata.logos!.map((logo) => ({ name: logo })) } },
+            },
+            coverage: {
+              connect: Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
+            },
+            category: beaconMetadata.category,
           },
-          coverage: {
-            connect: await Promise.all(
-              Object.values(beaconMetadata.pricingCoverage).map(async (pc) => {
-                return (await prisma.coverage.findUnique({ where: { chainName: pc }, select: { chainName: true } }))!;
-              })
-            ),
-          },
-          category: {
-            connectOrCreate: { where: { name: beaconMetadata.category }, create: { name: beaconMetadata.category } },
-          },
-        },
-      });
+        });
+      } catch (e) {
+        console.error(e);
+        console.error((e as Error).stack);
+        console.log(Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ chainName: coverage })));
+      }
     })
   );
 };
-
 main().catch(console.trace);

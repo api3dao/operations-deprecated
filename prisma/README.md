@@ -23,12 +23,16 @@ yarn db push
 # Browse the DB via a UI
 yarn prisma studio
 
-# Load operations into the database TODO
+# Load operations into the database
 yarn database:translate-operations
 ```
 
-TODO Reset DB, migrate, probably redundant
+Useful command: Reset the DB, migrate, load operations
 
 ```shell
-yarn prisma migrate reset --force && yarn prisma format && yarn prisma generate && yarn prisma db push
+yarn prisma format &&\
+yarn prisma migrate reset --force &&\
+yarn prisma generate &&\
+yarn prisma db push &&\
+yarn ts-node src/database/translate-operations.ts # or yarn database:translate-operations
 ```
