@@ -139,7 +139,7 @@ model ChainConfiguration {
   active                  Boolean // Is this chain configuration active?
   sponsor                 String // The sponsor to be used when executing updates
   topUpWallet             TopUpWallet[] // The TopUpWallets used to fund updates for beacons associated with this chain
-  airSeekerConfig         Json // The Airseeker configuration blob, stored as JSON: refer to `airseekerConfig`
+  airSeekerConfig         Json? // The Airseeker configuration blob, stored as JSON: refer to `airseekerConfig`
   beaconSet               BeaconSet?          @relation(fields: [beaconSetId], references: [id])
   updatedAt               DateTime            @updatedAt // The last time this chain configuration was updated
   chainInfrastructureName String // FK: The name of this chain configuration, eg. "ropsten"

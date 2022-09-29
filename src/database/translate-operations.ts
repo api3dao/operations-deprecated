@@ -27,11 +27,11 @@ export const getId = async (key: string) => {
  *  [x] beaconsets
  *  [x] chains
  *  [x] dapis
- *  explorer
+ *  market
  *    - [x] beaconMetadata
  *    - [x] beaconsetmetadata
  *    - [x] commonlogos
- *    - [ ] dapiMetadata - requires reworking
+ *    - [x] dapiMetadata
  *    - [x] pricingCoverage
  *   ~policies~ deferring for now as probably not required
  */
@@ -152,7 +152,7 @@ const main = async () => {
                   active,
                   sponsor,
                   topUpWallet: { connect: topUpWalletResults },
-                  airSeekerConfig: JSON.stringify(airseekerConfig),
+                  airSeekerConfig: airseekerConfig,
                 },
                 select: { id: true },
               });
@@ -188,7 +188,7 @@ const main = async () => {
                                   provider: { connect: { name: createdProvider.name } },
                                   title: ois.title,
                                   version: ois.version,
-                                  ois: JSON.stringify(airnodeNested.ois),
+                                  ois: airnodeNested.ois,
                                 },
                                 select: { id: true },
                               });
@@ -211,7 +211,7 @@ const main = async () => {
                             deployedAt,
                             cloudType: cloudType.toLowerCase() === 'GCP' ? CloudType.GCP : CloudType.AWS,
                             providerName: createdProvider.name,
-                            config: JSON.stringify(airnodeNested),
+                            config: airnodeNested,
                             deploymentSet: {
                               create: oisIds.map((oisId) => {
                                 return { oISId: oisId.id };
@@ -256,7 +256,7 @@ const main = async () => {
                   walletType: getDbWalletType(wallet.walletType),
                 })),
               },
-              airSeekerConfig: JSON.stringify(chain.airseekerConfig),
+              airSeekerConfig: chain.airseekerConfig,
             },
             select: { id: true },
           });
@@ -304,25 +304,25 @@ const main = async () => {
   );
 
   await prisma.logo.createMany({
-    data: Object.entries(operations.explorer.commonLogos).map(([name, url]) => ({
+    data: Object.entries(operations.market.commonLogos).map(([name, url]) => ({
       name,
       url,
     })),
   });
 
   await Promise.all(
-    Object.entries(operations.explorer.pricingCoverage).map(([chainName, coverage]) =>
+    Object.entries(operations.market.pricingCoverage).map(([chainName, coverage]) =>
       prisma.coverage.create({
         data: {
           id: chainName,
-          coverageOptions: JSON.stringify(coverage),
+          coverageOptions: coverage,
         },
       })
     )
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) =>
+    Object.entries(operations.market.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) =>
       prisma.dataFeedMetadata.create({
         data: {
           id: dataFeedId,
@@ -342,7 +342,7 @@ const main = async () => {
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.beaconMetadata).map(([id, beaconMetadata]) =>
+    Object.entries(operations.market.beaconMetadata).map(([id, beaconMetadata]) =>
       prisma.dataFeedMetadata.create({
         data: {
           id,
@@ -362,7 +362,7 @@ const main = async () => {
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.dapiMetadata).map(([id, dapiMetadata]) =>
+    Object.entries(operations.market.dapiMetadata).map(([id, dapiMetadata]) =>
       prisma.dApiMetadata.create({
         data: {
           id,

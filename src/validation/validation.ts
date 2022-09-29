@@ -53,6 +53,12 @@ export const topUpWalletSchema = z
   })
   .strict();
 
+export const airSeekerConfigSchema = z.object({
+  deviationThreshold: z.number(),
+  heartbeatInterval: z.number(),
+  updateInterval: z.number(),
+});
+
 /**
  * Extended Chain Description Schema
  *
@@ -74,13 +80,7 @@ export const extendedChainDescriptionSchema = z
     topUpWallets: z.array(topUpWalletSchema),
     updateConditionPercentage: z.number().optional(),
     displayDisabled: z.boolean().optional(),
-    airseekerConfig: z
-      .object({
-        deviationThreshold: z.number(),
-        heartbeatInterval: z.number(),
-        updateInterval: z.number(),
-      })
-      .optional(),
+    airseekerConfig: airSeekerConfigSchema.optional(),
   })
   .strict();
 
