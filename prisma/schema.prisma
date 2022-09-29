@@ -228,64 +228,58 @@ model Coverage {
   id                       String               @id // The name of the coverage, usually the chain name, eg. "rsk"
   DataFeedMetadata         DataFeedMetadata?    @relation(fields: [dataFeedMetadataBeaconId], references: [id])
   dataFeedMetadataBeaconId String?
-  dApiMetadata             DApiMetadata?        @relation(fields: [dApiMetadataName], references: [name])
-  dApiMetadataName         String?
   updatedAt                DateTime             @updatedAt // When the record was last updated
   coverageOptions          Json // a JSON payload complying with the existing Coverage type
   chainInfrastructureName  String?
   ChainInfrastructure      ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
+  DApiMetadata             DApiMetadata?        @relation(fields: [dApiMetadataId], references: [id])
+  dApiMetadataId           String?
 }
 
 // Commonly used logo URLs
 model Logo {
-  name                     String            @id // The name of the logo, eg. "USD"
-  url                      String // A URL pointing to the logo in question
-  DataFeedMetadata         DataFeedMetadata? @relation(fields: [dataFeedMetadataBeaconId], references: [id])
-  dataFeedMetadataBeaconId String?
-  aApiMetadata             DApiMetadata?     @relation(fields: [dApiMetadataName], references: [name])
-  dApiMetadataName         String?
-  updatedAt                DateTime          @updatedAt // The last time this record was updated
-  LogoSet                  LogoSet?          @relation(fields: [logoSetId], references: [id])
-  logoSetId                String?           @db.Uuid
+  name      String   @id // The name of the logo, eg. "USD"
+  url       String // A URL pointing to the logo in question
+  updatedAt DateTime @updatedAt // The last time this record was updated
+  LogoSet   LogoSet? @relation(fields: [logoSetId], references: [id])
+  logoSetId String?  @db.Uuid
 }
 
+// A beacon and/or beaconset can have many logos and logos can each have many associated data feeds. This is therefore
+// a many-to-many relationship. A LogoSet is an association between these two sets of records.
 model LogoSet {
   id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  logos            Logo[]
-  dataFeedMetadata DataFeedMetadata[]
+  logos            Logo[] // The logos this LogoSet references
+  dataFeedMetadata DataFeedMetadata[] // The dataFeedMetadata that reference this LogoSet
 }
 
 // UI specific beacon or beaconset metadata
 model DataFeedMetadata {
   id            String     @id // The hashed ID of the target beacon or beacon set
-  category      String
-  coverage      Coverage[]
-  decimalPlaces Int
+  category      String // A human-readable category name, eg. "Cryptocurrency" or "Forex"
+  coverage      Coverage[] // Coverage pricing/options
+  decimalPlaces Int // The number of decimal places used when rendering this in a UI
   logoSet       LogoSet    @relation(fields: [logoSetId], references: [id])
-  prefix        String?
-  postfix       String?
+  prefix        String? // A prefix, usually a currency symbol
+  postfix       String? // A postfix, usually a unit, like "cm"
   updatedAt     DateTime   @updatedAt
-  Logo          Logo[]
   logoSetId     String     @db.Uuid
 }
 
+// Additional DAPI metadata
 model DApiMetadata {
-  name                    String              @id
-  chain                   ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  id                      String               @id
   coverage                Coverage[]
-  decimalPlaces           Int
-  logos                   Logo[]
-  prefix                  String
-  postfix                 String
-  chainInfrastructureName String
-  category                String
-  updatedAt               DateTime            @updatedAt
+  updatedAt               DateTime             @updatedAt
+  ChainInfrastructure     ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String?
 }
 
+// Represents different transaction types on an account
 enum ClientTransactionType {
-  CoveragePurchase
-  Deposit
-  Withdrawal
+  CoveragePurchase // Transaction represents a coverage purchase
+  Deposit // eg. a client pays us
+  Withdrawal // eg. we refund a client for an over-payment.
 }
 
 // Represents a transaction on a client's account
@@ -293,9 +287,9 @@ model ClientTransaction {
   id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   when                  DateTime              @default(dbgenerated("now()"))
   clientTransactionType ClientTransactionType
-  paymentType           PaymentType
-  Reference             String?
-  transactionHash       String?
+  paymentType           PaymentType // The Currency used
+  Reference             String? // If there's a remote transaction reference
+  transactionHash       String? // If applicable a transactionHash
   detail                String
   notes                 String
   clientAccount         ClientAccount         @relation(fields: [clientAccountId], references: [id])
@@ -303,51 +297,74 @@ model ClientTransaction {
   coveragePolicy        CoveragePolicy[]
   coverageQuote         CoverageQuote?        @relation(fields: [coverageQuoteId], references: [id])
   coverageQuoteId       String?               @db.Uuid
+  CoverageInvoice       CoverageInvoice[]
 }
 
+// Represents different payment types
 enum PaymentType {
+  Circle
   USDC
-  Ethereum
   USDWire
+  Ethereum
 }
 
+// Represents banking details for a client - possibly not needed
 model BankingDetails {
   id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   type            PaymentType
-  detail          String
-  verified        DateTime?
+  detail          String // A manually verified banking details blob
+  verified        DateTime? // If not null someone verified the details
   clientAccount   ClientAccount? @relation(fields: [clientAccountId], references: [id])
   clientAccountId String?        @db.Uuid
 }
 
+// Bundles transactions together
 model ClientAccount {
   id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   clientTransactionId String              @db.Uuid
   clientTransactions  ClientTransaction[]
   coverageClient      CoverageClient[]
-  balance             Decimal
+  balance             Decimal // cached computed value
   bankingDetails      BankingDetails[]
 }
 
+// Coverage client information - someone who purchases coverage
 model CoverageClient {
   id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firstName       String
   lastName        String
+  contactEmail    String
+  contactAddress  String
+  contactPhone    String
   clientAccount   ClientAccount    @relation(fields: [clientAccountId], references: [id])
   clientAccountId String           @db.Uuid
   coveragePolicy  CoveragePolicy[]
 }
 
+// CoverageClient requests a CoverageQuote and has a specific amount of time to accept said quote
 model CoverageQuote {
   id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   amount            Decimal
   expiry            DateTime
   createdAt         DateTime            @default(dbgenerated("now()"))
   coveragePolicy    CoveragePolicy[]
-  sentToClient      Json
-  clientTransaction ClientTransaction[]
+  sentToClient      Json // what was actually sent to the client
+  ClientTransaction ClientTransaction[]
+  CoverageInvoice   CoverageInvoice[]
 }
 
+// If there's an invoice we're either waiting for payment or have received payment
+model CoverageInvoice {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  coverageQuote       CoverageQuote     @relation(fields: [coverageQuoteId], references: [id])
+  clientTransaction   ClientTransaction @relation(fields: [clientTransactionId], references: [id])
+  paymentReference    String
+  expiry              DateTime
+  coverageQuoteId     String            @db.Uuid
+  clientTransactionId String            @db.Uuid
+}
+
+// A coverage policy - as per existing framework
 model CoveragePolicy {
   id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   coverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
@@ -371,30 +388,45 @@ model CoveragePolicy {
   coverageQuoteId       String            @db.Uuid
 }
 
-model BlockCheck {
-  id          Int @id
-  chainId     Int
-  blockNumber Int
-
-  @@unique([chainId, blockNumber])
-  @@index([blockNumber])
-  @@index([chainId])
-}
-
-model ChainEvent {
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractEvents {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   when            DateTime
-  blockNumber     Int
-  sourceContract  String
+  chain           BigInt
+  block           BigInt
   transactionHash String
-  eventIndex      Int
-  eventType       String
+  logIndex        Int
+  eventName       String
+  transactionData Json
   eventData       Json
+  contractAddress String
 
-  @@unique([blockNumber, sourceContract, transactionHash, eventIndex])
-  @@index([blockNumber])
+  @@unique([transactionHash, logIndex])
   @@index([when])
-  @@index([sourceContract])
-  @@index([transactionHash])
-  @@index([eventType])
+  @@index([eventName])
+  @@index([contractAddress])
+}
+
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractTransactions {
+  transactionHash String   @id
+  when            DateTime
+  chain           BigInt
+  block           BigInt
+  transactionData Json
+
+  @@index([when])
+}
+
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractLastBlockPerChain {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when            DateTime @default(dbgenerated("now()"))
+  chain           BigInt
+  block           BigInt
+  contractAddress String
+
+  @@unique([chain, block, contractAddress])
+  @@index([contractAddress])
+  @@index([when])
 }

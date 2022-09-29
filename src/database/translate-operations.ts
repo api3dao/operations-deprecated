@@ -1,3 +1,6 @@
+// This script loads operations into the database.
+// It is not intended to be used long-term; it's just a way of bootstrapping the database.
+
 import { PrismaClient, CloudType, ApplicationType, WalletType } from '@prisma/client';
 import { Config } from '@api3/airnode-validator/dist/cjs/src/config';
 import { readOperationsRepository } from '../utils/read-operations';
@@ -28,7 +31,7 @@ export const getId = async (key: string) => {
  *    - [x] beaconMetadata
  *    - [x] beaconsetmetadata
  *    - [x] commonlogos
- *    - [!] dapiMetadata - requires reworking
+ *    - [ ] dapiMetadata - requires reworking
  *    - [x] pricingCoverage
  *   ~policies~ deferring for now as probably not required
  */
@@ -169,11 +172,11 @@ const main = async () => {
 
           (
             await Promise.all(
-              Object.entries(provider.deployments).flatMap(async ([key, value]) => {
-                return await Promise.all(
-                  Object.entries(value.airnode).flatMap(async ([appType, next]) => {
-                    return await Promise.all(
-                      Object.entries(next)
+              Object.entries(provider.deployments).flatMap(([key, value]) =>
+                Promise.all(
+                  Object.entries(value.airnode).flatMap(([appType, nextLevelDown]) =>
+                    Promise.all(
+                      Object.entries(nextLevelDown)
                         .filter(([_cloudType, airnodeNested]) => airnodeNested?.ois)
                         .flatMap(async ([cloudType, airnodeNestedSource]) => {
                           const airnodeNested = airnodeNestedSource as Config;
@@ -216,20 +219,18 @@ const main = async () => {
                             },
                           };
                         })
-                    );
-                  })
-                );
-              })
+                    )
+                  )
+                )
+              )
             )
           )
             .flat(10)
-            .map(async (airnode) => {
-              const insertable = { ...airnode, chainApiReference: undefined };
-
-              return await prisma.deployment.create({
-                data: insertable,
-              });
-            });
+            .map((airnode) =>
+              prisma.deployment.create({
+                data: { ...airnode, chainApiReference: undefined },
+              })
+            );
         })
       );
     })
@@ -275,8 +276,8 @@ const main = async () => {
   );
 
   await Promise.all(
-    Object.entries(operations.dapis).map(async ([chainName, dapi]) => {
-      await Promise.all(
+    Object.entries(operations.dapis).map(([chainName, dapi]) =>
+      Promise.all(
         Object.entries(dapi).map(async ([name, dataFeedId]) => {
           const beaconExists = await prisma.beacon.findFirst({
             where: { id: dataFeedId },
@@ -298,8 +299,8 @@ const main = async () => {
             },
           });
         })
-      );
-    })
+      )
+    )
   );
 
   await prisma.logo.createMany({
@@ -310,19 +311,19 @@ const main = async () => {
   });
 
   await Promise.all(
-    Object.entries(operations.explorer.pricingCoverage).map(async ([chainName, coverage]) => {
-      await prisma.coverage.create({
+    Object.entries(operations.explorer.pricingCoverage).map(([chainName, coverage]) =>
+      prisma.coverage.create({
         data: {
           id: chainName,
           coverageOptions: JSON.stringify(coverage),
         },
-      });
-    })
+      })
+    )
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) => {
-      await prisma.dataFeedMetadata.create({
+    Object.entries(operations.explorer.beaconSetMetadata).map(async ([dataFeedId, beaconSetMeta]) =>
+      prisma.dataFeedMetadata.create({
         data: {
           id: dataFeedId,
           decimalPlaces: beaconSetMeta.decimalPlaces ?? 2,
@@ -336,34 +337,41 @@ const main = async () => {
           },
           category: beaconSetMeta.category,
         },
-      });
-    })
+      })
+    )
   );
 
   await Promise.all(
-    Object.entries(operations.explorer.beaconMetadata).map(async ([id, beaconMetadata]) => {
-      try {
-        await prisma.dataFeedMetadata.create({
-          data: {
-            id,
-            decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
-            prefix: beaconMetadata.prefix,
-            postfix: beaconMetadata.postfix,
-            logoSet: {
-              create: { logos: { connect: beaconMetadata.logos!.map((logo) => ({ name: logo })) } },
-            },
-            coverage: {
-              connect: Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
-            },
-            category: beaconMetadata.category,
+    Object.entries(operations.explorer.beaconMetadata).map(([id, beaconMetadata]) =>
+      prisma.dataFeedMetadata.create({
+        data: {
+          id,
+          decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
+          prefix: beaconMetadata.prefix,
+          postfix: beaconMetadata.postfix,
+          logoSet: {
+            create: { logos: { connect: beaconMetadata.logos!.map((logo) => ({ name: logo })) } },
           },
-        });
-      } catch (e) {
-        console.error(e);
-        console.error((e as Error).stack);
-        console.log(Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ chainName: coverage })));
-      }
-    })
+          coverage: {
+            connect: Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
+          },
+          category: beaconMetadata.category,
+        },
+      })
+    )
+  );
+
+  await Promise.all(
+    Object.entries(operations.explorer.dapiMetadata).map(([id, dapiMetadata]) =>
+      prisma.dApiMetadata.create({
+        data: {
+          id,
+          coverage: {
+            connect: Object.keys(dapiMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
+          },
+        },
+      })
+    )
   );
 };
 main().catch(console.trace);
