@@ -480,7 +480,7 @@ describe('writeOperationsRepository', () => {
     });
   });
 
-  describe('explorer', () => {
+  describe('market', () => {
     it('writes changes to beaconMetadata', () => {
       // Add new test beacon first
       const coingeckoTestBeaconId = ethers.utils.hexlify(ethers.utils.randomBytes(32));
@@ -494,7 +494,7 @@ describe('writeOperationsRepository', () => {
       // Then add the beaconId reference to beaconMetadata
       const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
       const coingeckoTestBeaconMetaData = {
-        ...mockOpsRepo.explorer.beaconMetadata,
+        ...mockOpsRepo.market.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
           pricingCoverage: { ropsten: 'test-pricing-set' },
@@ -513,11 +513,11 @@ describe('writeOperationsRepository', () => {
             },
           },
         },
-        explorer: {
-          ...mockOpsRepo.explorer,
+        market: {
+          ...mockOpsRepo.market,
           beaconMetadata: coingeckoTestBeaconMetaData,
           pricingCoverage: {
-            ...mockOpsRepo.explorer.pricingCoverage,
+            ...mockOpsRepo.market.pricingCoverage,
             ...testPricingCoverage,
           },
         },
@@ -525,7 +525,7 @@ describe('writeOperationsRepository', () => {
 
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(tempTestPath, 'explorer', 'beaconMetadata.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'market', 'beaconMetadata.json'))).toBe(true);
 
       const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
@@ -543,7 +543,7 @@ describe('writeOperationsRepository', () => {
       // Then add the beaconId reference to beaconMetadata
       const testPricingCoverage = { 'test-pricing-set': [{ subscriptionFee: 1000, coverage: 15000 }] };
       const coingeckoTestBeaconMetadata = {
-        ...mockOpsRepo.explorer.beaconMetadata,
+        ...mockOpsRepo.market.beaconMetadata,
         [coingeckoTestBeaconId]: {
           category: 'test',
           pricingCoverage: { ropsten: 'test-pricing-set' },
@@ -562,7 +562,7 @@ describe('writeOperationsRepository', () => {
       };
 
       const coingeckoTestBeaconSetMetadata = {
-        ...mockOpsRepo.explorer.beaconSetMetadata,
+        ...mockOpsRepo.market.beaconSetMetadata,
         [coingeckoTestBeaconSetId]: {
           category: 'test',
           pricingCoverage: { ropsten: 'test-pricing-set' },
@@ -585,12 +585,12 @@ describe('writeOperationsRepository', () => {
           ...mockOpsRepo.beaconSets,
           ['coingeckoTestBeaconSet']: coingeckoTestBeaconSet,
         },
-        explorer: {
-          ...mockOpsRepo.explorer,
+        market: {
+          ...mockOpsRepo.market,
           beaconMetadata: coingeckoTestBeaconMetadata,
           beaconSetMetadata: coingeckoTestBeaconSetMetadata,
           pricingCoverage: {
-            ...mockOpsRepo.explorer.pricingCoverage,
+            ...mockOpsRepo.market.pricingCoverage,
             ...testPricingCoverage,
           },
         },
@@ -599,7 +599,7 @@ describe('writeOperationsRepository', () => {
       // @ts-ignore
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(tempTestPath, 'explorer', 'beaconSetMetadata.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'market', 'beaconSetMetadata.json'))).toBe(true);
 
       const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
@@ -607,21 +607,21 @@ describe('writeOperationsRepository', () => {
 
     it('writes changes to pricingCoverage', () => {
       const coingeckoTestPricingCoverage = {
-        ...mockOpsRepo.explorer.pricingCoverage,
+        ...mockOpsRepo.market.pricingCoverage,
         pricingCoverage: [],
       };
 
       const updatedOpsRepo = {
         ...mockOpsRepo,
-        explorer: {
-          ...mockOpsRepo.explorer,
+        market: {
+          ...mockOpsRepo.market,
           pricingCoverage: coingeckoTestPricingCoverage,
         },
       };
 
       writeOperationsRepository(updatedOpsRepo, tempTestPath);
 
-      expect(existsSync(join(tempTestPath, 'explorer', 'pricingCoverage.json'))).toBe(true);
+      expect(existsSync(join(tempTestPath, 'market', 'pricingCoverage.json'))).toBe(true);
 
       const writtenOpsRepo = readOperationsRepository(tempTestPath);
       expect(writtenOpsRepo).toEqual(updatedOpsRepo);
