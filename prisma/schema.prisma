@@ -47,25 +47,27 @@ model Provider {
 
 // An OIS (aka Integration in ChainAPI parlance) defines mappings between HTTP APIs and a common EVM compatible interface.
 // An OIS is generally owned by a Provider... but could be used by a different provider's Airnode in practice.
+// It is possible for an Airnode to have multiple OISes and for a provider to have multiple deployments each with multiple
+// OISes. many-many relationships get painful quickly, so this table isn't properly related; it's a convenience
 model OIS {
-  id           String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   ois          Json // The OIS JSON blob
-  deployment   DeploymentSet[]
-  provider     Provider        @relation(fields: [providerName], references: [name])
+  provider     Provider @relation(fields: [providerName], references: [name])
   title        String // The name of this OIS, eg. "Amberdata"
   version      String // The version of this OIS, eg. "1.0.0"
-  updatedAt    DateTime        @updatedAt // The last time this OIS was updated
-  providerName String          @db.Text // The name of the provider this OIS "belongs" to
+  updatedAt    DateTime @updatedAt // The last time this OIS was updated
+  providerName String   @db.Text // The name of the provider this OIS "belongs" to
 }
 
 // A Template defines an API call based on an OIS
 model Template {
-  templateId String   @id // The EVM hashed templateId
-  name       String // The human-readable name of this template
-  endpointId String // The hashed endpoint Id
-  parameters String // The encoded parameters of this template
-  beacon     Beacon[] // The beacons that reference this template
-  updatedAt  DateTime @updatedAt // The last time this template was updated - should really be immutable.
+  templateId        String   @id // The EVM hashed templateId
+  name              String // The human-readable name of this template
+  endpointId        String // The hashed endpoint Id
+  parameters        String // The encoded parameters of this template
+  decodedParameters Json // As a convenience, the decoded variant of the parameters
+  beacon            Beacon[] // The beacons that reference this template
+  updatedAt         DateTime @updatedAt // The last time this template was updated - should really be immutable.
 }
 
 // A Provider has Beacons built on top of their API(s), Templates and Airnodes
@@ -91,7 +93,6 @@ model Deployment {
   chainApiReference String? // Every deployment should reference a chain api record
   appVersion        String // The Airnode version, eg. "0.7.5"
   config            Json // The JSON config blob belonging to this Airnode
-  deploymentSet     DeploymentSet[]
   provider          Provider        @relation(fields: [providerName], references: [name])
   providerName      String          @db.Text // The provider that "owns" this deployment
   updatedAt         DateTime        @updatedAt // The last time this deployment was updated
@@ -105,13 +106,6 @@ model Deployment {
 //
 // Here an Airnode/Airkeeper/Airseeker application deployment references a DeploymentSet, which is also referenced
 // by multiple OISes.
-model DeploymentSet {
-  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  OIS          OIS?        @relation(fields: [oISId], references: [id])
-  oISId        String?     @db.Uuid
-  Deployment   Deployment? @relation(fields: [deploymentId], references: [id])
-  deploymentId String?     @db.Uuid
-}
 
 // WalletType represents the following wallet types:
 enum WalletType {
@@ -238,32 +232,34 @@ model Coverage {
 
 // Commonly used logo URLs
 model Logo {
-  name      String   @id // The name of the logo, eg. "USD"
-  url       String // A URL pointing to the logo in question
-  updatedAt DateTime @updatedAt // The last time this record was updated
-  LogoSet   LogoSet? @relation(fields: [logoSetId], references: [id])
-  logoSetId String?  @db.Uuid
+  name             String                    @id // The name of the logo, eg. "USD"
+  url              String // A URL pointing to the logo in question
+  updatedAt        DateTime                  @updatedAt // The last time this record was updated
+  dataFeedMetadata LogosOnDataFeedMetadata[]
 }
 
 // A beacon and/or beaconset can have many logos and logos can each have many associated data feeds. This is therefore
-// a many-to-many relationship. A LogoSet is an association between these two sets of records.
-model LogoSet {
-  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  logos            Logo[] // The logos this LogoSet references
-  dataFeedMetadata DataFeedMetadata[] // The dataFeedMetadata that reference this LogoSet
+// a many-to-many relationship. This model acts as an association between these two sets of records.
+// It could alternatively be implemented loosely without checks.
+model LogosOnDataFeedMetadata {
+  Logo               Logo             @relation(fields: [logoName], references: [name])
+  logoName           String
+  DataFeedMetadata   DataFeedMetadata @relation(fields: [dataFeedMetadataId], references: [id])
+  dataFeedMetadataId String
+
+  @@id([logoName, dataFeedMetadataId])
 }
 
 // UI specific beacon or beaconset metadata
 model DataFeedMetadata {
-  id            String     @id // The hashed ID of the target beacon or beacon set
+  id            String                    @id // The hashed ID of the target beacon or beacon set
   category      String // A human-readable category name, eg. "Cryptocurrency" or "Forex"
   coverage      Coverage[] // Coverage pricing/options
   decimalPlaces Int // The number of decimal places used when rendering this in a UI
-  logoSet       LogoSet    @relation(fields: [logoSetId], references: [id])
+  logos         LogosOnDataFeedMetadata[]
   prefix        String? // A prefix, usually a currency symbol
   postfix       String? // A postfix, usually a unit, like "cm"
-  updatedAt     DateTime   @updatedAt
-  logoSetId     String     @db.Uuid
+  updatedAt     DateTime                  @updatedAt
 }
 
 // Additional DAPI metadata

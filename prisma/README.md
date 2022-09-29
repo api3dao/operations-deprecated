@@ -27,7 +27,7 @@ yarn prisma studio
 yarn database:translate-operations
 ```
 
-Useful command: Reset the DB, migrate, load operations
+#### Or, all together: Reset the DB, migrate, load operations
 
 ```shell
 yarn prisma format &&\
@@ -36,3 +36,10 @@ yarn prisma generate &&\
 yarn prisma db push &&\
 yarn ts-node src/database/translate-operations.ts # or yarn database:translate-operations
 ```
+
+#### Examples of database usage
+
+Refer to `generate-exports.ts`, which partially replicates the functionality of `export-ops-json-payloads.ts` for
+various query examples.
+
+Refer to `translate-operations.ts` for examples of how data can be loaded en-masse.

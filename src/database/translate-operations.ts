@@ -113,11 +113,12 @@ const main = async () => {
 
       const templates = Object.values(provider.templates);
       await prisma.template.createMany({
-        data: templates.map(({ name, templateId, endpointId, parameters }) => ({
+        data: templates.map(({ name, templateId, endpointId, parameters, decodedParameters }) => ({
           name,
           templateId,
           endpointId,
           parameters,
+          decodedParameters,
         })),
       });
 
@@ -181,7 +182,7 @@ const main = async () => {
                         .flatMap(async ([cloudType, airnodeNestedSource]) => {
                           const airnodeNested = airnodeNestedSource as Config;
 
-                          const oisIds = await Promise.all(
+                          await Promise.all(
                             airnodeNested.ois.map(async (ois) => {
                               const result = await prisma.oIS.create({
                                 data: {
@@ -212,11 +213,6 @@ const main = async () => {
                             cloudType: cloudType.toLowerCase() === 'GCP' ? CloudType.GCP : CloudType.AWS,
                             providerName: createdProvider.name,
                             config: airnodeNested,
-                            deploymentSet: {
-                              create: oisIds.map((oisId) => {
-                                return { oISId: oisId.id };
-                              }),
-                            },
                           };
                         })
                     )
@@ -329,8 +325,8 @@ const main = async () => {
           decimalPlaces: beaconSetMeta.decimalPlaces ?? 2,
           prefix: beaconSetMeta.prefix,
           postfix: beaconSetMeta.postfix,
-          logoSet: {
-            create: { logos: { connect: beaconSetMeta.logos!.map((logo) => ({ name: logo })) } },
+          logos: {
+            create: beaconSetMeta.logos!.map((logo) => ({ logoName: logo })),
           },
           coverage: {
             connect: Object.keys(beaconSetMeta.pricingCoverage).map((coverage) => ({ id: coverage })),
@@ -341,25 +337,25 @@ const main = async () => {
     )
   );
 
-  await Promise.all(
-    Object.entries(operations.market.beaconMetadata).map(([id, beaconMetadata]) =>
-      prisma.dataFeedMetadata.create({
-        data: {
-          id,
-          decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
-          prefix: beaconMetadata.prefix,
-          postfix: beaconMetadata.postfix,
-          logoSet: {
-            create: { logos: { connect: beaconMetadata.logos!.map((logo) => ({ name: logo })) } },
-          },
-          coverage: {
-            connect: Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
-          },
-          category: beaconMetadata.category,
+  const beaconMetadataEntries = Object.entries(operations.market.beaconMetadata);
+
+  for (const [id, beaconMetadata] of beaconMetadataEntries) {
+    await prisma.dataFeedMetadata.create({
+      data: {
+        id,
+        decimalPlaces: beaconMetadata.decimalPlaces ?? 2,
+        prefix: beaconMetadata.prefix,
+        postfix: beaconMetadata.postfix,
+        logos: {
+          create: beaconMetadata.logos!.map((logo) => ({ logoName: logo })),
         },
-      })
-    )
-  );
+        coverage: {
+          connect: Object.keys(beaconMetadata.pricingCoverage).map((coverage) => ({ id: coverage })),
+        },
+        category: beaconMetadata.category,
+      },
+    });
+  }
 
   await Promise.all(
     Object.entries(operations.market.dapiMetadata).map(([id, dapiMetadata]) =>
