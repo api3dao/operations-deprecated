@@ -91,7 +91,7 @@
     "jest": "^28.1.0",
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
-    "prisma": "^4.3.1",
+    "prisma": "^4.4.0",
     "prisma-erd-generator": "^1.2.0",
     "prisma-typegraphql-types-generator": "^1.5.14",
     "prompts": "^2.4.2",

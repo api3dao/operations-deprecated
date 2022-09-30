@@ -20,13 +20,13 @@ scripts that deal with creating the configs and deployment for airnode, airkeepe
 
 - Creates the boilerplate directory for the API provider
 
-## explorer
+## market
 
-scripts that perform operations on the api3 explorer content
+scripts that perform operations on the api3 market content
 
 ### add-missing-beacon-metadata
 
-- used to add missing beacon metadata to the explorer
+- used to add missing beacon metadata to the market
 
 ## inspect
 

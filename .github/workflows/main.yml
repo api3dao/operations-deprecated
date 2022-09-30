@@ -10,7 +10,7 @@ on:
 env:
   TARGET_NODE_VERSION: '16.17.0'
   REACT_APP_COMMIT_HASH: ${{ github.sha }}
-  PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
+  PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/market'
   REACT_APP_PREVIEW_BUILD: 'TRUE'
   LIVE_OPS_DATA: 'TRUE'
   OPERATIONS_GIT_BRANCH: ${{ github.sha }}

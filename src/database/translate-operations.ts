@@ -13,7 +13,7 @@ export const getId = async (key: string) => {
     (await prisma.chainInfrastructure.findFirst({
       where: { name: key },
       select: { id: true },
-    })) ?? { id: 0 }
+    })) ?? { id: '-1' }
   );
 };
 
@@ -75,7 +75,7 @@ const main = async () => {
           name,
           fullName,
           decimalPlaces,
-          id: parseInt(id),
+          id,
           contracts: {
             create: Object.entries(contracts).map(([name, address]) => ({ name, address })),
           },
@@ -210,7 +210,7 @@ const main = async () => {
                               appType === 'airnode' ? ApplicationType.Airnode : ApplicationType.Airseeker,
                             appVersion: airnodeNested.nodeSettings.nodeVersion,
                             deployedAt,
-                            cloudType: cloudType.toLowerCase() === 'GCP' ? CloudType.GCP : CloudType.AWS,
+                            cloudType: cloudType.toUpperCase() as CloudType,
                             providerName: createdProvider.name,
                             config: airnodeNested,
                           };
@@ -241,7 +241,7 @@ const main = async () => {
               chain: {
                 connect: (await prisma.chainInfrastructure.findFirst({
                   where: { name: chainName },
-                  select: { name: true },
+                  select: { id: true },
                 }))!,
               },
               active: chain.active,

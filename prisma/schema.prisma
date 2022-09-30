@@ -179,10 +179,10 @@ model DeployedContract {
 
 // A representation of on-chain infrastructure
 model ChainInfrastructure {
-  name               String               @id // The name of the chain this record describes
+  id                 String               @id // The chainId of this chain
+  name               String               @unique // The name of the chain this record describes
   fullName           String               @unique // The full, human-readable name
   decimalPlaces      Int // The number of decimal places used when displaying this chain's native token
-  id                 Int                  @unique // The chainId of this chain
   contracts          DeployedContract[] // The contracts we're interested in currently deployed on this chain
   nativeToken        String               @unique // The native token of this chain (eg. ETH)
   blockTime          Float? // The average block issuance interval
