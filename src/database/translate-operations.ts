@@ -235,14 +235,11 @@ const main = async () => {
   await Promise.all(
     Object.values(operations.beaconSets).map(async (beaconset) => {
       const chainConfigs = await Promise.all(
-        Object.entries(beaconset.chains).map(async ([chainName, chain]) => {
-          return prisma.chainConfiguration.create({
+        Object.entries(beaconset.chains).map(async ([chainName, chain]) =>
+          prisma.chainConfiguration.create({
             data: {
               chain: {
-                connect: (await prisma.chainInfrastructure.findFirst({
-                  where: { name: chainName },
-                  select: { id: true },
-                }))!,
+                connect: await getId(chainName),
               },
               active: chain.active,
               sponsor: chain.sponsor,
@@ -255,8 +252,8 @@ const main = async () => {
               airSeekerConfig: chain.airseekerConfig,
             },
             select: { id: true },
-          });
-        })
+          })
+        )
       );
 
       await prisma.beaconSet.create({

@@ -7,7 +7,15 @@
 */
 import fs from 'fs';
 import { join } from 'path';
-import { PrismaClient } from '@prisma/client';
+import {
+  Beacon,
+  ChainConfiguration,
+  ChainInfrastructure,
+  DeployedContract,
+  PrismaClient,
+  Provider,
+} from '@prisma/client';
+import * as prismaImport from '@prisma/client';
 import { OIS } from '@api3/airnode-validator/dist/cjs/src/ois';
 import { airSeekerConfigSchema } from '../validation/validation';
 import { writeJsonFile } from '../utils/write-operations';
@@ -24,7 +32,7 @@ const main = async () => {
   const beacons = await Promise.all(
     (
       await prisma.beacon.findMany({ include: { provider: true } })
-    ).map(async (beacon) => ({
+    ).map(async (beacon: Beacon & { provider: Provider }) => ({
       ...beacon,
       chainConfiguration: await prisma.chainConfiguration.findMany({ where: { beaconId: beacon.id } }),
     }))
@@ -39,15 +47,12 @@ const main = async () => {
       description: beacon.description,
       templateUrl: `https://github.com/api3dao/operations/blob/main/data/apis/${beacon.provider.name}/templates/${beacon.templateId}.json`,
       chains: Object.fromEntries(
-        beacon.chainConfiguration.map((chain) => {
-          console.log(chain);
-          return [
-            chain.chainInfrastructureName,
-            {
-              airseekerDeviationThreshold: airSeekerConfigSchema.parse(chain.airSeekerConfig).deviationThreshold,
-            },
-          ];
-        })
+        beacon.chainConfiguration.map((chain: ChainConfiguration) => [
+          chain.chainInfrastructureName,
+          {
+            airseekerDeviationThreshold: airSeekerConfigSchema.parse(chain.airSeekerConfig).deviationThreshold,
+          },
+        ])
       ),
     };
   });
@@ -60,30 +65,32 @@ const main = async () => {
   const documentation = {
     beacons: formattedBeacons,
     chains: Object.fromEntries(
-      (await prisma.chainInfrastructure.findMany({ include: { contracts: true } })).map((chain) => {
-        return [
-          chain.name,
-          {
-            name: chain.name,
-            fullName: chain.fullName,
-            id: chain.id,
-            decimalPlaces: chain.decimalPlaces,
-            contracts: chain.contracts.map((contract) => [contract.name, contract.address]),
-            nativeToken: chain.nativeToken,
-            blockTime: chain.blockTime,
-            logoPath: chain.logoPath,
-            explorerUrl: chain.explorerUrl,
-            testnet: chain.testnet,
-          },
-        ];
-      })
+      (await prisma.chainInfrastructure.findMany({ include: { contracts: true } })).map(
+        (chain: ChainInfrastructure & { contracts: DeployedContract[] }) => {
+          return [
+            chain.name,
+            {
+              name: chain.name,
+              fullName: chain.fullName,
+              id: chain.id,
+              decimalPlaces: chain.decimalPlaces,
+              contracts: chain.contracts.map((contract) => [contract.name, contract.address]),
+              nativeToken: chain.nativeToken,
+              blockTime: chain.blockTime,
+              logoPath: chain.logoPath,
+              explorerUrl: chain.explorerUrl,
+              testnet: chain.testnet,
+            },
+          ];
+        }
+      )
     ),
   };
 
   writeJsonFile(join(basePath, 'documentation.json'), documentation);
 
   const templates = Object.fromEntries(
-    (await prisma.template.findMany({})).map((template) => [template.templateId, template])
+    (await prisma.template.findMany({})).map((template: prismaImport.Template) => [template.templateId, template])
   );
   console.log(templates);
 
@@ -96,7 +103,7 @@ const main = async () => {
 
   // I define the types here up front to help me know if stuff doesn't comply
   const dapis: Record<string, Record<string, string>> = {};
-  (await prisma.dApi.findMany()).forEach((dapiRecord) => {
+  (await prisma.dApi.findMany()).forEach((dapiRecord: prismaImport.DApi) => {
     if (!dapis[dapiRecord.chainInfrastructureName]) {
       // eslint-disable-next-line functional/immutable-data
       dapis[dapiRecord.chainInfrastructureName] = {};
