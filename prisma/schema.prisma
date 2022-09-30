@@ -10,12 +10,12 @@ generator erd {
   includeRelationFromFields = true
 }
 
-generator PrismaTypeGraphQLTypesGenerator {
-  provider     = "yarn prisma-typegraphql-types-generator"
-  modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
-  enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
-  useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
-}
+// generator PrismaTypeGraphQLTypesGenerator {
+  // provider     = "yarn prisma-typegraphql-types-generator"
+  // modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
+  // enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
+ // useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
+//}
 
 // Configures the datasource, not sure how to fallback to defaults, maybe an .env file?
 datasource db {
