@@ -20,3 +20,12 @@ cache
 artifacts
 credentials.json
 **.flat.sol
+
+
+# MacOS
+.DS_Store
+
+# Terraform
+*.tfstate*
+*.lock.hcl
+.terraform

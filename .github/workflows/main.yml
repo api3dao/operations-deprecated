@@ -8,9 +8,9 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
-  TARGET_NODE_VERSION: '14.17.1'
+  TARGET_NODE_VERSION: '16.17.0'
   REACT_APP_COMMIT_HASH: ${{ github.sha }}
-  PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer'
+  PUBLIC_URL: 'https://operations-development.s3.amazonaws.com/${{ github.sha }}/market'
   REACT_APP_PREVIEW_BUILD: 'TRUE'
   LIVE_OPS_DATA: 'TRUE'
   OPERATIONS_GIT_BRANCH: ${{ github.sha }}
@@ -39,112 +39,10 @@ jobs:
           node-version: ${{ env.TARGET_NODE_VERSION }}
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Lint
         run: yarn lint
       - name: Build
         run: yarn build
       - name: Validate
         run: yarn validate
-      - name: Test
-        run: yarn test
-      - name: Pack
-        run: yarn pack
-      - name: Cache packed operations
-        id: cache-packed-operations
-        uses: actions/cache@v3
-        with:
-          path: api3-operations-v0.0.1-d.tgz
-          key: ${{ github.sha }}-pack
-      - name: Export S3 payloads
-        run: yarn export-ops-json-payloads
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Upload JSON payloads with commit hash to S3
-        run: aws s3 cp json-exports s3://operations-development/${{ github.sha }} --acl public-read --recursive
-      - name: Upload JSON payloads as latest to S3
-        run: aws s3 sync s3://operations-development/${{ github.sha }} s3://operations-development/latest --acl public-read
-
-  build-explorer:
-    name: Build the API3 Explorer
-    runs-on: ubuntu-latest
-    needs: [lint-build-test-publish]
-    steps:
-      - name: Clone
-        uses: actions/checkout@v3
-        with:
-          repository: 'api3dao/api3-explorer'
-          token: ${{secrets.EXPLORER_PAT}}
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.TARGET_NODE_VERSION }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Retrieve cached packed operations
-        id: cache-packed-operations
-        uses: actions/cache@v3
-        with:
-          path: api3-operations-v0.0.1-d.tgz
-          key: ${{ github.sha }}-pack
-      - name: Unpack operations
-        run: |
-          rm -rf node_modules/@api3/operations &&
-          tar xvf api3-operations*.tgz &&
-          mv package node_modules/@api3/operations
-      - name: Translate operations data
-        run: yarn prepare-data
-
-      # This step uses the REACT_APP ENVs above
-      - name: Build the API3 Explorer
-        run: yarn build
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Upload JSON payloads with commit hash to S3
-        run: aws s3 cp build s3://operations-development/${{ github.sha }}/explorer --acl public-read --recursive
-      - name: Clean up before cloning operations (to get PR number)
-        run: rm -rf *
-      - name: Clone operations
-        uses: actions/checkout@v3
-      - name: Get PR number for operations
-        id: pr
-        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Add a PR comment with the preview URL of the built Explorer
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.pr.outputs.pull_request_number }}
-          message: |
-            You can view a preview of the API3 Explorer [here](https://operations-development.s3.amazonaws.com/${{ github.sha }}/explorer/index.html).
-            Be sure to check the preview Explorer as part of your PR review.
-            This link will be updated with new pushes.
-
-  chain-verification:
-    name: Chain verification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.TARGET_NODE_VERSION }}
-          cache: 'yarn'
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Verify SubscriptionIds on chain
-        run: yarn check-subscriptions
-      - name: Verify DAPI Name on chain
-        run: yarn check-dapi-name
-      - name: Verify DapiServer allowed readers on chain
-        run: yarn check-policy-readers

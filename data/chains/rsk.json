@@ -4,7 +4,7 @@
   "decimalPlaces": 5,
   "id": "30",
   "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
-  "nativeToken": "RBTC",
+  "nativeToken": "tRBTC",
   "blockTime": 30,
   "logoPath": "https://market.api3.org/images/chains/RSK-4_icon_white.svg",
   "orderLogoPath": "https://market.api3.org/images/chains/RSK-4_icon.svg",

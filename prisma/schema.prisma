@@ -1,11 +1,23 @@
+// Generates a JS/TS client with associated types
 generator client {
   provider = "prisma-client-js"
 }
 
+// Generates an Entity Relationship Diagram aka ERD
 generator erd {
-  provider = "prisma-erd-generator"
+  provider                  = "prisma-erd-generator"
+  theme                     = "forest"
+  includeRelationFromFields = true
 }
 
+// generator PrismaTypeGraphQLTypesGenerator {
+  // provider     = "yarn prisma-typegraphql-types-generator"
+  // modelsOutput = "./src/models" // Optional defaults to "./src/generated/models"
+  // enumsOutput  = "./src/types/enums" // Optional defaults to "./src/generated/enums"
+ // useYarn      = true // Optional if you want `graphql-scalars` installation to be done via yarn defaults to "npm"
+//}
+
+// Configures the datasource, not sure how to fallback to defaults, maybe an .env file?
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL") // eg = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
@@ -16,65 +28,401 @@ datasource db {
 // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#postgresql
 // have to create checks as a migration
 
+// Provider stores the main data about API providers
 model Provider {
-  name                  String  @id @db.Text
-  active                Boolean @db.Boolean
-  description           String  @db.Text
-  homepage              String  @db.Text
-  airnodeAddress        String  @db.Text // evm address constraint
-  xpub                  String  @db.Text
-  logoPath              String  @db.Text
-  maxSubscriptionPeriod Int
+  name                  String       @id @db.Text // the name of the provider, must be unique
+  active                Boolean      @db.Boolean // Is the provider active?
+  description           String       @db.Text // A human-readable description of this provider
+  homepage              String       @db.Text // The provider's homepage
+  airnodeAddress        String       @db.Text // The provider's Airnode address
+  xpub                  String       @db.Text // The provider's XPUB
+  logoPath              String       @db.Text // A URL pointing to a logo for this provider
+  orderLogoPath         String?      @db.Text // A URl pointing to a logo for this provider when used in a dark context
+  maxSubscriptionPeriod Int // The maximum subscription period this provider will allow
+  beacon                Beacon[] // Beacons associated with this provider
+  deployment            Deployment[] // Deployments associated with this provider
+  updatedAt             DateTime     @updatedAt // The last time this record was updated
+  oIS                   OIS[] // OISes associated with this provider
 }
 
-model Beacon {
-  beaconId     String         @id @db.Text
-  name         String         @unique @db.Text
-  description  String
-  templateId   String
-  BeaconChains BeaconChains[]
-}
-
-model Chain {
-  name         String         @id
-  BeaconChains BeaconChains[]
-}
-
-enum WalletType {
-  Provider
-  ProviderSponsor
-  API3
-  API3Sponsor
-}
-
-model TopUpWallet {
-  id           String         @id @default(uuid()) @db.Uuid
-  address      String
-  walletType   WalletType
-  BeaconChains BeaconChains[]
-}
-
-model Template {
-  templateId String @id
-  name       String @unique
-  endpointId String
-  parameters String
-}
-
-model BeaconChains {
-  id              String      @id @default(uuid()) @db.Uuid
-  beacon          Beacon      @relation(fields: [beaconId], references: [beaconId])
-  beaconId        String
-  chain           Chain       @relation(fields: [chainName], references: [name])
-  chainName       String
-  active          Boolean
-  sponsor         String
-  topUpWallet     TopUpWallet @relation(fields: [topUpWalletId], references: [id])
-  topUpWalletId   String      @db.Uuid
-  airSeekerConfig Json
-}
-
+// An OIS (aka Integration in ChainAPI parlance) defines mappings between HTTP APIs and a common EVM compatible interface.
+// An OIS is generally owned by a Provider... but could be used by a different provider's Airnode in practice.
+// It is possible for an Airnode to have multiple OISes and for a provider to have multiple deployments each with multiple
+// OISes. many-many relationships get painful quickly, so this table isn't properly related; it's a convenience
 model OIS {
-  id  String @id @default(uuid()) @db.Uuid
-  ois Json
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ois          Json // The OIS JSON blob
+  provider     Provider @relation(fields: [providerName], references: [name])
+  title        String // The name of this OIS, eg. "Amberdata"
+  version      String // The version of this OIS, eg. "1.0.0"
+  updatedAt    DateTime @updatedAt // The last time this OIS was updated
+  providerName String   @db.Text // The name of the provider this OIS "belongs" to
+}
+
+// A Template defines an API call based on an OIS
+model Template {
+  templateId        String   @id // The EVM hashed templateId
+  name              String // The human-readable name of this template
+  endpointId        String // The hashed endpoint Id
+  parameters        String // The encoded parameters of this template
+  decodedParameters Json // As a convenience, the decoded variant of the parameters
+  beacon            Beacon[] // The beacons that reference this template
+  updatedAt         DateTime @updatedAt // The last time this template was updated - should really be immutable.
+}
+
+// A Provider has Beacons built on top of their API(s), Templates and Airnodes
+model Beacon {
+  id                  String               @id @db.Text // The hashed ID of this beacon
+  name                String               @unique @db.Text // The beacon's name
+  description         String               @db.Text // A description of this beacon
+  provider            Provider             @relation(fields: [providerName], references: [name])
+  template            Template             @relation(fields: [templateId], references: [templateId])
+  templateId          String // The hashed associated template ID
+  chains              ChainConfiguration[] // ChainConfigurations this beacon runs on
+  providerName        String               @db.Text // The name of the provider driving this beacon
+  updatedAt           DateTime             @updatedAt // The last time this record was updated
+  BeaconSet           BeaconSet?           @relation(fields: [beaconSetId], references: [id])
+  beaconSetDataFeedId String?
+  DApi                DApi[]
+  beaconSetId         String?
+}
+
+// A deployment represents the deployment of an application (eg. Airnode)
+model Deployment {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  chainApiReference String? // Every deployment should reference a chain api record
+  appVersion        String // The Airnode version, eg. "0.7.5"
+  config            Json // The JSON config blob belonging to this Airnode
+  provider          Provider        @relation(fields: [providerName], references: [name])
+  providerName      String          @db.Text // The provider that "owns" this deployment
+  updatedAt         DateTime        @updatedAt // The last time this deployment was updated
+  deployedAt        DateTime // When this deployment was executed
+  cloudType         CloudType // The cloud type deployed to
+  applicationType   ApplicationType // The application type deployed
+}
+
+// A deployment can use multiple OISes and an OIS can be used by multiple deployments, therefore this is a many-to-many
+// relationship, which needs an intermediate table to associated them.
+//
+// Here an Airnode/Airkeeper/Airseeker application deployment references a DeploymentSet, which is also referenced
+// by multiple OISes.
+
+// WalletType represents the following wallet types:
+enum WalletType {
+  Provider // a wallet belonging to the provider that is the product of wallet derivation
+  ProviderSponsor // an underived sponsor belonging to the provider
+  API3 // a wallet belonging to API3 that is the product of wallet derivation
+  API3Sponsor // an underived sponsor belonging to API3
+}
+
+// A TopUpWallet is used to determine Airkeeper/Airseeker wallets to monitor and possibly top up
+model TopUpWallet {
+  id                   String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  address              String // The wallet address
+  walletType           WalletType // The type of wallet (sponsor wallet or just sponsor)
+  updatedAt            DateTime            @updatedAt // When the record was last updated
+  ChainConfiguration   ChainConfiguration? @relation(fields: [chainConfigurationId], references: [id])
+  chainConfigurationId String?             @db.Uuid // Chain Configuration reference
+}
+
+// Represents a chain configuration for Airseeker
+model ChainConfiguration {
+  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  beacon                  Beacon?             @relation(fields: [beaconId], references: [id])
+  chain                   ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  active                  Boolean // Is this chain configuration active?
+  sponsor                 String // The sponsor to be used when executing updates
+  topUpWallet             TopUpWallet[] // The TopUpWallets used to fund updates for beacons associated with this chain
+  airSeekerConfig         Json? // The Airseeker configuration blob, stored as JSON: refer to `airseekerConfig`
+  beaconSet               BeaconSet?          @relation(fields: [beaconSetId], references: [id])
+  updatedAt               DateTime            @updatedAt // The last time this chain configuration was updated
+  chainInfrastructureName String // FK: The name of this chain configuration, eg. "ropsten"
+  beaconId                String?             @db.Text
+  beaconSetId             String?
+}
+
+// Used to indicate the type of cloud an application has been deployed to
+enum CloudType {
+  GCP
+  AWS
+}
+
+// Used to indicate a deployment application type
+enum ApplicationType {
+  Airnode
+  Airkeeper
+  Airseeker
+}
+
+// A BeaconSet
+model BeaconSet {
+  id           String               @id // The hashed beaconset id of this beaconset
+  name         String               @unique // The beacon set's name, unique
+  description  String // A description
+  beaconIds    Beacon[] // The constituent beaconIds
+  activeChains ChainConfiguration[] // The chains on which this is active
+  updatedAt    DateTime             @updatedAt // When this record was last updated
+  dApi         DApi[] // Associated DAPIs
+}
+
+// Deployed Contracts
+model DeployedContract {
+  id                      String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid // An arbitrary ID
+  name                    String // The name of the deployed contract, eg. "DapiServer"
+  address                 String // The contract's deployed address
+  chainInfrastructure     ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String
+  updatedAt               DateTime            @updatedAt
+
+  @@unique([name, chainInfrastructureName])
+}
+
+// A representation of on-chain infrastructure
+model ChainInfrastructure {
+  id                 String               @id // The chainId of this chain
+  name               String               @unique // The name of the chain this record describes
+  fullName           String               @unique // The full, human-readable name
+  decimalPlaces      Int // The number of decimal places used when displaying this chain's native token
+  contracts          DeployedContract[] // The contracts we're interested in currently deployed on this chain
+  nativeToken        String               @unique // The native token of this chain (eg. ETH)
+  blockTime          Float? // The average block issuance interval
+  logoPath           String // The logo URL of this chain, for display purposes
+  explorerUrl        String // A URL for an explorer for this chain
+  testnet            Boolean // Is this a testnet?
+  coverage           Coverage[]
+  dApiMetadata       DApiMetadata[]
+  chainConfiguration ChainConfiguration[]
+  orderLogoPath      String? // A chain logo to be used in the API3 Market during the order process
+  updatedAt          DateTime             @updatedAt // The last updated time
+  DApi               DApi[]
+}
+
+// A representation of a DAPI
+// It should either have a beaconset or beacon populated, but not both.
+model DApi {
+  id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid // an arbitary ID
+  name           String // The name of this DAPI (eg. "USD/EUR")
+  beaconSet      BeaconSet?          @relation(fields: [beaconSetId], references: [id]) // The beaconset this possibly references
+  beacon         Beacon?             @relation(fields: [beaconId], references: [id]) // The beacon this possibly references
+  updatedAt      DateTime            @updatedAt // When this record was last updated
+  chain          ChainInfrastructure @relation(fields: [chainInfrastructureName], references: [name])
+  coveragePolicy CoveragePolicy[]
+
+  // todo unique constraint across chain and name
+  chainInfrastructureName String
+  beaconSetId             String?
+  beaconId                String? @db.Text
+
+  @@unique([name, chainInfrastructureName])
+}
+
+// Coverage represents coverage options in the form of a JSON payload
+// Keeping it JSON for simplicity and because it's likely to change.
+model Coverage {
+  id                       String               @id // The name of the coverage, usually the chain name, eg. "rsk"
+  DataFeedMetadata         DataFeedMetadata?    @relation(fields: [dataFeedMetadataBeaconId], references: [id])
+  dataFeedMetadataBeaconId String?
+  updatedAt                DateTime             @updatedAt // When the record was last updated
+  coverageOptions          Json // a JSON payload complying with the existing Coverage type
+  chainInfrastructureName  String?
+  ChainInfrastructure      ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
+  DApiMetadata             DApiMetadata?        @relation(fields: [dApiMetadataId], references: [id])
+  dApiMetadataId           String?
+}
+
+// Commonly used logo URLs
+model Logo {
+  name             String                    @id // The name of the logo, eg. "USD"
+  url              String // A URL pointing to the logo in question
+  updatedAt        DateTime                  @updatedAt // The last time this record was updated
+  dataFeedMetadata LogosOnDataFeedMetadata[]
+}
+
+// A beacon and/or beaconset can have many logos and logos can each have many associated data feeds. This is therefore
+// a many-to-many relationship. This model acts as an association between these two sets of records.
+// It could alternatively be implemented loosely without checks.
+model LogosOnDataFeedMetadata {
+  Logo               Logo             @relation(fields: [logoName], references: [name])
+  logoName           String
+  DataFeedMetadata   DataFeedMetadata @relation(fields: [dataFeedMetadataId], references: [id])
+  dataFeedMetadataId String
+
+  @@id([logoName, dataFeedMetadataId])
+}
+
+// UI specific beacon or beaconset metadata
+model DataFeedMetadata {
+  id            String                    @id // The hashed ID of the target beacon or beacon set
+  category      String // A human-readable category name, eg. "Cryptocurrency" or "Forex"
+  coverage      Coverage[] // Coverage pricing/options
+  decimalPlaces Int // The number of decimal places used when rendering this in a UI
+  logos         LogosOnDataFeedMetadata[]
+  prefix        String? // A prefix, usually a currency symbol
+  postfix       String? // A postfix, usually a unit, like "cm"
+  updatedAt     DateTime                  @updatedAt
+}
+
+// Additional DAPI metadata
+model DApiMetadata {
+  id                      String               @id
+  coverage                Coverage[]
+  updatedAt               DateTime             @updatedAt
+  ChainInfrastructure     ChainInfrastructure? @relation(fields: [chainInfrastructureName], references: [name])
+  chainInfrastructureName String?
+}
+
+// Represents different transaction types on an account
+enum ClientTransactionType {
+  CoveragePurchase // Transaction represents a coverage purchase
+  Deposit // eg. a client pays us
+  Withdrawal // eg. we refund a client for an over-payment.
+}
+
+// Represents a transaction on a client's account
+model ClientTransaction {
+  id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when                  DateTime              @default(dbgenerated("now()"))
+  clientTransactionType ClientTransactionType
+  paymentType           PaymentType // The Currency used
+  Reference             String? // If there's a remote transaction reference
+  transactionHash       String? // If applicable a transactionHash
+  detail                String
+  notes                 String
+  clientAccount         ClientAccount         @relation(fields: [clientAccountId], references: [id])
+  clientAccountId       String                @db.Uuid
+  coveragePolicy        CoveragePolicy[]
+  coverageQuote         CoverageQuote?        @relation(fields: [coverageQuoteId], references: [id])
+  coverageQuoteId       String?               @db.Uuid
+  CoverageInvoice       CoverageInvoice[]
+}
+
+// Represents different payment types
+enum PaymentType {
+  Circle
+  USDC
+  USDWire
+  Ethereum
+}
+
+// Represents banking details for a client - possibly not needed
+model BankingDetails {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type            PaymentType
+  detail          String // A manually verified banking details blob
+  verified        DateTime? // If not null someone verified the details
+  clientAccount   ClientAccount? @relation(fields: [clientAccountId], references: [id])
+  clientAccountId String?        @db.Uuid
+}
+
+// Bundles transactions together
+model ClientAccount {
+  id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clientTransactionId String              @db.Uuid
+  clientTransactions  ClientTransaction[]
+  coverageClient      CoverageClient[]
+  balance             Decimal // cached computed value
+  bankingDetails      BankingDetails[]
+}
+
+// Coverage client information - someone who purchases coverage
+model CoverageClient {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName       String
+  lastName        String
+  contactEmail    String
+  contactAddress  String
+  contactPhone    String
+  clientAccount   ClientAccount    @relation(fields: [clientAccountId], references: [id])
+  clientAccountId String           @db.Uuid
+  coveragePolicy  CoveragePolicy[]
+}
+
+// CoverageClient requests a CoverageQuote and has a specific amount of time to accept said quote
+model CoverageQuote {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amount            Decimal
+  expiry            DateTime
+  createdAt         DateTime            @default(dbgenerated("now()"))
+  coveragePolicy    CoveragePolicy[]
+  sentToClient      Json // what was actually sent to the client
+  ClientTransaction ClientTransaction[]
+  CoverageInvoice   CoverageInvoice[]
+}
+
+// If there's an invoice we're either waiting for payment or have received payment
+model CoverageInvoice {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  coverageQuote       CoverageQuote     @relation(fields: [coverageQuoteId], references: [id])
+  clientTransaction   ClientTransaction @relation(fields: [clientTransactionId], references: [id])
+  paymentReference    String
+  expiry              DateTime
+  coverageQuoteId     String            @db.Uuid
+  clientTransactionId String            @db.Uuid
+}
+
+// A coverage policy - as per existing framework
+model CoveragePolicy {
+  id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  coverageClient        CoverageClient    @relation(fields: [coverageClientId], references: [id])
+  dApi                  DApi              @relation(fields: [dApiId], references: [id])
+  clientTransaction     ClientTransaction @relation(fields: [clientTransactionId], references: [id])
+  claimantAddress       String?
+  beneficiaryAddress    String?
+  readerAddress         String
+  coverageAmount        Decimal
+  startDate             DateTime
+  endDate               DateTime
+  ipfsPolicyHash        String?
+  ipfsServicePolicyHash String
+  metadata              Json?
+  updatedAt             DateTime          @updatedAt
+  coverageClientId      String            @db.Uuid
+  dApiId                String            @db.Uuid
+  clientTransactionId   String            @db.Uuid
+  coverageQuote         CoverageQuote     @relation(fields: [coverageQuoteId], references: [id])
+  active                Boolean
+  coverageQuoteId       String            @db.Uuid
+}
+
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractEvents {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when            DateTime
+  chain           BigInt
+  block           BigInt
+  transactionHash String
+  logIndex        Int
+  eventName       String
+  transactionData Json
+  eventData       Json
+  contractAddress String
+
+  @@unique([transactionHash, logIndex])
+  @@index([when])
+  @@index([eventName])
+  @@index([contractAddress])
+}
+
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractTransactions {
+  transactionHash String   @id
+  when            DateTime
+  chain           BigInt
+  block           BigInt
+  transactionData Json
+
+  @@index([when])
+}
+
+// Taken from https://github.com/api3dao/rrp-events-collector/blob/main/src/rrp-collection.ts with changes
+model ContractLastBlockPerChain {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  when            DateTime @default(dbgenerated("now()"))
+  chain           BigInt
+  block           BigInt
+  contractAddress String
+
+  @@unique([chain, block, contractAddress])
+  @@index([contractAddress])
+  @@index([when])
 }

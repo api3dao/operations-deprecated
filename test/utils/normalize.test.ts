@@ -86,8 +86,8 @@ describe('normalize', () => {
           beaconSetId: ethers.constants.HashZero,
         },
       },
-      explorer: {
-        ...originalMockData.explorer,
+      market: {
+        ...originalMockData.market,
       },
     };
   });

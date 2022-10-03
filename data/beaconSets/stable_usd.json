@@ -1,0 +1,20 @@
+{
+  "name": "STABLE/USD",
+  "description": "Amberdata BUSD/USD, DAI/USD, USDC/USD and USDT/USD index",
+  "beaconSetId": "0x8620ac32e01e44bd537eda39831f1c154fab786223356b30337553a2a63150af",
+  "beaconIds": [
+    "0xe6bc56045455ca1aebc85ddd7a251ecf55b11c0797c53f2833d7caa6b1a91fa0",
+    "0x733c4c37c939fa1f62a271200a73c682986e0491340638394a251c2da3bf4037",
+    "0xb1b031f4b9616ad61070e27e192f1d57da9dc26dc67712049c80bd0075f913d6",
+    "0xe3057388cbd2df9ace15fce8c8fc6cf013fcff85eb849c5991a3beb7cf4c8fc7"
+  ],
+  "chains": {
+    "polygon-testnet": {
+      "active": true,
+      "sponsor": "0xAb770D6E94e26E9388db8d6D10a2458973a7Ff8f",
+      "topUpWallets": [{ "walletType": "API3", "address": "0x25B246C3bA7B7353e286859FaE8913600b96B719" }],
+      "displayDisabled": true,
+      "airseekerConfig": { "deviationThreshold": 0.2, "heartbeatInterval": 86400, "updateInterval": 30 }
+    }
+  }
+}

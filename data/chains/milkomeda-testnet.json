@@ -1,10 +1,10 @@
 {
   "name": "milkomeda-testnet",
-  "fullName": " Milkomeda C1 testnet",
+  "fullName": "Milkomeda C1 testnet",
   "decimalPlaces": 2,
   "id": "200101",
   "contracts": { "DapiServer": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251" },
-  "nativeToken": "milkADA",
+  "nativeToken": "tmilkADA",
   "blockTime": 4,
   "logoPath": "",
   "testnet": true,
