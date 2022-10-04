@@ -238,5 +238,15 @@
       "avalanche-testnet": "test-pricing-set-free",
       "bsc": "bsc"
     }
+  },
+  "Stable USD": {
+    "pricingCoverage": {
+      "polygon": "polygon",
+      "polygon-testnet": "test-pricing-set-free",
+      "rsk": "rsk",
+      "avalanche": "avalanche",
+      "avalanche-testnet": "test-pricing-set-free",
+      "bsc": "bsc"
+    }
   }
 }
