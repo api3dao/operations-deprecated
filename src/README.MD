@@ -36,10 +36,6 @@ scripts that inspect/check the information in operations with on-chain values
 
 - used to check if the dapi name is registered on chain (DapiServer.sol)
 
-### check-policy-readers
-
-- used to check if the policy readers are correctly registered on chain (DapiServer.sol)
-
 ### check-subscriptions
 
 - used to check if the beacon subscriptions are registered on chain (DapiServer.sol)
@@ -47,10 +43,6 @@ scripts that inspect/check the information in operations with on-chain values
 ## register
 
 scripts used to perform on-chain transactions
-
-### enable-policy-readers
-
-- used to enable the policy readers on chain by extending the whitelisting expiration of the readers address on chain (DapiServer.sol)
 
 ### register-subscriptions
 

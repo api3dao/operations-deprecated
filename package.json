@@ -28,8 +28,6 @@
     "build": "yarn run clean && yarn run compile",
     "check-subscriptions": "ts-node src/inspect/check-subscriptions.ts",
     "check-dapi-name": "ts-node src/inspect/check-dapi-name.ts",
-    "check-policy-readers": "ts-node src/inspect/check-policy-readers.ts",
-    "enable-policy-readers": "ts-node src/register/enable-policy-readers.ts",
     "clean": "rimraf -rf ./dist *.tgz",
     "compile": "tsc -p tsconfig.json",
     "normalize-and-validate": "ts-node src/validation/normalize-and-validate.ts",
