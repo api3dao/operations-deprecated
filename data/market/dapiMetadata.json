@@ -239,7 +239,7 @@
       "bsc": "bsc"
     }
   },
-  "Stable USD": {
+  "Stable/USD": {
     "pricingCoverage": {
       "polygon": "polygon",
       "polygon-testnet": "test-pricing-set-free",
