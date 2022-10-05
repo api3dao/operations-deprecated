@@ -1,5 +1,5 @@
 {
-  "name": "STABLE/USD",
+  "name": "Stable/USD",
   "description": "Amberdata BUSD/USD, DAI/USD, USDC/USD and USDT/USD index",
   "beaconSetId": "0x8620ac32e01e44bd537eda39831f1c154fab786223356b30337553a2a63150af",
   "beaconIds": [
