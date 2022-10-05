@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'api3dao/api3-market'
-          token: ${{secrets.MARKET_PATH}}
+          token: ${{secrets.MARKET_PAT}}
       - name: Setup node
         uses: actions/setup-node@v3
         with:
