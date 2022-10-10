@@ -2,10 +2,10 @@ import { join } from 'path';
 import { PromptObject } from 'prompts';
 import { runAndHandleErrors } from './cli';
 import { sanitiseFilename } from './filesystem';
-import { emptyObject } from '../validation/normalization';
 import { promptQuestions } from './prompts';
 import { readOperationsRepository } from './read-operations';
 import { writeOperationsRepository } from './write-operations';
+import { emptyObject } from '../validation/normalization';
 
 const questions: PromptObject[] = [
   {
