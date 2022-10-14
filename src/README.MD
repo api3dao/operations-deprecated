@@ -8,21 +8,9 @@ For development usage refer to the [development usage guide](../DEVELOPMENT_USAG
 
 `/src` houses scripts in the following directory structure:
 
-## deployment
+## market
 
-scripts that deal with creating the configs and deployment for airnode, airkeeper, airseeker
-
-### create-airseeker-config
-
-- Creates the airseeker configuration file for the deployment
-
-### create-boilerplate:
-
-- Creates the boilerplate directory for the API provider
-
-## explorer
-
-scripts that perform operations on the api3 explorer content
+scripts that perform operations on the api3 market content
 
 ### add-missing-beacon-metadata
 

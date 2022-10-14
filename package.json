@@ -17,13 +17,11 @@
   },
   "scripts": {
     "create-boilerplate": "ts-node src/deployment/create-boilerplate.ts",
-    "create-airseeker-config": "ts-node src/deployment/create-airseeker-config.ts",
     "export-ops-json-payloads": "ts-node src/utils/export-ops-json-payloads.ts",
     "eth:deploy": "cd chain && hardhat deploy --network $NETWORK",
     "deploy-all": "yarn deploy-airnode; yarn deploy-airkeeper",
     "deploy-airkeeper": "yarn ts-node src/deployment/deploy-airkeeper",
     "generate-topup-wallets": "ts-node src/utils/generate-topup-wallets.ts",
-    "register-subscriptions": "ts-node src/register/register-subscriptions.ts",
     "add-missing-beacon-metadata": "ts-node src/market/add-missing-beacon-metadata.ts",
     "build": "yarn run clean && yarn run compile",
     "check-subscriptions": "ts-node src/inspect/check-subscriptions.ts",
