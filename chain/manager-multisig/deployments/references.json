@@ -4,8 +4,8 @@
     "manager": "0x7fc103Cc17EB1764c14F8A1ac4745445cea62A46"
   },
   "arbitrum-testnet": {
-    "multisig": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a",
-    "manager": "0xc8f78DA6022572643c09DE0D02e0542C0653F88F"
+    "multisig": "0x55D72F0eb10e85D390B20DA57aa3122312647c0d",
+    "manager": "0x2ab9f26E18B64848cd349582ca3B55c2d06f507d"
   },
   "avalanche": {
     "multisig": "0xC3E76D8829259f2A34541746de2F8A0509Dc1987",
@@ -80,8 +80,8 @@
     "manager": "0x67308748E81E5898566A115D93E6D234dD9aB361"
   },
   "optimism-testnet": {
-    "multisig": "0xd8eC2c4158a0Cb65Dd42E2d1C1da8EA11975Ba22",
-    "manager": "0x8984152339F9D35742BB878D0eaD9EF9fd6469d3"
+    "multisig": "0x55D72F0eb10e85D390B20DA57aa3122312647c0d",
+    "manager": "0x2ab9f26E18B64848cd349582ca3B55c2d06f507d"
   },
   "polygon": {
     "multisig": "0x4923968942E8aae4656ae4913874EB7312e0F7c7",
@@ -98,5 +98,9 @@
   "rsk-testnet": {
     "multisig": "0xd8eC2c4158a0Cb65Dd42E2d1C1da8EA11975Ba22",
     "manager": "0x8984152339F9D35742BB878D0eaD9EF9fd6469d3"
+  },
+  "sepolia": {
+    "multisig": "0x55Cf1079a115029a879ec3A11Ba5D453272eb61D",
+    "manager": "0x1DCE40DC2AfA7131C4838c8BFf635ae9d198d1cE"
   }
 }

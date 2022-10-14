@@ -11,6 +11,7 @@
     "100": "gnosis",
     "137": "polygon",
     "250": "fantom",
+    "420": "optimism-testnet",
     "588": "metis-testnet",
     "1088": "metis",
     "1284": "moonbeam",
@@ -22,7 +23,9 @@
     "43113": "avalanche-testnet",
     "43114": "avalanche",
     "80001": "polygon-testnet",
-    "200101": "milkomeda-testnet"
+    "200101": "milkomeda-testnet",
+    "421613": "arbitrum-testnet",
+    "11155111": "sepolia"
   },
   "contracts": {
     "DapiServer": {
@@ -37,6 +40,7 @@
       "100": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
       "137": "0xd7CA5BD7a45985D271F216Cb1CAD82348464f6d5",
       "250": "0x7E1B9dC5f85c6EB7bBdF053352E784F3da7a6507",
+      "420": "0x2b4401E59780e44d3b1Fd2D41FCb3047c830F286",
       "588": "0x50f8f227DEbA0028607a37B615A4EbBbF0E5b42E",
       "1088": "0x50f8f227DEbA0028607a37B615A4EbBbF0E5b42E",
       "1284": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
@@ -48,7 +52,9 @@
       "43113": "0xdC91ea613247C0C9438A6F64Cc0E08291198981a",
       "43114": "0x291a11cbbC441201562A6418Fd11bBeb0675b4e4",
       "80001": "0x71Da7A936fCaEd1Ee364Df106B12deF6D1Bf1f14",
-      "200101": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251"
+      "200101": "0xCC5005Bd08b8882c9A132C0067E7D3f79796C251",
+      "421613": "0x2b4401E59780e44d3b1Fd2D41FCb3047c830F286",
+      "11155111": "0xb015ACeEdD478fc497A798Ab45fcED8BdEd08924"
     }
   }
 }
